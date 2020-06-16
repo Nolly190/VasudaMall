@@ -44,7 +44,19 @@
     <Compile Include="Data Access\Implentations\Class1.cs" />
     <Compile Include="DTOs\Class1.cs" />
     <Compile Include="Logic\Implementation\Class1.cs" />
-    <Compile Include="Model\Class1.cs" />
+    <Compile Include="Model\AuditTrial.cs" />
+    <Compile Include="Model\Category.cs" />
+    <Compile Include="Model\Currency.cs" />
+    <Compile Include="Model\ExchangeRate.cs" />
+    <Compile Include="Model\Notification.cs" />
+    <Compile Include="Model\Order.cs" />
+    <Compile Include="Model\OrderType.cs" />
+    <Compile Include="Model\PaymentHistory.cs" />
+    <Compile Include="Model\Price.cs" />
+    <Compile Include="Model\Product.cs" />
+    <Compile Include="Model\Setting.cs" />
+    <Compile Include="Model\SubCategory.cs" />
+    <Compile Include="Model\Vendor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

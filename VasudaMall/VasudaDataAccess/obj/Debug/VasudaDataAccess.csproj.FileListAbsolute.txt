@@ -1,0 +1,2 @@
+C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaMall\VasudaDataAccess\obj\Debug\VasudaDataAccess.csprojAssemblyReference.cache
+C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaMall\VasudaDataAccess\obj\Debug\VasudaDataAccess.csproj.CoreCompileInputs.cache

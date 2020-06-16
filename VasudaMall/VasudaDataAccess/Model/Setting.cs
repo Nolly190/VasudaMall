@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VasudaDataAccess
+namespace VasudaDataAccess.Model
 {
-    class Class1
+    public class Setting
     {
+        public Guid Id { get; set; }
     }
 }
