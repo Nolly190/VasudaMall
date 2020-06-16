@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data Access\Implentations\Class1.cs" />
-    <Compile Include="DTOs\Class1.cs" />
+    <Compile Include="DTOs\Class2.cs" />
     <Compile Include="Logic\Implementation\Class1.cs" />
     <Compile Include="Model\AuditTrial.cs" />
     <Compile Include="Model\Category.cs" />
