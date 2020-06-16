@@ -12,6 +12,8 @@ namespace VasudaDataAccess.Model
         public Guid UserId { get; set; }
         public string Action { get; set; }
         public string Description { get; set; }
+        public string ModifiedData { get; set; }
+        public string OriginalData { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }                
     }

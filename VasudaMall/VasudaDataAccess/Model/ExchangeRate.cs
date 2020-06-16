@@ -11,7 +11,7 @@ namespace VasudaDataAccess.Model
         public Guid Id { get; set; }
         public string RateType { get; set; }
         public decimal Rate { get; set; }
-        public Guid CategoryId { get; set; }
+        public string Currency { get; set; }
         public bool IsActive { get; set; }
         public DateTime DateCreated { get; set; }
     }

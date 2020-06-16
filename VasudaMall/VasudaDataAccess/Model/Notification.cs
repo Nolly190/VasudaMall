@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace VasudaDataAccess
 {
-    public class Notification
+    public class NotificationTable
     {
         public Guid Id { get; set; }
+        public Guid UserId { get; set; }
         public string Subject { get; set; }
         public string Message { get; set; }
         public bool IsRead { get; set; }

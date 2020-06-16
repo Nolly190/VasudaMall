@@ -11,9 +11,14 @@ namespace VasudaDataAccess.Model
 
         public Guid Id { get; set; }
         public decimal Amount { get; set; }
-        public decimal Credit { get; set; }
-        public decimal Debit { get; set; }
+        public string TransactionType { get; set; }
         public string Purpose { get; set; }
         public DateTime DateCreated { get; set; }
+    }
+
+   public enum TransactionType
+    {
+        Credit,
+        Debit
     }
 }

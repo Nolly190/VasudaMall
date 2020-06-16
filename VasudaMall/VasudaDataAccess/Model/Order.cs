@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VasudaDataAccess.Model
 {
-    public class Order
+    public class OrderTable
     {
         public Guid Id { get; set; }
         public Guid ProductTypeId { get; set; }

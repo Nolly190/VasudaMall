@@ -13,4 +13,13 @@ namespace VasudaDataAccess.Model
         public bool IsActive { get; set; }
         public DateTime DateCreated { get; set; }
     }
+    public class ImageTable
+    {
+        public Guid Id { get; set; }
+        public Guid SourceId { get; set; }
+        public string Type { get; set; }
+        public string Path { get; set; }
+        public bool IsActive { get; set; }
+        public DateTime DateCreated { get; set; }
+    }
 }
