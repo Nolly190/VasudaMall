@@ -29,7 +29,7 @@ namespace VasudaDataAccess.Model
         public virtual DbSet<SubCategoryTable> SubCategoryTables { get; set; }
         public virtual DbSet<SupportTable> SupportTables { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<Vendor> Vendors { get; set; }
+        public virtual DbSet<VendorTable> Vendors { get; set; }
         public virtual DbSet<NotificationTable> NotificationTables { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -83,7 +83,7 @@ namespace VasudaDataAccess.Model
                 .WithOptional(e => e.ProductTable)
                 .HasForeignKey(e => e.ProductId);
 
-            modelBuilder.Entity<Vendor>()
+            modelBuilder.Entity<VendorTable>()
                 .HasMany(e => e.OrderTables)
                 .WithRequired(e => e.Vendor)
                 .WillCascadeOnDelete(false);

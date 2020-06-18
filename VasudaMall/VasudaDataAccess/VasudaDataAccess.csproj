@@ -51,11 +51,33 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data Access\ICategoryTable.cs" />
-    <Compile Include="Data Access\Implentations\BlogTableRepo.cs" />
+    <Compile Include="Data Access\IExchangeRateTable.cs" />
+    <Compile Include="Data Access\IImageTable.cs" />
+    <Compile Include="Data Access\Implentations\CategoryTableRepo.cs" />
+    <Compile Include="Data Access\Implentations\ExchangeRateTableRepo.cs" />
+    <Compile Include="Data Access\Implentations\ImageTableRepo.cs" />
+    <Compile Include="Data Access\Implentations\NotificationTableRepo.cs" />
+    <Compile Include="Data Access\Implentations\OrderTableRepo.cs" />
+    <Compile Include="Data Access\Implentations\PaymentHistoryTableRepo.cs" />
+    <Compile Include="Data Access\Implentations\PriceTableRepo.cs" />
+    <Compile Include="Data Access\Implentations\ProductTableRepo.cs" />
+    <Compile Include="Data Access\Implentations\SettingTableRepo.cs" />
+    <Compile Include="Data Access\Implentations\SubCategoryTableRepo.cs" />
+    <Compile Include="Data Access\Implentations\SupportTableRepo.cs" />
+    <Compile Include="Data Access\Implentations\VendorTableRepo.cs" />
+    <Compile Include="Data Access\INotificationTable.cs" />
+    <Compile Include="Data Access\IOrderTable.cs" />
+    <Compile Include="Data Access\IPaymentHistoryTable.cs" />
+    <Compile Include="Data Access\IPriceTable.cs" />
+    <Compile Include="Data Access\IProductTable.cs" />
     <Compile Include="Data Access\IRepository.cs" />
+    <Compile Include="Data Access\ISettingTable.cs" />
+    <Compile Include="Data Access\ISubCategoryTable.cs" />
+    <Compile Include="Data Access\ISupportTable.cs" />
     <Compile Include="Data Access\IUnitOfWork.cs" />
     <Compile Include="Data Access\Implentations\Repository.cs" />
     <Compile Include="Data Access\Implentations\UnitOfWork.cs" />
+    <Compile Include="Data Access\IVendorTable.cs" />
     <Compile Include="Model\AspNetRole.cs" />
     <Compile Include="Model\AspNetUser.cs" />
     <Compile Include="Model\AspNetUserClaim.cs" />
@@ -75,7 +97,7 @@
     <Compile Include="Model\SupportTable.cs" />
     <Compile Include="Model\sysdiagram.cs" />
     <Compile Include="Model\VasudaModel.cs" />
-    <Compile Include="Model\Vendor.cs" />
+    <Compile Include="Model\VendorTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

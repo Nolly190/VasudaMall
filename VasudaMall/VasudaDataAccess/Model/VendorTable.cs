@@ -6,10 +6,10 @@ namespace VasudaDataAccess.Model
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Vendor
+    public partial class VendorTable
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Vendor()
+        public VendorTable()
         {
             OrderTables = new HashSet<OrderTable>();
         }
