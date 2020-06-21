@@ -78,6 +78,11 @@
     <Compile Include="Data Access\Implentations\Repository.cs" />
     <Compile Include="Data Access\Implentations\UnitOfWork.cs" />
     <Compile Include="Data Access\IVendorTable.cs" />
+    <Compile Include="DTOs\Response.cs" />
+    <Compile Include="Logic\Implementation\OrderService.cs" />
+    <Compile Include="Logic\Implementation\StoreService.cs" />
+    <Compile Include="Logic\IOrderService.cs" />
+    <Compile Include="Logic\IStoreService.cs" />
     <Compile Include="Model\AspNetRole.cs" />
     <Compile Include="Model\AspNetUser.cs" />
     <Compile Include="Model\AspNetUserClaim.cs" />
@@ -100,10 +105,7 @@
     <Compile Include="Model\VendorTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DTOs\" />
-    <Folder Include="Logic\Implementation\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

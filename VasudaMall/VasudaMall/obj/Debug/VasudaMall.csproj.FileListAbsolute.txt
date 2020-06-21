@@ -105,3 +105,13 @@ C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaMall\obj\Debug\
 C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaMall\bin\VasudaDataAccess.dll
 C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaMall\bin\VasudaDataAccess.pdb
 C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaMall\bin\VasudaDataAccess.dll.config
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaMall\bin\Ninject.dll
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaMall\bin\Ninject.Web.Common.dll
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaMall\bin\Ninject.Web.Common.WebHost.dll
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaMall\bin\WebActivatorEx.dll
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaMall\bin\Ninject.xml
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaMall\bin\Ninject.Web.Common.xml
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaMall\bin\Ninject.Web.Common.WebHost.xml
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaMall\bin\Ninject.MVC.dll
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaMall\bin\Ninject.Web.Mvc.dll
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaMall\bin\Ninject.Web.Mvc.xml
