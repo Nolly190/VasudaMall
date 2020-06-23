@@ -78,6 +78,7 @@
     <Compile Include="Data Access\Implentations\Repository.cs" />
     <Compile Include="Data Access\Implentations\UnitOfWork.cs" />
     <Compile Include="Data Access\IVendorTable.cs" />
+    <Compile Include="DTOs\ProductViewModel.cs" />
     <Compile Include="DTOs\Response.cs" />
     <Compile Include="Logic\Implementation\OrderService.cs" />
     <Compile Include="Logic\Implementation\StoreService.cs" />

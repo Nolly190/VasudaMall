@@ -25,6 +25,7 @@ namespace VasudaDataAccess.Model
         public string Location { get; set; }
 
         public bool IsActive { get; set; }
+        public bool IsPopular { get; set; }
 
         public DateTime DateCreated { get; set; }
 

@@ -9,5 +9,7 @@ namespace VasudaDataAccess.Data_Access
 {
     public interface IProductTable : IRepository<ProductTable>
     {
+        List<ProductTable> GetAllPopular(int? pageNum);
+        List<ProductTable> GetAllTrending(int? pageNum);
     }
 }

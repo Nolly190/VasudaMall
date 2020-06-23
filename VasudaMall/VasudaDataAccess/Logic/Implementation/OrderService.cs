@@ -10,10 +10,6 @@ namespace VasudaDataAccess.Logic.Implementation
 {
   public class OrderService : IOrderService
     {
-        public void CheckResult()
-        {
-         
-
-        }
+      
     }
 }
