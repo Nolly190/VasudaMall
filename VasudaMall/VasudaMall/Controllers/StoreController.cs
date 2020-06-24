@@ -16,7 +16,7 @@ namespace VasudaMall.Controllers
             _storeService = _service;
         }
         // GET: Store
-        public ActionResult Index()
+        public ActionResult Products()
         {
             return View();
         }

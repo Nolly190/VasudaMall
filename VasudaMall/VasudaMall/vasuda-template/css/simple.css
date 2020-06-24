@@ -1,0 +1,32 @@
+/*  
+    Recommeded CSS
+    ==============
+*/
+
+.panel {
+    position: fixed;
+    right: -18.625em; /*or width of your navigation panel*/
+    width: 18.625em; /*should match the above value*/
+}
+
+/*  
+    Demo Specific Styles
+    ====================
+*/
+
+body {
+    
+}
+
+.wrap {
+    position: relative;
+    width: 100%;
+}
+
+.panel {
+    background:#f5f5f5 url(../../images/.png) no-repeat ; background-size:fit;background-position:bottom; opacity:0.9;
+}
+
+.panel a {
+    color: #555;
+}
