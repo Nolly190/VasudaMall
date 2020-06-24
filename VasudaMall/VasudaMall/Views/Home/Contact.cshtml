@@ -1,17 +1,37 @@
 ﻿@{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "Contact-Us";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
-
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+<section class="row">
+    <div class="slide">
+        <div class="animated fadeInUp" id="title2" style="color:#">
+            <b>Got Questions?, Contact Us.</b>
+        </div>
+        <div class="animated fadeInDown rider2">
+            Send us an email via <b>enquiries@vasudamall.com </b><br />
+            or use the contact form below
+        </div>
+        <div class="col-lg-5 message-form">
+            <input type="text" class="col-lg-10" placeholder="Full Name">
+            <input type="text" class="col-lg-10" placeholder="Address">
+            <input type="text" class="col-lg-10" placeholder="Phone Number">
+            <textarea type="text" class="col-lg-10" placeholder="Enter your message here..."></textarea><br />
+            <button class="col-lg-5">Send</button>
+        </div>
+        <img src="~/vasuda-template/images/style.jpg" class="slidepic" />
+    </div>
+</section>
+<section class="row" style="background:#f0f0f0">
+    <div class="offset-lg-1 col-lg-10 page-tab-wrapper">
+        <div class="row">
+            <div class="col-lg-12 page-tab">Privacy Policy <i class="fas fa-plus" id="a"></i><i class="fas fa-minus" id="e1"></i></div><br />
+            <div class="page-content" id="a1">Privacy policy statement goes here...</div>
+            <div class="col-lg-12 page-tab">Returns <i class="fas fa-plus" id="b"></i><i class="fas fa-minus" id="e2"></i></div><br />
+            <div class="page-content" id="b1">Returns policy goes here...</div>
+            <div class="col-lg-12 page-tab">Terms of Use <i class="fas fa-plus" id="c"></i><i class="fas fa-minus" id="e3"></i></div><br />
+            <div class="page-content" id="c1">Terms of use statement goes here...</div>
+            <div class="col-lg-12 page-tab">Shipping <i class="fas fa-plus" id="d"></i><i class="fas fa-minus" id="e4"></i></div><br />
+            <div class="page-content" id="d1">Shipping policy goes here...</div>
+        </div>
+    </div>
+</section>
