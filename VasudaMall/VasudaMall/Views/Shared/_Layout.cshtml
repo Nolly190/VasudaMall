@@ -119,8 +119,8 @@
                     <div class="col-lg-5 fl">
                         <img src="~/vasuda-template/images/logo2.png" /><br />
                         <span class="copy">
-                            &copy;
-                            @DateTime.Now.Year, &nbsp;VasudaMall. All Rights Reserved. <br />Designed by <span><a href="www.amplo.com.ng" target="_blank" style="color:#444;font-family:calibri;font-weight:bold;">Amplo IT Solutions</a></span>
+                            &copy; @DateTime.Now.Year, &nbsp;VasudaMall. All Rights Reserved. 
+                            <br />Designed by <span><a href="www.amplo.com.ng" target="_blank" style="color:#444;font-family:calibri;font-weight:bold;">Amplo IT Solutions</a></span>
                     </div>
                     <div class="col-lg-7 site-nav-img">
                         <li id=""><a href=@Url.Action("About", "Home")>About-Us</a></li>
@@ -136,7 +136,7 @@
     </div>
 
     @*@Scripts.Render("~/bundles/jquery")*@
-    @Scripts.Render("~/vasuda-template/styles")
+    @Scripts.Render("~/vasuda-template/script")
     @RenderSection("scripts", required: false)
 
 
