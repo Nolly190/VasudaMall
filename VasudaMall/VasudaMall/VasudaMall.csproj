@@ -2111,6 +2111,18 @@
     <Content Include="vasuda-template\js\bootstrap.min.js.map" />
     <Content Include="Views\Shared\_Layout2.cshtml" />
     <Content Include="Views\Store\Products.cshtml" />
+    <Content Include="Views\Store\Cart.cshtml" />
+    <Content Include="Views\Store\Clearance.cshtml" />
+    <Content Include="Views\Store\Index.cshtml" />
+    <Content Include="Views\Store\Portfolio.cshtml" />
+    <Content Include="Views\Store\Services.cshtml" />
+    <Content Include="Views\Store\TrackOrder.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Home\FAQ.cshtml" />
+    <Content Include="Views\Home\Portfolio.cshtml" />
+    <Content Include="Views\Home\Services.cshtml" />
+    <Content Include="Views\Home\Teams.cshtml" />
+    <Content Include="Views\Home\Terms.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
