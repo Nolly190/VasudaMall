@@ -16,6 +16,35 @@ namespace VasudaMall.Controllers
             _storeService = _service;
         }
         // GET: Store
+
+        public ActionResult Index()
+        {
+            return View();
+        }   
+        public ActionResult Cart()
+        {
+            return View();
+        }  
+        public ActionResult TrackOrder()
+        {
+            return View();
+        } 
+        public ActionResult Services()
+        {
+            return View();
+        }  
+        public ActionResult Teams()
+        {
+            return View();
+        }  
+        public ActionResult Portfolio()
+        {
+            return View();
+        }  
+        public ActionResult Clearance()
+        {
+            return View();
+        }  
         public ActionResult Products()
         {
             return View();

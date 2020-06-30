@@ -55,7 +55,7 @@
     @Scripts.Render("~/bundles/modernizr")
 
     <link rel="stylesheet" href="~/vasuda-template/css/skitter.css" type="text/css" media="all" />
-    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="shortcut icon" href="~/favicon.ico" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 </head>
@@ -69,10 +69,11 @@
         <ul style="list-style-type:none">
             <a href=@Url.Action("Index", "Home")><li><i class="fas fa-home" aria-hidden="true"></i> &nbsp;  &nbsp; Home</li></a>
             <a href=@Url.Action("About", "Home")><li><i class="fas fa-clipboard"></i> &nbsp;  &nbsp; About-Us</li></a>
-            <a href="services.html"><li><i class="fas fa-cog" aria-hidden="true"></i> &nbsp;  &nbsp; Services</li></a>
-            <a href="portfolio.html"><li><i class="fas fa-clipboard" aria-hidden="true"></i> &nbsp;  &nbsp; Portfolio</li></a>
-            <a href="team.html"><li><i class="fas fa-users" aria-hidden="true"></i> &nbsp;  &nbsp; Team</li></a>
+            <a href="@Url.Action("Services", "Home")"><li><i class="fas fa-cog" aria-hidden="true"></i> &nbsp;  &nbsp; Services</li></a>
+            <a href="@Url.Action("Portfolio", "Home")"><li><i class="fas fa-clipboard" aria-hidden="true"></i> &nbsp;  &nbsp; Portfolio</li></a>
+            <a href="@Url.Action("Teams", "Home")"><li><i class="fas fa-users" aria-hidden="true"></i> &nbsp;  &nbsp; Team</li></a>
             <a href=@Url.Action("Contact", "Home")><li><i class="fas fa-phone" aria-hidden="true"></i> &nbsp;  &nbsp; Contact-Us</li></a>
+            <a href=@Url.Action("Index", "Dashboard")><li><i class="fas fa-phone" aria-hidden="true"></i> &nbsp;  &nbsp; Dashboard</li></a>
         </ul>
 
     </nav>
@@ -84,15 +85,15 @@
                         <a href=@Url.Action("Index", "Home")><img src="~/vasuda-template/images/logo.png" /></a>
                     </div>
                     <div class="offset-lg- col-lg-6 navmenu">
-                        <li id=""><a href=@Url.Action("Index", "Home")>Home</a></li>
-                        <li id=""><a href="track.html">Track Order</a></li>
-                        <li id=""><a href="products.html">Products</a></li>
+                        <li id=""><a href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li id=""><a href="@Url.Action("TrackOrder", "Store")">Track Order</a></li>
+                        <li id=""><a href="@Url.Action("index", "Store")">Products</a></li>
                         <li id=""><a href=@Url.Action("Contact", "Home")>Contact-Us</a></li>
-                        <li id=""><a href="clearance.html">Clearance</a></li>
+                        <li id=""><a href="@Url.Action("Clearance", "Store")">Clearance</a></li>
                     </div>
                     <div class="offset-lg-1 col-lg-2 navmenu">
                         <a href=@Url.Action("Login", "Account")><i class="fas fa-user" aria-hidden="true"></i></a>
-                        <a href="cart.html"><i class="fas fa-shopping-cart" style="margin-left:7%;" aria-hidden="true"></i></a>
+                        <a href="@Url.Action("Cart", "Store")"><i class="fas fa-shopping-cart" style="margin-left:7%;" aria-hidden="true"></i></a>
                         <select id="">
                             <option><a href="#">USD</a></option>
                             <option><a href="#">GBP</a></option>
@@ -120,15 +121,15 @@
                         <img src="~/vasuda-template/images/logo2.png" /><br />
                         <span class="copy">
                             &copy;
-                            @DateTime.Now.Year, &nbsp;VasudaMall. All Rights Reserved. <br />Designed by <span><a href="www.amplo.com.ng" target="_blank" style="color:#444;font-family:calibri;font-weight:bold;">Amplo IT Solutions</a></span>
+                            @DateTime.Now.Year, &nbsp;VasudaMall. All Rights Reserved. <br />Designed by <span><a href="https://www.amplo.com.ng" target="_blank" style="color:#444;font-family:calibri;font-weight:bold;">Amplo IT Solutions</a></span>
                     </div>
                     <div class="col-lg-7 site-nav-img">
                         <li id=""><a href=@Url.Action("About", "Home")>About-Us</a></li>
-                        <li id=""><a href="terms.html">Terms & Conditions</a></li>
-                        <li id=""><a href="products.html">Products</a></li>
-                        <li id=""><a href="clearance.html">Clearance</a></li>
+                        <li id=""><a href="@Url.Action("Terms", "Home")">Terms & Conditions</a></li>
+                        <li id=""><a href="@Url.Action("Index", "Store")">Products</a></li>
+                        <li id=""><a href="@Url.Action("Clearance", "Store")">Clearance</a></li>
                         <li id=""><a href=@Url.Action("Contact", "Home")>Contact-Us</a></li>
-                        <li id=""><a href="faq.html">FAQ</a></li>
+                        <li id=""><a href="@Url.Action("FAQ", "Home")">FAQ</a></li>
                     </div>
                 </div>
             </div>
