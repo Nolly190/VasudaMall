@@ -1,10 +1,10 @@
-﻿@*@using VasudaMall.Models
-    @model LoginViewModel
-    @{
-        ViewBag.Title = "Log in";
-    }
+﻿@using VasudaMall.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
 
-    <h2>@ViewBag.Title.</h2>
+@*    <h2>@ViewBag.Title.</h2>
     <div class="row">
         <div class="col-md-8">
             <section id="loginForm">
@@ -62,26 +62,30 @@
         @Scripts.Render("~/bundles/jqueryval")
     }*@
 
-@{ 
+@{
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
-
-        <section class="row">
-            <div class="slide">
-                <div class="overlay2"></div>
-                <div class="animated fadeInUp overlay-title" id="title2" style="color:#ccc">
-                    <b>Login</b>
-                </div>
-                <div class="col-lg-5 message-form">
-                    <input type="text" class="col-lg-11" placeholder="Username">
-                    <input type="password" class="col-lg-11" placeholder="Password">
-                    <button class="col-lg-5">Submit</button><br /><br />
-                    <a href="forgot.html">Forgot Password?</a><br />
-                    Don't have an account yet?, <a href=@Url.Action("Register", "Account")>Register</a>
-                    <hr />
-                    <button class="col-lg-5 btn btn-danger">Login with Google</button><button class="offset-lg-1 col-lg-5 btn btn-info">Login with Facebook</button>
-                </div>
-                <img src="~/vasuda-template/images/mv.jpg" />
+<section class="row">
+    <div class="slide">
+        <div class="overlay2"></div>
+        <div class="animated fadeInUp overlay-title" id="title2" style="color:#ccc">
+            <b>Login</b>
+        </div>
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+        {
+            <div class="col-lg-5 message-form">
+                <input type="text" class="col-lg-11" name="@Html.NameFor(x=>x.Email)" placeholder="Username">
+                <input type="password" class="col-lg-11" name="@Html.NameFor(x=>x.Password)" placeholder="Password">
+                <button type="submit" class="col-lg-5">Submit</button><br /><br />
+                
+                <span style="color:red">@Html.ValidationSummary()</span><br/>
+                <a href="@Url.Action("ForgotPassword","Account")">Forgot Password?</a><br />
+                Don't have an account yet?, <a href=@Url.Action("Register", "Account")>Register</a>
+                <hr />
+                <button class="col-lg-5 btn btn-danger">Login with Google</button><button class="offset-lg-1 col-lg-5 btn btn-info">Login with Facebook</button>
             </div>
-        </section>
+        }
+        <img src="~/vasuda-template/images/mv.jpg" />
+    </div>
+</section>

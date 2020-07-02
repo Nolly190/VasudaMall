@@ -28,7 +28,10 @@
             <a href="@Url.Action("Portfolio", "Home")"><li><i class="fas fa-clipboard" aria-hidden="true"></i> &nbsp;  &nbsp; Portfolio</li></a>
             <a href="@Url.Action("Teams", "Home")"><li><i class="fas fa-users" aria-hidden="true"></i> &nbsp;  &nbsp; Team</li></a>
             <a href=@Url.Action("Contact", "Home")><li><i class="fas fa-phone" aria-hidden="true"></i> &nbsp;  &nbsp; Contact-Us</li></a>
-            <a href=@Url.Action("Index", "Dashboard")><li><i class="fas fa-phone" aria-hidden="true"></i> &nbsp;  &nbsp; Dashboard</li></a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a href=@Url.Action("Index", "Dashboard")><li><i class="fas fa-phone" aria-hidden="true"></i> &nbsp;  &nbsp; Dashboard</li></a>
+            }
         </ul>
 
     </nav>
@@ -45,10 +48,23 @@
                         <li id=""><a href="@Url.Action("index", "Store")">Products</a></li>
                         <li id=""><a href=@Url.Action("Contact", "Home")>Contact-Us</a></li>
                         <li id=""><a href="@Url.Action("Clearance", "Store")">Clearance</a></li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li id=""><a href="@Url.Action("Index", "Dashboard")">Dashboard</a></li>
+
+                        }
                     </div>
                     <div class="offset-lg-1 col-lg-2 navmenu">
-                        <a href=@Url.Action("Login", "Account")><i class="fas fa-user" aria-hidden="true"></i></a>
-                        <a href="@Url.Action("Cart", "Store")"><i class="fas fa-shopping-cart" style="margin-left:7%;" aria-hidden="true"></i></a>
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <a href=@Url.Action("Login", "Account")><i class="fas fa-user" aria-hidden="true"></i></a>
+                        }
+                        else
+                        {
+                            <a href=@Url.Action("LogOff", "Account")>Log Out</a>
+                       
+                        }
+                        <a href="@Url.Action("Cart", "Store")"><i class="fas fa-shopping-cart" style="margin-left: 7%;" aria-hidden="true"></i></a>
                         <select id="">
                             <option><a href="#">USD</a></option>
                             <option><a href="#">GBP</a></option>

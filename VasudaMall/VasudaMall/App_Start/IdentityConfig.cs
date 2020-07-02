@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
+using RestSharp;
+using RestSharp.Authenticators;
 using VasudaMall.Models;
 
 namespace VasudaMall
@@ -18,7 +20,22 @@ namespace VasudaMall
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
+
+            var mailFrom = "Vasuda Support <info@vasudamall.com>";
+            RestClient client = new RestClient();
+            client.BaseUrl = new Uri("https://api.mailgun.net/v3");
+            client.Authenticator = new HttpBasicAuthenticator(
+                "api", "key-0b215b55ec418d93124c7eeab51ad795");
+            RestRequest request = new RestRequest();
+            request.AddParameter("domain",
+                "Vasudamall.com", ParameterType.UrlSegment);
+            request.Resource = "{domain}/messages";
+            request.AddParameter("from", mailFrom);
+            request.AddParameter("to", message.Destination);
+            request.AddParameter("subject", message.Subject);
+            request.AddParameter("html", message.Body);
+            request.Method = Method.POST;
+            var status = (RestResponse)client.Execute(request);
             return Task.FromResult(0);
         }
     }
