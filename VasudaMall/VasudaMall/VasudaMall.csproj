@@ -223,6 +223,7 @@
     <Compile Include="ViewModels\WalletViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="admin-lte\custom\style.css" />
     <Content Include="admin-lte\dist\css\adminlte.css" />
     <Content Include="admin-lte\dist\css\adminlte.min.css" />
     <Content Include="admin-lte\dist\css\alt\adminlte.components.css" />
