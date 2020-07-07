@@ -1,0 +1,37 @@
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaDataAccess\obj\Debug\VasudaDataAccess.csprojAssemblyReference.cache
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaDataAccess\bin\Debug\VasudaDataAccess.dll.config
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaDataAccess\bin\Debug\VasudaDataAccess.dll
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaDataAccess\bin\Debug\VasudaDataAccess.pdb
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaDataAccess\bin\Debug\EntityFramework.dll
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaDataAccess\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaDataAccess\bin\Debug\EntityFramework.xml
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaDataAccess\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaDataAccess\obj\Debug\VasudaDataAccess.csproj.CopyComplete
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaDataAccess\obj\Debug\VasudaDataAccess.dll
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\VasudaDataAccess\obj\Debug\VasudaDataAccess.pdb
+C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaMall\VasudaDataAccess\bin\Debug\VasudaDataAccess.dll.config
+C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaMall\VasudaDataAccess\bin\Debug\VasudaDataAccess.dll
+C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaMall\VasudaDataAccess\bin\Debug\VasudaDataAccess.pdb
+C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaMall\VasudaDataAccess\bin\Debug\EntityFramework.dll
+C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaMall\VasudaDataAccess\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaMall\VasudaDataAccess\bin\Debug\EntityFramework.xml
+C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaMall\VasudaDataAccess\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaMall\VasudaDataAccess\obj\Debug\VasudaDataAccess.csprojAssemblyReference.cache
+C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaMall\VasudaDataAccess\obj\Debug\VasudaDataAccess.csproj.CoreCompileInputs.cache
+C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaMall\VasudaDataAccess\obj\Debug\VasudaDataAccess.csproj.CopyComplete
+C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaMall\VasudaDataAccess\obj\Debug\VasudaDataAccess.dll
+C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaMall\VasudaDataAccess\obj\Debug\VasudaDataAccess.pdb
+C:\Users\NONSO UDENWANI\source\repos\Vasuda\VasudaDataAccess\bin\Debug\VasudaDataAccess.dll.config
+C:\Users\NONSO UDENWANI\source\repos\Vasuda\VasudaDataAccess\bin\Debug\VasudaDataAccess.dll
+C:\Users\NONSO UDENWANI\source\repos\Vasuda\VasudaDataAccess\bin\Debug\VasudaDataAccess.pdb
+C:\Users\NONSO UDENWANI\source\repos\Vasuda\VasudaDataAccess\bin\Debug\EntityFramework.dll
+C:\Users\NONSO UDENWANI\source\repos\Vasuda\VasudaDataAccess\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\NONSO UDENWANI\source\repos\Vasuda\VasudaDataAccess\bin\Debug\EntityFramework.xml
+C:\Users\NONSO UDENWANI\source\repos\Vasuda\VasudaDataAccess\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\NONSO UDENWANI\source\repos\Vasuda\VasudaDataAccess\obj\Debug\VasudaDataAccess.csprojAssemblyReference.cache
+C:\Users\NONSO UDENWANI\source\repos\Vasuda\VasudaDataAccess\obj\Debug\VasudaDataAccess.csproj.CopyComplete
+C:\Users\NONSO UDENWANI\source\repos\Vasuda\VasudaDataAccess\obj\Debug\VasudaDataAccess.dll
+C:\Users\NONSO UDENWANI\source\repos\Vasuda\VasudaDataAccess\obj\Debug\VasudaDataAccess.pdb
+C:\Users\NONSO UDENWANI\source\repos\Vasuda\VasudaDataAccess\bin\Debug\NLog.config
+C:\Users\NONSO UDENWANI\source\repos\Vasuda\VasudaDataAccess\bin\Debug\NLog.dll
+C:\Users\NONSO UDENWANI\source\repos\Vasuda\VasudaDataAccess\bin\Debug\NLog.xml
