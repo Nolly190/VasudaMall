@@ -40,8 +40,8 @@ namespace VasudaMall
                 ));
 
             bundles.Add(new ScriptBundle("~/vasuda-template/script").Include(
-                    //"~/vasuda-template/js/jquery-2.0.3.min.js",
-                    //"~/vasuda-template/js/jquery-3.3.1.min.js",
+                    "~/vasuda-template/js/jquery-2.0.3.min.js",
+                    "~/vasuda-template/js/jquery-3.3.1.min.js",
                     "~/vasuda-template/js/bootstrap.min.js",
                     "~/vasuda-template/js/bigSlide.js",
                     "~/vasuda-template/js/index.js",
@@ -55,40 +55,35 @@ namespace VasudaMall
             bundles.Add(new ScriptBundle("~/admin-lte/script").Include(
                 // "~/Scripts/jquery-1.10.2.min.js",
                 //"~/Scripts/jquery-3.4.1.min.js",
+                "~/admin-lte/plugins/jquery/jquery.min.js",
                 "~/admin-lte/plugins/jquery-ui/jquery-ui.min.js",
+                "~/admin-lte/dist/js/adminlte.js",
+                "~/admin-lte/dist/js/pages/dashboard.js",
                 "~/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js",
-                "~/admin-lte/plugins/sparklines/sparkline.js",
                 "~/admin-lte/plugins/jqvmap/jquery.vmap.min.js",
                 "~/admin-lte/plugins/jqvmap/maps/jquery.vmap.usa.js",
                 "~/admin-lte/plugins/jquery-knob/jquery.knob.min.js",
                 "~/admin-lte/plugins/moment/moment.min.js",
                 "~/admin-lte/plugins/daterangepicker/daterangepicker.js",
-                //"~/admin-lte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js",
+                "~/admin-lte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js",
                 "~/admin-lte/plugins/summernote/summernote-bs4.min.js",
                 "~/admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js",
                 "~/admin-lte/plugins/datatables/jquery.dataTables.js",
                 "~/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.js",
-                "~/admin-lte/dist/js/pages/dashboard.js",
-                "~/admin-lte/plugins/select2/js/select2.full.min.js",
-                "~/admin-lte/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js",
-                "~/admin-lte/dist/js/adminlte.js",
                 "~/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js"
                 //"~/Scripts/jquery.validate.min.js",
                 //"~/Scripts/jquery.validate.unobtrusive.min.js"
                 ));
 
             bundles.Add(new StyleBundle("~/admin-lte/css").Include(
+                "~/admin-lte/dist/css/adminlte.min.css",
                 "~/admin-lte/plugins/fontawesome-free/css/all.min.css",
-                //"~/admin-lte/plugins/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css",
+                "~/admin-lte/plugins/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css",
                 "~/admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css",
                 "~/admin-lte/plugins/jqvmap/jqvmap.min.css",
                 "~/admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css",
                 "~/admin-lte/plugins/daterangepicker/daterangepicker.css",
-                "~/admin-lte/plugins/summernote/summernote-bs4.css",
-                "~/admin-lte/plugins/select2/css/select2.min.css",
-                "~/admin-lte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css",
-                "~/admin-lte/dist/css/adminlte.min.css",
-                "~/admin-lte/custom/style.css"
+                "~/admin-lte/plugins/summernote/summernote-bs4.css"
                 //"~/admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.css",
                 //"~/admin-lte/plugins/select2/css/select2.min.css",
                 //"~/admin-lte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css"
