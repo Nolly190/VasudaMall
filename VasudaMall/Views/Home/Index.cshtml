@@ -1,0 +1,159 @@
+﻿@model VasudaDataAccess.DTOs.HomeProductViewModel
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/shared/_Layout.cshtml";
+}
+<section class="row">
+    <div class="slide">
+        <div class="skitter skitter-large ">
+            <ul>
+                <li>
+                    <a href="#cut">
+                        <img src="~/vasuda-template/images/style.jpg" class="cut" />
+                    </a>
+                    <div class="label_text">
+                        <p>
+                            <div class="animated fadeInDown" id="title" style="font-family:roboto slab;color:#000;">
+                                <b>Move in Style</b>
+                            </div>
+                            <div class="animated fadeInUp rider">
+                                Lets take your breath away with our
+                                collection of vintage, old fashioned and mordern day
+                                wears nd accesories from your favorite stores across
+                                the globe.
+                            </div>
+                            <a href="#" class="btn btn-xs btn-warning" style="margin-left:3%;padding:10px;margin-top:2%">Explore Fashion</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a href="#swapBarsBack">
+                        <img src="~/vasuda-template/images/mv.jpg" class="swapBarsBack" />
+                    </a>
+                    <div class="label_text" style="font-family:;">
+                        <p>
+                            <div class="animated fadeInDown" id="title" style="font-family:roboto slab;color:#000;">
+                                <b>Best in Tech</b>
+                            </div>
+                            <div class="animated fadeInUp rider">
+                                Exlore top notch tech and security gadgets designed to secure your property and help you live better.
+                            </div>
+                            <a href="about.html" class="btn btn-xs btn-warning" style="margin-left:3%;padding:10px;margin-top:2%">Explore Fashion</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a href="#swapBarsBack">
+                        <img src="~/vasuda-template/images/mp.jpg" class="swapBarsBack" />
+                    </a>
+                    <div class="label_text" style="font-family:;">
+                        <p>
+                            <div class="animated fadeInDown" id="title" style="font-family:roboto slab;color:#000;">
+                                <b>Comfortable Home</b>
+                            </div>
+                            <div class="animated fadeInUp rider">
+                                View different ranges of home accesories and equipment tailored to enhance the comfortability of your home.
+                            </div>
+                            <a href="about.html" class="btn btn-xs btn-warning" style="margin-left:3%;padding:10px;margin-top:2%">Shop Now</a>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<section class="row">
+    <div class="offset-lg-1 col-lg-10 section-title">
+        In Our <b>Warehouse</b>
+    </div>
+    <div class="offset-lg-1 col-lg-10 products">
+        <div class="row">
+            @foreach (var item in Model.TopStory)
+            {
+                var path = @item?.ImageTables?.LastOrDefault()?.Path ?? "~/vasuda-template/images/aa.jpg";
+                <div class="p-tab popular">
+                    <div class="p-image topTrend">
+                        <img src="@path" />
+                    </div>
+                    <div class="p-name">@item?.Title</div>
+                    <div class="p-price">₦ @item?.Price</div>
+                </div>
+
+            }
+        </div>
+    </div>
+    @if (Model.TopStory.Count >= 10)
+    {
+
+        <a>
+            <div class="offset-lg-4 col-lg-4 load">
+                <i class="fas fa-plus-circle loadMore" data-cate="topTrend" aria-hidden="true"></i><br />Load More
+            </div>
+        </a>
+    }
+
+</section>
+<section class="row" style="background:#f0f0f0">
+    <div class="offset-lg-1 col-lg-10 section-title">
+        Our Top <b>Stores</b>
+    </div>
+    <div class="col-lg-12 stores">
+        <div class="row">
+            <div class="col-md-4 col-lg-4 store-tab">
+                <div class="overlay">
+                </div>
+                <div class="store-name">
+                    Aliexpress<br />
+                    <a href="https://aliexpress.com" target="_blank" class="btn btn-xs btn-warning" style="margin-top:5px;padding:8px;font-size:0.6em">Shop Now</a>
+                </div>
+                <img src="~/vasuda-template/images/mp.jpg" />
+            </div>
+            <div class="col-md-4 col-lg-4 store-tab">
+                <div class="overlay">
+                </div>
+                <div class="store-name">
+                    1916.com<br />
+                    <a href="https://1916.com" target="_blank" class="btn btn-xs btn-warning" style="margin-top:5px;padding:8px;font-size:0.6em">Shop Now</a>
+                </div>
+                <img src="~/vasuda-template/images/sg.jpg" />
+            </div>
+            <div class="col-md-4 col-lg-4 store-tab">
+                <div class="overlay">
+                </div>
+                <div class="store-name">
+                    DHGate<br />
+                    <a href="https://dhgate.com" target="_blank" class="btn btn-xs btn-warning" style="margin-top:5px;padding:8px;font-size:0.6em">Shop Now</a>
+                </div>
+                <img src="~/vasuda-template/images/mv.jpg" />
+            </div>
+        </div>
+    </div>
+    <div class="offset-lg-1 col-lg-10 section-title">
+        Our Popular <b>Products</b>
+    </div>
+    <div class="offset-lg-1 col-lg-10 products">
+        <div class="row">
+            @foreach (var item in Model.TopStory)
+            {
+                var path = @item?.ImageTables?.LastOrDefault()?.Path ?? "~/vasuda-template/images/aa.jpg";
+                <div class="p-tab popular">
+                    <div class="p-image">
+                        <img src="@path" />
+                    </div>
+                    <div class="p-name">@item?.Title</div>
+                    <div class="p-price">₦ @item?.Price</div>
+                </div>
+
+            }
+        </div>
+    </div>
+    @if (Model.TopStory.Count >= 10)
+    {
+
+        <a>
+            <div class="offset-lg-4 col-lg-4 load">
+                <i class="fas fa-plus-circle loadMore" data-cate="popular" aria-hidden="true"></i><br />Load More
+            </div>
+        </a>
+    }
+</section>
