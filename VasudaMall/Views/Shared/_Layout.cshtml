@@ -9,120 +9,133 @@
     @Styles.Render("~/vasuda-template/css")
     @Scripts.Render("~/bundles/modernizr")
 
-     <link rel="stylesheet" href="~/vasuda-template/css/skitter.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/vasuda-template/css/skitter.css" type="text/css" media="all" />
     <link rel="shortcut icon" href="~/favicon.ico" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    
+    <!-- jQuery -->
+    <script src="~/vasuda-template/js/jquery-2.0.3.min.js"></script>
+    <script src="~/vasuda-template/js/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 
-<nav id="menu" class="panel" role="navigation">
-    <ul style="margin-top: 1%; text-align: center;">
-        <img src="~/vasuda-template/images/logo2.png"/>
-    </ul>
-    <hr/>
-    <ul style="list-style-type: none">
-        <a href=@Url.Action("Index", "Home")><li><i class="fas fa-home" aria-hidden="true"></i> &nbsp; &nbsp; Home</li></a>
-        <a href=@Url.Action("About", "Home")><li><i class="fas fa-clipboard"></i> &nbsp; &nbsp; About-Us</li></a>
-        <a href="@Url.Action("Services", "Home")"><li><i class="fas fa-cog" aria-hidden="true"></i> &nbsp; &nbsp; Services</li></a>
-        <a href="@Url.Action("Portfolio", "Home")"><li><i class="fas fa-clipboard" aria-hidden="true"></i> &nbsp; &nbsp; Portfolio</li></a>
-        <a href="@Url.Action("Teams", "Home")"><li><i class="fas fa-users" aria-hidden="true"></i> &nbsp; &nbsp; Team</li></a>
-        <a href=@Url.Action("Contact", "Home")><li><i class="fas fa-phone" aria-hidden="true"></i> &nbsp; &nbsp; Contact-Us</li></a>
-        @if (User.Identity.IsAuthenticated)
-        {
-            <a href=@Url.Action("Index", "Dashboard")><li><i class="fas fa-phone" aria-hidden="true"></i> &nbsp; &nbsp; Dashboard</li></a>
-        }
-    </ul>
+    <nav id="menu" class="panel" role="navigation">
+        <ul style="margin-top: 1%; text-align: center;">
+            <img src="~/vasuda-template/images/logo2.png" />
+        </ul>
+        <hr />
+        <ul style="list-style-type: none">
+            <a href=@Url.Action("Index", "Home")><li><i class="fas fa-home" aria-hidden="true"></i> &nbsp; &nbsp; Home</li></a>
+            <a href=@Url.Action("About", "Home")><li><i class="fas fa-clipboard"></i> &nbsp; &nbsp; About-Us</li></a>
+            <a href="@Url.Action("Services", "Home")"><li><i class="fas fa-cog" aria-hidden="true"></i> &nbsp; &nbsp; Services</li></a>
+            <a href="@Url.Action("Portfolio", "Home")"><li><i class="fas fa-clipboard" aria-hidden="true"></i> &nbsp; &nbsp; Portfolio</li></a>
+            <a href="@Url.Action("Teams", "Home")"><li><i class="fas fa-users" aria-hidden="true"></i> &nbsp; &nbsp; Team</li></a>
+            <a href=@Url.Action("Contact", "Home")><li><i class="fas fa-phone" aria-hidden="true"></i> &nbsp; &nbsp; Contact-Us</li></a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a href=@Url.Action("Index", "Dashboard")><li><i class="fas fa-phone" aria-hidden="true"></i> &nbsp; &nbsp; Dashboard</li></a>
+            }
+        </ul>
 
-</nav>
-<div class="test wrap push">
-    <section class="row">
-        <div class="col-lg-12 header sticky-top">
-            <div class="row noham">
-                <div class="offset-lg-1 col-lg-1 logo">
-                    <a href=@Url.Action("Index", "Home")><img src="~/vasuda-template/images/logo.png"/></a>
+    </nav>
+    <div class="test wrap push">
+        <section class="row">
+            <div class="col-lg-12 header sticky-top">
+                <div class="row noham">
+                    <div class="offset-lg-1 col-lg-1 logo">
+                        <a href=@Url.Action("Index", "Home")><img src="~/vasuda-template/images/logo.png" /></a>
+                    </div>
+                    <div class="offset-lg- col-lg-6 navmenu">
+                        <li id=""><a href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li id=""><a href="@Url.Action("TrackOrder", "Store")">Track Order</a></li>
+                        <li id=""><a href="@Url.Action("index", "Store")">Products</a></li>
+                        <li id=""><a href=@Url.Action("Contact", "Home")>Contact-Us</a></li>
+                        <li id=""><a href="@Url.Action("Clearance", "Store")">Clearance</a></li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li id=""><a href="@Url.Action("Index", "Dashboard")">Dashboard</a></li>
+
+                        }
+                    </div>
+                    <div class="offset-lg-1 col-lg-2 navmenu">
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <a href=@Url.Action("Login", "Account")><i class="fas fa-user" aria-hidden="true"></i></a>
+                        }
+                        else
+                        {
+                            <a href=@Url.Action("LogOff", "Account")>Log Out</a>
+
+                        }
+                        <a href="@Url.Action("Cart", "Store")"><i class="fas fa-shopping-cart" style="margin-left: 7%;" aria-hidden="true"></i></a>
+                        <select id="">
+                            <option><a href="#">USD</a></option>
+                            <option><a href="#">GBP</a></option>
+                            <option><a href="#">NGN</a></option>
+                        </select>
+                    </div>
                 </div>
-                <div class="offset-lg- col-lg-6 navmenu">
-                    <li id=""><a href="@Url.Action("Index", "Home")">Home</a></li>
-                    <li id=""><a href="@Url.Action("TrackOrder", "Store")">Track Order</a></li>
-                    <li id=""><a href="@Url.Action("index", "Store")">Products</a></li>
-                    <li id=""><a href=@Url.Action("Contact", "Home")>Contact-Us</a></li>
-                    <li id=""><a href="@Url.Action("Clearance", "Store")">Clearance</a></li>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <li id=""><a href="@Url.Action("Index", "Dashboard")">Dashboard</a></li>
-
-                    }
-                </div>
-                <div class="offset-lg-1 col-lg-2 navmenu">
-                    @if (!User.Identity.IsAuthenticated)
-                    {
-                        <a href=@Url.Action("Login", "Account")><i class="fas fa-user" aria-hidden="true"></i></a>
-                    }
-                    else
-                    {
-                        <a href=@Url.Action("LogOff", "Account")>Log Out</a>
-
-                    }
-                    <a href="@Url.Action("Cart", "Store")"><i class="fas fa-shopping-cart" style="margin-left: 7%;" aria-hidden="true"></i></a>
-                    <select id="">
-                        <option><a href="#">USD</a></option>
-                        <option><a href="#">GBP</a></option>
-                        <option><a href="#">NGN</a></option>
-                    </select>
+                <div class="navmob hams col-12">
+                    <div class="row">
+                        <div class="col-3 logo ">
+                            <a href=@Url.Action("Index", "Home")><img src="~/vasuda-template/images/logo.png" /></a>
+                        </div>
+                        <div class="offset-3 col-5 ham">
+                            <a href="#menu" class="menu-link" style="margin-left: 3%;"><i class="fas fa-bars" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="navmob hams col-12">
-                <div class="row">
-                    <div class="col-3 logo ">
-                        <a href=@Url.Action("Index", "Home")><img src="~/vasuda-template/images/logo.png"/></a>
-                    </div>
-                    <div class="offset-3 col-5 ham">
-                        <a href="#menu" class="menu-link" style="margin-left: 3%;"><i class="fas fa-bars" aria-hidden="true"></i></a>
+        </section>
+        <div class="Main-loader">
+            <div class="spin-loader">
+                <div class="loadingio-spinner-spinner-hl80v3974ce">
+                    <div class="ldio-002z8m7bwq0j8">
+                        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <div class="loadingio-spinner-spinner-hl80v3974ce"><div class="ldio-002z8m7bwq0j8">
-            <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-        </div>
-    </div>
-    @RenderBody()
-    <footer class="row">
-        <div class="offset-lg-1 col-lg-10 footer-nav">
-            <div class="row foot2">
-                <div class="col-lg-5 fl">
-                    <img src="~/vasuda-template/images/logo2.png"/><br/>
-                    <span class="copy">
-                        &copy;
-                        @DateTime.Now.Year, &nbsp;VasudaMall. All Rights Reserved. <br/>Designed by
-                        <span><a href="https://www.amplo.com.ng" target="_blank" style="color: #444; font-family: calibri; font-weight: bold;">Amplo IT Solutions</a>
+
+        @RenderBody()
+        <footer class="row">
+            <div class="offset-lg-1 col-lg-10 footer-nav">
+                <div class="row foot2">
+                    <div class="col-lg-5 fl">
+                        <img src="~/vasuda-template/images/logo2.png" /><br />
+                        <span class="copy">
+                            &copy;
+                            @DateTime.Now.Year, &nbsp;VasudaMall. All Rights Reserved. <br />Designed by
+                            <span>
+                                <a href="https://www.amplo.com.ng" target="_blank" style="color: #444; font-family: calibri; font-weight: bold;">Amplo IT Solutions</a>
+                            </span>
                         </span>
-                    </span>
-                </div>
-                <div class="col-lg-7 site-nav-img">
-                    <li id=""><a href=@Url.Action("About", "Home")>About-Us</a></li>
-                    <li id=""><a href="@Url.Action("Terms", "Home")">Terms & Conditions</a></li>
-                    <li id=""><a href="@Url.Action("Index", "Store")">Products</a></li>
-                    <li id=""><a href="@Url.Action("Clearance", "Store")">Clearance</a></li>
-                    <li id=""><a href=@Url.Action("Contact", "Home")>Contact-Us</a></li>
-                    <li id=""><a href="@Url.Action("FAQ", "Home")">FAQ</a></li>
+                    </div>
+                    <div class="col-lg-7 site-nav-img">
+                        <li id=""><a href=@Url.Action("About", "Home")>About-Us</a></li>
+                        <li id=""><a href="@Url.Action("Terms", "Home")">Terms & Conditions</a></li>
+                        <li id=""><a href="@Url.Action("Index", "Store")">Products</a></li>
+                        <li id=""><a href="@Url.Action("Clearance", "Store")">Clearance</a></li>
+                        <li id=""><a href=@Url.Action("Contact", "Home")>Contact-Us</a></li>
+                        <li id=""><a href="@Url.Action("FAQ", "Home")">FAQ</a></li>
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
-</div>
+        </footer>
+    </div>
 
-@*@Scripts.Render("~/bundles/jquery")*@
-@Scripts.Render("~/vasuda-template/script")
-@RenderSection("scripts", required: false)
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @Scripts.Render("~/vasuda-template/script")
+    @RenderSection("scripts", required: false)
 
 
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
--->
-@*<script src="https://maps.google.com/maps/api/js?sensor=false"></script>*@
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    -->
+    @*<script src="https://maps.google.com/maps/api/js?sensor=false"></script>*@
 </body>
 </html>

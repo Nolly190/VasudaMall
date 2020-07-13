@@ -25,9 +25,10 @@ namespace VasudaDataAccess.Model
         public string Location { get; set; }
 
         public bool IsActive { get; set; }
-        public bool IsPopular { get; set; }
 
         public DateTime DateCreated { get; set; }
+
+        public bool IsPopular { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ImageTable> ImageTables { get; set; }

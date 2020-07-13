@@ -9,5 +9,6 @@ namespace VasudaDataAccess.Data_Access
 {
     public interface IPaymentHistoryTable : IRepository<PaymentHistoryTable>
     {
+        List<PaymentHistoryTable> GetRecentTransactionsHistory(int? pageNum);
     }
 }

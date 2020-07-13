@@ -16,6 +16,8 @@ namespace VasudaDataAccess.Model
 
         public string Purpose { get; set; }
 
+        public bool Status { get; set; }
+
         public DateTime DateCreated { get; set; }
     }
 }

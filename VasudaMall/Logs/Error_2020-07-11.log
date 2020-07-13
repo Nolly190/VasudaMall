@@ -1,0 +1,420 @@
+<====================================================================>
+2020-07-11 21:16:29.5311 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 21:16:39.0733 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 21:17:00.2975 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 21:19:06.6613 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.GetEnumerator()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Collections.Generic.IEnumerable<TResult>.GetEnumerator()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at VasudaDataAccess.Logic.Implementation.NotificationService.GetAllNotificationsHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\NotificationService.cs:line 38
+<====================================================================>
+2020-07-11 21:19:08.9787 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.GetEnumerator()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Collections.Generic.IEnumerable<TResult>.GetEnumerator()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetAllTransactionsHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 64
+<====================================================================>
+2020-07-11 21:19:11.5811 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.NotificationTableRepo.GetRecentNotifications(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\NotificationTableRepo.cs:line 29
+   at VasudaDataAccess.Logic.Implementation.ProfileService.GetProfileHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\ProfileService.cs:line 38
+<====================================================================>
+2020-07-11 21:22:40.8216 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ProductTableRepo.GetAllPopular(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ProductTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.StoreService.GetHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\StoreService.cs:line 35
+<====================================================================>
+2020-07-11 21:27:09.4052 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.GetEnumerator()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Collections.Generic.IEnumerable<TResult>.GetEnumerator()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetAllTransactionsHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 64
+<====================================================================>
+2020-07-11 21:27:11.4585 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.NotificationTableRepo.GetRecentNotifications(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\NotificationTableRepo.cs:line 29
+   at VasudaDataAccess.Logic.Implementation.ProfileService.GetProfileHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\ProfileService.cs:line 38
+<====================================================================>
+2020-07-11 21:35:16.2461 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.NotificationTableRepo.GetRecentNotifications(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\NotificationTableRepo.cs:line 29
+   at VasudaDataAccess.Logic.Implementation.ProfileService.GetProfileHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\ProfileService.cs:line 38
+<====================================================================>
+2020-07-11 21:35:26.7881 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.NotificationTableRepo.GetRecentNotifications(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\NotificationTableRepo.cs:line 29
+   at VasudaDataAccess.Logic.Implementation.ProfileService.GetProfileHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\ProfileService.cs:line 38
+<====================================================================>
+2020-07-11 22:38:50.7575 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.NotificationTableRepo.GetRecentNotifications(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\NotificationTableRepo.cs:line 29
+   at VasudaDataAccess.Logic.Implementation.ProfileService.GetProfileHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\ProfileService.cs:line 38
+<====================================================================>
+2020-07-11 22:39:01.8246 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 22:40:53.0164 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 22:42:10.5112 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 22:48:26.6803 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 22:49:51.9750 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 22:50:57.6152 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 22:51:33.2667 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 22:55:02.7315 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 22:56:41.6363 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 22:57:53.1008 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 22:58:05.7075 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 22:58:16.2366 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 23:01:14.8917 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 23:02:03.6107 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 23:02:59.5836 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 23:03:39.8753 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 23:03:47.4856 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 23:04:37.4598 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 23:08:58.0503 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 23:10:23.5366 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 23:14:41.3404 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 23:15:01.6062 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38
+<====================================================================>
+2020-07-11 23:16:48.5506 System.InvalidOperationException: No connection string named 'VasudaDataModel' could be found in the application config file.
+   at System.Data.Entity.Internal.LazyInternalConnection.get_ConnectionHasModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ExchangeRateTableRepo.GetExchangeRates(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ExchangeRateTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.WalletService.GetWalletHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\WalletService.cs:line 38

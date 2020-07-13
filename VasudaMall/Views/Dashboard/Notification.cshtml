@@ -1,4 +1,4 @@
-﻿@model VasudaMall.ViewModels.NotificationViewModel
+﻿@model VasudaDataAccess.DTOs.NotificationViewModel
 
 
 @{
@@ -34,36 +34,46 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="notificationTable" class="table table-bordered table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>S/N</th>
-                                    <th>Subject</th>
-                                    <th>Date Published</th>
-                                    <th>Read Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Trident</td>
-                                    <td>
-                                        Internet
-                                        Explorer 4.0
-                                    </td>
-                                    <td>Win 95+</td>
-                                    <td> 4</td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>S/N</th>
-                                    <th>Subject</th>
-                                    <th>Date Published</th>
-                                    <th>Read Status</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
+                        @if (Model.AllNotifications.Count == 0)
+                        {
+                            <h3 style="text-align:center">NO NOTIFICATION AVAILABLE</h3>
+                        }
+                        else
+                        { 
+                            <table id="notificationTable" class="table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Subject</th>
+                                        <th>Date Published</th>
+                                        <th>Read Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var notification in Model.AllNotifications)
+                                    {
+                                        var count = 1;
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@notification.Subject</td>
+                                            <td>@notification.DateCreated</td>
+                                            <td>@notification.IsRead</td>
+                                            <td><button type="submit" class="btn btn-outline-success btn-sm">View More</button></td>
+                                        </tr>
+                                        count++;
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Subject</th>
+                                        <th>Date Published</th>
+                                        <th>Read Status</th>
+                                    </tr>
+                                </tfoot>
+                            </table>                       
+                        }
+                        </div>
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->

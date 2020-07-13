@@ -19,7 +19,7 @@ namespace VasudaDataAccess.Logic.Implementation
         public StoreService()
         {
             logger = LogManager.GetCurrentClassLogger();
-            _unitOfWork = new UnitOfWork(new VasudaModel());
+            _unitOfWork = new UnitOfWork(new VasudaDataModel());
         }
         public Response<HomeProductViewModel> GetHomePage()
         {
@@ -29,15 +29,12 @@ namespace VasudaDataAccess.Logic.Implementation
             var model = new HomeProductViewModel();
             model.TopStory = new List<ProductTable>();
             model.Popular = new List<ProductTable>();
-            result.SetResult(model);
             try
             {
                 
                 model.Popular = _unitOfWork.ProductTable.GetAllPopular(null);
                 model.TopStory = _unitOfWork.ProductTable.GetAllTrending(null);
                 result.Status = true;
-                result.SetResult(model);
-
             }
             catch (Exception ex)
             {
@@ -45,6 +42,7 @@ namespace VasudaDataAccess.Logic.Implementation
 
             }
 
+            result.SetResult(model);
             return result;
         }
     }

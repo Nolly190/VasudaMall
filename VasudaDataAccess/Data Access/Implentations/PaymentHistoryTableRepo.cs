@@ -22,5 +22,11 @@ namespace VasudaDataAccess.Data_Access.Implentations
                 return dbcontext as DbContext;
             }
         }
+
+        public List<PaymentHistoryTable> GetRecentTransactionsHistory(int? pageNum)
+        {
+            var lastTwoWeeks = DateTime.Now.Date.AddDays(-14);
+            return pageNum.HasValue ? dbcontext.Set<PaymentHistoryTable>().Where(x => x.DateCreated >= lastTwoWeeks).Skip(pageNum.Value * 10).Take(10).ToList() : dbcontext.Set<PaymentHistoryTable>().Where(x => x.DateCreated >= lastTwoWeeks).Take(10).ToList();
+        }
     }
 }

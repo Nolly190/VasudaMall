@@ -5,9 +5,9 @@ namespace VasudaDataAccess.Model
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class VasudaModel : DbContext
+    public partial class VasudaDataModel : DbContext
     {
-        public VasudaModel()
+        public VasudaDataModel()
             : base("name=VasudaModel")
         {
         }
@@ -18,6 +18,7 @@ namespace VasudaDataAccess.Model
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<AuditTrialTable> AuditTrialTables { get; set; }
+        public virtual DbSet<BankTable> BankTables { get; set; }
         public virtual DbSet<CategoryTable> CategoryTables { get; set; }
         public virtual DbSet<ExchangeRateTable> ExchangeRateTables { get; set; }
         public virtual DbSet<ImageTable> ImageTables { get; set; }
@@ -29,8 +30,9 @@ namespace VasudaDataAccess.Model
         public virtual DbSet<SubCategoryTable> SubCategoryTables { get; set; }
         public virtual DbSet<SupportTable> SupportTables { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<VendorTable> Vendors { get; set; }
+        public virtual DbSet<VendorTable> VendorTables { get; set; }
         public virtual DbSet<NotificationTable> NotificationTables { get; set; }
+        public virtual DbSet<WithdrawalDetailsTable> WithdrawalDetailsTables { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -85,7 +87,8 @@ namespace VasudaDataAccess.Model
 
             modelBuilder.Entity<VendorTable>()
                 .HasMany(e => e.OrderTables)
-                .WithRequired(e => e.Vendor)
+                .WithRequired(e => e.VendorTable)
+                .HasForeignKey(e => e.VendorId)
                 .WillCascadeOnDelete(false);
         }
     }

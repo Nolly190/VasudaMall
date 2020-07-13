@@ -52,6 +52,8 @@ namespace VasudaDataAccess.Model
         [StringLength(256)]
         public string UserName { get; set; }
 
+        public string Address { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
 
