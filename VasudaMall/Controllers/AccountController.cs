@@ -77,7 +77,7 @@ namespace VasudaMall.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var unitOfWork = new UnitOfWork(new VasudaModel());
+            var unitOfWork = new UnitOfWork(new VasudaDataModel());
           var user =  UserManager.Users.SingleOrDefault(x => x.Email == model.Email);
           if (user!= null && user.EmailConfirmed)
           {

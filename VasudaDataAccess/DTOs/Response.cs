@@ -24,11 +24,4 @@ namespace VasudaDataAccess.DTOs
         }
   }
 
-  public class ProfileViewModel
-  {
-      public AspNetUser UserInfo { get; set; }
-      public List<ExchangeRateTable> Rates { get; set; }
-      public List<NotificationTable> Notifications { get; set; }
-  }
-
 }

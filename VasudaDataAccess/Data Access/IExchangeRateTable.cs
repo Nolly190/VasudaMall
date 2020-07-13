@@ -9,5 +9,6 @@ namespace VasudaDataAccess.Data_Access
 {
     public interface IExchangeRateTable : IRepository<ExchangeRateTable>
     {
+        List<ExchangeRateTable> GetExchangeRates(int? pageNum);
     }
 }

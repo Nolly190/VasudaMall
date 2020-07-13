@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using VasudaDataAccess.Model;
 
-namespace VasudaMall.ViewModels
+namespace VasudaDataAccess.DTOs
 {
     public class NotificationViewModel
     {
+        public List<NotificationTable> AllNotifications { get; set; }
     }
 }

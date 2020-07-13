@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using VasudaDataAccess.Model;
 
 namespace VasudaDataAccess.Data_Access.Implentations
 {
@@ -20,6 +21,8 @@ namespace VasudaDataAccess.Data_Access.Implentations
             SubCategoryTable = new SubCategoryTableRepo(context);
             SupportTable = new SupportTableRepo(context);
             VendorTable = new VendorTableRepo(context);
+            WithdrawalDetailsTable = new WithdrawalDetailsTableRepo(context);
+            BankTable = new BankTableRepo(context);
         }
 
         public ICategoryTable CategoryTable { get; }
@@ -34,6 +37,8 @@ namespace VasudaDataAccess.Data_Access.Implentations
         public ISubCategoryTable SubCategoryTable { get; }
         public ISupportTable SupportTable { get; }
         public IVendorTable VendorTable { get; }
+        public IWithdrawalDetailsTable WithdrawalDetailsTable { get; }
+        public IBankTable BankTable { get; }
         public void Complete()
         {
            _dbContext.SaveChanges();

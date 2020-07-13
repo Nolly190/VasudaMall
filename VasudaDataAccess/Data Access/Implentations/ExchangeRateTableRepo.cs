@@ -22,5 +22,10 @@ namespace VasudaDataAccess.Data_Access.Implentations
                 return dbcontext as DbContext;
             }
         }
+
+        public List<ExchangeRateTable> GetExchangeRates(int? pageNum)
+        {
+            return pageNum.HasValue ? dbcontext.Set<ExchangeRateTable>().Where(x => x.IsActive == true).Skip(pageNum.Value * 10).Take(10).ToList() : dbcontext.Set<ExchangeRateTable>().Where(x => x.IsActive == true).Take(10).ToList();
+        }
     }
 }

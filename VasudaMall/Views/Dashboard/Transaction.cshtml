@@ -1,4 +1,4 @@
-﻿@model VasudaMall.ViewModels.TransactionViewModel
+﻿@model VasudaDataAccess.DTOs.TransactionViewModel
 
 @{
     Layout = "~/Views/shared/_LayoutDashboard.cshtml";
@@ -22,3 +22,57 @@
     </div><!-- /.container-fluid -->
 </div>
 <!-- /.content-header -->
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Transactions</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @if (Model.AllTransactions.Count == 0)
+                        {
+                            <h3 style="text-align:center">NO TRANSACTION AVAILABLE</h3>
+                        }
+                        else
+                        {
+                            <table id="allTransactionsTable" class="table table-bordered table-striped table-hover table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Amount</th>
+                                        <th>Type</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var transaction in Model.AllTransactions)
+                                    {
+                                        var count = 1;
+                                        <tr>
+                                            <td>count</td>
+                                            <td>@transaction.Amount</td>
+                                            <td>@transaction.TransactionType</td>
+                                            <td>@transaction.DateCreated</td>
+                                            <td>@transaction.Status</td>
+                                            <td><button type="submit" class="btn btn-outline-success btn-sm">View More</button></td>
+                                        </tr>
+                                        count++;
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+</section>
+
