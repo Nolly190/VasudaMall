@@ -9,5 +9,6 @@ namespace VasudaDataAccess.Data_Access
 {
     public interface ISettingTable : IRepository<SettingTable>
     {
+        SettingTable GetSystemSetting();
     }
 }

@@ -1,4 +1,4 @@
-﻿@model VasudaMall.ViewModels.WalletViewModel
+﻿@model VasudaDataAccess.DTOs.WalletViewModel
 
 @{
     Layout = "~/Views/shared/_LayoutDashboard.cshtml";
@@ -27,9 +27,246 @@
 <section class="content">
     <div class="container-fluid">
         <!--Main Content start-->
+        <!--Withdrawal and exchange rate row start-->
         <div class="row">
+            <!--Withdrawal col(left-side) start-->
+            <div class="col-12 col-lg-7">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card card-green card-outline card-outline-tabs">
+                            <div class="card-header p-0 border-bottom-0">
+                                <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="withdrawal-account-list-tab" data-toggle="pill" href="#withdrawal-account-list" role="tab" aria-controls="custom-tabs-four-home" aria-selected="true"><i class="fas fa-key d-md-none"></i><span class="d-none d-md-inline">Withdrawal Account(s)</span></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="withdrawal-account-tab" data-toggle="pill" href="#withdrawal-account" role="tab" aria-controls="custom-tabs-four-profile" aria-selected="false"><i class="fas fa-wallet d-md-none"></i><span class="d-none d-md-inline">Add Withdrawal Account</span></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="make-withdrawal-tab" data-toggle="pill" href="#make-withdrawal" role="tab" aria-controls="custom-tabs-four-profile" aria-selected="false"><i class="fas fa-wallet d-md-none"></i><span class="d-none d-md-inline">Make Withdrawal</span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-body">
+                                <div class="tab-content" id="custom-tabs-four-tabContent">
+                                    <!--Withdrawal account list start-->
+                                    <div class="tab-pane fade show active" id="withdrawal-account-list" role="tabpanel" aria-labelledby="withdrawal-account-list-tab">
+                                        <!-- Withdrawal account list table start-->
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Withdrawal Account(s)</h3>
+                                            </div>
+                                            <!-- /.card-header -->
+                                            <div class="card-body">
+                                                @if (Model.WithdrawalAccounts.Count == 0)
+                                                {
+                                                    <h3 style="text-align:center">NO WITHDRAWAL ACCOUNT ADDED</h3>
+                                                }
+                                                else
+                                                {
+                                                    <table id="withdrawalAccountListTable" class="table table-bordered table-striped table-hover table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S/N</th>
+                                                            <th>Account Name</th>
+                                                            <th>Account Number</th>
+                                                            <th>Bank</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var withdrawalAccount in Model.WithdrawalAccounts)
+                                                        {
+                                                            var count = 1;
+                                                            <tr>
+                                                                <td>@count</td>
+                                                                <td>@withdrawalAccount.AccountName</td>
+                                                                <td>@withdrawalAccount.AccountNumber</td>
+                                                                <td>@withdrawalAccount.BankName</td>
+                                                            </tr>
+                                                            count++;
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                                }
+                                            </div>
+                                            <!-- /.card-body -->
+                                        </div>
+                                        <!-- Withdrawal account list table end-->
+                                        <!-- /.card -->
+                                    </div>
+                                    <!--Withdrawal account list end-->
+                                    <!--Withdrawal Account Add start-->
+                                    <div class="tab-pane fade" id="withdrawal-account" role="tabpanel" aria-labelledby="withdrawal-account-tab">
+                                        <!-- withdrawal account Form start-->
+                                        <div class="card card-info">
+                                            <!-- form start -->
+                                            <form class="form-horizontal" id="setWithdrawalAccountForm">
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <label>Bank Name</label>
+                                                        <select class="form-control select2" style="width: 100%;" id="banksList" data-formname="Bank Name" required>
+                                                            <option value="" selected>Select Bank</option>
 
+                                                            @foreach (var bank in Model.Banks)
+                                                            {
+                                                                <option value="@bank.BankCode">@bank.BankName</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="accountNumber" ">Account Number</label>
+                                                        <input type="text" class="form-control form-control-sm" data-formname="Account Number" id="accountNumber" placeholder="Account Number" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="accountName">Account Name</label>
+                                                        <input type="text" class="form-control form-control-sm" data-formname="Account Name" readonly id="accountName" placeholder="Account Name" required>
+                                                    </div>
+                                                </div>
+                                                <!-- /.card-body -->
+                                                <div class="card-footer">
+                                                    <button type="button" class="btn btn-info" id="setWithdrawalAccountButton">Add Account</button>
+                                                </div>
+                                                <!-- /.card-footer -->
+                                            </form>
+                                        </div>
+                                        <!-- Withdrawal account Form start-->
+                                        <!-- /.card -->
+                                    </div>
+                                    <!--Withdrawal Account Add end-->
+                                    <!--Make Withdrawal start-->
+                                    <div class="tab-pane fade" id="make-withdrawal" role="tabpanel" aria-labelledby="make-withdrawal-tab">
+                                        <!--Make withdrawal Form start-->
+                                        <div class="card card-info">
+                                            <!--Form start -->
+                                            <form class="form-horizontal" id="makeWithdrawalForm">
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <label for="accountBalance">Account Balance</label>
+                                                        <input type="text" class="form-control form-control-sm" id="accountBalance" placeholder="Account Balance" readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exchangeRate">Exchange Rate</label>
+                                                        <input type="text" class="form-control form-control-sm" id="exchangeRate" placeholder="Exchange Rate" readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="withdrawalAmount">Withdrawal Amount</label>
+                                                        <input type="text" class="form-control form-control-sm" id="withdrawalAmount" placeholder="Enter withdrrawal amount">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Destination Account</label>
+                                                        <select class="form-control-sm select2" style="width: 100%;" id="withdrawalAccountsList">
+                                                            <option value="" selected>Select Withdrawal Account</option>
+
+                                                            @foreach (var account in Model.WithdrawalAccounts)
+                                                            {
+                                                                <option value="@account.AccountNumber">@account.AccountNumber @account.BankName</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <!-- /.card-body -->
+                                                <div class="card-footer">
+                                                    <button type="submit" class="btn btn-info">Submit Request</button>
+                                                </div>
+                                                <!-- /.card-footer -->
+                                            </form>
+                                        </div>
+                                        <!--Make Withdrawal Form end-->
+                                        <!-- /.card -->
+                                    </div>
+                                    <!--Make withdrawal end-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Profile /.card end -->
+                </div>
+            </div>
+            <!--withdrawal col(left-side) end-->
+            <!--Right-side col start-->
+            <div class="col-12 col-lg-5">
+                <!--Exchange rate col start-->
+                <div class="col-12">
+                    <div class="card card-green card-outline">
+                        <div class="card-header">
+                            <h2 class="card-title">Today's Exchange Rate</h2>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            @if (Model.ExchangeRates.Count == 0)
+                            {
+                                <h3 style="text-align:center">NO EXCHANGE RATE AVAILABLE</h3>
+                            }
+                            else
+                            {
+                                <table id="exchangeRateable" class="table table-bordered table-striped table-hover table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Dollar to Naira</th>
+                                            <th>Dollar to Yuan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>$1 equals #350</td>
+                                            <td>$1 equals 7Yuan</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            }
+                        </div>
+                    </div>
+                    <!--Exchange rate /.card-body end-->
+                    <!-- /.card -->
+                </div>
+                <!--Exchange rate col end-->
+                <!--Currency converter col start-->
+                <div class="col-12">
+                    <!-- Currency converter Form start-->
+                    <div class="card card-green card-outline">
+                        <div class="card-header">
+                            <h2>Currency Converter</h2>
+                        </div>
+                        <!-- form start -->
+                        <form class="form-horizontal">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label for="nairaBalance" class="col-12 col-md-3 col-form-label-sm">Naira Balance</label>
+                                    <div class="col-12 col-md-9">
+                                        <input type="text" class="form-control form-control-sm" id="nairaBalance" placeholder="Naira Balance" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="yuanBalance" class="col-12 col-md-3 col-form-label-sm">Yuan Balance</label>
+                                    <div class="col-12 col-md-9">
+                                        <input type="text" class="form-control form-control-sm" id="yuanBalance" placeholder="Yuan Balance" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-12 col-md-3 col-form-label-sm">Convertion Type</label>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control form-control-sm select2" style="width: 100%;">
+                                            <option selected="selected">Naira to Dollar</option>
+                                            <option>Yuan to Dollar</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                            @*<div class="card-footer">
+                                <button type="submit" class="btn btn-info">Add Account</button>
+                            </div>*@
+                            <!-- /.card-footer -->
+                        </form>
+                    </div>
+                    <!-- Currency converter Form end-->
+                    <!-- /.card -->
+                </div>
+                <!--Currency converter col end-->
+            </div>
+            <!--Right-side col end-->
         </div>
+        <!--Withdrawal and exchange rate row end-->
         <!--Recent Transaction start-->
         <div class="row">
             <div class="col-12">
@@ -39,7 +276,13 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="notificationTable" class="table table-bordered table-striped table-hover table-sm">
+                        @if (Model.PaymentHistory.Count == 0)
+                        {
+                            <h3 style="text-align:center">NO RECENT TRANSACTION</h3>
+                        }
+                        else
+                        {
+                            <table id="recentTransactionsTable" class="table table-bordered table-striped table-hover table-sm">
                             <thead>
                                 <tr>
                                     <th>S/N</th>
@@ -51,19 +294,22 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Trident</td>
-                                    <td>
-                                        Internet
-                                        Explorer 4.0
-                                    </td>
-                                    <td>Win 95+</td>
-                                    <td> 4</td>
-                                    <td>Success</td>
-                                    <td><button type="submit" class="btn btn-outline-success btn-sm">View More</button></td>
-                                </tr>
+                                @foreach (var recentTransaction in Model.PaymentHistory)
+                                {
+                                    var count = 1;
+                                    <tr>
+                                        <td>count</td>
+                                        <td>@recentTransaction.Amount</td>
+                                        <td>@recentTransaction.TransactionType</td>
+                                        <td>@recentTransaction.DateCreated</td>
+                                        <td>@recentTransaction.Status</td>
+                                        <td><button type="submit" class="btn btn-outline-success btn-sm">View More</button></td>
+                                    </tr>
+                                    count++;
+                                }
                             </tbody>
                         </table>
+                        }
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -75,3 +321,5 @@
     </div>
 </section>
 <!--Main Content end-->
+
+

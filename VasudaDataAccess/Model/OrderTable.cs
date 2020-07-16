@@ -43,6 +43,6 @@ namespace VasudaDataAccess.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ImageTable> ImageTables { get; set; }
 
-        public virtual VendorTable Vendor { get; set; }
+        public virtual VendorTable VendorTable { get; set; }
     }
 }

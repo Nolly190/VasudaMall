@@ -1,4 +1,7 @@
-﻿
+﻿@{
+    Layout = null;
+}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +14,9 @@
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="~/admin-lte/plugins/jquery/jquery.min.js"></script>
 
     @Styles.Render("~/admin-lte/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -26,7 +32,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="index3.html" class="nav-link">Home</a>
+                    <a href=@Url.Action("Index", "Home") class="nav-link">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Track Order</a>
@@ -35,7 +41,7 @@
                     <a href="#" class="nav-link">Products </a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Support</a>
+                    <a href=@Url.Action("Contact", "Home") class="nav-link">Support</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Clearance</a>
@@ -79,7 +85,6 @@
             </ul>
         </nav>
         <!-- /.navbar -->
-
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
@@ -105,7 +110,7 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-                    with font-awesome or any other icon font library -->
+                        with font-awesome or any other icon font library -->
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-shopping-cart"></i>
@@ -122,8 +127,8 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="pages/charts/flot.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                    <a href=@Url.Action("Orderhistory", "Dashboard") class="nav-link">
+                                        <i class="far fa-cart-plus nav-icon"></i>
                                         <p>Order History</p>
                                     </a>
                                 </li>
@@ -183,10 +188,22 @@
             <br />Designed by <span><a href="www.amplo.com.ng" target="_blank" style="color:#444;font-family:calibri;font-weight:bold;">Amplo IT Solutions</a></span>
         </footer>
     </div>
-        <!-- ./wrapper -->
+    <!-- ./wrapper -->
+    <div class="Main-loader">
+        <div class="spin-loader">
+            <div class="loadingio-spinner-spinner-hl80v3974ce">
+                <div class="ldio-002z8m7bwq0j8">
+                    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        @Scripts.Render("~/admin-lte/script")
-        @RenderSection("scripts", required: false)
+    @*<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>*@
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    @Scripts.Render("~/admin-lte/script")
+    @RenderSection("scripts", required: false)
 
 </body>
 </html>

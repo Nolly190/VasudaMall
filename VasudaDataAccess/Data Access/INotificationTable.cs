@@ -9,5 +9,6 @@ namespace VasudaDataAccess.Data_Access
 {
     public interface INotificationTable : IRepository<NotificationTable>
     {
+        List<NotificationTable> GetRecentNotifications(int? pageNum);
     }
 }

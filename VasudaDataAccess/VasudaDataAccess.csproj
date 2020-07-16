@@ -37,8 +37,14 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.7.2\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.11.4.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.11.4\lib\net452\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -49,6 +55,7 @@
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -57,9 +64,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data Access\IBankTable.cs" />
     <Compile Include="Data Access\ICategoryTable.cs" />
     <Compile Include="Data Access\IExchangeRateTable.cs" />
     <Compile Include="Data Access\IImageTable.cs" />
+    <Compile Include="Data Access\Implentations\BankTableRepo.cs" />
     <Compile Include="Data Access\Implentations\CategoryTableRepo.cs" />
     <Compile Include="Data Access\Implentations\ExchangeRateTableRepo.cs" />
     <Compile Include="Data Access\Implentations\ImageTableRepo.cs" />
@@ -72,6 +81,7 @@
     <Compile Include="Data Access\Implentations\SubCategoryTableRepo.cs" />
     <Compile Include="Data Access\Implentations\SupportTableRepo.cs" />
     <Compile Include="Data Access\Implentations\VendorTableRepo.cs" />
+    <Compile Include="Data Access\Implentations\WithdrawalDetailsTableRepo.cs" />
     <Compile Include="Data Access\INotificationTable.cs" />
     <Compile Include="Data Access\IOrderTable.cs" />
     <Compile Include="Data Access\IPaymentHistoryTable.cs" />
@@ -85,17 +95,33 @@
     <Compile Include="Data Access\Implentations\Repository.cs" />
     <Compile Include="Data Access\Implentations\UnitOfWork.cs" />
     <Compile Include="Data Access\IVendorTable.cs" />
-    <Compile Include="DTOs\ProductViewModel.cs" />
+    <Compile Include="Data Access\IWithdrawalDetailsTable.cs" />
+    <Compile Include="DTOs\FlutterwaveTransResponse.cs" />
+    <Compile Include="DTOs\HomeProductViewModel.cs" />
+    <Compile Include="DTOs\NotificationViewModel.cs" />
+    <Compile Include="DTOs\OrderHistoryViewModel.cs" />
+    <Compile Include="DTOs\ProfileViewModel.cs" />
     <Compile Include="DTOs\Response.cs" />
+    <Compile Include="DTOs\TransactionViewModel.cs" />
+    <Compile Include="DTOs\WalletViewModel.cs" />
+    <Compile Include="Logic\Implementation\NotificationService.cs" />
     <Compile Include="Logic\Implementation\OrderService.cs" />
+    <Compile Include="Providers\Implementations\PaymentService.cs" />
+    <Compile Include="Logic\Implementation\ProfileService.cs" />
+    <Compile Include="Logic\Implementation\WalletService.cs" />
     <Compile Include="Logic\Implementation\StoreService.cs" />
+    <Compile Include="Logic\INotificationService.cs" />
     <Compile Include="Logic\IOrderService.cs" />
+    <Compile Include="Providers\IPaymentService.cs" />
+    <Compile Include="Logic\IProfileService.cs" />
+    <Compile Include="Logic\IWalletService.cs" />
     <Compile Include="Logic\IStoreService.cs" />
     <Compile Include="Model\AspNetRole.cs" />
     <Compile Include="Model\AspNetUser.cs" />
     <Compile Include="Model\AspNetUserClaim.cs" />
     <Compile Include="Model\AspNetUserLogin.cs" />
     <Compile Include="Model\AuditTrialTable.cs" />
+    <Compile Include="Model\BankTable.cs" />
     <Compile Include="Model\CategoryTable.cs" />
     <Compile Include="Model\C__MigrationHistory.cs" />
     <Compile Include="Model\ExchangeRateTable.cs" />
@@ -109,9 +135,11 @@
     <Compile Include="Model\SubCategoryTable.cs" />
     <Compile Include="Model\SupportTable.cs" />
     <Compile Include="Model\sysdiagram.cs" />
-    <Compile Include="Model\VasudaModel.cs" />
+    <Compile Include="Model\VasudaDataModel.cs" />
     <Compile Include="Model\VendorTable.cs" />
+    <Compile Include="Model\WithdrawalDetailsTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\Encryption.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
