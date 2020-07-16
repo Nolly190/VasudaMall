@@ -104,7 +104,7 @@
                                                 <div class="card-body">
                                                     <div class="form-group">
                                                         <label>Bank Name</label>
-                                                        <select class="form-control select2" style="width: 100%;" id="banksList">
+                                                        <select class="form-control select2" style="width: 100%;" id="banksList" data-formname="Bank Name" required>
                                                             <option value="" selected>Select Bank</option>
 
                                                             @foreach (var bank in Model.Banks)
@@ -115,11 +115,11 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="accountNumber" ">Account Number</label>
-                                                        <input type="text" class="form-control form-control-sm" required id="accountNumber" placeholder="Account Number">
+                                                        <input type="text" class="form-control form-control-sm" data-formname="Account Number" id="accountNumber" placeholder="Account Number" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="accountName">Account Name</label>
-                                                        <input type="text" class="form-control form-control-sm" readonly id="accountName" placeholder="Account Name">
+                                                        <input type="text" class="form-control form-control-sm" data-formname="Account Name" readonly id="accountName" placeholder="Account Name" required>
                                                     </div>
                                                 </div>
                                                 <!-- /.card-body -->
@@ -321,4 +321,5 @@
     </div>
 </section>
 <!--Main Content end-->
+
 

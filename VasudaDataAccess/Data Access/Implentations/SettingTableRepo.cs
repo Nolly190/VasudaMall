@@ -22,5 +22,12 @@ namespace VasudaDataAccess.Data_Access.Implentations
                 return dbcontext as DbContext;
             }
         }
+
+        public SettingTable GetSystemSetting()
+        {
+            SettingTable settingTable;
+            settingTable = dbcontext.Set<SettingTable>().FirstOrDefault();
+            return settingTable;
+        }
     }
 }
