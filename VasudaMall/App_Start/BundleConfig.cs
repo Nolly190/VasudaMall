@@ -75,7 +75,7 @@ namespace VasudaMall
                 "~/admin-lte/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js",
                 "~/admin-lte/dist/js/adminlte.js",
                 "~/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js",
-                "~/Scripts/WalletPage.js"
+                "~/Scripts/Walletpage.js"
                 //"~/Scripts/jquery.validate.min.js",
                 //"~/Scripts/jquery.validate.unobtrusive.min.js"
                 ));

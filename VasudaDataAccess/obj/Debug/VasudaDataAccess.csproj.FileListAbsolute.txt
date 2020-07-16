@@ -50,3 +50,7 @@ C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\o
 C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\obj\Debug\VasudaDataAccess.csproj.CopyComplete
 C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\obj\Debug\VasudaDataAccess.dll
 C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\obj\Debug\VasudaDataAccess.pdb
+C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\bin\Debug\Newtonsoft.Json.dll
+C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\bin\Debug\RestSharp.dll
+C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\bin\Debug\Newtonsoft.Json.xml
+C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\bin\Debug\RestSharp.xml

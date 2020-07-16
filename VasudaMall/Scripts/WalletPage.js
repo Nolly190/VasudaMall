@@ -2,41 +2,43 @@
 
     var Validator = function (InputObj) {
         var result = [];
-        var Name = InputObj.id;
-        var getFormObj = $("#" + Name).val().trim();
+        var Name = $("#" + InputObj.id);
+        var getFormObj = Name.val().trim();
+        var dataName = Name.data("formname");
+
         if (InputObj.required === true) {
 
             if (InputObj.nodeName.toLowerCase() === "input") {
                 if (getFormObj === null || getFormObj === "") {
                     result["Status"] = false;
-                    result["Message"] = InputObj.id + " Field is required";
+                    result["Message"] = dataName + " Field is required";
                     return result;
                 }
             }
             if (InputObj.nodeName.toLowerCase() === "select") {
                 if (getFormObj === "0" || getFormObj === 0 || getFormObj === "") {
                     result["Status"] = false;
-                    result["Message"] = "Select a value for " + InputObj.id;
+                    result["Message"] = "Select a value for " + dataName;
                     return result;
                 }
             }
         }
 
-        @*if (InputObj.type.toLowerCase() === "email") {
-            var pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-            var MatchResult = getFormObj.match(pattern);
-            if (MatchResult === null) {
-                result["Status"] = false;
-                result["Message"] = "Invalid email format for " + InputObj.id;
-                return result;
-            }
+        //if (InputObj.type.toLowerCase() === "email") {
+        //    var pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        //    var MatchResult = getFormObj.match(pattern);
+        //    if (MatchResult === null) {
+        //        result["Status"] = false;
+        //        result["Message"] = "Invalid email format for " + InputObj.id;
+        //        return result;
+        //    }
 
-        }*@
+        //}
 
             if (InputObj.type.toLowerCase() === "number") {
             if (getFormObj < 0) {
                 result["Status"] = false;
-                result["Message"] = "Invalid number format for " + InputObj.id;
+                result["Message"] = "Invalid number format for " + dataName;
                 return result;
             }
 
@@ -46,7 +48,7 @@
     }
 
     $("#setWithdrawalAccountButton").click(function () {
-
+        console.log("clicked me...");
         $(".Main-loader").show();
         var allInputFeilds = [];
         $("form#setWithdrawalAccountForm :input").each(function (index) {
