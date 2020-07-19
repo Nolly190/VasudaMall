@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace VasudaDataAccess.Logic.Implementation
         public StoreService()
         {
             logger = LogManager.GetCurrentClassLogger();
-            _unitOfWork = new UnitOfWork(new VasudaDataModel());
+            _unitOfWork = new UnitOfWork(new VasudaModel());
         }
         public Response<HomeProductViewModel> GetHomePage()
         {
@@ -44,6 +45,42 @@ namespace VasudaDataAccess.Logic.Implementation
 
             result.SetResult(model);
             return result;
+        }
+
+        public Response<StoreViewModel> GetStorePage()
+        {
+            var response = new Response<StoreViewModel>();
+            response.Message = "Could not Get product";
+            var model = new StoreViewModel();
+            model.Products = new List<ProductTable>();
+            model.Categories = new List<CategoryTable>();
+            response.SetResult(model);
+            try
+            {
+                model.Products = _unitOfWork.ProductTable.GetAll(x => x.IsActive).ToList();
+                model.Categories = _unitOfWork.CategoryTable.GetAll(x => x.IsActive).OrderByDescending(x=>x.DateCreated).Take(6).ToList();
+                response.SetResult(model);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+            }
+
+            return response;
+        }
+
+        public Response<List<ProductTable>> ClearanceProduct()
+        {
+            var response = new Response<List<ProductTable>>();
+            try
+            {
+                response.SetResult(_unitOfWork.ProductTable.GetAll(x => x.Clearance).ToList());
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+            }
+            return response;
         }
     }
 }

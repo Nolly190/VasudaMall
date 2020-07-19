@@ -18,7 +18,7 @@ namespace VasudaDataAccess.Logic.Implementation
         public WalletService()
         {
             logger = LogManager.GetCurrentClassLogger();
-            _unitOfWork = new UnitOfWork(new VasudaDataModel());
+            _unitOfWork = new UnitOfWork(new VasudaModel());
         }
 
         public Response<WalletViewModel> GetWalletHomePage()

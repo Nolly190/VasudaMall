@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -74,29 +75,41 @@ namespace VasudaMall.Controllers
             {
                 return View(model);
             }
-
+           
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var unitOfWork = new UnitOfWork(new VasudaDataModel());
+            var unitOfWork = new UnitOfWork(new VasudaModel());
           var user =  UserManager.Users.SingleOrDefault(x => x.Email == model.Email);
-          if (user!= null && user.EmailConfirmed)
+          if (user!= null )
           {
-              var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-              switch (result)
+              if (user.EmailConfirmed)
               {
-                  case SignInStatus.Success:
-                      return RedirectToLocal(returnUrl);
-                  case SignInStatus.LockedOut:
-                      return View("Lockout");
-                  case SignInStatus.RequiresVerification:
-                      return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                  case SignInStatus.Failure:
-                  default:
-                      ModelState.AddModelError("", "Invalid login attempt.");
-                      return View(model);
+                  var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+               switch (result)
+                    {
+                      case SignInStatus.Success:
+                          return RedirectToLocal(returnUrl);
+                      case SignInStatus.LockedOut:
+                          return View("Lockout");
+                      case SignInStatus.RequiresVerification:
+                          return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                      case SignInStatus.Failure:
+                      default:
+                          ModelState.AddModelError("", "Invalid login attempt.");
+                          return View(model);
+                  }
+
+              }
+              else
+              {
+                  ModelState.AddModelError("EmailAddress", "Email Address not Confirmed, Kindly click on the link sent to you on your mail, to proceed <a>Click Here</a> ");
               }
             }
-            ModelState.AddModelError("EmailAddress","Email Address not Confirmed, Kindly click on the link sent to you on your mail, to proceed <a>Click Here</a> ");
+          else
+          {
+              ModelState.AddModelError("EmailAddress", "Incorrect Username or Password");
+
+            }
             return View();
         }
 

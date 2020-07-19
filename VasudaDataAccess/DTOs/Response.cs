@@ -10,7 +10,7 @@ namespace VasudaDataAccess.DTOs
 {
   public class Response<TEntity>
   {
-      private TEntity _entity;
+      public TEntity _entity { get; private set; }
       public bool Status { get; set; }    
       public string Message { get; set; }
 

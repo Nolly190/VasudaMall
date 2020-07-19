@@ -19,7 +19,7 @@ namespace VasudaDataAccess.Logic.Implementation
         public OrderService()
         {
             logger = LogManager.GetCurrentClassLogger();
-            _unitOfWork = new UnitOfWork(new VasudaDataModel());
+            _unitOfWork = new UnitOfWork(new VasudaModel());
         }
 
         public Response<OrderHistoryViewModel> GetAllOrdersHomePage()

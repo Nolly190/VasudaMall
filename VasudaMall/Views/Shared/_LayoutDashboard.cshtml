@@ -1,4 +1,5 @@
-﻿@{
+﻿@using VasudaDataAccess.Utility
+@{
     Layout = null;
 }
 
@@ -102,7 +103,7 @@
                         <img src="~/admin-lte/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
+                        <a href="#" class="d-block">@User.Identity.Name</a>
                     </div>
                 </div>
 
@@ -185,7 +186,7 @@
 
         <footer class="main-footer text-center">
             <strong>&copy; 2014 - @DateTime.Now.Year, &nbsp;VasudaMall.</strong> All rights reserved.
-            <br />Designed by <span><a href="www.amplo.com.ng" target="_blank" style="color:#444;font-family:calibri;font-weight:bold;">Amplo IT Solutions</a></span>
+            <br />Designed by <span><a href="https://www.amplo.com.ng" target="_blank" style="color:#444;font-family:calibri;font-weight:bold;">Amplo IT Solutions</a></span>
         </footer>
     </div>
     <!-- ./wrapper -->
@@ -199,9 +200,7 @@
         </div>
     </div>
 
-    @*<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>*@
-
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     @Scripts.Render("~/admin-lte/script")
     @RenderSection("scripts", required: false)
 

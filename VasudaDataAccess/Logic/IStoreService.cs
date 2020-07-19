@@ -11,5 +11,7 @@ namespace VasudaDataAccess.Logic
   public interface IStoreService
   {
       Response<HomeProductViewModel> GetHomePage();
+      Response<StoreViewModel> GetStorePage();
+      Response<List<ProductTable>> ClearanceProduct();
   }
 }

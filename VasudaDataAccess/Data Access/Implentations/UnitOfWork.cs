@@ -23,8 +23,10 @@ namespace VasudaDataAccess.Data_Access.Implentations
             VendorTable = new VendorTableRepo(context);
             WithdrawalDetailsTable = new WithdrawalDetailsTableRepo(context);
             BankTable = new BankTableRepo(context);
+            ContactTable = new ContactTableRepo(context);
         }
 
+        public IContactTable ContactTable { get; }
         public ICategoryTable CategoryTable { get; }
         public IExchangeRateTable ExchangeRateTable { get; }
         public IImageTable ImageTable { get; }
