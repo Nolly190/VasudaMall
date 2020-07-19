@@ -8,7 +8,7 @@ namespace VasudaDataAccess.Data_Access
     {
         void Add(TEntity model);
         void AddRange(IEnumerable<TEntity> model);
-        TEntity Get(int id);
+        TEntity Get(object id);
         TEntity Get(Expression<Func<TEntity, bool>> predicate);
         IEnumerable<TEntity> GetAll();
         IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate);

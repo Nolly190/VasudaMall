@@ -24,9 +24,9 @@ namespace VasudaDataAccess.Logic.Implementation
             _paymentService = new PaymentService();
         }
 
-        public Response<string> AddWithdrawalAccount(WithdrawalDetailsTable model)
+        public Response<List<WithdrawalDetailsTable>> AddWithdrawalAccount(WithdrawalDetailsTable model)
         {
-            var response = new Response<string>();
+            var response = new Response<List<WithdrawalDetailsTable>>();
             response.Status = false;
             response.Message = " Could not add account";
             try
@@ -48,12 +48,43 @@ namespace VasudaDataAccess.Logic.Implementation
                 _unitOfWork.WithdrawalDetailsTable.Add(model);
                 _unitOfWork.Complete();
                 response.Status = true;
+                response.SetResult(_unitOfWork.WithdrawalDetailsTable.GetAll(x=>x.UserId==model.UserId && x.IsActive).ToList());
             }
             catch (Exception e)
             {
                 logger.Error(e.ToString());
             }
             return response;
+        }
+
+        public Response<List<WithdrawalDetailsTable>> DisableWithdrawalAccount(string id)
+        {
+            var result = new Response<List<WithdrawalDetailsTable>>
+            {
+                Status = false,
+                Message = "Could not retrieve info"
+            };
+            try
+            {
+                var getCard = _unitOfWork.WithdrawalDetailsTable.Get(id);
+                if (getCard==null)
+                {
+                    result.Message = "Could not retrieve user account";
+                    return result;
+                }
+
+                getCard.IsActive = false;
+                _unitOfWork.Complete();
+                result.Status = true;
+                result.SetResult(_unitOfWork.WithdrawalDetailsTable.GetAll(x=>x.UserId ==getCard.UserId && x.IsActive).ToList());
+               return result;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+            }
+
+            return result;
         }
 
         public Response<ProfileViewModel> GetProfileHomePage()

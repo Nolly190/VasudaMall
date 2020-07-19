@@ -12,5 +12,8 @@ namespace VasudaDataAccess.DTOs
         public List<ExchangeRateTable> ExchangeRates { get; set; }
         public List<PaymentHistoryTable> PaymentHistory { get; set; }
         public List<BankTable> Banks { get; set; }
+        public string NairaBal { get; set; }
+        public string YuanBal { get; set; }
+        public string DollarBal { get; set; }
     }
 }

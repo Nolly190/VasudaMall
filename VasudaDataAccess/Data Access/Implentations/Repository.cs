@@ -23,7 +23,7 @@ namespace VasudaDataAccess.Data_Access.Implentations
             dbcontext.Set<TEntity>().AddRange(model);
         }
 
-        public TEntity Get(int id)
+        public TEntity Get(object id)
         {
             return dbcontext.Set<TEntity>().Find(id);
         }

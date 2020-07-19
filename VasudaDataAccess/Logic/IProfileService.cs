@@ -11,6 +11,7 @@ namespace VasudaDataAccess.Logic
     public interface IProfileService
     {
         Response<ProfileViewModel> GetProfileHomePage();
-        Response<string> AddWithdrawalAccount(WithdrawalDetailsTable model);
+        Response<List<WithdrawalDetailsTable>> AddWithdrawalAccount(WithdrawalDetailsTable model);
+        Response<List<WithdrawalDetailsTable>> DisableWithdrawalAccount(string id);
     }
 }

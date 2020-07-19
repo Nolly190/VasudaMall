@@ -21,7 +21,7 @@ namespace VasudaDataAccess.Logic.Implementation
             _unitOfWork = new UnitOfWork(new VasudaModel());
         }
 
-        public Response<WalletViewModel> GetWalletHomePage()
+        public Response<WalletViewModel> GetWalletHomePage(string user)
         {
             var result = new Response<WalletViewModel>
             {
@@ -38,8 +38,12 @@ namespace VasudaDataAccess.Logic.Implementation
             {
                 model.ExchangeRates = _unitOfWork.ExchangeRateTable.GetExchangeRates(null);
                 model.PaymentHistory = _unitOfWork.PaymentHistoryTable.GetRecentTransactionsHistory(null);
-                model.WithdrawalAccounts = _unitOfWork.WithdrawalDetailsTable.GetWithdrawalAccounts(null);
+                model.WithdrawalAccounts = _unitOfWork.WithdrawalDetailsTable.GetAll(x=>x.UserId==user && x.IsActive).ToList();
                 model.Banks = _unitOfWork.BankTable.GetAllActiveBanks();
+                var userInfo = _unitOfWork.AspNetUser.Get(user);
+                model.DollarBal = userInfo?.Balance.ToString();
+                model.YuanBal = userInfo?.Balance.ToString();
+                model.NairaBal = userInfo?.Balance.ToString();
                 result.Status = true;
             }
             catch (Exception ex)

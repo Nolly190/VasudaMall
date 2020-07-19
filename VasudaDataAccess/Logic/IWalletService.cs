@@ -10,7 +10,7 @@ namespace VasudaDataAccess.Logic
     public interface IWalletService
     {
         Response<string> AddWithdrawalAccount();
-        Response<WalletViewModel> GetWalletHomePage();
+        Response<WalletViewModel> GetWalletHomePage(string userId);
         Response<TransactionViewModel> GetAllTransactionsHomePage();
     }
 }

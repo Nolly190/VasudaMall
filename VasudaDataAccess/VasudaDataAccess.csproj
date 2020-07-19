@@ -188,6 +188,9 @@
     <Compile Include="Model\WithdrawalDetailsTable.cs">
       <DependentUpon>VasudaDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\WithdrawalRequestTable.cs">
+      <DependentUpon>VasudaDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Providers\Implementations\PaymentService.cs" />
     <Compile Include="Logic\Implementation\ProfileService.cs" />
     <Compile Include="Logic\Implementation\WalletService.cs" />

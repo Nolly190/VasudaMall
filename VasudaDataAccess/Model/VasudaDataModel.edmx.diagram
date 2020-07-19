@@ -9,7 +9,6 @@
         <EntityTypeShape EntityType="DB_A5731C_VasudaModel.AspNetRole" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_A5731C_VasudaModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_A5731C_VasudaModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_A5731C_VasudaModel.AspNetUser" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_A5731C_VasudaModel.AuditTrialTable" Width="1.5" PointX="10.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_A5731C_VasudaModel.BankTable" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_A5731C_VasudaModel.CategoryTable" Width="1.5" PointX="7.75" PointY="0.875" IsExpanded="true" />
@@ -26,17 +25,22 @@
         <EntityTypeShape EntityType="DB_A5731C_VasudaModel.sysdiagram" Width="1.5" PointX="12.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_A5731C_VasudaModel.VendorTable" Width="1.5" PointX="6" PointY="9.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_A5731C_VasudaModel.NotificationTable" Width="1.5" PointX="5.25" PointY="16.875" IsExpanded="true" />
-        <AssociationConnector Association="DB_A5731C_VasudaModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="DB_A5731C_VasudaModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="DB_A5731C_VasudaModel.FK_NotificationTables_AspNetUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="DB_A5731C_VasudaModel.FK_OrderTables_AspNetUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="DB_A5731C_VasudaModel.FK_SupportTables_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="DB_A5731C_VasudaModel.FK_SubCategoryTables_CategoryTables" ManuallyRouted="false" />
         <AssociationConnector Association="DB_A5731C_VasudaModel.FK_ImageTables_OrderTables" ManuallyRouted="false" />
         <AssociationConnector Association="DB_A5731C_VasudaModel.FK_ImageTables_ProductTables" ManuallyRouted="false" />
         <AssociationConnector Association="DB_A5731C_VasudaModel.FK_OrderTables_Vendors" ManuallyRouted="false" />
-        <AssociationConnector Association="DB_A5731C_VasudaModel.AspNetUserRoles" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="DB_A5731C_VasudaModel.WithdrawalDetailsTable" Width="1.5" PointX="7.375" PointY="12.75" />
+        <EntityTypeShape EntityType="DB_A5731C_VasudaModel.WithdrawalDetailsTable" Width="1.5" PointX="5.25" PointY="20.125" />
+        <EntityTypeShape EntityType="DB_A5731C_VasudaModel.WithdrawalRequestTable" Width="1.5" PointX="7.375" PointY="12.75" />
+        <AssociationConnector Association="DB_A5731C_VasudaModel.FK_WithdrawalRequestTable_WithdrawalDetailsTable" />
+        <EntityTypeShape EntityType="DB_A5731C_VasudaModel.AspNetUser" Width="1.5" PointX="3" PointY="6.375" />
+        <AssociationConnector Association="DB_A5731C_VasudaModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="DB_A5731C_VasudaModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="DB_A5731C_VasudaModel.FK_NotificationTables_AspNetUsers" />
+        <AssociationConnector Association="DB_A5731C_VasudaModel.FK_OrderTables_AspNetUsers" />
+        <AssociationConnector Association="DB_A5731C_VasudaModel.FK_SupportTables_AspNetUsers" />
+        <AssociationConnector Association="DB_A5731C_VasudaModel.FK_WithdrawalDetailsTable_AspNetUsers" />
+        <AssociationConnector Association="DB_A5731C_VasudaModel.FK_WithdrawalRequestTable_AspNetUsers" />
+        <AssociationConnector Association="DB_A5731C_VasudaModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
