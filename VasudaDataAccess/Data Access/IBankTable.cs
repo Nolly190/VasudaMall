@@ -11,4 +11,7 @@ namespace VasudaDataAccess.Data_Access
     {
         List<BankTable> GetAllActiveBanks();
     }
+    public interface IContactTable : IRepository<ContactTable>
+    {
+    }
 }

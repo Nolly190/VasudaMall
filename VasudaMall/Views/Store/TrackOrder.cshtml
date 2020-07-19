@@ -24,7 +24,39 @@
     </div>
     <div class="offset-lg-1 col-lg-10 products">
         <div class="row">
-            Order tracking information shows here...
+            <table id="orderHistoryTable" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>S/N</th>
+                    <th>Subject</th>
+                    <th>Date Published</th>
+                    <th>Read Status</th>
+                    <th>Read Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                                            <td>1</td>
+                                            <td>Name</td>
+                                            <td>Tesst</td>
+                                            <td>Read</td>
+                                            <td><button type="submit" class="btn btn-outline-success btn-sm">View More</button></td>
+                                        </tr>
+                @*@foreach (var orders in Model.AllOrders)
+                {
+                    var count = 1;
+                                        @*<tr>
+                                            <td>@count</td>
+                                            <td>@notification.Subject</td>
+                                            <td>@notification.DateCreated</td>
+                                            <td>@notification.IsRead</td>
+                                            <td><button type="submit" class="btn btn-outline-success btn-sm">View More</button></td>
+                                        </tr>
+                    count++;
+                }*@
+                </tbody>
+            </table>
+
         </div>
     </div>
 </section>

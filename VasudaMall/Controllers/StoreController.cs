@@ -19,7 +19,7 @@ namespace VasudaMall.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return View(_storeService.GetStorePage().Result());
         }   
         public ActionResult Cart()
         {
@@ -33,17 +33,13 @@ namespace VasudaMall.Controllers
         {
             return View();
         }  
-        public ActionResult Teams()
-        {
-            return View();
-        }  
         public ActionResult Portfolio()
         {
             return View();
         }  
         public ActionResult Clearance()
         {
-            return View();
+            return View(_storeService.ClearanceProduct().Result());
         }  
         public ActionResult Products()
         {

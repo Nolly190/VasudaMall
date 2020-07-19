@@ -12,6 +12,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using RestSharp;
 using RestSharp.Authenticators;
+using VasudaDataAccess.Utility;
 using VasudaMall.Models;
 
 namespace VasudaMall
@@ -33,6 +34,7 @@ namespace VasudaMall
             request.AddParameter("from", mailFrom);
             request.AddParameter("to", message.Destination);
             request.AddParameter("subject", message.Subject);
+            message.Body = Notification.getTemplate(message.Body,"");
             request.AddParameter("html", message.Body);
             request.Method = Method.POST;
             var status = (RestResponse)client.Execute(request);

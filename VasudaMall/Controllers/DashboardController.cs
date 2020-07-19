@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using VasudaDataAccess.Data_Access.Implentations;
 using VasudaDataAccess.Logic;
+using VasudaDataAccess.Logic.Implementation;
 using VasudaDataAccess.Model;
+using VasudaDataAccess.Provider;
 
 namespace VasudaMall.Controllers
 {
@@ -15,14 +18,15 @@ namespace VasudaMall.Controllers
         private IProfileService _profileService;
         private INotificationService _notificationService;
         private IOrderService _orderService;
+        private IPaymentService _paymentService;
 
-        public DashboardController(IWalletService walletService, IProfileService profileService, 
-                                   INotificationService notificationService, IOrderService orderService)
+        public DashboardController(IWalletService walletService, IProfileService profileService, IOrderService orderService, IPaymentService paymentService)
         {
             _walletService = walletService;
             _profileService = profileService;
-            _notificationService = notificationService;
+            _notificationService = new NotificationService(new UnitOfWork(new VasudaModel()));
             _orderService = orderService;
+            _paymentService = paymentService;
         }
         // GET: Dashboard
         public ActionResult Index()
@@ -33,11 +37,12 @@ namespace VasudaMall.Controllers
         [HttpPost]
         public JsonResult AddAccount(WithdrawalDetailsTable model)
         {
-            if (true)
-            {
 
-            }
-            return Json(JsonRequestBehavior.AllowGet);
+            return Json(_profileService.AddWithdrawalAccount(model),JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ResolveAccount(WithdrawalDetailsTable model)
+        {
+           return Json(_paymentService.GetValidAccountName(model.BankName, model.AccountNumber), JsonRequestBehavior.AllowGet);
         }
 
         public new ActionResult Profile()

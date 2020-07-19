@@ -10,10 +10,11 @@ namespace VasudaDataAccess.Utility
 {
     public class Encryption
     {
-        static readonly string SaltKey = "vasu-9lg80-poku65";
+        static readonly string SaltKey = "vasu-9lg8-poku32";
         public static string Encrypt(string input)
         {
             byte[] inputArray = UTF8Encoding.UTF8.GetBytes(input);
+            var test = UTF8Encoding.UTF8.GetBytes(SaltKey);
             TripleDESCryptoServiceProvider tripleDES = new TripleDESCryptoServiceProvider
             {
                 Key = UTF8Encoding.UTF8.GetBytes(SaltKey),
@@ -24,7 +25,6 @@ namespace VasudaDataAccess.Utility
             byte[] resultArray = cTransform.TransformFinalBlock(inputArray, 0, inputArray.Length);
             tripleDES.Clear();
             string rawencryt = Convert.ToBase64String(resultArray, 0, resultArray.Length);
-            var test = Uri.EscapeUriString(input);
             rawencryt = HttpUtility.UrlEncode(rawencryt);
             return rawencryt;
         }

@@ -49,10 +49,10 @@ namespace VasudaMall
                     "~/vasuda-template/js/jquery.easing.1.3.js",
                     "~/vasuda-template/js/jquery.skitter.js",
                     "~/vasuda-template/js/jquery.skitter.min.js",
+                    "~/Scripts/JqueryValidator.js",
                     "~/Scripts/products.js",
                     "~/vasuda-template/js/owl.carousel.js"
                     ));
-
             //Admin lte styles and scripts...
             bundles.Add(new ScriptBundle("~/admin-lte/script").Include(
                 // "~/Scripts/jquery-1.10.2.min.js",
@@ -75,6 +75,7 @@ namespace VasudaMall
                 "~/admin-lte/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js",
                 "~/admin-lte/dist/js/adminlte.js",
                 "~/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js",
+                "~/Scripts/JqueryValidator.js",
                 "~/Scripts/Walletpage.js"
                 //"~/Scripts/jquery.validate.min.js",
                 //"~/Scripts/jquery.validate.unobtrusive.min.js"

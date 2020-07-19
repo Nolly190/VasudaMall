@@ -1,6 +1,7 @@
 using VasudaDataAccess.Logic;
 using VasudaDataAccess.Logic.Implementation;
-
+using VasudaDataAccess.Provider;
+using VasudaDataAccess.Providers.Implementations;
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(VasudaMall.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(VasudaMall.App_Start.NinjectWebCommon), "Stop")]
 
@@ -69,6 +70,7 @@ namespace VasudaMall.App_Start
             kernel.Bind<IWalletService>().To<WalletService>();
             kernel.Bind<IProfileService>().To<ProfileService>();
             kernel.Bind<INotificationService>().To<NotificationService>();
+            kernel.Bind<IPaymentService>().To<PaymentService>();
         }
     }
 }

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace VasudaDataAccess.DTOs
 {
-    public class FlutterwaveTransResponse
+    public class FlutterwaveResponse<TEntity>
     {
         public string status { get; set; }
             public string message { get; set; }
-            public Data data { get; set; }
+            public TEntity data { get; set; }
     }
 
     public class Data

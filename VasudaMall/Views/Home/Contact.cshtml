@@ -11,13 +11,16 @@
             Send us an email via <b>enquiries@vasudamall.com </b><br />
             or use the contact form below
         </div>
-        <div class="col-lg-5 message-form">
-            <input type="text" class="col-lg-10" placeholder="Full Name">
-            <input type="text" class="col-lg-10" placeholder="Address">
-            <input type="text" class="col-lg-10" placeholder="Phone Number">
-            <textarea type="text" class="col-lg-10" placeholder="Enter your message here..."></textarea><br />
-            <button class="col-lg-5">Send</button>
-        </div>
+        <form id="ContactUsForm">
+            <div class="col-lg-5 message-form">
+                <input type="text" data-formname="Full Name" required id="fullName" class="col-lg-10" placeholder="Full Name">
+                <input type="text" data-formname="Address" required id="address" class="col-lg-10" placeholder="Address">
+                <input type="number" data-formname="Phone Number" required id="number" class="col-lg-10" placeholder="Phone Number">
+                <textarea type="text" data-formname="Message" required id="message" class="col-lg-10" placeholder="Enter your message here..."></textarea><br />
+                <button type="button" id="Submit" class="col-lg-5">Send</button>
+            </div>
+        </form>
+      
         <img src="~/vasuda-template/images/style.jpg" class="slidepic" />
     </div>
 </section>

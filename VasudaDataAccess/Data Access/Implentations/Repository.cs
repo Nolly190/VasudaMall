@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace VasudaDataAccess.Data_Access.Implentations
 {
@@ -38,6 +41,16 @@ namespace VasudaDataAccess.Data_Access.Implentations
         public void RemoveRange(IEnumerable<TEntity> model)
         {
             dbcontext.Set<TEntity>().RemoveRange(model);
+        }
+
+        public TEntity Get(Expression<Func<TEntity, bool>> predicate)
+        {
+           return dbcontext.Set<TEntity>().SingleOrDefault(predicate);
+        }
+
+        public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate)
+        {
+            return dbcontext.Set<TEntity>().Where(predicate);
         }
     }
 }
