@@ -137,6 +137,9 @@
     <Compile Include="Model\ExchangeRateTable.cs">
       <DependentUpon>VasudaDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\FundingRequestTable.cs">
+      <DependentUpon>VasudaDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\ImageTable.cs">
       <DependentUpon>VasudaDataModel.tt</DependentUpon>
     </Compile>
@@ -167,6 +170,9 @@
     <Compile Include="Model\sysdiagram.cs">
       <DependentUpon>VasudaDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\SystemAccountTable.cs">
+      <DependentUpon>VasudaDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\VasudaDataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -186,6 +192,9 @@
       <DependentUpon>VasudaDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\WithdrawalDetailsTable.cs">
+      <DependentUpon>VasudaDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\WithdrawalRequestTable.cs">
       <DependentUpon>VasudaDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Providers\Implementations\PaymentService.cs" />

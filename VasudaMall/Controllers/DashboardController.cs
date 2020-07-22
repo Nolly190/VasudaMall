@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using VasudaDataAccess.Data_Access.Implentations;
 using VasudaDataAccess.Logic;
 using VasudaDataAccess.Logic.Implementation;
@@ -11,7 +12,7 @@ using VasudaDataAccess.Provider;
 
 namespace VasudaMall.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class DashboardController : Controller
     {
         private IWalletService _walletService;
@@ -37,12 +38,22 @@ namespace VasudaMall.Controllers
         [HttpPost]
         public JsonResult AddAccount(WithdrawalDetailsTable model)
         {
-
+            model.UserId = User.Identity.GetUserId();
             return Json(_profileService.AddWithdrawalAccount(model),JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult DeleteAccount(string id)
+        {
+            return Json(_profileService.DisableWithdrawalAccount(id),JsonRequestBehavior.AllowGet);
         }
         public JsonResult ResolveAccount(WithdrawalDetailsTable model)
         {
            return Json(_paymentService.GetValidAccountName(model.BankName, model.AccountNumber), JsonRequestBehavior.AllowGet);
+        } 
+        public JsonResult WithdrawalRequest(WithdrawalRequestTable model)
+        {
+            model.UserId = User.Identity.GetUserId();
+           return Json(_walletService.WithdrawalRequest(model), JsonRequestBehavior.AllowGet);
         }
 
         public new ActionResult Profile()
@@ -62,7 +73,7 @@ namespace VasudaMall.Controllers
         
         public ActionResult Wallet()
         {
-            return View(_walletService.GetWalletHomePage().Result());
+            return View(_walletService.GetWalletHomePage(User.Identity.GetUserId()).Result());
         }
 
         public ActionResult OrderHistory()

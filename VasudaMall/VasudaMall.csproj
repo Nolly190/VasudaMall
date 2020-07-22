@@ -212,6 +212,10 @@
     <Compile Include="Migrations\202007012357441_AddressColumnAdded.Designer.cs">
       <DependentUpon>202007012357441_AddressColumnAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202007192336129_AddedFullName.cs" />
+    <Compile Include="Migrations\202007192336129_AddedFullName.Designer.cs">
+      <DependentUpon>202007192336129_AddedFullName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -2178,6 +2182,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202007012357441_AddressColumnAdded.resx">
       <DependentUpon>202007012357441_AddressColumnAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007192336129_AddedFullName.resx">
+      <DependentUpon>202007192336129_AddedFullName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

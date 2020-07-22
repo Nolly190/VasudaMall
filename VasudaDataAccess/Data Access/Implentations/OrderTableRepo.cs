@@ -23,4 +23,34 @@ namespace VasudaDataAccess.Data_Access.Implentations
             }
         }
     }
+  public class WithdrawalRequestTableRepo : Repository<WithdrawalRequestTable>, IWithdrawalRequestTable
+    {
+        public WithdrawalRequestTableRepo(DbContext context) : base(context)
+        {
+
+        }
+
+        public DbContext Context
+        {
+            get
+            {
+                return dbcontext as DbContext;
+            }
+        }
+    }
+  public class AspNetUserRepo : Repository<AspNetUser>, IAspNetUser
+    {
+        public AspNetUserRepo(DbContext context) : base(context)
+        {
+
+        }
+
+        public DbContext Context
+        {
+            get
+            {
+                return dbcontext as DbContext;
+            }
+        }
+    }
 }

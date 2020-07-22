@@ -16,7 +16,7 @@
     </Key>
     <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+    <NavigationProperty Name="AspNetUsers" Relationship="DB_A5731C_VasudaModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
   </EntityType>
   <EntityType Name="AspNetUserClaim">
     <Key>
@@ -26,7 +26,7 @@
     <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+    <NavigationProperty Name="AspNetUser" Relationship="DB_A5731C_VasudaModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
   </EntityType>
   <EntityType Name="AspNetUserLogin">
     <Key>
@@ -37,34 +37,7 @@
     <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
-  </EntityType>
-  <EntityType Name="AspNetUser">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Balance" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-    <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Country" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
-    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
-    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
-    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
-    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
-    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-    <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
-    <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
-    <NavigationProperty Name="NotificationTables" Relationship="Self.FK_NotificationTables_AspNetUsers" FromRole="AspNetUsers" ToRole="NotificationTables" />
-    <NavigationProperty Name="OrderTables" Relationship="Self.FK_OrderTables_AspNetUsers" FromRole="AspNetUsers" ToRole="OrderTables" />
-    <NavigationProperty Name="SupportTables" Relationship="Self.FK_SupportTables_AspNetUsers" FromRole="AspNetUsers" ToRole="SupportTables" />
-    <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+    <NavigationProperty Name="AspNetUser" Relationship="DB_A5731C_VasudaModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
   </EntityType>
   <EntityType Name="AuditTrialTable">
     <Key>
@@ -110,17 +83,6 @@
     <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
   </EntityType>
-  <EntityType Name="ExchangeRateTable">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Guid" Nullable="false" />
-    <Property Name="RateType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-    <Property Name="Currency" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="IsActive" Type="Boolean" Nullable="false" />
-    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-  </EntityType>
   <EntityType Name="ImageTable">
     <Key>
       <PropertyRef Name="Id" />
@@ -149,9 +111,9 @@
     <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_OrderTables_AspNetUsers" FromRole="OrderTables" ToRole="AspNetUsers" />
     <NavigationProperty Name="ImageTables" Relationship="Self.FK_ImageTables_OrderTables" FromRole="OrderTables" ToRole="ImageTables" />
     <NavigationProperty Name="VendorTable" Relationship="Self.FK_OrderTables_Vendors" FromRole="OrderTables" ToRole="VendorTables" />
+    <NavigationProperty Name="AspNetUser" Relationship="DB_A5731C_VasudaModel.FK_OrderTables_AspNetUsers" FromRole="OrderTable" ToRole="AspNetUser" />
   </EntityType>
   <EntityType Name="PaymentHistoryTable">
     <Key>
@@ -225,7 +187,7 @@
     <Property Name="SentBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="IsRead" Type="Boolean" Nullable="false" />
     <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_SupportTables_AspNetUsers" FromRole="SupportTables" ToRole="AspNetUsers" />
+    <NavigationProperty Name="AspNetUser" Relationship="DB_A5731C_VasudaModel.FK_SupportTables_AspNetUsers" FromRole="SupportTable" ToRole="AspNetUser" />
   </EntityType>
   <EntityType Name="sysdiagram">
     <Key>
@@ -260,72 +222,8 @@
     <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="IsRead" Type="Boolean" Nullable="false" />
     <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_NotificationTables_AspNetUsers" FromRole="NotificationTables" ToRole="AspNetUsers" />
+    <NavigationProperty Name="AspNetUser" Relationship="DB_A5731C_VasudaModel.FK_NotificationTables_AspNetUsers" FromRole="NotificationTable" ToRole="AspNetUser" />
   </EntityType>
-  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="AspNetUserClaims">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="AspNetUserLogins">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_NotificationTables_AspNetUsers">
-    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-    <End Role="NotificationTables" Type="Self.NotificationTable" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="NotificationTables">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_OrderTables_AspNetUsers">
-    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-    <End Role="OrderTables" Type="Self.OrderTable" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="OrderTables">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_SupportTables_AspNetUsers">
-    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-    <End Role="SupportTables" Type="Self.SupportTable" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="SupportTables">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_SubCategoryTables_CategoryTables">
     <End Role="CategoryTables" Type="Self.CategoryTable" Multiplicity="1" />
     <End Role="SubCategoryTables" Type="Self.SubCategoryTable" Multiplicity="*" />
@@ -374,21 +272,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="AspNetUserRoles">
-    <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
-    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
-  </Association>
   <EntityContainer Name="VasudaModel" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
     <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
     <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
-    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
     <EntitySet Name="AuditTrialTables" EntityType="Self.AuditTrialTable" />
     <EntitySet Name="BankTables" EntityType="Self.BankTable" />
     <EntitySet Name="CategoryTables" EntityType="Self.CategoryTable" />
     <EntitySet Name="ContactTables" EntityType="Self.ContactTable" />
-    <EntitySet Name="ExchangeRateTables" EntityType="Self.ExchangeRateTable" />
     <EntitySet Name="ImageTables" EntityType="Self.ImageTable" />
     <EntitySet Name="OrderTables" EntityType="Self.OrderTable" />
     <EntitySet Name="PaymentHistoryTables" EntityType="Self.PaymentHistoryTable" />
@@ -400,26 +292,6 @@
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="VendorTables" EntityType="Self.VendorTable" />
     <EntitySet Name="NotificationTables" EntityType="Self.NotificationTable" />
-    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
-    </AssociationSet>
-    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-    </AssociationSet>
-    <AssociationSet Name="FK_NotificationTables_AspNetUsers" Association="Self.FK_NotificationTables_AspNetUsers">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="NotificationTables" EntitySet="NotificationTables" />
-    </AssociationSet>
-    <AssociationSet Name="FK_OrderTables_AspNetUsers" Association="Self.FK_OrderTables_AspNetUsers">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="OrderTables" EntitySet="OrderTables" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SupportTables_AspNetUsers" Association="Self.FK_SupportTables_AspNetUsers">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="SupportTables" EntitySet="SupportTables" />
-    </AssociationSet>
     <AssociationSet Name="FK_SubCategoryTables_CategoryTables" Association="Self.FK_SubCategoryTables_CategoryTables">
       <End Role="CategoryTables" EntitySet="CategoryTables" />
       <End Role="SubCategoryTables" EntitySet="SubCategoryTables" />
@@ -436,11 +308,56 @@
       <End Role="VendorTables" EntitySet="VendorTables" />
       <End Role="OrderTables" EntitySet="OrderTables" />
     </AssociationSet>
-    <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
-      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-    </AssociationSet>
     <EntitySet Name="WithdrawalDetailsTables" EntityType="DB_A5731C_VasudaModel.WithdrawalDetailsTable" />
+    <EntitySet Name="WithdrawalRequestTables" EntityType="DB_A5731C_VasudaModel.WithdrawalRequestTable" />
+    <AssociationSet Name="FK_WithdrawalRequestTable_WithdrawalDetailsTable" Association="DB_A5731C_VasudaModel.FK_WithdrawalRequestTable_WithdrawalDetailsTable">
+      <End Role="WithdrawalDetailsTable" EntitySet="WithdrawalDetailsTables" />
+      <End Role="WithdrawalRequestTable" EntitySet="WithdrawalRequestTables" />
+    </AssociationSet>
+    <EntitySet Name="AspNetUsers" EntityType="DB_A5731C_VasudaModel.AspNetUser" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="DB_A5731C_VasudaModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="DB_A5731C_VasudaModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NotificationTables_AspNetUsers" Association="DB_A5731C_VasudaModel.FK_NotificationTables_AspNetUsers">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="NotificationTable" EntitySet="NotificationTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderTables_AspNetUsers" Association="DB_A5731C_VasudaModel.FK_OrderTables_AspNetUsers">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="OrderTable" EntitySet="OrderTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SupportTables_AspNetUsers" Association="DB_A5731C_VasudaModel.FK_SupportTables_AspNetUsers">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="SupportTable" EntitySet="SupportTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WithdrawalDetailsTable_AspNetUsers" Association="DB_A5731C_VasudaModel.FK_WithdrawalDetailsTable_AspNetUsers">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="WithdrawalDetailsTable" EntitySet="WithdrawalDetailsTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WithdrawalRequestTable_AspNetUsers" Association="DB_A5731C_VasudaModel.FK_WithdrawalRequestTable_AspNetUsers">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="WithdrawalRequestTable" EntitySet="WithdrawalRequestTables" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="DB_A5731C_VasudaModel.AspNetUserRoles">
+      <End Role="AspNetRole" EntitySet="AspNetRoles" />
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <EntitySet Name="FundingRequestTables" EntityType="DB_A5731C_VasudaModel.FundingRequestTable" />
+    <EntitySet Name="SystemAccountTables" EntityType="DB_A5731C_VasudaModel.SystemAccountTable" />
+    <AssociationSet Name="FK_FundingRequestTable_AspNetUsers" Association="DB_A5731C_VasudaModel.FK_FundingRequestTable_AspNetUsers">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="FundingRequestTable" EntitySet="FundingRequestTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundingRequestTable_SystemAccountTable" Association="DB_A5731C_VasudaModel.FK_FundingRequestTable_SystemAccountTable">
+      <End Role="SystemAccountTable" EntitySet="SystemAccountTables" />
+      <End Role="FundingRequestTable" EntitySet="FundingRequestTables" />
+    </AssociationSet>
+    <EntitySet Name="ExchangeRateTables" EntityType="DB_A5731C_VasudaModel.ExchangeRateTable" />
   </EntityContainer>
   <EntityType Name="WithdrawalDetailsTable">
     <Key>
@@ -450,6 +367,221 @@
     <Property Name="AccountName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="AccountNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
     <Property Name="BankName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="WithdrawalRequestTables" Relationship="DB_A5731C_VasudaModel.FK_WithdrawalRequestTable_WithdrawalDetailsTable" FromRole="WithdrawalDetailsTable" ToRole="WithdrawalRequestTable" />
+    <NavigationProperty Name="AspNetUser" Relationship="DB_A5731C_VasudaModel.FK_WithdrawalDetailsTable_AspNetUsers" FromRole="WithdrawalDetailsTable" ToRole="AspNetUser" />
+  </EntityType>
+  <EntityType Name="WithdrawalRequestTable">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="WithdrawalAccount" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="WithdrawalDetailsTable" Relationship="DB_A5731C_VasudaModel.FK_WithdrawalRequestTable_WithdrawalDetailsTable" FromRole="WithdrawalRequestTable" ToRole="WithdrawalDetailsTable" />
+    <NavigationProperty Name="AspNetUser" Relationship="DB_A5731C_VasudaModel.FK_WithdrawalRequestTable_AspNetUsers" FromRole="WithdrawalRequestTable" ToRole="AspNetUser" />
+  </EntityType>
+  <Association Name="FK_WithdrawalRequestTable_WithdrawalDetailsTable">
+    <End Type="DB_A5731C_VasudaModel.WithdrawalDetailsTable" Role="WithdrawalDetailsTable" Multiplicity="1" />
+    <End Type="DB_A5731C_VasudaModel.WithdrawalRequestTable" Role="WithdrawalRequestTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WithdrawalDetailsTable">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="WithdrawalRequestTable">
+        <PropertyRef Name="WithdrawalAccount" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AspNetUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Balance" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="DB_A5731C_VasudaModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="DB_A5731C_VasudaModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+    <NavigationProperty Name="NotificationTables" Relationship="DB_A5731C_VasudaModel.FK_NotificationTables_AspNetUsers" FromRole="AspNetUser" ToRole="NotificationTable" />
+    <NavigationProperty Name="OrderTables" Relationship="DB_A5731C_VasudaModel.FK_OrderTables_AspNetUsers" FromRole="AspNetUser" ToRole="OrderTable" />
+    <NavigationProperty Name="SupportTables" Relationship="DB_A5731C_VasudaModel.FK_SupportTables_AspNetUsers" FromRole="AspNetUser" ToRole="SupportTable" />
+    <NavigationProperty Name="WithdrawalDetailsTables" Relationship="DB_A5731C_VasudaModel.FK_WithdrawalDetailsTable_AspNetUsers" FromRole="AspNetUser" ToRole="WithdrawalDetailsTable" />
+    <NavigationProperty Name="WithdrawalRequestTables" Relationship="DB_A5731C_VasudaModel.FK_WithdrawalRequestTable_AspNetUsers" FromRole="AspNetUser" ToRole="WithdrawalRequestTable" />
+    <NavigationProperty Name="AspNetRoles" Relationship="DB_A5731C_VasudaModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+    <NavigationProperty Name="FundingRequestTables" Relationship="DB_A5731C_VasudaModel.FK_FundingRequestTable_AspNetUsers" FromRole="AspNetUser" ToRole="FundingRequestTable" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Type="DB_A5731C_VasudaModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="DB_A5731C_VasudaModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaim">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Type="DB_A5731C_VasudaModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="DB_A5731C_VasudaModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogin">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NotificationTables_AspNetUsers">
+    <End Type="DB_A5731C_VasudaModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+    <End Type="DB_A5731C_VasudaModel.NotificationTable" Role="NotificationTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="NotificationTable">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderTables_AspNetUsers">
+    <End Type="DB_A5731C_VasudaModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+    <End Type="DB_A5731C_VasudaModel.OrderTable" Role="OrderTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderTable">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SupportTables_AspNetUsers">
+    <End Type="DB_A5731C_VasudaModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+    <End Type="DB_A5731C_VasudaModel.SupportTable" Role="SupportTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SupportTable">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WithdrawalDetailsTable_AspNetUsers">
+    <End Type="DB_A5731C_VasudaModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+    <End Type="DB_A5731C_VasudaModel.WithdrawalDetailsTable" Role="WithdrawalDetailsTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="WithdrawalDetailsTable">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WithdrawalRequestTable_AspNetUsers">
+    <End Type="DB_A5731C_VasudaModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+    <End Type="DB_A5731C_VasudaModel.WithdrawalRequestTable" Role="WithdrawalRequestTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="WithdrawalRequestTable">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Type="DB_A5731C_VasudaModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+    <End Type="DB_A5731C_VasudaModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+  </Association>
+  <EntityType Name="FundingRequestTable">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="Userid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="SystemAccount" Type="Guid" />
+    <Property Name="PaymentStatus" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TransactionNarration" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PaymentType" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsApproved" Type="Boolean" />
+    <NavigationProperty Name="AspNetUser" Relationship="DB_A5731C_VasudaModel.FK_FundingRequestTable_AspNetUsers" FromRole="FundingRequestTable" ToRole="AspNetUser" />
+    <NavigationProperty Name="SystemAccountTable" Relationship="DB_A5731C_VasudaModel.FK_FundingRequestTable_SystemAccountTable" FromRole="FundingRequestTable" ToRole="SystemAccountTable" />
+  </EntityType>
+  <EntityType Name="SystemAccountTable">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="BankName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="AccountNumber" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="AccountName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="FundingRequestTables" Relationship="DB_A5731C_VasudaModel.FK_FundingRequestTable_SystemAccountTable" FromRole="SystemAccountTable" ToRole="FundingRequestTable" />
+  </EntityType>
+  <Association Name="FK_FundingRequestTable_AspNetUsers">
+    <End Type="DB_A5731C_VasudaModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+    <End Type="DB_A5731C_VasudaModel.FundingRequestTable" Role="FundingRequestTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FundingRequestTable">
+        <PropertyRef Name="Userid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundingRequestTable_SystemAccountTable">
+    <End Type="DB_A5731C_VasudaModel.SystemAccountTable" Role="SystemAccountTable" Multiplicity="0..1" />
+    <End Type="DB_A5731C_VasudaModel.FundingRequestTable" Role="FundingRequestTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemAccountTable">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FundingRequestTable">
+        <PropertyRef Name="SystemAccount" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ExchangeRateTable">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="BaseCurrency" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Rate" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="ConvertedCurrency" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
     <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
   </EntityType>

@@ -9,6 +9,7 @@ namespace VasudaDataAccess.Data_Access
 {
     public interface IExchangeRateTable : IRepository<ExchangeRateTable>
     {
-        List<ExchangeRateTable> GetExchangeRates(int? pageNum);
+        List<ExchangeRateTable> GetExchangeRates();
+        ExchangeRateTable GetSingleRate(string baseCurrency, string convertedCurrency);
     }
 }

@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VasudaDataAccess.DTOs;
+using VasudaDataAccess.Model;
 
 namespace VasudaDataAccess.Logic
 {
     public interface IWalletService
     {
-        Response<string> AddWithdrawalAccount();
-        Response<WalletViewModel> GetWalletHomePage();
+        Response<WalletViewModel> GetWalletHomePage(string userId);
         Response<TransactionViewModel> GetAllTransactionsHomePage();
+        Response<string> WithdrawalRequest(WithdrawalRequestTable model);
     }
 }

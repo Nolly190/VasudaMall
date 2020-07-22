@@ -12,13 +12,19 @@ namespace VasudaDataAccess.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class ExchangeRateTable
+    public partial class FundingRequestTable
     {
         public System.Guid Id { get; set; }
-        public string BaseCurrency { get; set; }
-        public decimal Rate { get; set; }
-        public string ConvertedCurrency { get; set; }
+        public string Userid { get; set; }
+        public Nullable<System.Guid> SystemAccount { get; set; }
+        public string PaymentStatus { get; set; }
+        public string Reason { get; set; }
+        public string TransactionNarration { get; set; }
+        public string PaymentType { get; set; }
         public bool IsActive { get; set; }
-        public System.DateTime DateCreated { get; set; }
+        public Nullable<bool> IsApproved { get; set; }
+    
+        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual SystemAccountTable SystemAccountTable { get; set; }
     }
 }

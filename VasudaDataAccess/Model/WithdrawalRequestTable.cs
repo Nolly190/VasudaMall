@@ -12,24 +12,17 @@ namespace VasudaDataAccess.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class WithdrawalDetailsTable
+    public partial class WithdrawalRequestTable
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public WithdrawalDetailsTable()
-        {
-            this.WithdrawalRequestTables = new HashSet<WithdrawalRequestTable>();
-        }
-    
         public string Id { get; set; }
-        public string AccountName { get; set; }
-        public string AccountNumber { get; set; }
-        public string BankName { get; set; }
-        public bool IsActive { get; set; }
-        public System.DateTime DateCreated { get; set; }
         public string UserId { get; set; }
+        public string WithdrawalAccount { get; set; }
+        public decimal Amount { get; set; }
+        public bool IsActive { get; set; }
+        public string Status { get; set; }
+        public System.DateTime DateCreated { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<WithdrawalRequestTable> WithdrawalRequestTables { get; set; }
+        public virtual WithdrawalDetailsTable WithdrawalDetailsTable { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
     }
 }

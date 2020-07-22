@@ -21,7 +21,7 @@ namespace VasudaDataAccess.Logic.Implementation
             _unitOfWork = new UnitOfWork(new VasudaModel());
         }
 
-        public Response<WalletViewModel> GetWalletHomePage()
+        public Response<WalletViewModel> GetWalletHomePage(string user)
         {
             var result = new Response<WalletViewModel>
             {
@@ -34,12 +34,21 @@ namespace VasudaDataAccess.Logic.Implementation
             model.ExchangeRates = new List<ExchangeRateTable>();
             model.PaymentHistory = new List<PaymentHistoryTable>();
             model.Banks = new List<BankTable>();
+            model.SystemAccounts = new List<SystemAccountTable>();
             try
             {
-                model.ExchangeRates = _unitOfWork.ExchangeRateTable.GetExchangeRates(null);
+                model.ExchangeRates = _unitOfWork.ExchangeRateTable.GetExchangeRates();
                 model.PaymentHistory = _unitOfWork.PaymentHistoryTable.GetRecentTransactionsHistory(null);
-                model.WithdrawalAccounts = _unitOfWork.WithdrawalDetailsTable.GetWithdrawalAccounts(null);
+                model.WithdrawalAccounts = _unitOfWork.WithdrawalDetailsTable.GetAll(x=>x.UserId==user && x.IsActive).ToList();
                 model.Banks = _unitOfWork.BankTable.GetAllActiveBanks();
+                var userInfo = _unitOfWork.AspNetUser.Get(user);
+                model.DollarBal = userInfo?.Balance.ToString();
+                var getRate = _unitOfWork.ExchangeRateTable.GetSingleRate("Dollar", "Yuan");
+                model.YuanBal = getRate!=null? (Math.Round((userInfo.Balance*getRate.Rate),2)).ToString() :"0";
+                getRate = _unitOfWork.ExchangeRateTable.GetSingleRate("Dollar", "Naira");
+                model.DollarToNairaRate = getRate != null ? getRate.Rate.ToString() : "0";
+                model.NairaBal = getRate != null ? (Math.Round((userInfo.Balance * getRate.Rate), 2)).ToString() : "0";
+                model.SystemAccounts = _unitOfWork.SystemAccountTable.GetAll(x=>x.IsActive).ToList();
                 result.Status = true;
             }
             catch (Exception ex)
@@ -50,7 +59,6 @@ namespace VasudaDataAccess.Logic.Implementation
             result.SetResult(model);
             return result;
         }
-
         public Response<TransactionViewModel> GetAllTransactionsHomePage()
         {
             var result = new Response<TransactionViewModel>
@@ -74,9 +82,50 @@ namespace VasudaDataAccess.Logic.Implementation
             result.SetResult(model);
             return result;
         }
-        public Response<string> AddWithdrawalAccount()
+
+        public Response<string> WithdrawalRequest(WithdrawalRequestTable model)
         {
-            throw new NotImplementedException();
+            var response = new Response<string>()
+            {
+                Message = "Could not add request",
+                Status = false,
+            };
+            try
+            {
+                var getBalance = _unitOfWork.AspNetUser.Get(model.UserId);
+                if (getBalance==null)
+                {
+                    response.Message = "Could not retrieve user balance";
+                    return response;
+                }
+
+                if (getBalance.Balance < model.Amount)
+                {
+                    response.Message = "Amount is more than your balance";
+                    return response;
+                }
+
+                getBalance.Balance = getBalance.Balance - model.Amount;
+                model.Status = FundWithdrawalStatus.Pending.ToString();
+                model.DateCreated = DateTime.UtcNow.AddHours(1);
+                model.Id = Guid.NewGuid().ToString();
+                model.IsActive =true;
+                _unitOfWork.WithdrawalRequestTable.Add(model);
+                _unitOfWork.Complete();
+                response.Status = true;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+            }
+            return response;
         }
+    }
+
+    public enum FundWithdrawalStatus
+    {
+        Pending,
+        Approved,
+        Declined,
     }
 }

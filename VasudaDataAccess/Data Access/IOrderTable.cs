@@ -10,4 +10,16 @@ namespace VasudaDataAccess.Data_Access
     public interface IOrderTable : IRepository<OrderTable>
     {
     }
+    public interface IAspNetUser : IRepository<AspNetUser>
+    {
+    }
+    public interface IWithdrawalRequestTable : IRepository<WithdrawalRequestTable>
+    {
+    }
+    public interface ISystemAccountTable : IRepository<SystemAccountTable>
+    {
+    }
+    public interface IFundingRequestTable : IRepository<FundingRequestTable>
+    {
+    }
 }

@@ -27,5 +27,37 @@ namespace VasudaDataAccess.Data_Access.Implentations
         {
             return dbcontext.Set<BankTable>().Where(x => x.IsActive == true).ToList();
         }
+    } 
+    public class FundingRequestTableRepo : Repository<FundingRequestTable>, IFundingRequestTable
+    {
+        public FundingRequestTableRepo(DbContext context) : base(context)
+        {
+
+        }
+
+        public DbContext Context
+        {
+            get
+            {
+                return dbcontext as DbContext;
+            }
+        }
+
+    }
+    public class SystemAccountTableRepo : Repository<SystemAccountTable>, ISystemAccountTable
+    {
+        public SystemAccountTableRepo(DbContext context) : base(context)
+        {
+
+        }
+
+        public DbContext Context
+        {
+            get
+            {
+                return dbcontext as DbContext;
+            }
+        }
+
     }
 }

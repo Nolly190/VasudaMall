@@ -64,6 +64,7 @@
     <Property Name="AccessFailedCount" Type="int" Nullable="false" />
     <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
     <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="FullName" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="AuditTrialTables">
     <Key>
@@ -113,11 +114,25 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="RateType" Type="nvarchar(max)" />
+    <Property Name="BaseCurrency" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Rate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-    <Property Name="Currency" Type="nvarchar(max)" />
+    <Property Name="ConvertedCurrency" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
     <Property Name="DateCreated" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FundingRequestTable">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Userid" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="SystemAccount" Type="uniqueidentifier" />
+    <Property Name="PaymentStatus" Type="varchar(max)" Nullable="false" />
+    <Property Name="Reason" Type="varchar(max)" />
+    <Property Name="TransactionNarration" Type="varchar(max)" />
+    <Property Name="PaymentType" Type="varchar(max)" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="IsApproved" Type="bit" />
   </EntityType>
   <EntityType Name="ImageTables">
     <Key>
@@ -243,6 +258,17 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
+  <EntityType Name="SystemAccountTable">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="BankName" Type="varchar(max)" Nullable="false" />
+    <Property Name="AccountNumber" Type="varchar(max)" Nullable="false" />
+    <Property Name="AccountName" Type="varchar(max)" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="DateCreated" Type="datetime" Nullable="false" />
+  </EntityType>
   <EntityType Name="VendorTables">
     <Key>
       <PropertyRef Name="Id" />
@@ -261,6 +287,19 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
     <Property Name="AccountNumber" Type="nvarchar" MaxLength="20" Nullable="false" />
     <Property Name="BankName" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="DateCreated" Type="datetime" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WithdrawalRequestTable">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="WithdrawalAccount" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="DateCreated" Type="datetime" Nullable="false" />
   </EntityType>
   <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
@@ -316,6 +355,30 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
       </Principal>
       <Dependent Role="AspNetUserRoles">
         <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundingRequestTable_AspNetUsers">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+    <End Role="FundingRequestTable" Type="Self.FundingRequestTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FundingRequestTable">
+        <PropertyRef Name="Userid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FundingRequestTable_SystemAccountTable">
+    <End Role="SystemAccountTable" Type="Self.SystemAccountTable" Multiplicity="0..1" />
+    <End Role="FundingRequestTable" Type="Self.FundingRequestTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemAccountTable">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FundingRequestTable">
+        <PropertyRef Name="SystemAccount" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -403,6 +466,42 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_WithdrawalDetailsTable_AspNetUsers">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+    <End Role="WithdrawalDetailsTable" Type="Self.WithdrawalDetailsTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="WithdrawalDetailsTable">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WithdrawalRequestTable_AspNetUsers">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+    <End Role="WithdrawalRequestTable" Type="Self.WithdrawalRequestTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="WithdrawalRequestTable">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WithdrawalRequestTable_WithdrawalDetailsTable">
+    <End Role="WithdrawalDetailsTable" Type="Self.WithdrawalDetailsTable" Multiplicity="1" />
+    <End Role="WithdrawalRequestTable" Type="Self.WithdrawalRequestTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WithdrawalDetailsTable">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="WithdrawalRequestTable">
+        <PropertyRef Name="WithdrawalAccount" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="DB_A5731C_VasudaModelStoreContainer">
     <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -415,6 +514,7 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
     <EntitySet Name="CategoryTables" EntityType="Self.CategoryTables" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ContactTable" EntityType="Self.ContactTable" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ExchangeRateTables" EntityType="Self.ExchangeRateTables" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FundingRequestTable" EntityType="Self.FundingRequestTable" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ImageTables" EntityType="Self.ImageTables" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderTables" EntityType="Self.OrderTables" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PaymentHistoryTables" EntityType="Self.PaymentHistoryTables" Schema="dbo" store:Type="Tables" />
@@ -424,8 +524,10 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
     <EntitySet Name="SubCategoryTables" EntityType="Self.SubCategoryTables" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SupportTables" EntityType="Self.SupportTables" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SystemAccountTable" EntityType="Self.SystemAccountTable" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="VendorTables" EntityType="Self.VendorTables" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WithdrawalDetailsTable" EntityType="Self.WithdrawalDetailsTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WithdrawalRequestTable" EntityType="Self.WithdrawalRequestTable" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="NotificationTables" EntityType="Self.NotificationTables" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [NotificationTables].[Id] AS [Id], 
@@ -451,6 +553,14 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
     <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundingRequestTable_AspNetUsers" Association="Self.FK_FundingRequestTable_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="FundingRequestTable" EntitySet="FundingRequestTable" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FundingRequestTable_SystemAccountTable" Association="Self.FK_FundingRequestTable_SystemAccountTable">
+      <End Role="SystemAccountTable" EntitySet="SystemAccountTable" />
+      <End Role="FundingRequestTable" EntitySet="FundingRequestTable" />
     </AssociationSet>
     <AssociationSet Name="FK_ImageTables_OrderTables" Association="Self.FK_ImageTables_OrderTables">
       <End Role="OrderTables" EntitySet="OrderTables" />
@@ -479,6 +589,18 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
     <AssociationSet Name="FK_SupportTables_AspNetUsers" Association="Self.FK_SupportTables_AspNetUsers">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="SupportTables" EntitySet="SupportTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WithdrawalDetailsTable_AspNetUsers" Association="Self.FK_WithdrawalDetailsTable_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="WithdrawalDetailsTable" EntitySet="WithdrawalDetailsTable" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WithdrawalRequestTable_AspNetUsers" Association="Self.FK_WithdrawalRequestTable_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="WithdrawalRequestTable" EntitySet="WithdrawalRequestTable" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WithdrawalRequestTable_WithdrawalDetailsTable" Association="Self.FK_WithdrawalRequestTable_WithdrawalDetailsTable">
+      <End Role="WithdrawalDetailsTable" EntitySet="WithdrawalDetailsTable" />
+      <End Role="WithdrawalRequestTable" EntitySet="WithdrawalRequestTable" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

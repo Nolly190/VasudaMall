@@ -620,3 +620,4 @@ C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\obj\Debug\VasudaMall.
 C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\obj\Debug\VasudaMall.csproj.CopyComplete
 C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\obj\Debug\VasudaMall.dll
 C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\obj\Debug\VasudaMall.pdb
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\obj\Debug\VasudaMall.Migrations.AddedFullName.resources
