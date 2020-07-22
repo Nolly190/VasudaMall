@@ -16,4 +16,10 @@ namespace VasudaDataAccess.Data_Access
     public interface IWithdrawalRequestTable : IRepository<WithdrawalRequestTable>
     {
     }
+    public interface ISystemAccountTable : IRepository<SystemAccountTable>
+    {
+    }
+    public interface IFundingRequestTable : IRepository<FundingRequestTable>
+    {
+    }
 }

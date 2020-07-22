@@ -85,18 +85,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ExchangeRateTables">
-      <EntityTypeMapping TypeName="DB_A5731C_VasudaModel.ExchangeRateTable">
-        <MappingFragment StoreEntitySet="ExchangeRateTables">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="RateType" ColumnName="RateType" />
-          <ScalarProperty Name="Rate" ColumnName="Rate" />
-          <ScalarProperty Name="Currency" ColumnName="Currency" />
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ImageTables">
       <EntityTypeMapping TypeName="DB_A5731C_VasudaModel.ImageTable">
         <MappingFragment StoreEntitySet="ImageTables">
@@ -293,5 +281,44 @@
         <ScalarProperty Name="Id" ColumnName="RoleId" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="FundingRequestTables">
+      <EntityTypeMapping TypeName="DB_A5731C_VasudaModel.FundingRequestTable">
+        <MappingFragment StoreEntitySet="FundingRequestTable">
+          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
+          <ScalarProperty Name="TransactionNarration" ColumnName="TransactionNarration" />
+          <ScalarProperty Name="Reason" ColumnName="Reason" />
+          <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+          <ScalarProperty Name="SystemAccount" ColumnName="SystemAccount" />
+          <ScalarProperty Name="Userid" ColumnName="Userid" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SystemAccountTables">
+      <EntityTypeMapping TypeName="DB_A5731C_VasudaModel.SystemAccountTable">
+        <MappingFragment StoreEntitySet="SystemAccountTable">
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+          <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+          <ScalarProperty Name="BankName" ColumnName="BankName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExchangeRateTables">
+      <EntityTypeMapping TypeName="DB_A5731C_VasudaModel.ExchangeRateTable">
+        <MappingFragment StoreEntitySet="ExchangeRateTables">
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ConvertedCurrency" ColumnName="ConvertedCurrency" />
+          <ScalarProperty Name="Rate" ColumnName="Rate" />
+          <ScalarProperty Name="BaseCurrency" ColumnName="BaseCurrency" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

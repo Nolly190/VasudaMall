@@ -49,6 +49,11 @@ namespace VasudaMall.Controllers
         public JsonResult ResolveAccount(WithdrawalDetailsTable model)
         {
            return Json(_paymentService.GetValidAccountName(model.BankName, model.AccountNumber), JsonRequestBehavior.AllowGet);
+        } 
+        public JsonResult WithdrawalRequest(WithdrawalRequestTable model)
+        {
+            model.UserId = User.Identity.GetUserId();
+           return Json(_walletService.WithdrawalRequest(model), JsonRequestBehavior.AllowGet);
         }
 
         public new ActionResult Profile()

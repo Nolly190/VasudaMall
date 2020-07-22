@@ -33,7 +33,6 @@ namespace VasudaDataAccess.Model
         public virtual DbSet<BankTable> BankTables { get; set; }
         public virtual DbSet<CategoryTable> CategoryTables { get; set; }
         public virtual DbSet<ContactTable> ContactTables { get; set; }
-        public virtual DbSet<ExchangeRateTable> ExchangeRateTables { get; set; }
         public virtual DbSet<ImageTable> ImageTables { get; set; }
         public virtual DbSet<OrderTable> OrderTables { get; set; }
         public virtual DbSet<PaymentHistoryTable> PaymentHistoryTables { get; set; }
@@ -48,5 +47,8 @@ namespace VasudaDataAccess.Model
         public virtual DbSet<WithdrawalDetailsTable> WithdrawalDetailsTables { get; set; }
         public virtual DbSet<WithdrawalRequestTable> WithdrawalRequestTables { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<FundingRequestTable> FundingRequestTables { get; set; }
+        public virtual DbSet<SystemAccountTable> SystemAccountTables { get; set; }
+        public virtual DbSet<ExchangeRateTable> ExchangeRateTables { get; set; }
     }
 }

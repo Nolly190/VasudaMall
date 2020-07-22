@@ -157,27 +157,31 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exchangeRate">Exchange Rate</label>
-                                                        <input type="text" class="form-control form-control-sm" id="exchangeRate" placeholder="Exchange Rate" readonly>
+                                                        <input type="text" class="form-control form-control-sm" id="exchangeRate" value="@Model.DollarToNairaRate" placeholder="Exchange Rate" readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="withdrawalAmount">Naira Amount</label>
+                                                        <input type="number" class="form-control form-control-sm" required data-formname="Withdrawal Amount" id="NairaAmount" placeholder="Enter amount in naira">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="withdrawalAmount">Withdrawal Amount</label>
-                                                        <input type="text" class="form-control form-control-sm" id="withdrawalAmount" placeholder="Enter withdrrawal amount">
+                                                        <input type="text" class="form-control form-control-sm" required data-formname="Withdrawal Amount" readonly id="withdrawalAmount" placeholder="Enter withdrawal amount">
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Destination Account</label>
-                                                        <select class="form-control-sm select2" style="width: 100%;" id="withdrawalAccountsList">
+                                                        <select class="form-control-sm select2" style="width: 100%;" required data-formname="Bank Account" id="withdrawalAccountsList">
                                                             <option value="" selected>Select Withdrawal Account</option>
 
                                                             @foreach (var account in Model.WithdrawalAccounts)
                                                             {
-                                                                <option value="@account.AccountNumber">@account.AccountNumber @account.BankName</option>
+                                                                <option value="@account.Id">@account.AccountNumber @account.BankName</option>
                                                             }
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <!-- /.card-body -->
                                                 <div class="card-footer">
-                                                    <button type="submit" class="btn btn-info">Submit Request</button>
+                                                    <button type="button" id="SubmitRequest" class="btn btn-info">Submit Request</button>
                                                 </div>
                                                 <!-- /.card-footer -->
                                             </form>
@@ -189,9 +193,53 @@
                                     <!--Make Withdrawal start-->
                                     <div class="tab-pane fade" id="fund-account" role="tabpanel" aria-labelledby="make-withdrawal-tab">
                                         <!--Make withdrawal Form start-->
+                                        <!--Make withdrawal Form start-->
                                         <div class="card card-info">
                                             <!--Form start -->
-                                          </div>
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label>Channel</label>
+                                                    <select class="form-control-sm select2" style="width: 100%;" id="PaymentChannel">
+                                                        <option value="" selected>Select Withdrawal Account</option>
+                                                        <option value="" selected>Online</option>
+                                                        <option value="" selected>Bank Deposit</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Bank</label>
+                                                    <select class="form-control-sm select2" style="width: 100%;" id="SystemAccount">
+                                                        <option value="" selected>Select Bank for deposits</option>
+                                                        @foreach (var item in Model.SystemAccounts)
+                                                        {
+                                                            <option value="@item.AccountName||@item.AccountNumber">@item.BankName</option>
+                                                        }
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="accountBalance">Amount</label>
+                                                    <input type="text" class="form-control form-control-sm" required data-formname="Amount"  id="fundingAmount" placeholder="Amount" >
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exchangeRate">Exchange Rate</label>
+                                                    <input type="text" class="form-control form-control-sm" value="@Model.DollarToNairaRate" placeholder="Exchange Rate" readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="withdrawalAmount">Dollars Amount</label>
+                                                    <input type="text" class="form-control form-control-sm" placeholder="Enter amount in naira">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="withdrawalAmount">Payment Narration</label>
+                                                    <input type="text" class="form-control form-control-sm" id="Narration" placeholder="Enter naration">
+                                                </div>
+
+                                            </div>
+                                                <!-- /.card-body -->
+                                                <div class="card-footer">
+                                                    <button type="button" id="Fund" class="btn btn-info">Fund wallet</button>
+                                                </div>
+                                                <!-- /.card-footer -->
+                                        </div>
                                         <!--Make Withdrawal Form end-->
                                         <!-- /.card -->
                                     </div>
@@ -223,15 +271,21 @@
                                 <table id="exchangeRateable" class="table table-bordered table-striped table-hover table-sm">
                                     <thead>
                                         <tr>
-                                            <th>Dollar to Naira</th>
-                                            <th>Dollar to Yuan</th>
+                                            <th>Base Currency</th>
+                                            <th>Converted Currency</th>
+                                            <th>Rate</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    @foreach (var item in Model.ExchangeRates)
+                                    {
+                                        
                                         <tr>
-                                            <td>$1 equals #350</td>
-                                            <td>$1 equals 7Yuan</td>
+                                            <td>@item.BaseCurrency</td>
+                                            <td>@item.ConvertedCurrency</td>
+                                            <td>@item.Rate</td>
                                         </tr>
+                                    }
                                     </tbody>
                                 </table>
                             }

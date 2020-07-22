@@ -25,6 +25,7 @@ namespace VasudaDataAccess.Model
             this.WithdrawalDetailsTables = new HashSet<WithdrawalDetailsTable>();
             this.WithdrawalRequestTables = new HashSet<WithdrawalRequestTable>();
             this.AspNetRoles = new HashSet<AspNetRole>();
+            this.FundingRequestTables = new HashSet<FundingRequestTable>();
         }
     
         public string Id { get; set; }
@@ -61,5 +62,7 @@ namespace VasudaDataAccess.Model
         public virtual ICollection<WithdrawalRequestTable> WithdrawalRequestTables { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FundingRequestTable> FundingRequestTables { get; set; }
     }
 }

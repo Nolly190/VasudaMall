@@ -119,11 +119,25 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="RateType" Type="nvarchar(max)" />
+          <Property Name="BaseCurrency" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Rate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Currency" Type="nvarchar(max)" />
+          <Property Name="ConvertedCurrency" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FundingRequestTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Userid" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="SystemAccount" Type="uniqueidentifier" />
+          <Property Name="PaymentStatus" Type="varchar(max)" Nullable="false" />
+          <Property Name="Reason" Type="varchar(max)" />
+          <Property Name="TransactionNarration" Type="varchar(max)" />
+          <Property Name="PaymentType" Type="varchar(max)" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsApproved" Type="bit" />
         </EntityType>
         <EntityType Name="ImageTables">
           <Key>
@@ -249,6 +263,17 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="SystemAccountTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="BankName" Type="varchar(max)" Nullable="false" />
+          <Property Name="AccountNumber" Type="varchar(max)" Nullable="false" />
+          <Property Name="AccountName" Type="varchar(max)" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="VendorTables">
           <Key>
             <PropertyRef Name="Id" />
@@ -335,6 +360,30 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
             </Principal>
             <Dependent Role="AspNetUserRoles">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FundingRequestTable_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="FundingRequestTable" Type="Self.FundingRequestTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FundingRequestTable">
+              <PropertyRef Name="Userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FundingRequestTable_SystemAccountTable">
+          <End Role="SystemAccountTable" Type="Self.SystemAccountTable" Multiplicity="0..1" />
+          <End Role="FundingRequestTable" Type="Self.FundingRequestTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemAccountTable">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FundingRequestTable">
+              <PropertyRef Name="SystemAccount" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -470,6 +519,7 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
           <EntitySet Name="CategoryTables" EntityType="Self.CategoryTables" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ContactTable" EntityType="Self.ContactTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExchangeRateTables" EntityType="Self.ExchangeRateTables" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FundingRequestTable" EntityType="Self.FundingRequestTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ImageTables" EntityType="Self.ImageTables" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderTables" EntityType="Self.OrderTables" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentHistoryTables" EntityType="Self.PaymentHistoryTables" Schema="dbo" store:Type="Tables" />
@@ -479,6 +529,7 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
           <EntitySet Name="SubCategoryTables" EntityType="Self.SubCategoryTables" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SupportTables" EntityType="Self.SupportTables" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemAccountTable" EntityType="Self.SystemAccountTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VendorTables" EntityType="Self.VendorTables" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WithdrawalDetailsTable" EntityType="Self.WithdrawalDetailsTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WithdrawalRequestTable" EntityType="Self.WithdrawalRequestTable" Schema="dbo" store:Type="Tables" />
@@ -507,6 +558,14 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FundingRequestTable_AspNetUsers" Association="Self.FK_FundingRequestTable_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="FundingRequestTable" EntitySet="FundingRequestTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FundingRequestTable_SystemAccountTable" Association="Self.FK_FundingRequestTable_SystemAccountTable">
+            <End Role="SystemAccountTable" EntitySet="SystemAccountTable" />
+            <End Role="FundingRequestTable" EntitySet="FundingRequestTable" />
           </AssociationSet>
           <AssociationSet Name="FK_ImageTables_OrderTables" Association="Self.FK_ImageTables_OrderTables">
             <End Role="OrderTables" EntitySet="OrderTables" />
@@ -635,17 +694,6 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
           <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="ExchangeRateTable">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="RateType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Currency" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="ImageTable">
           <Key>
@@ -845,7 +893,6 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
           <EntitySet Name="BankTables" EntityType="Self.BankTable" />
           <EntitySet Name="CategoryTables" EntityType="Self.CategoryTable" />
           <EntitySet Name="ContactTables" EntityType="Self.ContactTable" />
-          <EntitySet Name="ExchangeRateTables" EntityType="Self.ExchangeRateTable" />
           <EntitySet Name="ImageTables" EntityType="Self.ImageTable" />
           <EntitySet Name="OrderTables" EntityType="Self.OrderTable" />
           <EntitySet Name="PaymentHistoryTables" EntityType="Self.PaymentHistoryTable" />
@@ -912,6 +959,17 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="FundingRequestTables" EntityType="DB_A5731C_VasudaModel.FundingRequestTable" />
+          <EntitySet Name="SystemAccountTables" EntityType="DB_A5731C_VasudaModel.SystemAccountTable" />
+          <AssociationSet Name="FK_FundingRequestTable_AspNetUsers" Association="DB_A5731C_VasudaModel.FK_FundingRequestTable_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="FundingRequestTable" EntitySet="FundingRequestTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FundingRequestTable_SystemAccountTable" Association="DB_A5731C_VasudaModel.FK_FundingRequestTable_SystemAccountTable">
+            <End Role="SystemAccountTable" EntitySet="SystemAccountTables" />
+            <End Role="FundingRequestTable" EntitySet="FundingRequestTables" />
+          </AssociationSet>
+          <EntitySet Name="ExchangeRateTables" EntityType="DB_A5731C_VasudaModel.ExchangeRateTable" />
         </EntityContainer>
         <EntityType Name="WithdrawalDetailsTable">
           <Key>
@@ -982,6 +1040,7 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
           <NavigationProperty Name="WithdrawalDetailsTables" Relationship="DB_A5731C_VasudaModel.FK_WithdrawalDetailsTable_AspNetUsers" FromRole="AspNetUser" ToRole="WithdrawalDetailsTable" />
           <NavigationProperty Name="WithdrawalRequestTables" Relationship="DB_A5731C_VasudaModel.FK_WithdrawalRequestTable_AspNetUsers" FromRole="AspNetUser" ToRole="WithdrawalRequestTable" />
           <NavigationProperty Name="AspNetRoles" Relationship="DB_A5731C_VasudaModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+          <NavigationProperty Name="FundingRequestTables" Relationship="DB_A5731C_VasudaModel.FK_FundingRequestTable_AspNetUsers" FromRole="AspNetUser" ToRole="FundingRequestTable" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="DB_A5731C_VasudaModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
@@ -1075,6 +1134,69 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
           <End Type="DB_A5731C_VasudaModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="DB_A5731C_VasudaModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
+        <EntityType Name="FundingRequestTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Userid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SystemAccount" Type="Guid" />
+          <Property Name="PaymentStatus" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TransactionNarration" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentType" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsApproved" Type="Boolean" />
+          <NavigationProperty Name="AspNetUser" Relationship="DB_A5731C_VasudaModel.FK_FundingRequestTable_AspNetUsers" FromRole="FundingRequestTable" ToRole="AspNetUser" />
+          <NavigationProperty Name="SystemAccountTable" Relationship="DB_A5731C_VasudaModel.FK_FundingRequestTable_SystemAccountTable" FromRole="FundingRequestTable" ToRole="SystemAccountTable" />
+        </EntityType>
+        <EntityType Name="SystemAccountTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="BankName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AccountNumber" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AccountName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="FundingRequestTables" Relationship="DB_A5731C_VasudaModel.FK_FundingRequestTable_SystemAccountTable" FromRole="SystemAccountTable" ToRole="FundingRequestTable" />
+        </EntityType>
+        <Association Name="FK_FundingRequestTable_AspNetUsers">
+          <End Type="DB_A5731C_VasudaModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="DB_A5731C_VasudaModel.FundingRequestTable" Role="FundingRequestTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FundingRequestTable">
+              <PropertyRef Name="Userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FundingRequestTable_SystemAccountTable">
+          <End Type="DB_A5731C_VasudaModel.SystemAccountTable" Role="SystemAccountTable" Multiplicity="0..1" />
+          <End Type="DB_A5731C_VasudaModel.FundingRequestTable" Role="FundingRequestTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemAccountTable">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FundingRequestTable">
+              <PropertyRef Name="SystemAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ExchangeRateTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="BaseCurrency" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Rate" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ConvertedCurrency" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1162,18 +1284,6 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Message" ColumnName="Message" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ExchangeRateTables">
-            <EntityTypeMapping TypeName="DB_A5731C_VasudaModel.ExchangeRateTable">
-              <MappingFragment StoreEntitySet="ExchangeRateTables">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="RateType" ColumnName="RateType" />
-                <ScalarProperty Name="Rate" ColumnName="Rate" />
-                <ScalarProperty Name="Currency" ColumnName="Currency" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1373,6 +1483,45 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="FundingRequestTables">
+            <EntityTypeMapping TypeName="DB_A5731C_VasudaModel.FundingRequestTable">
+              <MappingFragment StoreEntitySet="FundingRequestTable">
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
+                <ScalarProperty Name="TransactionNarration" ColumnName="TransactionNarration" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+                <ScalarProperty Name="SystemAccount" ColumnName="SystemAccount" />
+                <ScalarProperty Name="Userid" ColumnName="Userid" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SystemAccountTables">
+            <EntityTypeMapping TypeName="DB_A5731C_VasudaModel.SystemAccountTable">
+              <MappingFragment StoreEntitySet="SystemAccountTable">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExchangeRateTables">
+            <EntityTypeMapping TypeName="DB_A5731C_VasudaModel.ExchangeRateTable">
+              <MappingFragment StoreEntitySet="ExchangeRateTables">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ConvertedCurrency" ColumnName="ConvertedCurrency" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="BaseCurrency" ColumnName="BaseCurrency" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

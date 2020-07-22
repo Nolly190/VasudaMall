@@ -23,9 +23,22 @@ namespace VasudaDataAccess.Data_Access.Implentations
             }
         }
 
-        public List<ExchangeRateTable> GetExchangeRates(int? pageNum)
+        public List<ExchangeRateTable> GetExchangeRates()
         {
-            return pageNum.HasValue ? dbcontext.Set<ExchangeRateTable>().Where(x => x.IsActive == true).Skip(pageNum.Value * 10).Take(10).ToList() : dbcontext.Set<ExchangeRateTable>().Where(x => x.IsActive == true).Take(10).ToList();
+            return  dbcontext.Set<ExchangeRateTable>().Where(x => x.IsActive == true).ToList();
+        }
+
+        public ExchangeRateTable GetSingleRate(string baseCurrency, string convertedCurrency)
+        {
+            var rec = dbcontext.Set<ExchangeRateTable>().Where(x =>
+                x.BaseCurrency.ToLower() == baseCurrency.ToLower() &&
+                x.ConvertedCurrency.ToLower() ==convertedCurrency.ToLower() && x.IsActive).ToList();
+            if (rec.Any())
+            {
+              return  rec.LastOrDefault();
+            }
+
+            return null;
         }
     }
 }

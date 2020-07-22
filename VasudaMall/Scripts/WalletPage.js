@@ -63,6 +63,7 @@
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.value) {
+                $(".Main-loader").show();
                 var id = $(this).data('id');
                 $.ajax({
                     url: "/Dashboard/DeleteAccount",
@@ -133,4 +134,45 @@
         }
 
     });
+
+    $("#NairaAmount").keyup(function () {
+
+        var result = parseFloat($("#NairaAmount").val()) / parseFloat($("#exchangeRate").val());
+        if (parseInt(result) >= 1) {
+
+            $("#withdrawalAmount").val(result.toFixed(2));
+            return;
+        }
+
+        $("#withdrawalAmount").val("0");
+        return;
+    });
+
+
+    $("#SubmitRequest").click(function () {
+        if (StartValidation("makeWithdrawalForm")) {
+            $(".Main-loader").show();
+            var details = {};
+            details.Amount = $("#withdrawalAmount").val();
+            details.WithdrawalAccount = $("#withdrawalAccountsList").val();
+            $.ajax({
+                url: "/Dashboard/WithdrawalRequest",
+                type: "Post",
+                data: { model: details },
+                error: function (status, xhr) {
+                    $(".Main-loader").hide();
+                },
+                success: function (result) {
+                    $(".Main-loader").hide();
+                    Swal.fire(result.Message);
+                }
+
+            });
+        }
+
+       
+
+    });
+
+
 });

@@ -26,9 +26,13 @@ namespace VasudaDataAccess.Data_Access.Implentations
             ContactTable = new ContactTableRepo(context);
             AspNetUser = new AspNetUserRepo(context);
             WithdrawalRequestTable = new WithdrawalRequestTableRepo(context);
+            FundingRequestTable = new FundingRequestTableRepo(context);
+            SystemAccountTable = new SystemAccountTableRepo(context);
         }
 
         public IAspNetUser AspNetUser { get; }
+        public ISystemAccountTable SystemAccountTable { get; }
+        public IFundingRequestTable FundingRequestTable { get; }
         public IWithdrawalRequestTable WithdrawalRequestTable { get; }
         public IContactTable ContactTable { get; }
         public ICategoryTable CategoryTable { get; }

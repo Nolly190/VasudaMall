@@ -13,7 +13,6 @@
         <EntityTypeShape EntityType="DB_A5731C_VasudaModel.BankTable" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_A5731C_VasudaModel.CategoryTable" Width="1.5" PointX="7.75" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_A5731C_VasudaModel.ContactTable" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_A5731C_VasudaModel.ExchangeRateTable" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_A5731C_VasudaModel.ImageTable" Width="1.5" PointX="10.5" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_A5731C_VasudaModel.OrderTable" Width="1.5" PointX="8.25" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_A5731C_VasudaModel.PaymentHistoryTable" Width="1.5" PointX="10.75" PointY="11.75" IsExpanded="true" />
@@ -41,6 +40,11 @@
         <AssociationConnector Association="DB_A5731C_VasudaModel.FK_WithdrawalDetailsTable_AspNetUsers" />
         <AssociationConnector Association="DB_A5731C_VasudaModel.FK_WithdrawalRequestTable_AspNetUsers" />
         <AssociationConnector Association="DB_A5731C_VasudaModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="DB_A5731C_VasudaModel.FundingRequestTable" Width="1.5" PointX="13.375" PointY="7.75" />
+        <EntityTypeShape EntityType="DB_A5731C_VasudaModel.SystemAccountTable" Width="1.5" PointX="13.375" PointY="11.75" />
+        <AssociationConnector Association="DB_A5731C_VasudaModel.FK_FundingRequestTable_AspNetUsers" />
+        <AssociationConnector Association="DB_A5731C_VasudaModel.FK_FundingRequestTable_SystemAccountTable" />
+        <EntityTypeShape EntityType="DB_A5731C_VasudaModel.ExchangeRateTable" Width="1.5" PointX="9.375" PointY="14.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
