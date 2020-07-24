@@ -13,5 +13,6 @@ namespace VasudaDataAccess.Logic
         Response<WalletViewModel> GetWalletHomePage(string userId);
         Response<TransactionViewModel> GetAllTransactionsHomePage();
         Response<string> WithdrawalRequest(WithdrawalRequestTable model);
+        Response<FlutterPaymentDetails> FundingRequest(FundingRequestTable model);
     }
 }

@@ -621,3 +621,10 @@ C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\obj\Debug\VasudaMall.
 C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\obj\Debug\VasudaMall.dll
 C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\obj\Debug\VasudaMall.pdb
 C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\obj\Debug\VasudaMall.Migrations.AddedFullName.resources
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\obj\Debug\VasudaMall.Migrations.AddedDateCreated.resources
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\bin\System.Net.Http.Formatting.dll
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\bin\System.Web.Http.dll
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\bin\System.Web.Http.WebHost.dll
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\bin\System.Net.Http.Formatting.xml
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\bin\System.Web.Http.xml
+C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\bin\System.Web.Http.WebHost.xml

@@ -21,6 +21,8 @@ namespace VasudaDataAccess.Model
         public bool IsActive { get; set; }
         public string Status { get; set; }
         public System.DateTime DateCreated { get; set; }
+        public decimal Rate { get; set; }
+        public bool IsApproved { get; set; }
     
         public virtual WithdrawalDetailsTable WithdrawalDetailsTable { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }

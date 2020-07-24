@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using VasudaDataAccess.Data_Access.Implentations;
 using VasudaDataAccess.DTOs;
 using VasudaDataAccess.Model;
+using VasudaDataAccess.Provider;
+using VasudaDataAccess.Utility;
 
 namespace VasudaDataAccess.Logic.Implementation
 {
@@ -14,11 +16,13 @@ namespace VasudaDataAccess.Logic.Implementation
     {
         private UnitOfWork _unitOfWork;
         private Logger logger;
+        private IPaymentService paymentService;
 
-        public WalletService()
+        public WalletService(IPaymentService _paymentService)
         {
             logger = LogManager.GetCurrentClassLogger();
             _unitOfWork = new UnitOfWork(new VasudaModel());
+            paymentService = _paymentService;
         }
 
         public Response<WalletViewModel> GetWalletHomePage(string user)
@@ -110,6 +114,7 @@ namespace VasudaDataAccess.Logic.Implementation
                 model.DateCreated = DateTime.UtcNow.AddHours(1);
                 model.Id = Guid.NewGuid().ToString();
                 model.IsActive =true;
+                model.IsApproved = false;
                 _unitOfWork.WithdrawalRequestTable.Add(model);
                 _unitOfWork.Complete();
                 response.Status = true;
@@ -120,6 +125,43 @@ namespace VasudaDataAccess.Logic.Implementation
             }
             return response;
         }
+
+        public Response<FlutterPaymentDetails> FundingRequest(FundingRequestTable model)
+        {
+            var response = new Response<FlutterPaymentDetails>()
+            {
+                Message = "Could not add request",
+                Status = false,
+            };
+            try
+            {
+                var result = paymentService.GetFlutterwavePaymentInfo(model.Userid, model.NairaAmount);
+                if (!result.Status)
+                {
+                    response.Message = result.Message;
+                    return response;
+                }
+                model.PaymentStatus = FundRequestStatus.Pending.ToString();
+                model.DateCreated = DateTime.UtcNow.AddHours(1);
+                model.Id = Guid.NewGuid();
+                model.IsActive =true;
+                model.IsApproved = false;
+                model.IsCredited = false;
+                model.PaymentId = result._entity.PaymentId;
+                model.Rate = _unitOfWork.ExchangeRateTable.GetSingleRate("Dollar", "Naira").Rate;
+                _unitOfWork.FundingRequestTable.Add(model);
+                _unitOfWork.Complete();
+                response.Status = true;
+                response.SetResult(result.Result());
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+            }
+            return response;
+        }
+
+
     }
 
     public enum FundWithdrawalStatus
@@ -127,5 +169,11 @@ namespace VasudaDataAccess.Logic.Implementation
         Pending,
         Approved,
         Declined,
+    }  public enum FundRequestStatus
+    {
+        Pending,
+        Payment_Successful,
+        Payment_Error,
+        Payment_Credited
     }
 }
