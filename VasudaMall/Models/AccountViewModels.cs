@@ -68,6 +68,9 @@ namespace VasudaMall.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "Your full address is required,")]
         public string Address { get; set; }
 
         [Required]

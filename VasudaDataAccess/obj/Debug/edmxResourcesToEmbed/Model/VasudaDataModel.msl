@@ -117,6 +117,7 @@
     <EntitySetMapping Name="PaymentHistoryTables">
       <EntityTypeMapping TypeName="DB_A5731C_VasudaModel.PaymentHistoryTable">
         <MappingFragment StoreEntitySet="PaymentHistoryTables">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Amount" ColumnName="Amount" />
           <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
@@ -240,6 +241,8 @@
     <EntitySetMapping Name="WithdrawalRequestTables">
       <EntityTypeMapping TypeName="DB_A5731C_VasudaModel.WithdrawalRequestTable">
         <MappingFragment StoreEntitySet="WithdrawalRequestTable">
+          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+          <ScalarProperty Name="Rate" ColumnName="Rate" />
           <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
           <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
@@ -253,6 +256,7 @@
     <EntitySetMapping Name="AspNetUsers">
       <EntityTypeMapping TypeName="DB_A5731C_VasudaModel.AspNetUser">
         <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
           <ScalarProperty Name="FullName" ColumnName="FullName" />
           <ScalarProperty Name="Address" ColumnName="Address" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
@@ -284,6 +288,12 @@
     <EntitySetMapping Name="FundingRequestTables">
       <EntityTypeMapping TypeName="DB_A5731C_VasudaModel.FundingRequestTable">
         <MappingFragment StoreEntitySet="FundingRequestTable">
+          <ScalarProperty Name="IsCredited" ColumnName="IsCredited" />
+          <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+          <ScalarProperty Name="TransId" ColumnName="TransId" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="NairaAmount" ColumnName="NairaAmount" />
+          <ScalarProperty Name="Rate" ColumnName="Rate" />
           <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
           <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
@@ -316,6 +326,17 @@
           <ScalarProperty Name="ConvertedCurrency" ColumnName="ConvertedCurrency" />
           <ScalarProperty Name="Rate" ColumnName="Rate" />
           <ScalarProperty Name="BaseCurrency" ColumnName="BaseCurrency" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ChatTables">
+      <EntityTypeMapping TypeName="DB_A5731C_VasudaModel.ChatTable">
+        <MappingFragment StoreEntitySet="ChatTable">
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="SentBy" ColumnName="SentBy" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

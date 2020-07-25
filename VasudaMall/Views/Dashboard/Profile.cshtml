@@ -3,180 +3,169 @@
 @{
     Layout = "~/Views/shared/_LayoutDashboard.cshtml";
     ViewBag.Title = "Profile";
-}
+    var count = 1;
+    var fullName = ""; var email = ""; var phoneNumber = ""; var address = ""; var city = ""; var country = "";
+    decimal.TryParse("0", out decimal balance); 
+    DateTime? dateCreated = null; var mainDateCreated = "";
 
-<!-- Content Header (Page header) -->
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Profile</h1>
-            </div><!-- /.col -->
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href=@Url.Action("Index", "Dashboard")>Home</a></li>
-                    <li class="breadcrumb-item active">Profile</li>
-                </ol>
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-</div>
-<!-- /.content-header -->
+    if (Model.User != null)
+    {
+        var User = Model.User;
+        fullName = string.IsNullOrEmpty(User.FullName) ? "" : User.FullName;
+        email = string.IsNullOrEmpty(User.Email) ? "" : User.Email;
+        phoneNumber = string.IsNullOrEmpty(User.PhoneNumber) ? "" : User.PhoneNumber;
+        city = string.IsNullOrEmpty(User.City) ? "" : User.City;
+        country = string.IsNullOrEmpty(User.Country) ? "" : User.Country;
+        address = string.IsNullOrEmpty(User.Address) ? "" : User.Address;
+        balance = User.Balance;
+        dateCreated = User.DateCreated;
+        mainDateCreated = $"{dateCreated.Value.Year}-{dateCreated.Value.Month}-{dateCreated.Value.Day}";
+    }
+}
 
 <section class="content">
     <div class="container-fluid">
         <!-- Main row -->
         <div class="row">
             <!-- Left col -->
-            <section class="col-lg-10 col-sm-12 content">
-                <div class="container-fluid">
-                    <div class="row">
-
-                        <!--Profile display col start-->
-                        <div class="col-lg-4 col-sm-12 container-fluid">
-                            <!-- Profile Image -->
-                            <div class="card card-primary card-outline">
-                                <div class="card-body box-profile">
-                                    <div class="text-center">
-                                        <img class="profile-user-img img-fluid img-circle"
-                                             src="../../dist/img/user4-128x128.jpg"
-                                             alt="User profile picture">
-                                    </div>
-
-                                    <h3 class="profile-username text-center">Nina Mcintire</h3>
-
-                                    <ul class="list-group list-group-unbordered mb-3">
-                                        <li class="list-group-item">
-                                            <b>UserName</b> <a class="float-right">Tester1</a>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <b>Email</b> <a class="float-right">543</a>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <b>Phone Number</b> <a class="float-right">13,287</a>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <b>City</b> <a class="float-right">13,287</a>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <b>Country</b> <a class="float-right">13,287</a>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <b>Account Balance</b> <a class="float-right">13,287</a>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <b>Registered</b> <a class="float-right">13,287</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- /.card-body -->
+            <div class="col-lg-10 col-sm-12 content">
+                <!--Profile display management row start-->
+                <div class="row">
+                    <!--Profile display col start-->
+                    <div class="col-lg-4 col-sm-12 container-fluid">
+                        <!-- Profile Image -->
+                        <div class="card card-info card-outline">
+                            <div class="card-body box-profile">
+                                <ul class="list-group list-group-unbordered mb-3">
+                                    <li class="list-group-item">
+                                        <b>Full Name</b> <a class="float-right" id="fullNameProfile">@fullName</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Email</b> <a class="float-right" id="emailProfile">@email</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Phone Number</b> <a class="float-right" id="phoneNumberProfile">@phoneNumber</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Account Balance</b> <a class="float-right" id="balanceProfile">@balance</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Address</b> <a class="float-right" id="addressProfile">@address</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>City</b> <a class="float-right" id="cityProfile">@city</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Country</b> <a class="float-right" id="countryProfile">@country</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Registered</b> <a class="float-right" id="registeredProfile">@mainDateCreated</a>
+                                    </li>
+                                </ul>
                             </div>
-                            <!-- /.card -->
+                            <!-- /.card-body -->
                         </div>
-                        <!--Profile display col end-->
-                        <!--Profile management col start-->
-                        <div class="col-lg-8 col-sm-12 px-3">
-                            <!--Profile row start-->
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="card card-green card-outline card-outline-tabs">
-                                        <div class="card-header p-0 border-bottom-0">
-                                            <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
-                                                <li class="nav-item">
-                                                    <a class="nav-link active" id="change-password-tab" data-toggle="pill" href="#change-password" role="tab" aria-controls="custom-tabs-four-home" aria-selected="true"><i class="fas fa-key d-md-none"></i><span class="d-none d-md-inline">Change Password</span></a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="withdrawal-account-tab" data-toggle="pill" href="#withdrawal-account" role="tab" aria-controls="custom-tabs-four-profile" aria-selected="false"><i class="fas fa-wallet d-md-none"></i><span class="d-none d-md-inline">Add Withdrawal Account</span></a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="custom-tabs-four-messages-tab" data-toggle="pill" href="#custom-tabs-four-messages" role="tab" aria-controls="custom-tabs-four-messages" aria-selected="false"><i class="fas fa-envelope d-md-none"></i><span class="d-none d-md-inline">Messages</span></a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="tab-content" id="custom-tabs-four-tabContent">
-                                                <!--Change Password start-->
-                                                <div class="tab-pane fade show active" id="change-password" role="tabpanel" aria-labelledby="change-password-tab">
-                                                    <!-- change password Form start-->
-                                                    <div class="card card-info">
-                                                        <!-- form start -->
-                                                        <form class="form-horizontal">
-                                                            <div class="card-body">
-                                                                <div class="form-group">
-                                                                    <label for="oldPassword">Old Password</label>
-                                                                    <input type="password" class="form-control" id="oldPassword" placeholder="Old Password">
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="newPassword" ">New Password</label>
-                                                                    <input type="password" class="form-control" id="newPassword" placeholder="New Password">
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="confirmNewPassword">Confirm New Password</label>
-                                                                    <input type="password" class="form-control" id="confirmNewPassword" placeholder="Confirm New Password">
-                                                                </div>
-                                                            </div>
-                                                            <!-- /.card-body -->
-                                                            <div class="card-footer">
-                                                                <button type="submit" class="btn btn-info">Change Password</button>
-                                                            </div>
-                                                            <!-- /.card-footer -->
-                                                        </form>
-                                                    </div>
-                                                    <!-- change password Form start-->
-                                                    <!-- /.card -->
-                                                </div>
-                                                <!--Change Password end-->
-                                                <!--Withdrawal account start-->
-                                                <div class="tab-pane fade" id="withdrawal-account" role="tabpanel" aria-labelledby="withdrawal-account-tab">
-                                                    <!-- withdrawal account Form start-->
-                                                    <div class="card card-info">
-                                                        <!-- form start -->
-                                                        <form class="form-horizontal">
-                                                            <div class="card-body">
-                                                                <div class="form-group">
-                                                                    <label for="accountName">Account Name</label>
-                                                                    <input type="text" class="form-control" id="accountName" placeholder="Account Name">
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="accountNumber" ">Account Number</label>
-                                                                    <input type="text" class="form-control" id="accountNumber" placeholder="Account Number">
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label>Bank Name</label>
-                                                                    <select class="form-control select2" style="width: 100%;">
-                                                                        <option selected="selected">Alabama</option>
-                                                                        <option>Alaska</option>
-                                                                        <option>California</option>
-                                                                        <option>Delaware</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <!-- /.card-body -->
-                                                            <div class="card-footer">
-                                                                <button type="submit" class="btn btn-info">Add Account</button>
-                                                            </div>
-                                                            <!-- /.card-footer -->
-                                                        </form>
-                                                    </div>
-                                                    <!-- Withdrawal account Form start-->
-                                                    <!-- /.card -->
-                                                </div>
-                                                <!--Withdrawal account end-->
-                                                <div class="tab-pane fade" id="custom-tabs-four-messages" role="tabpanel" aria-labelledby="custom-tabs-four-messages-tab">
-                                                    Morbi turpis dolor, vulputate vitae felis non, tincidunt congue mauris. Phasellus volutpat augue id mi placerat mollis. Vivamus faucibus eu massa eget condimentum. Fusce nec hendrerit sem, ac tristique nulla. Integer vestibulum orci odio. Cras nec augue ipsum. Suspendisse ut velit condimentum, mattis urna a, malesuada nunc. Curabitur eleifend facilisis velit finibus tristique. Nam vulputate, eros non luctus efficitur, ipsum odio volutpat massa, sit amet sollicitudin est libero sed ipsum. Nulla lacinia, ex vitae gravida fermentum, lectus ipsum gravida arcu, id fermentum metus arcu vel metus. Curabitur eget sem eu risus tincidunt eleifend ac ornare magna.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--Profile /.card end -->
-                            </div>
-                            <!--Profile row end-->
-                        </div>
-                        <!--Profile management col end-->
+                        <!-- /.card -->
                     </div>
-                </div>
+                    <!--Profile display col end-->
+                    <!--Profile management col start-->
+                    <div class="col-lg-8 col-sm-12 px-3">
+                        <!--Profile row start-->
+                        <div class="card card-info card-outline card-outline-tabs">
+                            <div class="card-header p-0 border-bottom-0">
+                                <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="edit-profile-tab" data-toggle="pill" href="#edit-profile" role="tab" aria-controls="custom-tabs-four-profile" aria-selected="false"><i class="fa fa-user d-md-none"></i><span class="d-none d-md-inline">Edit Profile</span></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="change-password-tab" data-toggle="pill" href="#change-password" role="tab" aria-controls="custom-tabs-four-home" aria-selected="true"><i class="fas fa-key d-md-none"></i><span class="d-none d-md-inline">Change Password</span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-body">
+                                <div class="tab-content" id="custom-tabs-four-tabContent">
+                                    <!--Edit profile start-->
+                                    <div class="tab-pane fade" id="edit-profile" role="tabpanel" aria-labelledby="edit-profile-tab">
+                                        <!-- Edit profile Form start-->
+                                        <div class="card card-info">
+                                            <!-- form start -->
+                                            <form class="form-horizontal" id="editUserProfileForm">
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <label for="fullName">Full Name</label>
+                                                        <input type="text" class="form-control form-control-sm" id="fullName" value="@fullName" placeholder="Full Name">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="phoneNumber">Phone Number</label>
+                                                        <input type="text" class="form-control form-control-sm" id="phoneNumber" value="@phoneNumber" placeholder="Phone Number">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="address">Address</label>
+                                                        <input type="text" class="form-control form-control-sm" id="address" value="@address" placeholder="Address">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="city">City</label>
+                                                        <input type="text" class="form-control form-control-sm" id="city" value="@city" placeholder="City">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="country">Country</label>
+                                                        <input type="text" class="form-control form-control-sm" id="country" value="@country" placeholder="Country">
+                                                    </div>
+                                                </div>
+                                                <!-- /.card-body -->
+                                                <div class="card-footer">
+                                                    <button type="button" class="btn btn-info btn-sm" id="editUserProfileBtn">Update</button>
+                                                </div>
+                                                <!-- /.card-footer -->
+                                            </form>
+                                        </div>
+                                        <!-- Edit profile Form start-->
+                                        <!-- /.card -->
+                                    </div>
+                                    <!--Edit profile end-->
 
+                                    <!--Change Password start-->
+                                    <div class="tab-pane fade show active" id="change-password" role="tabpanel" aria-labelledby="change-password-tab">
+                                        <!-- change password Form start-->
+                                        <div class="card card-info">
+                                            <!-- form start -->
+                                            <form class="form-horizontal" id="changePasswordForm">
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <label for="oldPassword">Old Password</label>
+                                                        <input type="password" class="form-control form-control-sm" id="oldPassword" placeholder="Old Password" data-formname="Old Password" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="newPassword">New Password</label>
+                                                        <input type="password" class="form-control form-control-sm" id="newPassword" placeholder="New Password" data-formname="New Password" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="confirmNewPassword">Confirm New Password</label>
+                                                        <input type="password" class="form-control form-control-sm" id="confirmNewPassword" placeholder="Confirm New Password" data-formname="Confirm New Password" required>
+                                                    </div>
+                                                </div>
+                                                <!-- /.card-body -->
+                                                <div class="card-footer">
+                                                    <button type="button" class="btn btn-info btn-sm" id="changePasswordBtn">Change Password</button>
+                                                </div>
+                                                <!-- /.card-footer -->
+                                            </form>
+                                        </div>
+                                        <!-- change password Form start-->
+                                        <!-- /.card -->
+                                    </div>
+                                    <!--Change Password end-->
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Profile /.card end -->
+                        <!--Profile row end-->
+                    </div>
+                    <!--Profile management col end-->
+                </div>
+                <!--Profile display management row end-->
                 <!--Notification table row start-->
                 <div class="row">
                     <div class="col-12">
@@ -193,39 +182,39 @@
                                 else
                                 {
                                     <table id="recentNotificationTable" class="table table-bordered table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>S/N</th>
-                                            <th>Subject</th>
-                                            <th>Date Published</th>
-                                            <th>Read Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var recentNotification in Model.RecentNotifications)
-                                        {
-                                            var count = 1;
+                                        <thead>
                                             <tr>
-                                                <td>@count</td>
-                                                <td>@recentNotification.Subject</td>
-                                                <td>@recentNotification.DateCreated</td>
-                                                <td>@recentNotification.IsRead</td>
-                                                <td><button type="submit" class="btn btn-outline-success btn-sm">View More</button></td>
+                                                <th>S/N</th>
+                                                <th>Subject</th>
+                                                <th>Date Published</th>
+                                                <th>Read Status</th>
+                                                <th>Action</th>
                                             </tr>
-                                            count++;
-                                        }
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>S/N</th>
-                                            <th>Subject</th>
-                                            <th>Date Published</th>
-                                            <th>Read Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            @count = 1;
+                                            @foreach (var recentNotification in Model.RecentNotifications)
+                                            {
+                                                <tr>
+                                                    <td>@count</td>
+                                                    <td>@recentNotification.Subject</td>
+                                                    <td>@recentNotification.DateCreated</td>
+                                                    <td>@recentNotification.IsRead</td>
+                                                    <td><button type="submit" class="btn btn-outline-success btn-sm">View More</button></td>
+                                                </tr>
+                                                count++;
+                                            }
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>S/N</th>
+                                                <th>Subject</th>
+                                                <th>Date Published</th>
+                                                <th>Read Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
                                 }
                             </div>
                             <!-- /.card-body -->
@@ -234,12 +223,12 @@
                     </div>
                 </div>
                 <!--Notification table row end-->
-            </section>
+            </div>
             <!-- /.Left col -->
             <!-- right col -->
-            <section class="col-lg-2 col-sm-12 connectedSortable">
+            <div class="col-lg-2 col-sm-12 connectedSortable">
                 <h2>ADVERTS</h2>
-            </section>
+            </div>
             <!-- /.right col -->
         </div>
         <!-- /.row (main row) -->

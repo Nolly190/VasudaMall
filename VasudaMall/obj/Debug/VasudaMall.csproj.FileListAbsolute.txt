@@ -621,3 +621,5 @@ C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\obj\Debug\VasudaMall.
 C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\obj\Debug\VasudaMall.dll
 C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\obj\Debug\VasudaMall.pdb
 C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaMall\obj\Debug\VasudaMall.Migrations.AddedFullName.resources
+C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaMall\obj\Debug\VasudaMall.Migrations.AddedFullName.resources
+C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaMall\obj\Debug\VasudaMall.Migrations.AddDateCreatedToUserModel.resources

@@ -76,7 +76,8 @@ namespace VasudaMall
                 "~/admin-lte/dist/js/adminlte.js",
                 "~/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js",
                 "~/Scripts/JqueryValidator.js",
-                "~/Scripts/Walletpage.js"
+                "~/Scripts/Walletpage.js",
+                "~/Scripts/ProfilePage.js"
                 //"~/Scripts/jquery.validate.min.js",
                 //"~/Scripts/jquery.validate.unobtrusive.min.js"
                 ));

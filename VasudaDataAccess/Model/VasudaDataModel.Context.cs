@@ -50,5 +50,6 @@ namespace VasudaDataAccess.Model
         public virtual DbSet<FundingRequestTable> FundingRequestTables { get; set; }
         public virtual DbSet<SystemAccountTable> SystemAccountTables { get; set; }
         public virtual DbSet<ExchangeRateTable> ExchangeRateTables { get; set; }
+        public virtual DbSet<ChatTable> ChatTables { get; set; }
     }
 }

@@ -36,52 +36,17 @@
                     <a href=@Url.Action("Index", "Home") class="nav-link">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Track Order</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Products </a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href=@Url.Action("Contact", "Home") class="nav-link">Support</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Clearance</a>
+                    <a href="@Url.Action("TrackOrder", "Store")" class="nav-link">Track Order</a>
                 </li>
             </ul>
 
-            <!-- SEARCH FORM -->
-            <form class="form-inline ml-3">
-                <div class="input-group input-group-sm">
-                    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-navbar" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
-
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
-                <!-- Notifications Dropdown Menu -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="far fa-bell"></i>
-                        <span class="badge badge-warning navbar-badge">15</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <span class="dropdown-item dropdown-header"></span>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-file mr-2"></i> 3 new reports
-                            <span class="float-right text-muted text-sm">2 days</span>
-                        </a>
-                    </div>
+                <li class="nav-item">
+                    <a href="@Url.Action("Cart", "Store")"><i class="nav-link fas fa-shopping-cart" aria-hidden="true"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-                        <i class="fas fa-th-large"></i>
-                    </a>
+                    <a class="nav-link" href=@Url.Action("LogOff", "Account")>Log Out</a>
                 </li>
             </ul>
         </nav>
@@ -111,7 +76,7 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-                        with font-awesome or any other icon font library -->
+    with font-awesome or any other icon font library -->
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-shopping-cart"></i>
@@ -171,6 +136,15 @@
                                 </p>
                             </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a href=@Url.Action("Support", "Dashboard") class="nav-link">
+                                <i class="nav-icon fa fa-phone"></i>
+                                <p>
+                                    Chat Support
+                                </p>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -180,7 +154,41 @@
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
+
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            @if (ViewBag.Title == "Home")
+                            {
+                                <h1 class="m-0 text-dark">Dashboard</h1>
+                            }
+                            else
+                            {
+                                <h1 class="m-0 text-dark">@ViewBag.Title</h1>
+                            }
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                @if (ViewBag.Title == "Home")
+                                {
+                                    <li class="breadcrumb-item active">@ViewBag.Title</li>
+                                }
+                                else
+                                {
+                                    <li class="breadcrumb-item"><a href=@Url.Action("Index", "Dashboard")>Home</a></li>
+                                    <li class="breadcrumb-item active">@ViewBag.Title</li>
+                                }
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
             @RenderBody()
+
         </div>
         <!-- /.content-wrapper -->
 

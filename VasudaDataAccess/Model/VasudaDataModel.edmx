@@ -70,6 +70,7 @@
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="Address" Type="nvarchar(max)" />
           <Property Name="FullName" Type="nvarchar(max)" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="AuditTrialTables">
           <Key>
@@ -101,6 +102,16 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="CategoryName" Type="nvarchar(max)" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ChatTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SentBy" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="ContactTable">
@@ -138,6 +149,12 @@
           <Property Name="PaymentType" Type="varchar(max)" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="IsApproved" Type="bit" />
+          <Property Name="Rate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="NairaAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="TransId" Type="varchar(max)" />
+          <Property Name="PaymentId" Type="varchar(max)" />
+          <Property Name="IsCredited" Type="bit" />
         </EntityType>
         <EntityType Name="ImageTables">
           <Key>
@@ -192,6 +209,7 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
           <Property Name="Purpose" Type="nvarchar(max)" />
           <Property Name="Status" Type="bit" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="PriceTables">
           <Key>
@@ -306,7 +324,21 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="Rate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IsApproved" Type="bit" Nullable="false" />
         </EntityType>
+        <Association Name="FK_ChatTable_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="ChatTable" Type="Self.ChatTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ChatTable">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -517,6 +549,7 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
           <EntitySet Name="AuditTrialTables" EntityType="Self.AuditTrialTables" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BankTable" EntityType="Self.BankTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CategoryTables" EntityType="Self.CategoryTables" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChatTable" EntityType="Self.ChatTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ContactTable" EntityType="Self.ContactTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExchangeRateTables" EntityType="Self.ExchangeRateTables" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FundingRequestTable" EntityType="Self.FundingRequestTable" Schema="dbo" store:Type="Tables" />
@@ -543,6 +576,10 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
     [NotificationTables].[DateCreated] AS [DateCreated]
     FROM [dbo].[NotificationTables] AS [NotificationTables]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_ChatTable_AspNetUsers" Association="Self.FK_ChatTable_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ChatTable" EntitySet="ChatTable" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -737,6 +774,7 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
           <Property Name="Purpose" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Boolean" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
         </EntityType>
         <EntityType Name="PriceTable">
           <Key>
@@ -970,6 +1008,11 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
             <End Role="FundingRequestTable" EntitySet="FundingRequestTables" />
           </AssociationSet>
           <EntitySet Name="ExchangeRateTables" EntityType="DB_A5731C_VasudaModel.ExchangeRateTable" />
+          <EntitySet Name="ChatTables" EntityType="DB_A5731C_VasudaModel.ChatTable" />
+          <AssociationSet Name="FK_ChatTable_AspNetUsers" Association="DB_A5731C_VasudaModel.FK_ChatTable_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ChatTable" EntitySet="ChatTables" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="WithdrawalDetailsTable">
           <Key>
@@ -998,6 +1041,8 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="WithdrawalDetailsTable" Relationship="DB_A5731C_VasudaModel.FK_WithdrawalRequestTable_WithdrawalDetailsTable" FromRole="WithdrawalRequestTable" ToRole="WithdrawalDetailsTable" />
           <NavigationProperty Name="AspNetUser" Relationship="DB_A5731C_VasudaModel.FK_WithdrawalRequestTable_AspNetUsers" FromRole="WithdrawalRequestTable" ToRole="AspNetUser" />
+          <Property Name="Rate" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IsApproved" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_WithdrawalRequestTable_WithdrawalDetailsTable">
           <End Type="DB_A5731C_VasudaModel.WithdrawalDetailsTable" Role="WithdrawalDetailsTable" Multiplicity="1" />
@@ -1041,6 +1086,8 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
           <NavigationProperty Name="WithdrawalRequestTables" Relationship="DB_A5731C_VasudaModel.FK_WithdrawalRequestTable_AspNetUsers" FromRole="AspNetUser" ToRole="WithdrawalRequestTable" />
           <NavigationProperty Name="AspNetRoles" Relationship="DB_A5731C_VasudaModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
           <NavigationProperty Name="FundingRequestTables" Relationship="DB_A5731C_VasudaModel.FK_FundingRequestTable_AspNetUsers" FromRole="AspNetUser" ToRole="FundingRequestTable" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ChatTables" Relationship="DB_A5731C_VasudaModel.FK_ChatTable_AspNetUsers" FromRole="AspNetUser" ToRole="ChatTable" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="DB_A5731C_VasudaModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
@@ -1149,6 +1196,12 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
           <Property Name="IsApproved" Type="Boolean" />
           <NavigationProperty Name="AspNetUser" Relationship="DB_A5731C_VasudaModel.FK_FundingRequestTable_AspNetUsers" FromRole="FundingRequestTable" ToRole="AspNetUser" />
           <NavigationProperty Name="SystemAccountTable" Relationship="DB_A5731C_VasudaModel.FK_FundingRequestTable_SystemAccountTable" FromRole="FundingRequestTable" ToRole="SystemAccountTable" />
+          <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="NairaAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TransId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsCredited" Type="Boolean" />
         </EntityType>
         <EntityType Name="SystemAccountTable">
           <Key>
@@ -1197,6 +1250,29 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityType Name="ChatTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SentBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AspNetUser" Relationship="DB_A5731C_VasudaModel.FK_ChatTable_AspNetUsers" FromRole="ChatTable" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="FK_ChatTable_AspNetUsers">
+          <End Type="DB_A5731C_VasudaModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="DB_A5731C_VasudaModel.ChatTable" Role="ChatTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ChatTable">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1319,6 +1395,7 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
           <EntitySetMapping Name="PaymentHistoryTables">
             <EntityTypeMapping TypeName="DB_A5731C_VasudaModel.PaymentHistoryTable">
               <MappingFragment StoreEntitySet="PaymentHistoryTables">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
@@ -1442,6 +1519,8 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
           <EntitySetMapping Name="WithdrawalRequestTables">
             <EntityTypeMapping TypeName="DB_A5731C_VasudaModel.WithdrawalRequestTable">
               <MappingFragment StoreEntitySet="WithdrawalRequestTable">
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
@@ -1455,6 +1534,7 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="DB_A5731C_VasudaModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
@@ -1486,6 +1566,12 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
           <EntitySetMapping Name="FundingRequestTables">
             <EntityTypeMapping TypeName="DB_A5731C_VasudaModel.FundingRequestTable">
               <MappingFragment StoreEntitySet="FundingRequestTable">
+                <ScalarProperty Name="IsCredited" ColumnName="IsCredited" />
+                <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+                <ScalarProperty Name="TransId" ColumnName="TransId" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="NairaAmount" ColumnName="NairaAmount" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
                 <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
@@ -1518,6 +1604,17 @@ warning 6002: The table/view 'DB_A5731C_Vasuda.dbo.NotificationTables' does not 
                 <ScalarProperty Name="ConvertedCurrency" ColumnName="ConvertedCurrency" />
                 <ScalarProperty Name="Rate" ColumnName="Rate" />
                 <ScalarProperty Name="BaseCurrency" ColumnName="BaseCurrency" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChatTables">
+            <EntityTypeMapping TypeName="DB_A5731C_VasudaModel.ChatTable">
+              <MappingFragment StoreEntitySet="ChatTable">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="SentBy" ColumnName="SentBy" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

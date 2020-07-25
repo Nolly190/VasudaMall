@@ -8,9 +8,9 @@ using VasudaDataAccess.Model;
 
 namespace VasudaDataAccess.Data_Access.Implentations
 {
-    public class OrderTableRepo : Repository<OrderTable>, IOrderTable
+    public class AspNetUserRepo : Repository<AspNetUser>, IAspNetUser
     {
-        public OrderTableRepo(DbContext context) : base(context)
+        public AspNetUserRepo(DbContext context) : base(context)
         {
 
         }
@@ -22,20 +22,16 @@ namespace VasudaDataAccess.Data_Access.Implentations
                 return dbcontext as DbContext;
             }
         }
-    }
-  public class WithdrawalRequestTableRepo : Repository<WithdrawalRequestTable>, IWithdrawalRequestTable
-    {
-        public WithdrawalRequestTableRepo(DbContext context) : base(context)
-        {
 
-        }
-
-        public DbContext Context
+        public AspNetUser GetUser(string userId)
         {
-            get
+            var rec = dbcontext.Set<AspNetUser>().Where(x => x.Id == userId).ToList();
+            if (rec.Any())
             {
-                return dbcontext as DbContext;
+                return rec.FirstOrDefault();
             }
+
+            return null;
         }
     }
 }

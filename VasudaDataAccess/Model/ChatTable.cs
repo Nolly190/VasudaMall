@@ -12,19 +12,14 @@ namespace VasudaDataAccess.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class WithdrawalRequestTable
+    public partial class ChatTable
     {
-        public string Id { get; set; }
+        public System.Guid Id { get; set; }
         public string UserId { get; set; }
-        public string WithdrawalAccount { get; set; }
-        public decimal Amount { get; set; }
-        public bool IsActive { get; set; }
-        public string Status { get; set; }
+        public string Message { get; set; }
+        public string SentBy { get; set; }
         public System.DateTime DateCreated { get; set; }
-        public decimal Rate { get; set; }
-        public bool IsApproved { get; set; }
     
-        public virtual WithdrawalDetailsTable WithdrawalDetailsTable { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
     }
 }

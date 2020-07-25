@@ -20,5 +20,6 @@ namespace VasudaDataAccess.Model
         public string Purpose { get; set; }
         public bool Status { get; set; }
         public System.DateTime DateCreated { get; set; }
+        public System.Guid UserId { get; set; }
     }
 }

@@ -10,8 +10,10 @@ namespace VasudaDataAccess.Logic
 {
     public interface IProfileService
     {
-        Response<ProfileViewModel> GetProfileHomePage();
+        Response<ProfileViewModel> GetProfileHomePage(string userId);
         Response<List<WithdrawalDetailsTable>> AddWithdrawalAccount(WithdrawalDetailsTable model);
         Response<List<WithdrawalDetailsTable>> DisableWithdrawalAccount(string id);
+        Response<AspNetUser> UpdateUserProfile(AspNetUser model);
+        Response<SupportViewModel> GetAllChats(string userId);
     }
 }

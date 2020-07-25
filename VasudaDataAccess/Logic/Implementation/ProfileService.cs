@@ -87,9 +87,9 @@ namespace VasudaDataAccess.Logic.Implementation
             return result;
         }
 
-        public Response<ProfileViewModel> GetProfileHomePage()
+        public Response<ProfileViewModel> GetProfileHomePage(string userId)
         {
-            var result = new Response<ProfileViewModel>
+            var response = new Response<ProfileViewModel>
             {
                 Status = false,
                 Message = "Could not retrieve info"
@@ -102,9 +102,10 @@ namespace VasudaDataAccess.Logic.Implementation
             try
             {
                 model.RecentNotifications = _unitOfWork.NotificationTable.GetRecentNotifications(null);
-                result.Status = true;
-                result.SetResult(model);
-
+                model.User = _unitOfWork.AspNetUser.GetUser(userId);
+                response.Message = "Successfully retrieved info";
+                response.Status = true;
+                response.SetResult(model);
             }
             catch (Exception ex)
             {
@@ -112,8 +113,72 @@ namespace VasudaDataAccess.Logic.Implementation
 
             }
 
-            result.SetResult(model);
-            return result;
+            response.SetResult(model);
+            return response;
+        }
+
+        public Response<AspNetUser> UpdateUserProfile(AspNetUser model)
+        {
+            var response = new Response<AspNetUser>
+            {
+                Status = false,
+                Message = "Could not update profile"
+            };
+
+            try
+            {
+                var existingUser = _unitOfWork.AspNetUser.Get(model.Id);
+                if (existingUser == null)
+                {
+                    response.Message = "Cannot update profile of an unknown user.";
+                    return response;
+                }
+
+                existingUser.FullName = string.IsNullOrEmpty(model.FullName) ? "" : model.FullName;
+                existingUser.PhoneNumber = string.IsNullOrEmpty(model.PhoneNumber) ? "" : model.PhoneNumber;
+                existingUser.Address = string.IsNullOrEmpty(model.Address) ? "" : model.Address;
+                existingUser.City = string.IsNullOrEmpty(model.City) ? "" : model.City;
+                existingUser.Country = string.IsNullOrEmpty(model.Country) ? "" : model.Country;
+                _unitOfWork.Complete();
+
+                response.Status = true;
+                response.Message = "Successfully updated user profile";
+                response.SetResult(_unitOfWork.AspNetUser.GetUser(existingUser.Id));
+                return response;
+            }
+            catch (Exception e)
+            {
+                logger.Error(e.ToString());
+            }
+
+            return response;
+        }
+
+        public Response<SupportViewModel> GetAllChats(string userId)
+        {
+            var response = new Response<SupportViewModel>()
+            {
+                Status = false,
+                Message = "Could not retrieve chats"
+            };
+
+            var model = new SupportViewModel
+            {
+                Chats = new List<ChatTable>()
+            };
+            try
+            {
+                model.Chats = _unitOfWork.ChatTable.GetAll(x => x.UserId == userId).OrderByDescending(x => x.DateCreated).ToList();
+                response.Message = "Successfully retrieved chats";
+                response.Status = true;
+                response.SetResult(model);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+
+            }
+            return response;
         }
     }
 }

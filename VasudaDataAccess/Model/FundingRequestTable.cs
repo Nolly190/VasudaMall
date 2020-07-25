@@ -23,6 +23,12 @@ namespace VasudaDataAccess.Model
         public string PaymentType { get; set; }
         public bool IsActive { get; set; }
         public Nullable<bool> IsApproved { get; set; }
+        public Nullable<decimal> Rate { get; set; }
+        public decimal NairaAmount { get; set; }
+        public System.DateTime DateCreated { get; set; }
+        public string TransId { get; set; }
+        public string PaymentId { get; set; }
+        public Nullable<bool> IsCredited { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual SystemAccountTable SystemAccountTable { get; set; }
