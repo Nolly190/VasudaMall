@@ -330,6 +330,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="PaymentHistoryTables">
+      <EntityTypeMapping TypeName="DB_A5731C_VasudaModel.PaymentHistoryTable">
+        <MappingFragment StoreEntitySet="PaymentHistoryTables">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Purpose" ColumnName="Purpose" />
+          <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ChatTables">
       <EntityTypeMapping TypeName="DB_A5731C_VasudaModel.ChatTable">
         <MappingFragment StoreEntitySet="ChatTable">

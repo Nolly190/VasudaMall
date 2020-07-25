@@ -135,26 +135,115 @@
 
     });
 
-    $("#NairaAmount").keyup(function () {
-
-        var result = parseFloat($("#NairaAmount").val()) / parseFloat($("#exchangeRate").val());
+    $(".convert").keyup(function () {
+        var ansa = $(this).data('baltxt');
+        var result = parseFloat($(this).val()) / parseFloat($("#exchangeRate").val());
         if (parseInt(result) >= 1) {
 
-            $("#withdrawalAmount").val(result.toFixed(2));
+            $("#"+ansa).val(result.toFixed(2));
             return;
         }
-
-        $("#withdrawalAmount").val("0");
+        
+        $("#" + ansa).val("0");
         return;
     });
 
+    $("#SystemAccount").change(function() {
+        if ($("#SystemAccount").val() !== "") {
+            var getBankInfo = $("#SystemAccount").val().split("||");
+            $("#bankName").text("Bank: "+ getBankInfo[0]);
+            $("#SystemaccountName").text("Account Name: " +getBankInfo[1]);
+            $("#SystemaccountNumber").text("Account Number: " +getBankInfo[2]);
+            $("#SystemBankDiv").fadeIn(750);
+        } 
 
+    });
+
+    $("#PaymentChannel").change(function() {
+        if ($("#PaymentChannel").val() === "Online") {
+            $("#BankDiv").fadeOut(750);
+            $("#PamentNarration").fadeOut(750);
+
+            $("#Narration").removeAttr("required");
+            $("#Narration").removeAttr("data-formname");
+            $("#SystemAccount").removeAttr("required");
+            $("#SystemAccount").removeAttr("data-formname");
+        }
+        else if ($("#PaymentChannel").val() === "BankDeposit") {
+            $("#BankDiv").fadeIn(750);
+            $("#PamentNarration").fadeIn(750);
+            $("#Narration").attr("required","required");
+            $("#Narration").attr("data-formname","Payment Narration");
+            $("#SystemAccount").attr("required","required");
+            $("#SystemAccount").attr("data-formname","bank");
+        } 
+
+    });
+
+    function CallFlutterwave (customerEmail,phone,name, publicKey, amt, paymentId) {
+            FlutterwaveCheckout({
+                public_key: publicKey,
+                tx_ref: paymentId,
+                amount: amt,
+                currency: "NGN",
+                payment_options: "card, mobilemoneyghana, ussd",
+                redirect_url: "https://localhost:44312/Payment",
+                customer: {
+                    email: customerEmail,
+                    phone_number: phone,
+                    name: name,
+                },
+                callback: function(data) {
+                    console.log(data);
+                },
+                customizations: {
+                    title: "Vasuda Mall",
+                    description: "Wallet funding",
+                    logo: "https://vasudamall.com/images/logo.png"
+                },
+        });
+    };
+
+
+    $("#FundBtn").click(function () {
+        if (StartValidation("fundingForm")) {
+            $(".Main-loader").show();
+            var details = {};
+            details.NairaAmount = $("#fundingAmount").val();
+            details.PaymentType = $("#PaymentChannel").val();
+            details.SystemAccount = $("#SystemAccount").val().split("||")[3];
+            details.TransactionNarration = $("#Narration").val();
+            $.ajax({
+                url: "/Dashboard/FundRequest",
+                type: "Post",
+                data: { model: details },
+                error: function (status, xhr) {
+                    $(".Main-loader").hide();
+                },
+                success: function (result) {
+                    $(".Main-loader").hide();
+                    if (result.Status) {
+                        if ($("#PaymentChannel").val() === "Online") {
+                            var paymentDetails = result._entity;
+                            CallFlutterwave(paymentDetails.Email, paymentDetails.Phone, paymentDetails.Name, paymentDetails.ApiKey, paymentDetails.Amount, paymentDetails.PaymentId);
+                        }
+                    }
+                    
+                }
+
+            });
+        }
+
+       
+
+    });
     $("#SubmitRequest").click(function () {
         if (StartValidation("makeWithdrawalForm")) {
             $(".Main-loader").show();
             var details = {};
             details.Amount = $("#withdrawalAmount").val();
             details.WithdrawalAccount = $("#withdrawalAccountsList").val();
+            details.Rate = $("#exchangeRate").val();
             $.ajax({
                 url: "/Dashboard/WithdrawalRequest",
                 type: "Post",

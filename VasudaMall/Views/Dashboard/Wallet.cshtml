@@ -143,7 +143,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="withdrawalAmount">Naira Amount</label>
-                                                        <input type="number" class="form-control form-control-sm" required data-formname="Withdrawal Amount" id="NairaAmount" placeholder="Enter amount in naira">
+                                                        <input type="number" class="form-control form-control-sm convert" data-baltxt="withdrawalAmount" required data-formname="Withdrawal Amount" id="NairaAmount" placeholder="Enter amount in naira">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="withdrawalAmount">Withdrawal Amount</label>
@@ -178,50 +178,59 @@
                                         <!--Make withdrawal Form start-->
                                         <div class="card card-info">
                                             <!--Form start -->
-                                            <div class="card-body">
-                                                <div class="form-group">
-                                                    <label>Channel</label>
-                                                    <select class="form-control-sm select2" style="width: 100%;" id="PaymentChannel">
-                                                        <option value="" selected>Select Withdrawal Account</option>
-                                                        <option value="" selected>Online</option>
-                                                        <option value="" selected>Bank Deposit</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Bank</label>
-                                                    <select class="form-control-sm select2" style="width: 100%;" id="SystemAccount">
-                                                        <option value="" selected>Select Bank for deposits</option>
-                                                        @foreach (var item in Model.SystemAccounts)
-                                                        {
-                                                            <option value="@item.AccountName||@item.AccountNumber">@item.BankName</option>
-                                                        }
-                                                    </select>
-                                                </div>
+                                            <form id="fundingForm">
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <label>Channel</label>
+                                                        <select class="form-control-sm select2" style="width: 100%;" id="PaymentChannel">
+                                                            <option value="Online">Online</option>
+                                                            <option value="BankDeposit">Bank Transfer</option>
+                                                        </select>
+                                                    </div>
 
-                                                <div class="form-group">
-                                                    <label for="accountBalance">Amount</label>
-                                                    <input type="text" class="form-control form-control-sm" required data-formname="Amount"  id="fundingAmount" placeholder="Amount" >
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="exchangeRate">Exchange Rate</label>
-                                                    <input type="text" class="form-control form-control-sm" value="@Model.DollarToNairaRate" placeholder="Exchange Rate" readonly>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="withdrawalAmount">Dollars Amount</label>
-                                                    <input type="text" class="form-control form-control-sm" placeholder="Enter amount in naira">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="withdrawalAmount">Payment Narration</label>
-                                                    <input type="text" class="form-control form-control-sm" id="Narration" placeholder="Enter naration">
-                                                </div>
 
-                                            </div>
+                                                    <div class="form-group" id="BankDiv" style="display:none">
+                                                        <label>Bank</label>
+                                                        <select class="form-control-sm select2" style="width: 100%;" id="SystemAccount">
+                                                            <option value="" selected>Select Bank for deposits</option>
+                                                            @foreach (var item in Model.SystemAccounts)
+                                                            {
+                                                                <option value="@item.BankName||@item.AccountName||@item.AccountNumber||@item.Id">@item.BankName</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group" id="SystemBankDiv" style="Display:none">
+                                                        <label id="bankName"></label><br />
+                                                        <label id="SystemaccountNumber"></label><br />
+                                                        <label id="SystemaccountName"></label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="accountBalance">Amount</label>
+                                                        <input type="text" class="form-control form-control-sm convert" data-baltxt="dollarsField" required data-formname="Amount" id="fundingAmount" placeholder="Amount">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exchangeRate">Exchange Rate</label>
+                                                        <input type="text" class="form-control form-control-sm" value="@Model.DollarToNairaRate" id="excha" placeholder="Exchange Rate" readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="withdrawalAmount">Dollars Amount</label>
+                                                        <input type="text" class="form-control form-control-sm" id="dollarsField" placeholder="Enter amount in naira">
+                                                    </div>
+
+                                                    <div class="form-group" id="PamentNarration" style="display:none">
+                                                        <label for="withdrawalAmount">Payment Narration</label>
+                                                        <input type="text" class="form-control form-control-sm" id="Narration" placeholder="Enter naration">
+                                                    </div>
+
+                                                </div>
                                                 <!-- /.card-body -->
                                                 <div class="card-footer">
-                                                    <button type="button" id="Fund" class="btn btn-info">Fund wallet</button>
+                                                    <button type="button" id="FundBtn" class="btn btn-info">Fund wallet</button>
                                                 </div>
                                                 <!-- /.card-footer -->
-                                        </div>
+
+                                            </form>
+                                           </div>
                                         <!--Make Withdrawal Form end-->
                                         <!-- /.card -->
                                     </div>

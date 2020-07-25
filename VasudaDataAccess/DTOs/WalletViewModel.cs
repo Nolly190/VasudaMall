@@ -18,4 +18,15 @@ namespace VasudaDataAccess.DTOs
         public string DollarBal { get; set; }
         public string DollarToNairaRate { get; set; }
     }
+
+    public class FlutterPaymentDetails
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string ApiKey { get; set; }
+        public string PaymentId { get; set; }
+        public decimal Amount { get; set; }
+        
+    }
 }

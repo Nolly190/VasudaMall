@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -14,6 +15,8 @@ namespace VasudaMall.Models
     {
         public decimal Balance { get; set; }
         public string FullName { get; set; }
+        [Required]
+        public DateTime DateCreated { get; set; }
         public string City { get; set; }
         public string Address { get; set; }
         public string Country { get; set; }

@@ -45,6 +45,7 @@
         <AssociationConnector Association="DB_A5731C_VasudaModel.FK_FundingRequestTable_AspNetUsers" />
         <AssociationConnector Association="DB_A5731C_VasudaModel.FK_FundingRequestTable_SystemAccountTable" />
         <EntityTypeShape EntityType="DB_A5731C_VasudaModel.ExchangeRateTable" Width="1.5" PointX="9.375" PointY="14.75" />
+        <EntityTypeShape EntityType="DB_A5731C_VasudaModel.PaymentHistoryTable" Width="1.5" PointX="15.375" PointY="0.75" />
         <EntityTypeShape EntityType="DB_A5731C_VasudaModel.ChatTable" Width="1.5" PointX="5.25" PointY="0.75" />
         <AssociationConnector Association="DB_A5731C_VasudaModel.FK_ChatTable_AspNetUsers" />
       </Diagram>

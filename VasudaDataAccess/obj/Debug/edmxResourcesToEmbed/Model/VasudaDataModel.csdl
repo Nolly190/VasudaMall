@@ -284,7 +284,6 @@
     <EntitySet Name="ContactTables" EntityType="Self.ContactTable" />
     <EntitySet Name="ImageTables" EntityType="Self.ImageTable" />
     <EntitySet Name="OrderTables" EntityType="Self.OrderTable" />
-    <EntitySet Name="PaymentHistoryTables" EntityType="Self.PaymentHistoryTable" />
     <EntitySet Name="PriceTables" EntityType="Self.PriceTable" />
     <EntitySet Name="ProductTables" EntityType="Self.ProductTable" />
     <EntitySet Name="SettingTables" EntityType="Self.SettingTable" />
@@ -359,6 +358,7 @@
       <End Role="FundingRequestTable" EntitySet="FundingRequestTables" />
     </AssociationSet>
     <EntitySet Name="ExchangeRateTables" EntityType="DB_A5731C_VasudaModel.ExchangeRateTable" />
+    <EntitySet Name="PaymentHistoryTables" EntityType="DB_A5731C_VasudaModel.PaymentHistoryTable" />
     <EntitySet Name="ChatTables" EntityType="DB_A5731C_VasudaModel.ChatTable" />
     <AssociationSet Name="FK_ChatTable_AspNetUsers" Association="DB_A5731C_VasudaModel.FK_ChatTable_AspNetUsers">
       <End Role="AspNetUser" EntitySet="AspNetUsers" />
@@ -437,6 +437,7 @@
     <NavigationProperty Name="WithdrawalRequestTables" Relationship="DB_A5731C_VasudaModel.FK_WithdrawalRequestTable_AspNetUsers" FromRole="AspNetUser" ToRole="WithdrawalRequestTable" />
     <NavigationProperty Name="AspNetRoles" Relationship="DB_A5731C_VasudaModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
     <NavigationProperty Name="FundingRequestTables" Relationship="DB_A5731C_VasudaModel.FK_FundingRequestTable_AspNetUsers" FromRole="AspNetUser" ToRole="FundingRequestTable" />
+    <Property Name="DateCreated" Type="DateTime" Precision="3" Nullable="false" />
     <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="ChatTables" Relationship="DB_A5731C_VasudaModel.FK_ChatTable_AspNetUsers" FromRole="AspNetUser" ToRole="ChatTable" />
   </EntityType>
@@ -600,6 +601,18 @@
     <Property Name="ConvertedCurrency" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
     <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="PaymentHistoryTable">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="TransactionType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Purpose" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Boolean" Nullable="false" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UserId" Type="Guid" Nullable="false" />
   </EntityType>
   <EntityType Name="ChatTable">
     <Key>

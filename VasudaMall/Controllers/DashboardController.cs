@@ -55,6 +55,12 @@ namespace VasudaMall.Controllers
             model.UserId = User.Identity.GetUserId();
            return Json(_walletService.WithdrawalRequest(model), JsonRequestBehavior.AllowGet);
         }
+        public JsonResult FundRequest(FundingRequestTable model)
+        {
+
+            model.Userid = User.Identity.GetUserId();
+           return Json(_walletService.FundingRequest(model), JsonRequestBehavior.AllowGet);
+        }
 
         public new ActionResult Profile()
         {
