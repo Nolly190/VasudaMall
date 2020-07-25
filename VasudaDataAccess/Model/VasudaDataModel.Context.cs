@@ -35,7 +35,6 @@ namespace VasudaDataAccess.Model
         public virtual DbSet<ContactTable> ContactTables { get; set; }
         public virtual DbSet<ImageTable> ImageTables { get; set; }
         public virtual DbSet<OrderTable> OrderTables { get; set; }
-        public virtual DbSet<PaymentHistoryTable> PaymentHistoryTables { get; set; }
         public virtual DbSet<PriceTable> PriceTables { get; set; }
         public virtual DbSet<ProductTable> ProductTables { get; set; }
         public virtual DbSet<SettingTable> SettingTables { get; set; }
@@ -50,5 +49,6 @@ namespace VasudaDataAccess.Model
         public virtual DbSet<FundingRequestTable> FundingRequestTables { get; set; }
         public virtual DbSet<SystemAccountTable> SystemAccountTables { get; set; }
         public virtual DbSet<ExchangeRateTable> ExchangeRateTables { get; set; }
+        public virtual DbSet<PaymentHistoryTable> PaymentHistoryTables { get; set; }
     }
 }
