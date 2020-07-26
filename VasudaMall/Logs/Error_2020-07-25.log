@@ -1,0 +1,312 @@
+<====================================================================>
+2020-07-25 11:53:53.5480 System.Data.Entity.Core.MetadataException: Schema specified is not valid. Errors: 
+Model.VasudaDataModel.csdl(442,6) : error 0019: Each property name in a type must be unique. Property name 'DateCreated' was already defined.
+Model.VasudaDataModel.csdl(605,4) : error 0019: Each type name in a schema must be unique. Type name 'DB_A5731C_VasudaModel.PaymentHistoryTable' was already defined.
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection.LoadItems(IEnumerable`1 xmlReaders, IEnumerable`1 sourceFilePaths, SchemaDataModelOption dataModelOption, DbProviderManifest providerManifest, ItemCollection itemCollection, Boolean throwOnError)
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection.Init(IEnumerable`1 xmlReaders, IEnumerable`1 filePaths, Boolean throwOnError)
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection..ctor(IEnumerable`1 xmlReaders, IEnumerable`1 filePaths, Boolean skipInitialization)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.LoadEdmItemCollection(MetadataArtifactLoader loader)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.<>c__DisplayClass5.<GetMetadataWorkspace>b__0(String k)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(String cacheKey, MetadataArtifactLoader artifactLoader)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(DbConnectionOptions effectiveConnectionOptions)
+   at System.Data.Entity.Core.EntityClient.EntityConnection.GetMetadataWorkspace()
+   at System.Data.Entity.Core.Objects.ObjectContext.RetrieveMetadataWorkspaceFromConnection()
+   at System.Data.Entity.Core.Objects.ObjectContext..ctor(EntityConnection connection, Boolean isConnectionConstructor, ObjectQueryExecutionPlanFactory objectQueryExecutionPlanFactory, Translator translator, ColumnMapFactory columnMapFactory)
+   at System.Data.Entity.Internal.InternalConnection.CreateObjectContextFromConnectionModel()
+   at System.Data.Entity.Internal.LazyInternalConnection.CreateObjectContextFromConnectionModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.NotificationTableRepo.GetRecentNotifications(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\NotificationTableRepo.cs:line 29
+   at VasudaDataAccess.Logic.Implementation.ProfileService.GetProfileHomePage(String userId) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\ProfileService.cs:line 104
+<====================================================================>
+2020-07-25 11:53:55.1135 System.Data.Entity.Core.MetadataException: Schema specified is not valid. Errors: 
+Model.VasudaDataModel.csdl(442,6) : error 0019: Each property name in a type must be unique. Property name 'DateCreated' was already defined.
+Model.VasudaDataModel.csdl(605,4) : error 0019: Each type name in a schema must be unique. Type name 'DB_A5731C_VasudaModel.PaymentHistoryTable' was already defined.
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection.LoadItems(IEnumerable`1 xmlReaders, IEnumerable`1 sourceFilePaths, SchemaDataModelOption dataModelOption, DbProviderManifest providerManifest, ItemCollection itemCollection, Boolean throwOnError)
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection.Init(IEnumerable`1 xmlReaders, IEnumerable`1 filePaths, Boolean throwOnError)
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection..ctor(IEnumerable`1 xmlReaders, IEnumerable`1 filePaths, Boolean skipInitialization)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.LoadEdmItemCollection(MetadataArtifactLoader loader)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.<>c__DisplayClass5.<GetMetadataWorkspace>b__0(String k)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(String cacheKey, MetadataArtifactLoader artifactLoader)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(DbConnectionOptions effectiveConnectionOptions)
+   at System.Data.Entity.Core.EntityClient.EntityConnection.GetMetadataWorkspace()
+   at System.Data.Entity.Core.Objects.ObjectContext.RetrieveMetadataWorkspaceFromConnection()
+   at System.Data.Entity.Core.Objects.ObjectContext..ctor(EntityConnection connection, Boolean isConnectionConstructor, ObjectQueryExecutionPlanFactory objectQueryExecutionPlanFactory, Translator translator, ColumnMapFactory columnMapFactory)
+   at System.Data.Entity.Internal.InternalConnection.CreateObjectContextFromConnectionModel()
+   at System.Data.Entity.Internal.LazyInternalConnection.CreateObjectContextFromConnectionModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ProductTableRepo.GetAllPopular(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ProductTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.StoreService.GetHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\StoreService.cs:line 36
+<====================================================================>
+2020-07-25 20:10:24.8494 System.Data.Entity.Core.MetadataException: Schema specified is not valid. Errors: 
+Model.VasudaDataModel.csdl(442,6) : error 0019: Each property name in a type must be unique. Property name 'DateCreated' was already defined.
+Model.VasudaDataModel.csdl(605,4) : error 0019: Each type name in a schema must be unique. Type name 'DB_A5731C_VasudaModel.PaymentHistoryTable' was already defined.
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection.LoadItems(IEnumerable`1 xmlReaders, IEnumerable`1 sourceFilePaths, SchemaDataModelOption dataModelOption, DbProviderManifest providerManifest, ItemCollection itemCollection, Boolean throwOnError)
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection.Init(IEnumerable`1 xmlReaders, IEnumerable`1 filePaths, Boolean throwOnError)
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection..ctor(IEnumerable`1 xmlReaders, IEnumerable`1 filePaths, Boolean skipInitialization)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.LoadEdmItemCollection(MetadataArtifactLoader loader)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.<>c__DisplayClass5.<GetMetadataWorkspace>b__0(String k)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(String cacheKey, MetadataArtifactLoader artifactLoader)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(DbConnectionOptions effectiveConnectionOptions)
+   at System.Data.Entity.Core.EntityClient.EntityConnection.GetMetadataWorkspace()
+   at System.Data.Entity.Core.Objects.ObjectContext.RetrieveMetadataWorkspaceFromConnection()
+   at System.Data.Entity.Core.Objects.ObjectContext..ctor(EntityConnection connection, Boolean isConnectionConstructor, ObjectQueryExecutionPlanFactory objectQueryExecutionPlanFactory, Translator translator, ColumnMapFactory columnMapFactory)
+   at System.Data.Entity.Internal.InternalConnection.CreateObjectContextFromConnectionModel()
+   at System.Data.Entity.Internal.LazyInternalConnection.CreateObjectContextFromConnectionModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ProductTableRepo.GetAllPopular(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ProductTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.StoreService.GetHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\StoreService.cs:line 36
+<====================================================================>
+2020-07-25 20:10:46.4836 System.Data.Entity.Core.MetadataException: Schema specified is not valid. Errors: 
+Model.VasudaDataModel.csdl(442,6) : error 0019: Each property name in a type must be unique. Property name 'DateCreated' was already defined.
+Model.VasudaDataModel.csdl(605,4) : error 0019: Each type name in a schema must be unique. Type name 'DB_A5731C_VasudaModel.PaymentHistoryTable' was already defined.
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection.LoadItems(IEnumerable`1 xmlReaders, IEnumerable`1 sourceFilePaths, SchemaDataModelOption dataModelOption, DbProviderManifest providerManifest, ItemCollection itemCollection, Boolean throwOnError)
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection.Init(IEnumerable`1 xmlReaders, IEnumerable`1 filePaths, Boolean throwOnError)
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection..ctor(IEnumerable`1 xmlReaders, IEnumerable`1 filePaths, Boolean skipInitialization)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.LoadEdmItemCollection(MetadataArtifactLoader loader)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.<>c__DisplayClass5.<GetMetadataWorkspace>b__0(String k)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(String cacheKey, MetadataArtifactLoader artifactLoader)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(DbConnectionOptions effectiveConnectionOptions)
+   at System.Data.Entity.Core.EntityClient.EntityConnection.GetMetadataWorkspace()
+   at System.Data.Entity.Core.Objects.ObjectContext.RetrieveMetadataWorkspaceFromConnection()
+   at System.Data.Entity.Core.Objects.ObjectContext..ctor(EntityConnection connection, Boolean isConnectionConstructor, ObjectQueryExecutionPlanFactory objectQueryExecutionPlanFactory, Translator translator, ColumnMapFactory columnMapFactory)
+   at System.Data.Entity.Internal.InternalConnection.CreateObjectContextFromConnectionModel()
+   at System.Data.Entity.Internal.LazyInternalConnection.CreateObjectContextFromConnectionModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.GetEnumerator()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Collections.Generic.IEnumerable<TResult>.GetEnumerator()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at VasudaDataAccess.Logic.Implementation.NotificationService.GetAllNotificationsHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\NotificationService.cs:line 72
+<====================================================================>
+2020-07-25 20:10:49.1715 System.Data.Entity.Core.MetadataException: Schema specified is not valid. Errors: 
+Model.VasudaDataModel.csdl(442,6) : error 0019: Each property name in a type must be unique. Property name 'DateCreated' was already defined.
+Model.VasudaDataModel.csdl(605,4) : error 0019: Each type name in a schema must be unique. Type name 'DB_A5731C_VasudaModel.PaymentHistoryTable' was already defined.
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection.LoadItems(IEnumerable`1 xmlReaders, IEnumerable`1 sourceFilePaths, SchemaDataModelOption dataModelOption, DbProviderManifest providerManifest, ItemCollection itemCollection, Boolean throwOnError)
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection.Init(IEnumerable`1 xmlReaders, IEnumerable`1 filePaths, Boolean throwOnError)
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection..ctor(IEnumerable`1 xmlReaders, IEnumerable`1 filePaths, Boolean skipInitialization)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.LoadEdmItemCollection(MetadataArtifactLoader loader)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.<>c__DisplayClass5.<GetMetadataWorkspace>b__0(String k)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(String cacheKey, MetadataArtifactLoader artifactLoader)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(DbConnectionOptions effectiveConnectionOptions)
+   at System.Data.Entity.Core.EntityClient.EntityConnection.GetMetadataWorkspace()
+   at System.Data.Entity.Core.Objects.ObjectContext.RetrieveMetadataWorkspaceFromConnection()
+   at System.Data.Entity.Core.Objects.ObjectContext..ctor(EntityConnection connection, Boolean isConnectionConstructor, ObjectQueryExecutionPlanFactory objectQueryExecutionPlanFactory, Translator translator, ColumnMapFactory columnMapFactory)
+   at System.Data.Entity.Internal.InternalConnection.CreateObjectContextFromConnectionModel()
+   at System.Data.Entity.Internal.LazyInternalConnection.CreateObjectContextFromConnectionModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.NotificationTableRepo.GetRecentNotifications(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\NotificationTableRepo.cs:line 29
+   at VasudaDataAccess.Logic.Implementation.ProfileService.GetProfileHomePage(String userId) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\ProfileService.cs:line 104
+<====================================================================>
+2020-07-25 20:10:55.8037 System.Data.Entity.Core.MetadataException: Schema specified is not valid. Errors: 
+Model.VasudaDataModel.csdl(442,6) : error 0019: Each property name in a type must be unique. Property name 'DateCreated' was already defined.
+Model.VasudaDataModel.csdl(605,4) : error 0019: Each type name in a schema must be unique. Type name 'DB_A5731C_VasudaModel.PaymentHistoryTable' was already defined.
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection.LoadItems(IEnumerable`1 xmlReaders, IEnumerable`1 sourceFilePaths, SchemaDataModelOption dataModelOption, DbProviderManifest providerManifest, ItemCollection itemCollection, Boolean throwOnError)
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection.Init(IEnumerable`1 xmlReaders, IEnumerable`1 filePaths, Boolean throwOnError)
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection..ctor(IEnumerable`1 xmlReaders, IEnumerable`1 filePaths, Boolean skipInitialization)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.LoadEdmItemCollection(MetadataArtifactLoader loader)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.<>c__DisplayClass5.<GetMetadataWorkspace>b__0(String k)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(String cacheKey, MetadataArtifactLoader artifactLoader)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(DbConnectionOptions effectiveConnectionOptions)
+   at System.Data.Entity.Core.EntityClient.EntityConnection.GetMetadataWorkspace()
+   at System.Data.Entity.Core.Objects.ObjectContext.RetrieveMetadataWorkspaceFromConnection()
+   at System.Data.Entity.Core.Objects.ObjectContext..ctor(EntityConnection connection, Boolean isConnectionConstructor, ObjectQueryExecutionPlanFactory objectQueryExecutionPlanFactory, Translator translator, ColumnMapFactory columnMapFactory)
+   at System.Data.Entity.Internal.InternalConnection.CreateObjectContextFromConnectionModel()
+   at System.Data.Entity.Internal.LazyInternalConnection.CreateObjectContextFromConnectionModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ProductTableRepo.GetAllPopular(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ProductTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.StoreService.GetHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\StoreService.cs:line 36
+<====================================================================>
+2020-07-25 20:11:26.3978 System.Data.Entity.Core.MetadataException: Schema specified is not valid. Errors: 
+Model.VasudaDataModel.csdl(442,6) : error 0019: Each property name in a type must be unique. Property name 'DateCreated' was already defined.
+Model.VasudaDataModel.csdl(605,4) : error 0019: Each type name in a schema must be unique. Type name 'DB_A5731C_VasudaModel.PaymentHistoryTable' was already defined.
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection.LoadItems(IEnumerable`1 xmlReaders, IEnumerable`1 sourceFilePaths, SchemaDataModelOption dataModelOption, DbProviderManifest providerManifest, ItemCollection itemCollection, Boolean throwOnError)
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection.Init(IEnumerable`1 xmlReaders, IEnumerable`1 filePaths, Boolean throwOnError)
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection..ctor(IEnumerable`1 xmlReaders, IEnumerable`1 filePaths, Boolean skipInitialization)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.LoadEdmItemCollection(MetadataArtifactLoader loader)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.<>c__DisplayClass5.<GetMetadataWorkspace>b__0(String k)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(String cacheKey, MetadataArtifactLoader artifactLoader)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(DbConnectionOptions effectiveConnectionOptions)
+   at System.Data.Entity.Core.EntityClient.EntityConnection.GetMetadataWorkspace()
+   at System.Data.Entity.Core.Objects.ObjectContext.RetrieveMetadataWorkspaceFromConnection()
+   at System.Data.Entity.Core.Objects.ObjectContext..ctor(EntityConnection connection, Boolean isConnectionConstructor, ObjectQueryExecutionPlanFactory objectQueryExecutionPlanFactory, Translator translator, ColumnMapFactory columnMapFactory)
+   at System.Data.Entity.Internal.InternalConnection.CreateObjectContextFromConnectionModel()
+   at System.Data.Entity.Internal.LazyInternalConnection.CreateObjectContextFromConnectionModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ProductTableRepo.GetAllPopular(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ProductTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.StoreService.GetHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\StoreService.cs:line 36
+<====================================================================>
+2020-07-25 20:11:49.4674 System.Data.Entity.Core.MetadataException: Schema specified is not valid. Errors: 
+Model.VasudaDataModel.csdl(442,6) : error 0019: Each property name in a type must be unique. Property name 'DateCreated' was already defined.
+Model.VasudaDataModel.csdl(605,4) : error 0019: Each type name in a schema must be unique. Type name 'DB_A5731C_VasudaModel.PaymentHistoryTable' was already defined.
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection.LoadItems(IEnumerable`1 xmlReaders, IEnumerable`1 sourceFilePaths, SchemaDataModelOption dataModelOption, DbProviderManifest providerManifest, ItemCollection itemCollection, Boolean throwOnError)
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection.Init(IEnumerable`1 xmlReaders, IEnumerable`1 filePaths, Boolean throwOnError)
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection..ctor(IEnumerable`1 xmlReaders, IEnumerable`1 filePaths, Boolean skipInitialization)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.LoadEdmItemCollection(MetadataArtifactLoader loader)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.<>c__DisplayClass5.<GetMetadataWorkspace>b__0(String k)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(String cacheKey, MetadataArtifactLoader artifactLoader)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(DbConnectionOptions effectiveConnectionOptions)
+   at System.Data.Entity.Core.EntityClient.EntityConnection.GetMetadataWorkspace()
+   at System.Data.Entity.Core.Objects.ObjectContext.RetrieveMetadataWorkspaceFromConnection()
+   at System.Data.Entity.Core.Objects.ObjectContext..ctor(EntityConnection connection, Boolean isConnectionConstructor, ObjectQueryExecutionPlanFactory objectQueryExecutionPlanFactory, Translator translator, ColumnMapFactory columnMapFactory)
+   at System.Data.Entity.Internal.InternalConnection.CreateObjectContextFromConnectionModel()
+   at System.Data.Entity.Internal.LazyInternalConnection.CreateObjectContextFromConnectionModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ProductTableRepo.GetAllPopular(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ProductTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.StoreService.GetHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\StoreService.cs:line 36
+<====================================================================>
+2020-07-25 20:12:29.2822 System.Data.Entity.Core.MetadataException: Schema specified is not valid. Errors: 
+Model.VasudaDataModel.csdl(442,6) : error 0019: Each property name in a type must be unique. Property name 'DateCreated' was already defined.
+Model.VasudaDataModel.csdl(605,4) : error 0019: Each type name in a schema must be unique. Type name 'DB_A5731C_VasudaModel.PaymentHistoryTable' was already defined.
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection.LoadItems(IEnumerable`1 xmlReaders, IEnumerable`1 sourceFilePaths, SchemaDataModelOption dataModelOption, DbProviderManifest providerManifest, ItemCollection itemCollection, Boolean throwOnError)
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection.Init(IEnumerable`1 xmlReaders, IEnumerable`1 filePaths, Boolean throwOnError)
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection..ctor(IEnumerable`1 xmlReaders, IEnumerable`1 filePaths, Boolean skipInitialization)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.LoadEdmItemCollection(MetadataArtifactLoader loader)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.<>c__DisplayClass5.<GetMetadataWorkspace>b__0(String k)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(String cacheKey, MetadataArtifactLoader artifactLoader)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(DbConnectionOptions effectiveConnectionOptions)
+   at System.Data.Entity.Core.EntityClient.EntityConnection.GetMetadataWorkspace()
+   at System.Data.Entity.Core.Objects.ObjectContext.RetrieveMetadataWorkspaceFromConnection()
+   at System.Data.Entity.Core.Objects.ObjectContext..ctor(EntityConnection connection, Boolean isConnectionConstructor, ObjectQueryExecutionPlanFactory objectQueryExecutionPlanFactory, Translator translator, ColumnMapFactory columnMapFactory)
+   at System.Data.Entity.Internal.InternalConnection.CreateObjectContextFromConnectionModel()
+   at System.Data.Entity.Internal.LazyInternalConnection.CreateObjectContextFromConnectionModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.NotificationTableRepo.GetRecentNotifications(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\NotificationTableRepo.cs:line 29
+   at VasudaDataAccess.Logic.Implementation.ProfileService.GetProfileHomePage(String userId) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\ProfileService.cs:line 104
+<====================================================================>
+2020-07-25 20:13:00.5191 System.Data.Entity.Core.MetadataException: Schema specified is not valid. Errors: 
+Model.VasudaDataModel.csdl(442,6) : error 0019: Each property name in a type must be unique. Property name 'DateCreated' was already defined.
+Model.VasudaDataModel.csdl(605,4) : error 0019: Each type name in a schema must be unique. Type name 'DB_A5731C_VasudaModel.PaymentHistoryTable' was already defined.
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection.LoadItems(IEnumerable`1 xmlReaders, IEnumerable`1 sourceFilePaths, SchemaDataModelOption dataModelOption, DbProviderManifest providerManifest, ItemCollection itemCollection, Boolean throwOnError)
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection.Init(IEnumerable`1 xmlReaders, IEnumerable`1 filePaths, Boolean throwOnError)
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection..ctor(IEnumerable`1 xmlReaders, IEnumerable`1 filePaths, Boolean skipInitialization)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.LoadEdmItemCollection(MetadataArtifactLoader loader)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.<>c__DisplayClass5.<GetMetadataWorkspace>b__0(String k)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(String cacheKey, MetadataArtifactLoader artifactLoader)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(DbConnectionOptions effectiveConnectionOptions)
+   at System.Data.Entity.Core.EntityClient.EntityConnection.GetMetadataWorkspace()
+   at System.Data.Entity.Core.Objects.ObjectContext.RetrieveMetadataWorkspaceFromConnection()
+   at System.Data.Entity.Core.Objects.ObjectContext..ctor(EntityConnection connection, Boolean isConnectionConstructor, ObjectQueryExecutionPlanFactory objectQueryExecutionPlanFactory, Translator translator, ColumnMapFactory columnMapFactory)
+   at System.Data.Entity.Internal.InternalConnection.CreateObjectContextFromConnectionModel()
+   at System.Data.Entity.Internal.LazyInternalConnection.CreateObjectContextFromConnectionModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ProductTableRepo.GetAllPopular(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ProductTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.StoreService.GetHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\StoreService.cs:line 36
+<====================================================================>
+2020-07-25 20:13:09.0937 System.Data.Entity.Core.MetadataException: Schema specified is not valid. Errors: 
+Model.VasudaDataModel.csdl(442,6) : error 0019: Each property name in a type must be unique. Property name 'DateCreated' was already defined.
+Model.VasudaDataModel.csdl(605,4) : error 0019: Each type name in a schema must be unique. Type name 'DB_A5731C_VasudaModel.PaymentHistoryTable' was already defined.
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection.LoadItems(IEnumerable`1 xmlReaders, IEnumerable`1 sourceFilePaths, SchemaDataModelOption dataModelOption, DbProviderManifest providerManifest, ItemCollection itemCollection, Boolean throwOnError)
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection.Init(IEnumerable`1 xmlReaders, IEnumerable`1 filePaths, Boolean throwOnError)
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection..ctor(IEnumerable`1 xmlReaders, IEnumerable`1 filePaths, Boolean skipInitialization)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.LoadEdmItemCollection(MetadataArtifactLoader loader)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.<>c__DisplayClass5.<GetMetadataWorkspace>b__0(String k)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(String cacheKey, MetadataArtifactLoader artifactLoader)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(DbConnectionOptions effectiveConnectionOptions)
+   at System.Data.Entity.Core.EntityClient.EntityConnection.GetMetadataWorkspace()
+   at System.Data.Entity.Core.Objects.ObjectContext.RetrieveMetadataWorkspaceFromConnection()
+   at System.Data.Entity.Core.Objects.ObjectContext..ctor(EntityConnection connection, Boolean isConnectionConstructor, ObjectQueryExecutionPlanFactory objectQueryExecutionPlanFactory, Translator translator, ColumnMapFactory columnMapFactory)
+   at System.Data.Entity.Internal.InternalConnection.CreateObjectContextFromConnectionModel()
+   at System.Data.Entity.Internal.LazyInternalConnection.CreateObjectContextFromConnectionModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.NotificationTableRepo.GetRecentNotifications(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\NotificationTableRepo.cs:line 29
+   at VasudaDataAccess.Logic.Implementation.ProfileService.GetProfileHomePage(String userId) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\ProfileService.cs:line 104
+<====================================================================>
+2020-07-25 20:13:36.9462 System.Data.Entity.Core.MetadataException: Schema specified is not valid. Errors: 
+Model.VasudaDataModel.csdl(442,6) : error 0019: Each property name in a type must be unique. Property name 'DateCreated' was already defined.
+Model.VasudaDataModel.csdl(605,4) : error 0019: Each type name in a schema must be unique. Type name 'DB_A5731C_VasudaModel.PaymentHistoryTable' was already defined.
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection.LoadItems(IEnumerable`1 xmlReaders, IEnumerable`1 sourceFilePaths, SchemaDataModelOption dataModelOption, DbProviderManifest providerManifest, ItemCollection itemCollection, Boolean throwOnError)
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection.Init(IEnumerable`1 xmlReaders, IEnumerable`1 filePaths, Boolean throwOnError)
+   at System.Data.Entity.Core.Metadata.Edm.EdmItemCollection..ctor(IEnumerable`1 xmlReaders, IEnumerable`1 filePaths, Boolean skipInitialization)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.LoadEdmItemCollection(MetadataArtifactLoader loader)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.<>c__DisplayClass5.<GetMetadataWorkspace>b__0(String k)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(String cacheKey, MetadataArtifactLoader artifactLoader)
+   at System.Data.Entity.Core.Metadata.Edm.MetadataCache.GetMetadataWorkspace(DbConnectionOptions effectiveConnectionOptions)
+   at System.Data.Entity.Core.EntityClient.EntityConnection.GetMetadataWorkspace()
+   at System.Data.Entity.Core.Objects.ObjectContext.RetrieveMetadataWorkspaceFromConnection()
+   at System.Data.Entity.Core.Objects.ObjectContext..ctor(EntityConnection connection, Boolean isConnectionConstructor, ObjectQueryExecutionPlanFactory objectQueryExecutionPlanFactory, Translator translator, ColumnMapFactory columnMapFactory)
+   at System.Data.Entity.Internal.InternalConnection.CreateObjectContextFromConnectionModel()
+   at System.Data.Entity.Internal.LazyInternalConnection.CreateObjectContextFromConnectionModel()
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   at System.Data.Entity.Internal.InternalContext.Initialize()
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   at VasudaDataAccess.Data_Access.Implentations.ProductTableRepo.GetAllPopular(Nullable`1 pageNum) in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Data Access\Implentations\ProductTableRepo.cs:line 28
+   at VasudaDataAccess.Logic.Implementation.StoreService.GetHomePage() in C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Logic\Implementation\StoreService.cs:line 36

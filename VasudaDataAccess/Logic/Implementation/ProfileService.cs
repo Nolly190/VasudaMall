@@ -97,7 +97,8 @@ namespace VasudaDataAccess.Logic.Implementation
 
             var model = new ProfileViewModel
             {
-                RecentNotifications = new List<NotificationTable>()
+                RecentNotifications = new List<NotificationTable>(),
+                User = new AspNetUser()
             };
             try
             {
