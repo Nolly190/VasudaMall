@@ -24,7 +24,7 @@ namespace VasudaDataAccess.Model
         public decimal Rate { get; set; }
         public bool IsApproved { get; set; }
     
-        public virtual WithdrawalDetailsTable WithdrawalDetailsTable { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
+        public virtual WithdrawalDetailsTable WithdrawalDetailsTable { get; set; }
     }
 }

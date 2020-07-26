@@ -12,7 +12,7 @@ using VasudaDataAccess.Provider;
 
 namespace VasudaMall.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class DashboardController : Controller
     {
         private IWalletService _walletService;
@@ -64,7 +64,15 @@ namespace VasudaMall.Controllers
 
         public new ActionResult Profile()
         {
-            return View(_profileService.GetProfileHomePage().Result());
+            var userId = User.Identity.GetUserId();
+            return View(_profileService.GetProfileHomePage(userId).Result());
+        }
+
+        [HttpPost]
+        public JsonResult UpdateProfile(AspNetUser model)
+        {
+            model.Id = User.Identity.GetUserId();
+            return Json(_profileService.UpdateUserProfile(model), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Notification()
@@ -85,6 +93,11 @@ namespace VasudaMall.Controllers
         public ActionResult OrderHistory()
         {
             return View(_orderService.GetAllOrdersHomePage().Result());
+        }
+        
+        public ActionResult Support()
+        {
+            return View();
         }
     }
 }

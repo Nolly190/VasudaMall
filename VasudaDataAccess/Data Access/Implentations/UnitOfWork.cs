@@ -28,6 +28,7 @@ namespace VasudaDataAccess.Data_Access.Implentations
             WithdrawalRequestTable = new WithdrawalRequestTableRepo(context);
             FundingRequestTable = new FundingRequestTableRepo(context);
             SystemAccountTable = new SystemAccountTableRepo(context);
+            ChatTable = new ChatTableRepo(context);
         }
 
         public IAspNetUser AspNetUser { get; }
@@ -49,6 +50,7 @@ namespace VasudaDataAccess.Data_Access.Implentations
         public IVendorTable VendorTable { get; }
         public IWithdrawalDetailsTable WithdrawalDetailsTable { get; }
         public IBankTable BankTable { get; }
+        public IChatTable ChatTable { get; }
         public void Complete()
         {
            _dbContext.SaveChanges();
