@@ -13,7 +13,7 @@ using VasudaDataAccess.Utility;
 
 namespace VasudaDataAccess.Providers.Implementations
 {
-  public class PaymentService : IPaymentService
+    public class PaymentService : IPaymentService
     {
         private UnitOfWork _unitOfWork;
         private Logger logger;
@@ -24,7 +24,7 @@ namespace VasudaDataAccess.Providers.Implementations
             _unitOfWork = new UnitOfWork(new VasudaModel());
         }
 
-        public Response<FlutterPaymentDetails> GetFlutterwavePaymentInfo(string userId,decimal amount)
+        public Response<FlutterPaymentDetails> GetFlutterwavePaymentInfo(string userId, decimal amount)
         {
             var response = new Response<FlutterPaymentDetails>();
             response.Status = false;
@@ -63,7 +63,7 @@ namespace VasudaDataAccess.Providers.Implementations
             response.Message = "Could not resolve account";
             var getApiKey = _unitOfWork.SettingTable.GetSystemSetting();
             var paystackSecretkey = Encryption.Decrypt(getApiKey.paystackSecretKey);
-            var newModel =JsonConvert.SerializeObject(new { account_number = accountNumber, account_bank = bankCode });
+            var newModel = JsonConvert.SerializeObject(new { account_number = accountNumber, account_bank = bankCode });
             var Url = "https://api.flutterwave.com/v3/";
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3;
             System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
@@ -71,7 +71,7 @@ namespace VasudaDataAccess.Providers.Implementations
             var client = new RestClient(Url);
             var request = new RestRequest("accounts/resolve", Method.POST);
             request.AddHeader("authorization", "Bearer " + "FLWSECK-d105e19714ce12c81f6834c416810344-X");
-           // request.AddHeader("authorization", "Bearer " + paystackSecretkey);
+            // request.AddHeader("authorization", "Bearer " + paystackSecretkey);
             request.AddParameter("application/json; charset=utf-8", newModel, ParameterType.RequestBody);
             var responseStr = client.Execute(request);
             var flutterResponse = JsonConvert.DeserializeObject<FlutterwaveResponse<Data>>(responseStr.Content);
@@ -99,25 +99,34 @@ namespace VasudaDataAccess.Providers.Implementations
             {
                 var getPaymentInfo =
                     _unitOfWork.FundingRequestTable.Get(x => x.PaymentId.ToLower() == tx_ref.ToLower());
-                if (getPaymentInfo!=null && getPaymentInfo.IsCredited== false)
+                if (getPaymentInfo != null && getPaymentInfo.IsCredited == false)
                 {
-                        getPaymentInfo.TransId = transactionId;
-                        getPaymentInfo.PaymentStatus = status== "successful"? FundRequestStatus.Payment_Successful.ToString(): FundRequestStatus.Payment_Error.ToString();
+                    getPaymentInfo.TransId = transactionId;
+                    getPaymentInfo.PaymentStatus = status == "successful" ? FundRequestStatus.Payment_Successful.ToString() : FundRequestStatus.Payment_Error.ToString();
+                    _unitOfWork.Complete();
+                    var result = VerifyTransaction(getPaymentInfo.PaymentId);
+                    if (result.Status)
+                    {
+                        var getUserDetails = _unitOfWork.AspNetUser.Get(getPaymentInfo.Userid);
+                        var amount = Convert.ToDecimal((getPaymentInfo.NairaAmount / getPaymentInfo.Rate.Value).ToString("##.##"));
+                        getUserDetails.Balance = getUserDetails.Balance + amount;
+                        getPaymentInfo.IsCredited = true;
+                        getPaymentInfo.IsApproved = true;
+                        AddPaymentHistory("Credit", amount, getUserDetails.Id, "Wallet funding", true);
+                        var mailModel = new Notification();
+                        var model = new MailDTO()
+                        {
+                            Email = getUserDetails.Email,
+                            Message = $"Your payment was successfully received and your wallet has been credited.",
+                            Name = getUserDetails.FullName.Split(' ')[0],
+                            Subject = "Vasuda Mall payment received",
+                        };
                         _unitOfWork.Complete();
-                      var result =  VerifyTransaction(getPaymentInfo.PaymentId);
-                      if (result.Status)
-                      {
-                          var getUserDetails = _unitOfWork.AspNetUser.Get(getPaymentInfo.Userid);
-                          var amount  = Convert.ToDecimal((getPaymentInfo.NairaAmount / getPaymentInfo.Rate.Value).ToString("##.##"));
-                            getUserDetails.Balance = getUserDetails.Balance+ amount;
-                          getPaymentInfo.IsCredited = true;
-                          getPaymentInfo.IsApproved = true;
-                          AddPaymentHistory("Credit", amount, getUserDetails.Id, "Wallet funding", true);
-                          _unitOfWork.Complete();
-                      }
+                        mailModel.SendEmail(model);
+                    }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex.ToString());
                 response.Message = "Could not update the transaction";
@@ -125,7 +134,7 @@ namespace VasudaDataAccess.Providers.Implementations
             return response;
         }
 
-        public Response<string> AddPaymentHistory(string transType, decimal amount, string userId,string purpose,bool status)
+        public Response<string> AddPaymentHistory(string transType, decimal amount, string userId, string purpose, bool status)
         {
             var response = new Response<string>();
             response.Status = false;
@@ -161,10 +170,10 @@ namespace VasudaDataAccess.Providers.Implementations
             {
                 var getPaymentInfo =
                     _unitOfWork.FundingRequestTable.Get(x => x.PaymentId.ToLower() == paymentId.ToLower());
-                if (getPaymentInfo!=null)
+                if (getPaymentInfo != null)
                 {
-                    var secretKey =Encryption.Decrypt(_unitOfWork.SettingTable.GetSystemSetting().paystackSecretKey);
-                    var paymentVerification =  FlutterwaveVerification(secretKey, getPaymentInfo.TransId);
+                    var secretKey = Encryption.Decrypt(_unitOfWork.SettingTable.GetSystemSetting().paystackSecretKey);
+                    var paymentVerification = FlutterwaveVerification(secretKey, getPaymentInfo.TransId);
                     if (paymentVerification.Status && getPaymentInfo.NairaAmount == paymentVerification._entity.data.amount && paymentVerification._entity.data.processor_response.Contains("successful"))
                     {
                         response.Status = true;
@@ -176,17 +185,17 @@ namespace VasudaDataAccess.Providers.Implementations
                         response.Message = paymentVerification._entity.message;
 
                     }
-                
+
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex.ToString());
                 response.Message = "Could not update the transaction";
             }
             return response;
-        }  
-        public Response<FlutterwaveResponse<VerifyPayment<Card>>> FlutterwaveVerification(string secretKey,string transId)
+        }
+        public Response<FlutterwaveResponse<VerifyPayment<Card>>> FlutterwaveVerification(string secretKey, string transId)
         {
             var response = new Response<FlutterwaveResponse<VerifyPayment<Card>>>();
             response.Status = false;
@@ -205,7 +214,7 @@ namespace VasudaDataAccess.Providers.Implementations
                 response.Status = true;
                 response.SetResult(FlutterwaveVerifyResponse);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex.ToString());
                 response.Message = "Could not verify transaction";
