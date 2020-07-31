@@ -15,5 +15,6 @@ namespace VasudaDataAccess.Logic
         Response<List<WithdrawalDetailsTable>> DisableWithdrawalAccount(string id);
         Response<AspNetUser> UpdateUserProfile(AspNetUser model);
         Response<SupportViewModel> GetAllChats(string userId);
+        Response<AdminProfileViewModel> AdminGetAllUsers();
     }
 }

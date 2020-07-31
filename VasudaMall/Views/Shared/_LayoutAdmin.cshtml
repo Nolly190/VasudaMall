@@ -8,18 +8,13 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Dashboard - @ViewBag.Title</title>
+    <title>Admin-Dashboard - @ViewBag.Title</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-
-    @*Chat template
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>*@
 
     <!-- jQuery -->
     <script src="~/admin-lte/plugins/jquery/jquery.min.js"></script>
@@ -68,7 +63,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href=@Url.Action("Index", "Dashboard") class="brand-link">
+            <a href=@Url.Action("Index", "Admin") class="brand-link">
                 <img src="~/vasuda-template/images/logo2.png" alt="Vasuda Logo" class="brand-image elevation-3"
                      style="opacity: .8;height:16px">
                 <span class="brand-text font-weight-light"></span>
@@ -87,71 +82,64 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-shopping-cart"></i>
-                                <p>
-                                    Orders
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
+                        <li class="nav-item">
+                            <a href=@Url.Action("Order", "Admin") class="nav-link">
+                                <i class="far fa-cart-plus nav-icon"></i>
+                                <p>Manage Orders</p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="@Url.Action("Index","Order")" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Order Placement</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href=@Url.Action("Orderhistory", "Dashboard") class="nav-link">
-                                        <i class="far fa-cart-plus nav-icon"></i>
-                                        <p>Order History</p>
-                                    </a>
-                                </li>
-                            </ul>
+
                         </li>
 
                         <li class="nav-item">
-                            <a href=@Url.Action("Wallet", "Dashboard") class="nav-link">
+                            <a href=@Url.Action("Wallet", "Admin") class="nav-link">
                                 <i class="nav-icon far fa-image"></i>
                                 <p>
-                                    Wallet
+                                    Manage Wallet
                                 </p>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href=@Url.Action("Transaction", "Dashboard") class="nav-link">
+                            <a href=@Url.Action("Transaction", "Admin") class="nav-link">
                                 <i class="nav-icon far fa-image"></i>
                                 <p>
-                                    Transaction History
+                                    Manage Transaction
                                 </p>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href=@Url.Action("Profile", "Dashboard") class="nav-link">
+                            <a href=@Url.Action("Profile", "Admin") class="nav-link">
                                 <i class="nav-icon fas fa-user-cog"></i>
                                 <p>
-                                    Profile Management
+                                    Manage Profile
                                 </p>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href=@Url.Action("Notification", "Dashboard") class="nav-link">
+                            <a href=@Url.Action("Notification", "Admin") class="nav-link">
                                 <i class="nav-icon far fa-bell"></i>
                                 <p>
-                                    Notifications
+                                    Manage Notifications
+                                </p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href=@Url.Action("Banks", "Admin") class="nav-link">
+                                <i class="nav-icon far fa-bank"></i>
+                                <p>
+                                    Manage Banks
                                 </p>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href=@Url.Action("Support", "Dashboard") class="nav-link">
+                            <a href=@Url.Action("Support", "Admin") class="nav-link">
                                 <i class="nav-icon fa fa-phone"></i>
                                 <p>
-                                    Chat Support
+                                    Manage Chat Support
                                 </p>
                             </a>
                         </li>
@@ -187,7 +175,7 @@
                                 }
                                 else
                                 {
-                                    <li class="breadcrumb-item"><a href=@Url.Action("Index", "Dashboard")>Home</a></li>
+                                    <li class="breadcrumb-item"><a href=@Url.Action("Index", "Admin")>Home</a></li>
                                     <li class="breadcrumb-item active">@ViewBag.Title</li>
                                 }
                             </ol>
