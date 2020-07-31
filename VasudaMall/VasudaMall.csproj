@@ -241,6 +241,10 @@
     <Compile Include="Migrations\202007192336129_AddedFullName.Designer.cs">
       <DependentUpon>202007192336129_AddedFullName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202007222059586_AddDateCreatedToUserModel.cs" />
+    <Compile Include="Migrations\202007222059586_AddDateCreatedToUserModel.Designer.cs">
+      <DependentUpon>202007222059586_AddDateCreatedToUserModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202007230319194_AddedDateCreated.cs" />
     <Compile Include="Migrations\202007230319194_AddedDateCreated.Designer.cs">
       <DependentUpon>202007230319194_AddedDateCreated.cs</DependentUpon>
@@ -2055,6 +2059,7 @@
     <Content Include="Scripts\JqueryValidator.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Products.js" />
+    <Content Include="Scripts\ProfilePage.js" />
     <Content Include="Scripts\WalletPage.js" />
     <Content Include="vasuda-template\css\animate.css" />
     <Content Include="vasuda-template\css\animate.min.css" />
@@ -2175,6 +2180,7 @@
     <Content Include="Views\Order\Test.cshtml" />
     <Content Include="Views\Dashboard\OrderHistory.cshtml" />
     <Content Include="Views\Payment\Index.cshtml" />
+    <Content Include="Views\Dashboard\Support.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2215,6 +2221,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202007192336129_AddedFullName.resx">
       <DependentUpon>202007192336129_AddedFullName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007222059586_AddDateCreatedToUserModel.resx">
+      <DependentUpon>202007222059586_AddDateCreatedToUserModel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202007230319194_AddedDateCreated.resx">
       <DependentUpon>202007230319194_AddedDateCreated.cs</DependentUpon>

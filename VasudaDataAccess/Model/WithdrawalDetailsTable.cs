@@ -28,8 +28,8 @@ namespace VasudaDataAccess.Model
         public System.DateTime DateCreated { get; set; }
         public string UserId { get; set; }
     
+        public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WithdrawalRequestTable> WithdrawalRequestTables { get; set; }
-        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

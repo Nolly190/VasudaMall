@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using VasudaDataAccess.Data_Access;
 using VasudaDataAccess.Data_Access.Implentations;
+using VasudaDataAccess.DTOs;
 using VasudaDataAccess.Model;
 using VasudaMall.Models;
 
@@ -172,7 +173,7 @@ namespace VasudaMall.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email,Address = model.Address,DateCreated = DateTime.UtcNow.AddHours(1)};
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email,Address = model.Address, DateCreated = DateTime.Now};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -194,7 +195,7 @@ namespace VasudaMall.Controllers
         }
 
         //
-        // GET: /Account/ConfirmEmail
+        // GET: /Account/ConfirmEmaillogin
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
@@ -290,6 +291,31 @@ namespace VasudaMall.Controllers
         public ActionResult ResetPasswordConfirmation()
         {
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult ChangePassword(ChangePasswordDTO model)
+        {
+            var response = new Response<string>() {
+                Message = "Failed to change password.",
+                Status = false
+            };
+                
+            if (ModelState.IsValid)
+            {
+                var userId = User.Identity.GetUserId();
+                var passwordChanged = UserManager.ChangePassword(userId, model.OldPassword, model.NewPassword);
+                if (!passwordChanged.Succeeded)
+                {
+                    response.Status = false;
+                    response.Message = passwordChanged.Errors.FirstOrDefault();
+                }
+                else
+                {
+                    response.Status = true;                 
+                }
+            }
+            return Json(response, JsonRequestBehavior.AllowGet);
         }
 
         //
