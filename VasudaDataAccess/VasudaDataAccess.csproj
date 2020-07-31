@@ -101,6 +101,10 @@
     <Compile Include="Data Access\Implentations\UnitOfWork.cs" />
     <Compile Include="Data Access\IVendorTable.cs" />
     <Compile Include="Data Access\IWithdrawalDetailsTable.cs" />
+    <Compile Include="DTOs\AdminBankViewModel.cs" />
+    <Compile Include="DTOs\AdminNotificationViewModel.cs" />
+    <Compile Include="DTOs\AdminProfileViewModel.cs" />
+    <Compile Include="DTOs\AdminWalletViewModel.cs" />
     <Compile Include="DTOs\ChangePasswordDTO.cs" />
     <Compile Include="DTOs\FlutterwaveTransResponse.cs" />
     <Compile Include="DTOs\HomeProductViewModel.cs" />
@@ -112,6 +116,8 @@
     <Compile Include="DTOs\SupportViewModel.cs" />
     <Compile Include="DTOs\TransactionViewModel.cs" />
     <Compile Include="DTOs\WalletViewModel.cs" />
+    <Compile Include="Logic\IBankService.cs" />
+    <Compile Include="Logic\Implementation\BankService.cs" />
     <Compile Include="Logic\Implementation\NotificationService.cs" />
     <Compile Include="Logic\Implementation\OrderService.cs" />
     <Compile Include="Model\AspNetRole.cs">

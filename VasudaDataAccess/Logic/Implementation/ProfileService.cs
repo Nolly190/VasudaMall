@@ -181,5 +181,32 @@ namespace VasudaDataAccess.Logic.Implementation
             }
             return response;
         }
+
+        public Response<AdminProfileViewModel> AdminGetAllUsers()
+        {
+            var response = new Response<AdminProfileViewModel>()
+            {
+                Status = false,
+                Message = "Could not retrieve users"
+            };
+
+            var model = new AdminProfileViewModel
+            {
+                Users = new List<AspNetUser>()
+            };
+            try
+            {
+                model.Users = _unitOfWork.AspNetUser.GetAll().ToList();
+                response.Message = "Successfully retrieved all users";
+                response.Status = true;
+                response.SetResult(model);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+
+            }
+            return response;
+        }
     }
 }

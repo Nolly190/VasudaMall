@@ -1,0 +1,102 @@
+﻿@model VasudaDataAccess.DTOs.AdminBankViewModel
+
+@{
+    ViewBag.Title = "Banks";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var count = 1;
+}
+
+<section class="content">
+    <div class="container-fluid">
+
+        <!--Bank drop down start-->
+        <div class="row">
+            <div class="col-12">
+                <!-- Default box -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Manage Banks</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        Start creating your amazing application!
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        Footer
+                    </div>
+                    <!-- /.card-footer-->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!--Bank drop down end-->
+        <!--Bank table start-->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Banks</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @if (Model.Banks.Count == 0)
+                        {
+                            <h3 style="text-align:center">NO BANK AVAILABLE</h3>
+                        }
+                        else
+                        {
+                            <table id="notificationTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Bank Name</th>
+                                        <th>Bank Code</th>
+                                        <th>IsActive</th>
+                                        <th>Date Created</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var bank in Model.Banks)
+                                    {
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@bank.BankName</td>
+                                            <td>@bank.BankCode</td>
+                                            <td>@bank.IsActive</td>
+                                            <td>@bank.DateCreated</td>
+                                            <td>
+                                                @if (bank.IsActive == true)
+                                                {
+
+                                                    <button type="button" class="btn btn-outline-danger btn-sm blockWIthdrawalAccountBtn">Block</button>
+                                                }
+                                                else
+                                                {
+                                                    <button type="button" class="btn btn-outline-success btn-sm unblockWIthdrawalAccountBtn">UnBlock</button>
+                                                }
+                                            </td>
+                                        </tr>
+                                        count++;
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!--Bank table end-->
+
+    </div>
+</section>
+
+

@@ -97,5 +97,32 @@ namespace VasudaDataAccess.Logic.Implementation
 
             return response;
         }
+
+        public Response<AdminNotificationViewModel> AdminGetAllNotifications()
+        {
+            var response = new Response<AdminNotificationViewModel>()
+            {
+                Status = false,
+                Message = "Could not retrieve notifications"
+            };
+
+            var model = new AdminNotificationViewModel
+            {
+                Notifications = new List<NotificationTable>()
+            };
+            try
+            {
+                model.Notifications = _unitOfWork.NotificationTable.GetAll().ToList();
+                response.Message = "Successfully retrieved all notifications";
+                response.Status = true;
+                response.SetResult(model);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+
+            }
+            return response;
+        }
     }
 }

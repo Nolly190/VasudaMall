@@ -1,0 +1,116 @@
+﻿@model VasudaDataAccess.DTOs.AdminProfileViewModel
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var count = 1;
+}
+
+<section class="content">
+    <div class="container-fluid">
+
+        <!--Users drop down start-->
+        <div class="row">
+            <div class="col-12">
+                <!-- Default box -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Manage Users</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        Start creating your amazing application!
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        Footer
+                    </div>
+                    <!-- /.card-footer-->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!--Users drop down end-->
+        <!--Users table start-->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Notifications</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @if (Model.Users.Count == 0)
+                        {
+                            <h3 style="text-align:center">NO USER AVAILABLE</h3>
+                        }
+                        else
+                        {
+                            <table id="notificationTable" class="table table-bordered table-striped table-hover table-sm table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Full Name</th>
+                                        <th>User Name</th>
+                                        <th>Email</th>
+                                        <th>Balance</th>
+                                        <th>Phone Number</th>
+                                        <th>Address</th>
+                                        <th>City</th>
+                                        <th>Country</th>
+                                        <th>Email Confirmed</th>
+                                        <th>Phone Number Confirmed</th>
+                                        <th>Access Failed Count</th>
+                                        <th>Lockout Enabled</th>
+                                        <th>Lockout End Date</th>
+                                        <th>Two Factor Enabled</th>
+                                        <th>Date Created</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var user in Model.Users)
+                                    {
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@user.FullName</td>
+                                            <td>@user.UserName</td>
+                                            <td>@user.Email</td>
+                                            <td>@user.Balance</td>
+                                            <td>@user.PhoneNumber</td>
+                                            <td>@user.Address</td>
+                                            <td>@user.City</td>
+                                            <td>@user.Country</td>
+                                            <td>@user.EmailConfirmed</td>
+                                            <td>@user.PhoneNumberConfirmed</td>
+                                            <td>@user.AccessFailedCount</td>
+                                            <td>@user.LockoutEnabled</td>
+                                            <td>@user.LockoutEndDateUtc</td>
+                                            <td>@user.TwoFactorEnabled</td>
+                                            <td>@user.DateCreated</td>
+                                            <td>
+                                                <button type="button" id="unblockUserBtn" class="btn btn-outline-success btn-sm">Unblock</button><br />
+                                                <button type="button" id="blockUserBtn" class="btn btn-outline-danger btn-sm">Block</button>
+                                            </td>
+                                        </tr>
+                                        count++;
+                                    }
+                                </tbody>
+                                <tfoot>
+                                </tfoot>
+                            </table>
+                        }
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!--Users table end-->
+    </div>
+</section>

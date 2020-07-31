@@ -13,6 +13,7 @@ namespace VasudaDataAccess.Logic
         Response<NotificationViewModel> GetAllNotificationsHomePage();
         Response<string> AddContactUs(ContactTable model);
         Response<string> ResolveAccount(WithdrawalDetailsTable model);
+        Response<AdminNotificationViewModel> AdminGetAllNotifications();
 
     }
 }

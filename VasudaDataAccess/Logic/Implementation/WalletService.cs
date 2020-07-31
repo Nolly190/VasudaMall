@@ -161,7 +161,32 @@ namespace VasudaDataAccess.Logic.Implementation
             return response;
         }
 
+        public Response<AdminWalletViewModel> AdminGetAllWithdrawalAccounts()
+        {
+            var response = new Response<AdminWalletViewModel>()
+            {
+                Status = false,
+                Message = "Could not retrieve withdrawal accounts"
+            };
 
+            var model = new AdminWalletViewModel
+            {
+                AllWithdrawalAccounts = new List<WithdrawalDetailsTable>()
+            };
+            try
+            {
+                model.AllWithdrawalAccounts = _unitOfWork.WithdrawalDetailsTable.GetAll().ToList();
+                response.Message = "Successfully retrieved all withdrawal accounts";
+                response.Status = true;
+                response.SetResult(model);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+
+            }
+            return response;
+        }
     }
 
     public enum FundWithdrawalStatus

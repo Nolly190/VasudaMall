@@ -78,6 +78,7 @@ namespace VasudaMall
                 "~/Scripts/JqueryValidator.js",
                 "~/Scripts/Walletpage.js",
                 "~/Scripts/ProfilePage.js"
+                //"~/Scripts/ChatPage.js"
                 //"~/Scripts/jquery.validate.min.js",
                 //"~/Scripts/jquery.validate.unobtrusive.min.js"
                 ));
@@ -95,6 +96,7 @@ namespace VasudaMall
                 "~/admin-lte/dist/css/adminlte.min.css",
                 "~/admin-lte/custom/style.css",
                 "~/Content/spinner.css"
+                //"~/Content/chat.css"
                 //"~/admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.css",
                 //"~/admin-lte/plugins/select2/css/select2.min.css",
                 //"~/admin-lte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css"

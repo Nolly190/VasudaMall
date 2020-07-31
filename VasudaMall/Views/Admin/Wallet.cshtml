@@ -1,0 +1,106 @@
+﻿@model VasudaDataAccess.DTOs.AdminWalletViewModel
+
+@{
+    ViewBag.Title = "Wallet";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var count = 1;
+}
+
+<section class="content">
+    <div class="container-fluid">
+
+        <!--Wallet drop down start-->
+        <div class="row">
+            <div class="col-12">
+                <!-- Default box -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Manage Wallets</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        Start creating your amazing application!
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        Footer
+                    </div>
+                    <!-- /.card-footer-->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!--Wallet drop down end-->
+        <!--Wallet table start-->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Notifications</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @if (Model.AllWithdrawalAccounts.Count == 0)
+                        {
+                            <h3 style="text-align:center">NO WITHDRAWAL ACCOUNT AVAILABLE</h3>
+                        }
+                        else
+                        {
+                            <table id="notificationTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Account Name</th>
+                                        <th>Account Number</th>
+                                        <th>Bank Name</th>
+                                        <th>Owner Name</th>
+                                        <th>IsActive</th>
+                                        <th>Date Created</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var withdrawalAccount in Model.AllWithdrawalAccounts)
+                                    {
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@withdrawalAccount.AccountName</td>
+                                            <td>@withdrawalAccount.AccountNumber</td>
+                                            <td>@withdrawalAccount.BankName</td>
+                                            <td>@withdrawalAccount.AspNetUser.FullName</td>
+                                            <td>@withdrawalAccount.IsActive</td>
+                                            <td>@withdrawalAccount.DateCreated</td>
+                                            <td>
+                                                @if (withdrawalAccount.IsActive == true)
+                                                {
+                                                    <button type="button" class="btn btn-outline-danger btn-sm blockWIthdrawalAccountBtn">Block</button>
+
+                                                }
+                                                else
+                                                {
+                                                    <button type="button" class="btn btn-outline-success btn-sm unblockWIthdrawalAccountBtn">UnBlock</button>
+                                                }
+                                            </td>
+                                        </tr>
+                                        count++;
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!--Wallet table end-->
+
+    </div>
+</section>
+
+
