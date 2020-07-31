@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using HtmlAgilityPack;
 using Microsoft.AspNet.Identity;
+using ScrapySharp.Extensions;
+using ScrapySharp.Network;
 using VasudaDataAccess.Data_Access.Implentations;
 using VasudaDataAccess.Logic;
 using VasudaDataAccess.Logic.Implementation;
@@ -29,9 +32,15 @@ namespace VasudaMall.Controllers
             _orderService = orderService;
             _paymentService = paymentService;
         }
+
+        static ScrapingBrowser _browser = new ScrapingBrowser();
         // GET: Dashboard
         public ActionResult Index()
         {
+            //HtmlWeb web = new HtmlWeb();
+            //HtmlDocument doc = web.Load("https://campaign.aliexpress.com/wow/gf/newarrivals20201/index?spm=a2g0o.home.16001.2.3f6b2145E9mZZX&wh_weex=true&wx_navbar_hidden=true&wx_navbar_transparent=true&ignoreNavigationBar=true&wx_statusbar_hidden=true&productIds=4001032200037");
+            //HtmlNode TitleNode = doc.DocumentNode.CssSelect(".site-footer").First();
+
             return View();
         }
 
