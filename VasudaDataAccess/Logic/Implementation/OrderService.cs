@@ -47,5 +47,6 @@ namespace VasudaDataAccess.Logic.Implementation
             result.SetResult(model);
             return result;
         }
+
     }
 }
