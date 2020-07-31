@@ -113,6 +113,7 @@
     <Compile Include="DTOs\FlutterwaveTransResponse.cs" />
     <Compile Include="DTOs\HomeProductViewModel.cs" />
     <Compile Include="DTOs\NotificationViewModel.cs" />
+    <Compile Include="DTOs\OrderDTO.cs" />
     <Compile Include="DTOs\OrderHistoryViewModel.cs" />
     <Compile Include="DTOs\ProfileViewModel.cs" />
     <Compile Include="DTOs\Response.cs" />
