@@ -74,7 +74,8 @@ namespace VasudaDataAccess.Logic.Implementation
             var response = new Response<List<ProductTable>>();
             try
             {
-                response.SetResult(_unitOfWork.ProductTable.GetAll(x => x.Clearance).ToList());
+                var result = _unitOfWork.ProductTable.GetAll(x => x.Clearance).ToList();
+                response.SetResult(result);
             }
             catch (Exception ex)
             {

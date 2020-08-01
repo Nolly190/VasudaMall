@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using VasudaDataAccess.Data_Access.Implentations;
 using VasudaDataAccess.Logic;
 using VasudaDataAccess.Logic.Implementation;
 using VasudaDataAccess.Model;
+using VasudaMall.Models;
 
 namespace VasudaMall.Controllers
 {
@@ -25,6 +29,15 @@ namespace VasudaMall.Controllers
         }
         public ActionResult Index()
         {
+            //var context = new ApplicationDbContext();
+            //var roleStore = new RoleStore<IdentityRole>(context);
+            //var roleManager = new RoleManager<IdentityRole>(roleStore);
+            //var userStore = new UserStore<ApplicationUser>(context);
+            //var UserManager =new UserManager<ApplicationUser>(userStore);
+            //var idtest = roleManager.CreateAsync(new IdentityRole("SuperAdmin")).Result;
+            //var idtest1 = roleManager.CreateAsync(new IdentityRole("Admin")).Result;
+            // UserManager.AddToRoleAsync("9af7a9d5-f929-4ff1-a3b7-5403103d44ec", "SuperAdmin");
+
             return View(_storeService.GetHomePage().Result());
         }
 
