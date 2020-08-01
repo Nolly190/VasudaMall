@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -7,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using VasudaDataAccess.Data_Access;
@@ -76,7 +78,7 @@ namespace VasudaMall.Controllers
             {
                 return View(model);
             }
-           
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var unitOfWork = new UnitOfWork(new VasudaModel());
@@ -103,7 +105,7 @@ namespace VasudaMall.Controllers
               }
               else
               {
-                  ModelState.AddModelError("EmailAddress", "Email Address not Confirmed, Kindly click on the link sent to you on your mail, to proceed <a>Click Here</a> ");
+                  ModelState.AddModelError("EmailAddress", "Email Address not Confirmed, Kindly click on the link sent to you on your mail, to proceed  <a>Click Here</a> ");
               }
             }
           else

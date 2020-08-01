@@ -1,4 +1,5 @@
-﻿@using VasudaMall.Models
+﻿@using System.Web.UI.WebControls
+@using VasudaMall.Models
 @model LoginViewModel
 @{
     ViewBag.Title = "Log in";
@@ -78,8 +79,8 @@
                 <input type="text" class="col-lg-11" name="@Html.NameFor(x=>x.Email)" placeholder="Username">
                 <input type="password" class="col-lg-11" name="@Html.NameFor(x=>x.Password)" placeholder="Password">
                 <button type="submit" class="col-lg-5">Submit</button><br /><br />
-                
-                <span style="color:red">@Html.ValidationSummary()</span><br/>
+               
+                <span style="color:red">@Html.ValidationSummary().ToHtmlString()</span><br/>
                 <a href="@Url.Action("ForgotPassword","Account")">Forgot Password?</a><br />
                 Don't have an account yet?, <a href=@Url.Action("Register", "Account")>Register</a>
                 <hr />
