@@ -13,5 +13,6 @@ namespace VasudaDataAccess.Provider
         Response<FlutterPaymentDetails> GetFlutterwavePaymentInfo (string userId, decimal amount);
         Response<string> UpdatePaymentInfo (string status,string transactionId,string tx_ref);
         Response<string> VerifyTransaction (string paymentId);
+        Response<FlutterwaveResponse<TransferData>> PayUser (UserPaymentDTO model);
     }
 }

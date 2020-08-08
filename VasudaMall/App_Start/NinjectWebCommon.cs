@@ -72,6 +72,7 @@ namespace VasudaMall.App_Start
             kernel.Bind<INotificationService>().To<NotificationService>();
             kernel.Bind<IPaymentService>().To<PaymentService>();
             kernel.Bind<IBankService>().To<BankService>();
+            kernel.Bind<IProductService>().To<ProductService>();
         }
     }
 }

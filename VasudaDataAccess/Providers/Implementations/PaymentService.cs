@@ -221,5 +221,42 @@ namespace VasudaDataAccess.Providers.Implementations
             }
             return response;
         }
+
+        public Response<FlutterwaveResponse<TransferData>> PayUser(UserPaymentDTO model)
+        {
+            var response = new Response<FlutterwaveResponse<TransferData>>();
+            response.Status = false;
+            try
+            {
+                var newModel = JsonConvert.SerializeObject(new
+                {
+                    account_bank =model.BankCode,
+                    account_number = model.AccountNumber,
+                    amount = model.Amount,
+                    beneficiary_name = model.AccountName,
+                    currency ="NGN",
+                    narration =model.Narration
+                });
+                var setting = Encryption.Decrypt(_unitOfWork.SettingTable.GetSystemSetting().paystackSecretKey);
+                var Url = $"https://api.flutterwave.com/";
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3;
+                System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+                ServicePointManager.ServerCertificateValidationCallback = (snder, cert, chain, error) => true;
+                var client = new RestClient(Url);
+                var request = new RestRequest($"v3/transfers", Method.POST);
+                request.AddHeader("authorization", "Bearer " + setting);
+                request.AddParameter("application/json; charset=utf-8", newModel, ParameterType.RequestBody);
+                var responseStr = client.Execute(request);
+                var FlutterwaveVerifyResponse = JsonConvert.DeserializeObject<FlutterwaveResponse<TransferData>>(responseStr.Content);
+                response.Status = true;
+                response.SetResult(FlutterwaveVerifyResponse);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+                response.Message = "Could not verify transaction";
+            }
+            return response;
+        }
     }
 }

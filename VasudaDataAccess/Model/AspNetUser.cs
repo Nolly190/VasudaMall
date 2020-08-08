@@ -22,7 +22,6 @@ namespace VasudaDataAccess.Model
             this.ChatTables = new HashSet<ChatTable>();
             this.FundingRequestTables = new HashSet<FundingRequestTable>();
             this.NotificationTables = new HashSet<NotificationTable>();
-            this.OrderTables = new HashSet<OrderTable>();
             this.SupportTables = new HashSet<SupportTable>();
             this.WithdrawalDetailsTables = new HashSet<WithdrawalDetailsTable>();
             this.WithdrawalRequestTables = new HashSet<WithdrawalRequestTable>();
@@ -58,8 +57,6 @@ namespace VasudaDataAccess.Model
         public virtual ICollection<FundingRequestTable> FundingRequestTables { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NotificationTable> NotificationTables { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderTable> OrderTables { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SupportTable> SupportTables { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using NLog;
 using VasudaDataAccess.Data_Access;
 using VasudaDataAccess.Data_Access.Implentations;
 using VasudaDataAccess.DTOs;
@@ -29,7 +30,7 @@ namespace VasudaMall.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -41,9 +42,9 @@ namespace VasudaMall.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -82,35 +83,40 @@ namespace VasudaMall.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var unitOfWork = new UnitOfWork(new VasudaModel());
-          var user =  UserManager.Users.SingleOrDefault(x => x.Email == model.Email);
-          if (user!= null )
-          {
-              if (user.EmailConfirmed)
-              {
-                  var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-               switch (result)
+            var user = UserManager.Users.SingleOrDefault(x => x.Email == model.Email);
+            if (user != null)
+            {
+                if (user.EmailConfirmed)
+                {
+                    var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+                    switch (result)
                     {
-                      case SignInStatus.Success:
-                          return RedirectToLocal(returnUrl);
-                      case SignInStatus.LockedOut:
-                          return View("Lockout");
-                      case SignInStatus.RequiresVerification:
-                          return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                      case SignInStatus.Failure:
-                      default:
-                          ModelState.AddModelError("", "Invalid login attempt.");
-                          return View(model);
-                  }
+                        case SignInStatus.Success:
+                            if (UserManager.IsInRoleAsync(user.Id, "Admin").Result || UserManager.IsInRoleAsync(user.Id, "SuperAdmin").Result)
+                            {
+                                return RedirectToAction("Index", "Admin");
+                            }
+                            return RedirectToLocal(returnUrl);
+                        case SignInStatus.LockedOut:
+                            return View("Lockout");
+                        case SignInStatus.RequiresVerification:
+                            return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                        case SignInStatus.Failure:
+                        default:
+                            ModelState.AddModelError("", "Invalid login attempt.");
+                            return View(model);
+                    }
 
-              }
-              else
-              {
-                  ModelState.AddModelError("EmailAddress", "Email Address not Confirmed, Kindly click on the link sent to you on your mail, to proceed  <a>Click Here</a> ");
-              }
+                }
+                else
+                {
+                    Session["UserId"] = user.Id;
+                    ModelState.AddModelError("EmailAddress", "Email Address not Confirmed, Kindly click on the link sent to you on your mail, to proceed.");
+                }
             }
-          else
-          {
-              ModelState.AddModelError("EmailAddress", "Incorrect Username or Password");
+            else
+            {
+                ModelState.AddModelError("EmailAddress", "Incorrect Username or Password");
 
             }
             return View();
@@ -118,6 +124,29 @@ namespace VasudaMall.Controllers
 
         //
         // GET: /Account/VerifyCode
+        [AllowAnonymous]
+        public JsonResult ResendLink()
+        {
+            var status = false;
+            try
+            {
+                var id = Session["UserId"].ToString();
+                var code = UserManager.GenerateEmailConfirmationTokenAsync(id).Result;
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = id, code = code }, protocol: Request.Url.Scheme);
+                UserManager.SendEmailAsync(id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+
+
+                status = true;
+            }
+            catch (Exception ex)
+            {
+                status = false;
+                LogManager.GetCurrentClassLogger().Error(ex);
+            }
+
+            return Json(new { Status = status }, JsonRequestBehavior.AllowGet);
+        }
         [AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
         {
@@ -145,7 +174,7 @@ namespace VasudaMall.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -175,18 +204,18 @@ namespace VasudaMall.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email,Address = model.Address, DateCreated = DateTime.Now};
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Address = model.Address, DateCreated = DateTime.Now };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                   // await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    // await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                   ModelState.AddModelError("Registration","Registration Successful, kindly verify your email by clicking on the link sent to you");
+                    ModelState.AddModelError("Registration", "Registration Successful, kindly verify your email by clicking on the link sent to you");
                     // return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
@@ -298,11 +327,12 @@ namespace VasudaMall.Controllers
         [HttpPost]
         public JsonResult ChangePassword(ChangePasswordDTO model)
         {
-            var response = new Response<string>() {
+            var response = new Response<string>()
+            {
                 Message = "Failed to change password.",
                 Status = false
             };
-                
+
             if (ModelState.IsValid)
             {
                 var userId = User.Identity.GetUserId();
@@ -314,7 +344,7 @@ namespace VasudaMall.Controllers
                 }
                 else
                 {
-                    response.Status = true;                 
+                    response.Status = true;
                 }
             }
             return Json(response, JsonRequestBehavior.AllowGet);

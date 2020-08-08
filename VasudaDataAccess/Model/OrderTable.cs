@@ -21,20 +21,24 @@ namespace VasudaDataAccess.Model
         }
     
         public System.Guid Id { get; set; }
-        public System.Guid ProductTypeId { get; set; }
+        public Nullable<System.Guid> ProductTypeId { get; set; }
         public string ProductLink { get; set; }
-        public System.Guid VendorId { get; set; }
+        public Nullable<System.Guid> VendorId { get; set; }
         public string SellerPhoneNumber { get; set; }
-        public decimal UnitPrice { get; set; }
-        public long Quantity { get; set; }
-        public decimal ItemsPrice { get; set; }
-        public decimal TotalPrice { get; set; }
+        public Nullable<decimal> UnitPrice { get; set; }
+        public Nullable<long> Quantity { get; set; }
+        public Nullable<decimal> ItemsPrice { get; set; }
+        public Nullable<decimal> TotalPrice { get; set; }
         public string Description { get; set; }
         public string UserId { get; set; }
+        public string Type { get; set; }
+        public string Status { get; set; }
+        public System.DateTime DateCreated { get; set; }
     
-        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual DomesticOrderTable DomesticOrderTable { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ImageTable> ImageTables { get; set; }
         public virtual VendorTable VendorTable { get; set; }
+        public virtual ShippingOrderTable ShippingOrderTable { get; set; }
     }
 }

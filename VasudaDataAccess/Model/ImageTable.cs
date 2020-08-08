@@ -21,7 +21,7 @@ namespace VasudaDataAccess.Model
         public bool IsActive { get; set; }
         public System.DateTime DateCreated { get; set; }
     
-        public virtual OrderTable OrderTable { get; set; }
         public virtual ProductTable ProductTable { get; set; }
+        public virtual OrderTable OrderTable { get; set; }
     }
 }

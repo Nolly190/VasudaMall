@@ -127,16 +127,21 @@
     <Compile Include="DTOs\NotificationViewModel.cs" />
     <Compile Include="DTOs\OrderDTO.cs" />
     <Compile Include="DTOs\OrderHistoryViewModel.cs" />
+    <Compile Include="DTOs\ProductViewModel.cs" />
     <Compile Include="DTOs\ProfileViewModel.cs" />
+    <Compile Include="DTOs\RequestApprovalDTO.cs" />
     <Compile Include="DTOs\Response.cs" />
     <Compile Include="DTOs\StoreViewModel.cs" />
     <Compile Include="DTOs\SupportViewModel.cs" />
     <Compile Include="DTOs\TransactionViewModel.cs" />
+    <Compile Include="DTOs\UserPaymentDTO.cs" />
     <Compile Include="DTOs\WalletViewModel.cs" />
     <Compile Include="Logic\IBankService.cs" />
     <Compile Include="Logic\Implementation\BankService.cs" />
     <Compile Include="Logic\Implementation\NotificationService.cs" />
     <Compile Include="Logic\Implementation\OrderService.cs" />
+    <Compile Include="Logic\Implementation\ProductService.cs" />
+    <Compile Include="Logic\IProductService.cs" />
     <Compile Include="Model\AspNetRole.cs">
       <DependentUpon>VasudaDataModel.tt</DependentUpon>
     </Compile>
@@ -167,6 +172,9 @@
     <Compile Include="Model\C__MigrationHistory.cs">
       <DependentUpon>VasudaDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\DomesticOrderTable.cs">
+      <DependentUpon>VasudaDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\ExchangeRateTable.cs">
       <DependentUpon>VasudaDataModel.tt</DependentUpon>
     </Compile>
@@ -192,6 +200,9 @@
       <DependentUpon>VasudaDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SettingTable.cs">
+      <DependentUpon>VasudaDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ShippingOrderTable.cs">
       <DependentUpon>VasudaDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SubCategoryTable.cs">

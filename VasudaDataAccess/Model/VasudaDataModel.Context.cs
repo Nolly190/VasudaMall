@@ -39,7 +39,6 @@ namespace VasudaDataAccess.Model
         public virtual DbSet<FundingRequestTable> FundingRequestTables { get; set; }
         public virtual DbSet<ImageTable> ImageTables { get; set; }
         public virtual DbSet<NotificationTable> NotificationTables { get; set; }
-        public virtual DbSet<OrderTable> OrderTables { get; set; }
         public virtual DbSet<PaymentHistoryTable> PaymentHistoryTables { get; set; }
         public virtual DbSet<PriceTable> PriceTables { get; set; }
         public virtual DbSet<ProductTable> ProductTables { get; set; }
@@ -48,8 +47,11 @@ namespace VasudaDataAccess.Model
         public virtual DbSet<SupportTable> SupportTables { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<SystemAccountTable> SystemAccountTables { get; set; }
-        public virtual DbSet<VendorTable> VendorTables { get; set; }
         public virtual DbSet<WithdrawalDetailsTable> WithdrawalDetailsTables { get; set; }
         public virtual DbSet<WithdrawalRequestTable> WithdrawalRequestTables { get; set; }
+        public virtual DbSet<DomesticOrderTable> DomesticOrderTables { get; set; }
+        public virtual DbSet<ShippingOrderTable> ShippingOrderTables { get; set; }
+        public virtual DbSet<VendorTable> VendorTables { get; set; }
+        public virtual DbSet<OrderTable> OrderTables { get; set; }
     }
 }

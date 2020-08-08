@@ -29,12 +29,16 @@ namespace VasudaMall.Controllers
         }
         public ActionResult Index()
         {
-            //var context = new ApplicationDbContext();
+            var context = new ApplicationDbContext();
             //var roleStore = new RoleStore<IdentityRole>(context);
             //var roleManager = new RoleManager<IdentityRole>(roleStore);
-            //var userStore = new UserStore<ApplicationUser>(context);
-            //var UserManager =new UserManager<ApplicationUser>(userStore);
-            //var idtest = roleManager.CreateAsync(new IdentityRole("SuperAdmin")).Result;
+            var userStore = new UserStore<ApplicationUser>(context);
+            var UserManager =new UserManager<ApplicationUser>(userStore);
+            if (User?.Identity?.GetUserId()!= null &&( UserManager.IsInRoleAsync(User.Identity.GetUserId(), "Admin").Result || UserManager.IsInRoleAsync(User.Identity.GetUserId(), "SuperAdmin").Result))
+            {
+                return RedirectToAction("Index", "Admin");
+            }
+           //var idtest = roleManager.CreateAsync(new IdentityRole("SuperAdmin")).Result;
             //var idtest1 = roleManager.CreateAsync(new IdentityRole("Admin")).Result;
             // UserManager.AddToRoleAsync("9af7a9d5-f929-4ff1-a3b7-5403103d44ec", "SuperAdmin");
 

@@ -17,12 +17,14 @@ namespace VasudaDataAccess.Logic.Implementation
         private UnitOfWork _unitOfWork;
         private Logger logger;
         private IPaymentService paymentService;
+        private Notification notification;
 
         public WalletService(IPaymentService _paymentService)
         {
             logger = LogManager.GetCurrentClassLogger();
             _unitOfWork = new UnitOfWork(new VasudaModel());
             paymentService = _paymentService;
+            notification = new Notification();
         }
 
         public Response<WalletViewModel> GetWalletHomePage(string user)
@@ -161,6 +163,45 @@ namespace VasudaDataAccess.Logic.Implementation
             return response;
         }
 
+        public Response<string> Action(RequestApprovalDTO model)
+        {
+            var response = new Response<string>()
+            {
+                Status = false,
+                Message = "Could not retrieve process request"
+            };
+
+            try
+            {
+                
+                if (model.Type == "Fund" && model.Action=="approve")
+                {
+                  response =  ApproveFundingRequest(model);
+                }
+                else if (model.Type == "Fund" && model.Action == "decline")
+                {
+                    response = DeclineFundingRequest(model);
+
+                }
+                else if (model.Type == "withdrawal" && model.Action == "approve")
+                {
+                    response = ApproveWithdrawalRequest(model);
+
+                }
+                else
+                {
+                    response = DeclineWithdrawalRequest(model);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+
+            }
+            return response;
+        }
+
         public Response<AdminWalletViewModel> AdminGetAllWithdrawalAccounts()
         {
             var response = new Response<AdminWalletViewModel>()
@@ -169,13 +210,13 @@ namespace VasudaDataAccess.Logic.Implementation
                 Message = "Could not retrieve withdrawal accounts"
             };
 
-            var model = new AdminWalletViewModel
-            {
-                AllWithdrawalAccounts = new List<WithdrawalDetailsTable>()
-            };
+            var model = new AdminWalletViewModel();
             try
             {
-                model.AllWithdrawalAccounts = _unitOfWork.WithdrawalDetailsTable.GetAll().ToList();
+                model.WithdrawalDetailsTables = _unitOfWork.WithdrawalRequestTable.GetAll().ToList();
+                model.FundingRequest = _unitOfWork.FundingRequestTable.GetAll().ToList();
+                model.PendingWithdrawalRequest = _unitOfWork.WithdrawalRequestTable.GetAll(x=>!x.IsApproved).ToList();
+                model.PendingFundingRequest = _unitOfWork.FundingRequestTable.GetAll(x=>x.IsCredited == false && x.PaymentType !="Online").ToList();
                 response.Message = "Successfully retrieved all withdrawal accounts";
                 response.Status = true;
                 response.SetResult(model);
@@ -187,6 +228,193 @@ namespace VasudaDataAccess.Logic.Implementation
             }
             return response;
         }
+
+        public Response<string> ApproveFundingRequest(RequestApprovalDTO model)
+        {
+            var response = new Response<string>();
+            response.Status = false;
+            try
+            {
+                var getUser = _unitOfWork.FundingRequestTable.Get(x => x.Id.ToString() == model.Id);
+                if (getUser== null||getUser?.IsCredited ==true)
+                {
+                    response.Message = getUser == null? "Could not retrieve request" :"User has already been credited";
+                    return response;
+                }
+                var getExchange = _unitOfWork.ExchangeRateTable.GetSingleRate("Dollar", "Naira");
+                if (getExchange == null)
+                {
+                    response.Message =  "Could not retrieve exchange rate";
+                    return response;
+                }
+                var dollars = Math.Round(getUser.NairaAmount / getExchange.Rate,2);
+                getUser.AspNetUser.Balance = getUser.AspNetUser.Balance + dollars;
+                getUser.IsCredited = true;
+                getUser.IsApproved = true;
+                var insertPaymentHistory = new PaymentHistoryTable()
+                {
+                    UserId = Guid.Parse(getUser.AspNetUser.Id),
+                    Amount = dollars,
+                    DateCreated = getUser.DateCreated,
+                    Purpose = "Wallet funding",
+                    Id=Guid.NewGuid(),
+                    Status = true,
+                    TransactionType = "Credit"
+                };
+                _unitOfWork.PaymentHistoryTable.Add(insertPaymentHistory);
+                _unitOfWork.Complete();
+                var mail = new MailDTO()
+                {
+                    Message =$"Your payment was successful and your account has been credited with ${dollars}. \n Thank you for choosing vasuda mall " ,
+                    Email = getUser.AspNetUser.Email,
+                    Name = getUser.AspNetUser?.FullName.Split(' ')[0],
+                    Subject = "Vasuda Mall Payment Successful"
+                };
+                notification.SendEmail(mail);
+                response.Status = true;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+            }
+            return response;
+        }
+        public Response<string> DeclineFundingRequest(RequestApprovalDTO model)
+        {
+            var response = new Response<string>();
+            response.Status = false;
+            try
+            {
+                var getUser = _unitOfWork.FundingRequestTable.Get(x => x.Id.ToString() == model.Id);
+                if (getUser == null || getUser?.IsCredited == true)
+                {
+                    response.Message = getUser == null ? "Could not retrieve request" : "User has already been credited";
+                    return response;
+                }
+
+                getUser.IsCredited = true;
+                getUser.IsApproved = false;
+                _unitOfWork.Complete();
+                var mail = new MailDTO()
+                {
+                    Message = $"Your payment was not successful. Reason : '{model.Reason}'. Send a mail to us on Info@Vasudamall.com or chat with the admin on your profile if there are issues. \n Thank you for choosing vasuda mall ",
+                    Email = getUser.AspNetUser.Email,
+                    Name = getUser.AspNetUser?.FullName.Split(' ')[0],
+                    Subject = "Vasuda Mall Payment Declined"
+                };
+                notification.SendEmail(mail);
+                response.Status = true;
+
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+            }
+            return response;
+        }
+        public Response<string> ApproveWithdrawalRequest(RequestApprovalDTO model)
+        {
+            var response = new Response<string>();
+            response.Status = false;
+            try
+            {
+                var getUser = _unitOfWork.WithdrawalRequestTable.Get(x => x.Id.ToString() == model.Id);
+                if (getUser == null || getUser?.IsApproved == true)
+                {
+                    response.Message = getUser == null ? "Could not retrieve request" : "User has already been credited";
+                    return response;
+                }
+                var getRate = _unitOfWork.ExchangeRateTable.GetSingleRate("Dollar", "Naira");
+                if (getRate==null)
+                {
+                    response.Message = "Could not retrieve exchange rate";
+                    return response;
+                }
+
+                var amount = Math.Round(getUser.Amount * getRate.Rate,2);
+                getUser.AspNetUser.Balance = getUser.AspNetUser.Balance - getUser.Amount;
+                getUser.IsApproved = true;
+                if (getUser.AspNetUser.Balance<0)
+                {
+                    response.Message = "Insufficient amount";
+                    return response;
+                }
+
+                var getBank =
+                    _unitOfWork.BankTable.Get(x => x.BankName.ToLower() == getUser.WithdrawalDetailsTable.BankName);
+                if (getBank==null)
+                {
+                    response.Message = "Could not retrieve bank details";
+                    return response;
+                }
+                var userModel = new UserPaymentDTO()
+                {
+                    AccountNumber = getUser.WithdrawalDetailsTable.AccountNumber,
+                    AccountName = getUser.WithdrawalDetailsTable.AccountName,
+                    Amount = amount,
+                    BankCode = getBank.BankCode,
+                    Narration = "Wallet"
+
+                };
+               var makePayment= paymentService.PayUser(userModel);
+               if (makePayment._entity.status=="success" && makePayment._entity.data.is_approved==1 && makePayment._entity.message== "Transfer Queued Successfully")
+               {
+                   getUser.IsApproved = true;
+                   response.Status = true;
+                   _unitOfWork.Complete();
+                   var mail = new MailDTO()
+                   {
+                       Message = $"Your withdrawal was successful, a paymment of {amount} has been paid into your account.  \n Thank you for choosing vasuda mall ",
+                       Email = getUser.AspNetUser.Email,
+                       Name = getUser.AspNetUser?.FullName.Split(' ')[0],
+                       Subject = "Vasuda Mall Payment Declined"
+                   };
+                   notification.SendEmail(mail);
+                }
+
+               else
+               {
+                   response.Message = makePayment._entity.message;
+               }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+            }
+            return response;
+        }
+        public Response<string> DeclineWithdrawalRequest(RequestApprovalDTO model)
+        {
+            var response = new Response<string>();
+            response.Status = false;
+            try
+            {
+                var getUser = _unitOfWork.WithdrawalRequestTable.Get(x => x.Id.ToString() == model.Id);
+                if (getUser == null || getUser?.IsApproved == true)
+                {
+                    response.Message = getUser == null ? "Could not retrieve request" : "User has already been credited";
+                    return response;
+                }
+
+                getUser.IsApproved = false;
+                _unitOfWork.Complete();
+                var mail = new MailDTO()
+                {
+                    Message = $"Your payment was not successful. Reason : '{model.Reason}'. Send a mail to us on Info@Vasudamall.com or chat with the admin on your profile if there are issues. \n Thank you for choosing vasuda mall ",
+                    Email = getUser.AspNetUser.Email,
+                    Name = getUser.AspNetUser?.FullName.Split(' ')[0],
+                    Subject = "Vasuda Mall Payment Declined"
+                };
+                notification.SendEmail(mail);
+                response.Status = true;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+            }
+            return response;
+        }
+
     }
 
     public enum FundWithdrawalStatus

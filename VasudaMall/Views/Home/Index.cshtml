@@ -70,13 +70,13 @@
         <div class="row">
             @foreach (var item in Model.TopStory)
             {
-                var path = @item?.ImageTables?.LastOrDefault()?.Path ?? "~/vasuda-template/images/aa.jpg";
+                var path = @item?.ImageTables?.FirstOrDefault()?.Path ?? "~/vasuda-template/images/aa.jpg";
                 <div class="p-tab popular">
                     <div class="p-image topTrend">
-                        <img src="@path" />
+                        <img src="@Url.Content(path)" width="300"/>
                     </div>
-                    <div class="p-name">@item?.Title</div>
-                    <div class="p-price">₦ @item?.Price</div>
+                    <div class="p-name">@item.Title</div>
+                    <div class="p-price">$ @item.Price</div>
                 </div>
 
             }
@@ -133,27 +133,18 @@
     </div>
     <div class="offset-lg-1 col-lg-10 products">
         <div class="row">
-            @foreach (var item in Model.TopStory)
+            @foreach (var item in Model.Popular)
             {
-                var path = @item?.ImageTables?.LastOrDefault()?.Path ?? "~/vasuda-template/images/aa.jpg";
+                var path = @item?.ImageTables?.FirstOrDefault()?.Path ?? "~/vasuda-template/images/aa.jpg";
                 <div class="p-tab popular">
                     <div class="p-image">
-                        <img src="@path" />
+                        <img src="@Url.Content(path)" width="300"/>
                     </div>
-                    <div class="p-name">@item?.Title</div>
-                    <div class="p-price">₦ @item?.Price</div>
+                    <div class="p-name">@item.Title</div>
+                    <div class="p-price">$ @item.Price</div>
                 </div>
 
             }
         </div>
     </div>
-    @if (Model.TopStory.Count >= 10)
-    {
-
-        <a>
-            <div class="offset-lg-4 col-lg-4 load">
-                <i class="fas fa-plus-circle loadMore" data-cate="popular" aria-hidden="true"></i><br />Load More
-            </div>
-        </a>
-    }
 </section>
