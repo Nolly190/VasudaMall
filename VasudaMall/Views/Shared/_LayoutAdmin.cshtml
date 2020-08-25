@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-
+    <link href="~/Content/Main.css" rel="stylesheet" />
     <!-- jQuery -->
     <script src="~/admin-lte/plugins/jquery/jquery.min.js"></script>
     <script src="https://checkout.flutterwave.com/v3.js"></script>
@@ -91,6 +91,15 @@
                         </li>
 
                         <li class="nav-item">
+                            <a href=@Url.Action("Products", "Admin") class="nav-link">
+                                <i class="nav-icon far fa-image"></i>
+                                <p>
+                                    Manage Products
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
                             <a href=@Url.Action("Wallet", "Admin") class="nav-link">
                                 <i class="nav-icon far fa-image"></i>
                                 <p>
@@ -112,7 +121,7 @@
                             <a href=@Url.Action("Profile", "Admin") class="nav-link">
                                 <i class="nav-icon fas fa-user-cog"></i>
                                 <p>
-                                    Manage Profile
+                                    Manage Users
                                 </p>
                             </a>
                         </li>
@@ -126,15 +135,6 @@
                             </a>
                         </li>
                         
-                        <li class="nav-item">
-                            <a href=@Url.Action("Banks", "Admin") class="nav-link">
-                                <i class="nav-icon far fa-bank"></i>
-                                <p>
-                                    Manage Banks
-                                </p>
-                            </a>
-                        </li>
-
                         <li class="nav-item">
                             <a href=@Url.Action("Support", "Admin") class="nav-link">
                                 <i class="nav-icon fa fa-phone"></i>
@@ -209,6 +209,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     @Scripts.Render("~/admin-lte/script")
     @RenderSection("scripts", required: false)
-
+    <script src="~/Scripts/AdminJs.js"></script>
+    <script src="~/Scripts/JqueryValidator.js"></script>
 </body>
 </html>

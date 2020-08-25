@@ -56,19 +56,11 @@
                                     <tr>
                                         <th>S/N</th>
                                         <th>Full Name</th>
-                                        <th>User Name</th>
                                         <th>Email</th>
                                         <th>Balance</th>
                                         <th>Phone Number</th>
                                         <th>Address</th>
                                         <th>City</th>
-                                        <th>Country</th>
-                                        <th>Email Confirmed</th>
-                                        <th>Phone Number Confirmed</th>
-                                        <th>Access Failed Count</th>
-                                        <th>Lockout Enabled</th>
-                                        <th>Lockout End Date</th>
-                                        <th>Two Factor Enabled</th>
                                         <th>Date Created</th>
                                         <th>Action</th>
                                     </tr>
@@ -79,23 +71,24 @@
                                         <tr>
                                             <td>@count</td>
                                             <td>@user.FullName</td>
-                                            <td>@user.UserName</td>
                                             <td>@user.Email</td>
                                             <td>@user.Balance</td>
                                             <td>@user.PhoneNumber</td>
                                             <td>@user.Address</td>
                                             <td>@user.City</td>
-                                            <td>@user.Country</td>
-                                            <td>@user.EmailConfirmed</td>
-                                            <td>@user.PhoneNumberConfirmed</td>
-                                            <td>@user.AccessFailedCount</td>
-                                            <td>@user.LockoutEnabled</td>
-                                            <td>@user.LockoutEndDateUtc</td>
-                                            <td>@user.TwoFactorEnabled</td>
                                             <td>@user.DateCreated</td>
                                             <td>
-                                                <button type="button" id="unblockUserBtn" class="btn btn-outline-success btn-sm">Unblock</button><br />
-                                                <button type="button" id="blockUserBtn" class="btn btn-outline-danger btn-sm">Block</button>
+                                                <a class="btn btn-outline-success btn-sm" href="@Url.Action("UserDetails","Admin", new {userId=user.Id})">View User</a>
+                                                @if (user.IsBanned)
+                                                {
+                                                    <button type="button" data-action="UnBan" data-id="@user.Id" class="btn btn-outline-success btn-sm banUser">UnBlock</button>
+
+                                                }
+                                                else
+                                                {
+                                                    <button type="button" data-action="Ban" data-id="@user.Id" class="btn btn-outline-danger btn-sm banUser">Block</button>
+
+                                                }
                                             </td>
                                         </tr>
                                         count++;

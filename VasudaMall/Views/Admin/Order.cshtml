@@ -1,38 +1,254 @@
-﻿
+﻿@model VasudaDataAccess.DTOs.AdminOrderDto
 @{
     ViewBag.Title = "Order";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <!-- Default box -->
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Add Product</h3>
+<div class="container-fluid">
+<div class="row">
+<div class="col-12">
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Add Product</h3>
 
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                                <i class="fas fa-times"></i>
-                            </button>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <input type="button" class="btn btn-primary" value="Completed Orders" id="CompletedOrderBtn" />
+            <input type="button" class="btn btn-primary" value="Pending Domestic Request" id="DomesticOrdersBtn" />
+            <input type="button" class="btn btn-primary" value="Pending Orders" id="PendingOrders" />
+
+            <div class="row" id="CompletedOrderDiv" style="display: none">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Completed Order</h3>
                         </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="CompleteOrderTable" class="table table-bordered table-striped table-responsive-lg">
+                                <thead>
+                                <tr>
+                                    <th>UserName</th>
+                                    <th>Email</th>
+                                    <th>Location</th>
+                                    <th>Phone Number</th>
+                                    <th>Type</th>
+                                    <th>Total Amount</th>
+                                    <th>Total ServiceCharge</th>
+                                    <th>Payment Status</th>
+                                    <th>Is Completed</th>
+                                    <th>Date Created</th>
+                                    <th>Options</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach (var item in Model.FinishedOrders)
+                                {
+                                    <tr>
+                                        <td>@item.AspNetUser.FullName</td>
+                                        <td>@item.AspNetUser.Email</td>
+                                        <td>@item.AspNetUser.Address</td>
+                                        <td>@item.AspNetUser.PhoneNumber</td>
+                                        <td>@item.OrderType</td>
+                                        <td>@item.TotalPrice</td>
+                                        <td>@item.TotalServiceCharge</td>
+                                        <td>@item.Status</td>
+                                        <td>@item.IsCompleted</td>
+                                        <td>@item.DateCreated.ToString("f")</td>
+                                        <td><button>View Details</button></td>
+                                    </tr>
+
+                                }
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
                     </div>
-                    <div class="card-body">
-                        Start creating your amazing application!
-                    </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer">
-                        Footer
-                    </div>
-                    <!-- /.card-footer-->
+                    <!-- /.card -->
                 </div>
-                <!-- /.card -->
+                <!-- /.col -->
+
+            </div>
+
+
+        </div>
+                  
+        <div class="card-body" id="PendingOrderDiv">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Pending Order</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="PendingOrderTable" class="table table-bordered table-striped table-responsive-lg">
+                                <thead>
+                                <tr>
+                                    <th>UserName</th>
+                                    <th>Email</th>
+                                    <th>Location</th>
+                                    <th>Phone Number</th>
+                                    <th>Type</th>
+                                    <th>Total Amount</th>
+                                    <th>Total ServiceCharge</th>
+                                    <th>Payment Status</th>
+                                    <th>Is Completed</th>
+                                    <th>Date Created</th>
+                                    <th>Options</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach (var item in Model.UnfinishedOrders)
+                                {
+                                    <tr>
+                                        <td>@item.AspNetUser.FullName</td>
+                                        <td>@item.AspNetUser.Email</td>
+                                        <td>@item.AspNetUser.Address</td>
+                                        <td>@item.AspNetUser.PhoneNumber</td>
+                                        <td>@item.OrderType</td>
+                                        <td>@item.TotalPrice</td>
+                                        <td>@item.TotalServiceCharge</td>
+                                        <td>@item.Status</td>
+                                        <td>@item.IsCompleted</td>
+                                        <td>@item.DateCreated.ToString("f")</td>
+                                        <td><button>View Details</button>| <button>@item.NextAction</button> </td>
+                                    </tr>
+
+                                }
+
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+
+            </div>
+
+
+        </div>
+                   
+        <div class="card-body" id="DomesticOrders">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Order History</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="UserOrderTable" class="table table-bordered table-striped table-responsive-lg">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Sender Name</th>
+                                    <th>Sender Phone</th>
+                                    <th>Sender Address</th>
+                                    <th>Receiver Name</th>
+                                    <th>Receiver Phone</th>
+                                    <th>Receiver Address</th>
+                                    <th>Description</th>
+                                    <th>Weight</th>
+                                    <th>Quantity</th>
+                                    <th>Options</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                
+                                @foreach (var item in Model.DomesticOrder)
+                                {
+                                    <tr>
+                                        <td>@item.AspNetUser.FullName</td>
+                                        <td>@item.AspNetUser.Email</td>
+                                        <td>@item.AspNetUser.Address</td>
+                                        <td>@item.AspNetUser.PhoneNumber</td>
+                                        <td></td>
+                                        <td>@item.TotalPrice</td>
+                                        <td></td>
+                                        <td>@item.Status</td>
+                                        <td></td>
+                                        <td>@item.DateCreated.ToString("f")</td>
+                                        <td><button>View Details</button> </td>
+                                    </tr>
+
+                                }
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+
+            </div>
+
+
+        </div>
+                  
+        <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
+</div>
+</div>
+</div>
+</section>
+
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
-</section>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

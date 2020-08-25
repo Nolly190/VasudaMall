@@ -29,6 +29,9 @@ namespace VasudaDataAccess.Model
         public System.DateTime DateCreated { get; set; }
         public bool IsPopular { get; set; }
         public bool Clearance { get; set; }
+        public int Quantity { get; set; }
+        public System.Guid Category { get; set; }
+        public Nullable<System.Guid> SubCategory { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ImageTable> ImageTables { get; set; }

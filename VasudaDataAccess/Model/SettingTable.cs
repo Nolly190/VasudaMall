@@ -19,5 +19,6 @@ namespace VasudaDataAccess.Model
         public string paystackPublicKey { get; set; }
         public string SmSUsername { get; set; }
         public string Password { get; set; }
+        public Nullable<decimal> ServiceCharge { get; set; }
     }
 }

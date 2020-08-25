@@ -208,5 +208,33 @@ namespace VasudaDataAccess.Logic.Implementation
             }
             return response;
         }
+
+        public Response<string> BanUser(string userId, bool action)
+        {
+            var response = new Response<string>()
+            {
+                Status = false,
+                Message = action? "Could not ban users": "Could not unblock users"
+            };
+
+            try
+            {
+                var getUser = _unitOfWork.AspNetUser.Get(userId);
+                if (getUser==null)
+                {
+                    response.Message = "Could not retrieve user";
+                    return response;
+                }
+                getUser.IsBanned = action;
+                _unitOfWork.Complete();
+                response.Status = true;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+
+            }
+            return response;
+        }
     }
 }

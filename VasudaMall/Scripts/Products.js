@@ -41,7 +41,36 @@
 
             });
         });
+    $("#ResendVerificationLink").click(function() {
+        $(".Main-loader").modal('show');
+        $.ajax({
+            url: "/Account/ResendLink",
+            type: "Get",
+            error: function (status, xhr) {
+                $(".Main-loader").hide();
+            },
+            success: function (result) {
 
+                $(".Main-loader").hide();
+                $(".modal-backdrop").removeClass("modal-backdrop show");
+                if (result.Status === true) {
+                    Swal.fire('Email sent successfully');
+                    return;
+                }
+
+                else if (result.status === undefined || result.status === "Refresh the page") {
+                    window.setTimeout(function () { location.reload(); }, 3000);
+                    return;
+                }
+                Swal.fire({
+                    icon: 'error',
+                    title: result.Message,
+                });
+            }
+
+        });
+
+    });
 
     $("#Submit").click(function () {
         if (StartValidation("ContactUsForm")) {
