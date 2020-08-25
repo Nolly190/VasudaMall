@@ -88,6 +88,10 @@ namespace VasudaMall.Controllers
             {
                 if (user.EmailConfirmed)
                 {
+                    if (user.IsBanned)
+                    {
+                        return View();
+                    }
                     var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
                     switch (result)
                     {
@@ -117,7 +121,7 @@ namespace VasudaMall.Controllers
             else
             {
                 ModelState.AddModelError("EmailAddress", "Incorrect Username or Password");
-
+               
             }
             return View();
         }
@@ -204,7 +208,7 @@ namespace VasudaMall.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Address = model.Address, DateCreated = DateTime.Now };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Address = model.Address, DateCreated = DateTime.Now,IsBanned = false};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

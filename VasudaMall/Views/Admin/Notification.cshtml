@@ -6,6 +6,15 @@
     var count = 1;
 }
 
+<link rel="stylesheet" href="~/admin-lte/plugins/fontawesome-free/css/all.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="~/admin-lte/dist/css/adminlte.min.css">
+<!-- summernote -->
+<link rel="stylesheet" href="~/admin-lte/plugins/summernote/summernote-bs4.css">
+<!-- Google Font: Source Sans Pro -->
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
 <section class="content">
     <div class="container-fluid">
@@ -25,19 +34,59 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        Start creating your amazing application!
+
+                        <div class="col-md-12">
+                            <div class="card card-primary card-outline">
+                                <div class="card-header">
+                                    <h3 class="card-title">Compose New Message</h3>
+                                </div>
+                                <div class="alert alert-danger" id="DangerAlert" style="display: none" role="alert">
+                                   
+                                </div>
+                                <!-- /.card-header -->
+                                <form id="MailForm">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <input class="form-control" required data-formname="To" id="email" placeholder="To:">
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-control" required data-formname="Subject" id="subject" placeholder="Subject:">
+                                        </div>
+                                        @*<div class="form-group">
+                                                <select class="form-control" id="MailType">
+                                                    <option value="">Select Notification</option>
+                                                    <option>Mail</option>
+                                                    <option>Text</option>
+                                                </select>
+                                            </div>*@
+                                        <div class="form-group">
+                                            <textarea id="compose-textarea" required data-formname="Message" class="form-control" style="height: 300px">
+                                      </textarea>
+                                        </div>
+                                    </div>
+                                    <!-- /.card-body -->
+                                    <div class="card-footer">
+                                        <div class="float-right">
+                                            <button type="submit" id="SendMail" class="btn btn-primary"><i class="far fa-envelope"></i> Send</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <!-- /.card-footer -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+
+
+
                     </div>
                     <!-- /.card-body -->
-                    <div class="card-footer">
-                        Footer
-                    </div>
-                    <!-- /.card-footer-->
+
                 </div>
                 <!-- /.card -->
             </div>
         </div>
         <!--Notification drop down end-->
-
         <!--Notification table start-->
         <div class="row">
             <div class="col-12">
@@ -99,5 +148,18 @@
 
     </div>
 </section>
+<!-- AdminLTE App -->
+<script src="~/admin-lte/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="~/admin-lte/dist/js/demo.js"></script>
+<!-- Summernote -->
+<script src="~/admin-lte/plugins/summernote/summernote-bs4.min.js"></script>
+<!-- Page Script -->
+<script>
+    $(function () {
+        //Add text editor
+        $('#compose-textarea').summernote();
+    })
+</script>
 
 

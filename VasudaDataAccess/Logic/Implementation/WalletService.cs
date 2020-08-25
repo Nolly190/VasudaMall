@@ -253,12 +253,12 @@ namespace VasudaDataAccess.Logic.Implementation
                 getUser.IsApproved = true;
                 var insertPaymentHistory = new PaymentHistoryTable()
                 {
-                    UserId = Guid.Parse(getUser.AspNetUser.Id),
+                    UserId = getUser.AspNetUser.Id,
                     Amount = dollars,
                     DateCreated = getUser.DateCreated,
                     Purpose = "Wallet funding",
                     Id=Guid.NewGuid(),
-                    Status = true,
+                    Status = "Completed",
                     TransactionType = "Credit"
                 };
                 _unitOfWork.PaymentHistoryTable.Add(insertPaymentHistory);
@@ -415,6 +415,27 @@ namespace VasudaDataAccess.Logic.Implementation
             return response;
         }
 
+        public Response<UserDetailsDTO> GetUserInfo(string userId)
+        {
+            var response = new Response<UserDetailsDTO>();
+            response.Status = false;
+            try
+            {
+                var model = new UserDetailsDTO();
+                model.User = _unitOfWork.AspNetUser.Get(x=>x.Id==userId);
+                model.FundingRequest = _unitOfWork.FundingRequestTable.GetAll(x => x.Userid == userId && x.IsActive).ToList();
+                model.WithdrawalRequest = _unitOfWork.WithdrawalRequestTable
+                    .GetAll(x => x.UserId == userId && x.IsActive).ToList();
+                model.OrderHistory = _unitOfWork.OrderTable.GetAll(x => x.UserId == userId && x.IsActive).ToList();
+                response.SetResult(model);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+            }
+
+            return response;
+        }
     }
 
     public enum FundWithdrawalStatus

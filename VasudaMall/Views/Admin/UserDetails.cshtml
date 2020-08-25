@@ -1,0 +1,236 @@
+﻿@using VasudaDataAccess.DTOs
+
+@model  UserDetailsDTO
+@{
+    ViewBag.Title = "UserDetails";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">User Settings</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <!-- text input -->
+                        <div class="form-group">
+                            <label>Full name</label>
+                            <input type="text" disabled value="@Model.User.FullName" class="form-control" placeholder="Enter ...">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <!-- text input -->
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" disabled value="@Model.User.Email" class="form-control" placeholder="Enter ...">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input type="text" class="form-control" value="@Model.User.PhoneNumber" placeholder="Enter ..." disabled>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <!-- text input -->
+                        <div class="form-group">
+                            <label>Wallet Balance</label>
+                            <input type="text" disabled value="@Model.User.Balance" class="form-control" placeholder="Enter ...">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <!-- text input -->
+                        <div class="form-group">
+                            <label>Location</label>
+                            <input type="text" disabled value="@Model.User.Address" class="form-control" placeholder="Enter ...">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            @{
+                                var activeUser = Model.User.LockoutEnabled == false ? "Active User" : "Banned User";
+                            }
+                            <label>Active User</label>
+                            <input type="text" disabled value="@activeUser" class="form-control" placeholder="Enter ...">
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Order History</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="UserOrderTable" class="table table-bordered table-striped table-responsive-lg">
+                                    <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Total Amount</th>
+                                        <th>Total ServiceCharge</th>
+                                        <th>Payment Status</th>
+                                        <th>Is Completed</th>
+                                        <th>Date Created</th>
+                                        <th>Options</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach (var item in Model.OrderHistory)
+                                    {
+                                        <tr>
+                                            <td>@item.OrderType</td>
+                                            <td>@item.TotalPrice</td>
+                                            <td> @item.TotalServiceCharge</td>
+                                            <td> @item.IsCompleted</td>
+                                            <td> @item.DateCreated</td>
+                                            <td><button class="btn btn-outline-success btn-sm" id="ViewItems">View Items</button></td>
+                                        </tr>
+                                    }
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col -->
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Withdrawal Request</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="UserPaymentTable" class="table table-bordered table-striped table-responsive-lg">
+                                    <thead>
+                                    <tr>
+                                        <th>Total Amount</th>
+                                        <th>Account Name</th>
+                                        <th>Account Number</th>
+                                        <th>Bank</th>
+                                        <th>Rate</th>
+                                        <th>Status</th>
+                                        <th>Date Created</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach (var item in Model.WithdrawalRequest)
+                                    {
+                                        <tr>
+                                            <td>@item.Amount</td>
+                                            <td>@item.WithdrawalDetailsTable.AccountName</td>
+                                            <td>@item.WithdrawalDetailsTable.AccountNumber</td>
+                                            <td>@item.WithdrawalDetailsTable.BankName</td>
+                                            <td>@item.Rate</td>
+                                            <td>@item.Status</td>
+                                            <td>@item.DateCreated.ToString("f")</td>
+                                        </tr>
+                                    }
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Funding Requests</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="UserVoucherTable" class="table table-bordered table-striped table-responsive-lg">
+                                    <thead>
+                                    <tr>
+                                        <th>Transaction Type</th>
+                                        <th>Naira Amount</th>
+                                        <th>Rate</th>
+                                        <th>PaymentId</th>
+                                        <th>Is Credited</th>
+                                        <th>Is Approved</th>
+                                        <th>Date Created</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach (var item in Model.FundingRequest)
+                                    {
+                                        <tr>
+                                            <td>@item.PaymentType</td>
+                                            <td>@item.NairaAmount</td>
+                                            <td>@item.Rate</td>
+                                            <td>@item.PaymentId</td>
+                                            <td>@item.IsCredited</td>
+                                            <td>@item.IsApproved</td>
+                                            <td>@item.DateCreated</td>
+                                        </tr>
+                                    }
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.col -->
+</div>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">View Items</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card-body">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="EditVendor">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+

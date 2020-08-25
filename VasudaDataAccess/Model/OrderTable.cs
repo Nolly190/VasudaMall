@@ -17,28 +17,22 @@ namespace VasudaDataAccess.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public OrderTable()
         {
-            this.ImageTables = new HashSet<ImageTable>();
+            this.ItemsTables = new HashSet<ItemsTable>();
         }
     
         public System.Guid Id { get; set; }
-        public Nullable<System.Guid> ProductTypeId { get; set; }
-        public string ProductLink { get; set; }
-        public Nullable<System.Guid> VendorId { get; set; }
-        public string SellerPhoneNumber { get; set; }
-        public Nullable<decimal> UnitPrice { get; set; }
-        public Nullable<long> Quantity { get; set; }
-        public Nullable<decimal> ItemsPrice { get; set; }
-        public Nullable<decimal> TotalPrice { get; set; }
-        public string Description { get; set; }
-        public string UserId { get; set; }
-        public string Type { get; set; }
         public string Status { get; set; }
+        public Nullable<decimal> TotalPrice { get; set; }
+        public string OrderType { get; set; }
+        public Nullable<decimal> TotalServiceCharge { get; set; }
+        public Nullable<decimal> ShippingFee { get; set; }
+        public bool IsCompleted { get; set; }
+        public bool IsActive { get; set; }
+        public string UserId { get; set; }
         public System.DateTime DateCreated { get; set; }
     
-        public virtual DomesticOrderTable DomesticOrderTable { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ImageTable> ImageTables { get; set; }
-        public virtual VendorTable VendorTable { get; set; }
-        public virtual ShippingOrderTable ShippingOrderTable { get; set; }
+        public virtual ICollection<ItemsTable> ItemsTables { get; set; }
     }
 }

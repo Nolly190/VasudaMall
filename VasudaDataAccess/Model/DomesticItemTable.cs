@@ -12,7 +12,7 @@ namespace VasudaDataAccess.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class ShippingOrderTable
+    public partial class DomesticItemTable
     {
         public System.Guid Id { get; set; }
         public string ReceiverName { get; set; }
@@ -20,12 +20,12 @@ namespace VasudaDataAccess.Model
         public string ReceiverAddress { get; set; }
         public decimal Weight { get; set; }
         public long Quantity { get; set; }
-        public string Description { get; set; }
+        public string Status { get; set; }
         public string SenderName { get; set; }
         public string SenderAddress { get; set; }
         public string SenderPhoneNumber { get; set; }
         public System.DateTime DateCreated { get; set; }
     
-        public virtual OrderTable OrderTable { get; set; }
+        public virtual ItemsTable ItemsTable { get; set; }
     }
 }

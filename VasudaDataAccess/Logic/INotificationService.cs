@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VasudaDataAccess.DTOs;
 using VasudaDataAccess.Model;
+using VasudaDataAccess.Utility;
 
 namespace VasudaDataAccess.Logic
 {
@@ -12,8 +13,8 @@ namespace VasudaDataAccess.Logic
     {
         Response<NotificationViewModel> GetAllNotificationsHomePage();
         Response<string> AddContactUs(ContactTable model);
-        Response<string> ResolveAccount(WithdrawalDetailsTable model);
         Response<AdminNotificationViewModel> AdminGetAllNotifications();
+        Response<string> SendMail(MailDTO model);
 
     }
 }

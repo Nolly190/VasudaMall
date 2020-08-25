@@ -26,11 +26,12 @@
                         <button type="button" data-target="#AddProductModal" class="btn btn-primary" data-toggle="modal" id="AddProduct">Add Product</button>
                         <button type="button" data-target="#AddCategoryModal" class="btn btn-primary" data-toggle="modal" id="AddCategory">Add Category</button>
                         <button type="button" data-target="#AddSubCategoryModal" class="btn btn-primary" data-toggle="modal" id="AddSubCategory">Add SubCategory</button>
+                        <button type="button" data-target="#AddVendorModal" class="btn btn-primary" data-toggle="modal" id="AddVendor">Add Vendor</button>
                     </div>
                     <!-- /.card-body -->
                     @*<div class="card-footer">
-                            Footer
-                        </div>*@
+                        Footer
+                    </div>*@
                     <!-- /.card-footer-->
                 </div>
                 <!-- /.card -->
@@ -81,8 +82,8 @@
                                             <td>@item.IsActive</td>
                                             <td>@item.DateCreated.ToString("f")</td>
                                             <td>
-                                                <button type="button" id="editNotificationBtn" class="btn btn-outline-success btn-sm">Edit</button>
-                                                <button type="button" id="deleteNotificationBtn" class="btn btn-outline-danger btn-sm">Delete</button>
+                                                <a class="btn btn-outline-success btn-sm" href="@Url.Action("EditProduct","Admin", new{id= item.Id})">Edit</a> 
+                                                <button type="button" id="deleteNotificationBtn" data-id="@item.Id" class="btn btn-outline-danger btn-sm DeleteProduct">Delete</button>
                                             </td>
                                         </tr>
                                         count++;
@@ -95,11 +96,11 @@
                 </div>
                 <!-- /.card -->
             </div>
-       </div>
+        </div>vi
         <!--Notification table end-->
-   <!--Notification table start-->
+        <!--Notification table start-->
         <div class="row">
-           <div class="col-6">
+            <div class="col-6">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Category</h3>
@@ -130,9 +131,8 @@
                                             <td>@item.CategoryName</td>
                                             <td>@item.DateCreated.ToString("f")</td>
                                             <td>
-                                                <button type="button" id="editNotificationBtn" class="btn btn-outline-success btn-sm">Edit Category</button>
-                                                <button type="button" id="editNotificationBtn" class="btn btn-outline-success btn-sm">View SubCategories</button>
-                                                <button type="button" id="deleteNotificationBtn" class="btn btn-outline-danger btn-sm">Delete</button>
+                                                <button type="button" id="editNotificationBtn" data-id="@item.Id" class="btn btn-outline-success btn-sm EditCategory" data-type="Category" >Edit Category</button>
+                                                <button type="button" id="deleteNotificationBtn" data-id="@item.Id" class="btn btn-outline-danger btn-sm DeleteCategory">Delete</button>
                                             </td>
                                         </tr>
                                         count++;
@@ -145,7 +145,7 @@
                 </div>
                 <!-- /.card -->
             </div>
-           <div class="col-6">
+            <div class="col-6">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Sub Category</h3>
@@ -179,8 +179,8 @@
                                             <td>@item.CategoryTable.CategoryName</td>
                                             <td>@item.DateCreated.ToString("f")</td>
                                             <td>
-                                                <button type="button" id="editNotificationBtn" class="btn btn-outline-success btn-sm">Edit Sub Category</button>
-                                                <button type="button" id="deleteNotificationBtn" class="btn btn-outline-danger btn-sm">Delete</button>
+                                                <button type="button" id="editNotificationBtn" data-id="@item.Id" data-type="SubCate"  class="btn btn-outline-success btn-sm EditSubCategory">Edit Sub Category</button>
+                                                <button type="button" id="deleteNotificationBtn" data-id="@item.Id" class="btn btn-outline-danger btn-sm DeleteSubCate">Delete</button>
                                             </td>
                                         </tr>
                                         count++;
@@ -195,7 +195,55 @@
             </div>
         </div>
         <!--Notification table end-->
-
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Vendors</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @{ count = 1;}
+                        @if (Model.Vendors.Count == 0)
+                        {
+                            <h3 style="text-align: center">NO VENDOR AVAILABLE</h3>
+                        }
+                        else
+                        {
+                            <table id="notificationTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
+                                <thead>
+                                <tr>
+                                    <th>S/N</th>
+                                    <th>Name</th>
+                                    <th>Website</th>
+                                    <th>Date Created</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach (var item in Model.Vendors)
+                                {
+                                    <tr>
+                                        <td>@count</td>
+                                        <td>@item.Name</td>
+                                        <td>@item.Link</td>
+                                        <td>@item.DateCreated.ToString("f")</td>
+                                        <td>
+                                            <button type="button" id="EditVendorBtn"  class="btn btn-outline-success btn-sm EditVendor">Edit</button>
+                                            <button type="button" id="deleteNotificationBtn" data-id="@item.Id" class="btn btn-outline-danger btn-sm DeleteVendor">Delete</button>
+                                        </td>
+                                    </tr>
+                                    count++;
+                                }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
     </div>
 
     <div class="modal" tabindex="-1" id="AddProductModal" role="dialog">
@@ -232,7 +280,7 @@
                                     }
                                 </select>
                             </div>
-                            <div class="form-group" style="display: none">
+                            <div class="form-group" id="subCatDropDown" style="display: none">
                                 <label for="Qty">Sub Category</label>
                                 <select id="ProdSubCate" class="form-control form-control-sm">
                                     <option value="">Select SubCategory</option>
@@ -307,6 +355,38 @@
         </div>
     </div>
 
+    <div class="modal" tabindex="-1" id="AddVendorModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Vendor</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body">
+                        <form id="AddVendorForm">
+                            <div class="form-group">
+                                <label for="title">Vendor Name</label>
+                                <input type="text" class="form-control form-control-sm" data-formname="Name" id="VendorName" placeholder="Vendor Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="title">Vendor Link</label>
+                                <input type="text" class="form-control form-control-sm" data-formname="Name" id="VendorLink" placeholder="Vendor Link" required>
+                            </div>
+                      
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="SaveVendor">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal" tabindex="-1" id="AddSubCategoryModal" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -344,4 +424,99 @@
         </div>
     </div>
 
-    </section>
+
+
+
+<div class="modal" tabindex="-1" id="EditCategoryModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Category</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body">
+                        <form id="EditCategoryForm">
+                            <div class="form-group">
+                                <label for="title">Name</label>
+                                <input type="hidden"  id="EditCatName">
+                                <input type="text" class="form-control form-control-sm" data-formname="Name" id="NewCatName" placeholder="Category Name" required>
+                            </div>
+                      
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="EditCategory">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" id="EditVendorModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Vendor</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body">
+                        <form id="EditVendorForm">
+                            <div class="form-group">
+                                <label for="title">Vendor Name</label>
+                                <input type="hidden" id="OldVendorName" required>
+                                <input type="text" class="form-control form-control-sm" data-formname="Name" id="EditedVendorName" placeholder="Vendor Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="title">Vendor Link</label>
+                                <input type="text" class="form-control form-control-sm" data-formname="Name" id="EditedVendorLink" placeholder="Vendor Link" required>
+                            </div>
+                      
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="EditVendor">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" id="EditSubCategoryModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Sub Category</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body">
+                        <form id="EditSubCategoryForm">
+                       
+                               <div class="form-group">
+                                    <label for="title">Name</label>
+                                    <input type="hidden" id="SubId" >
+                                    <input type="text" class="form-control form-control-sm" data-formname="Subcategory Name" id="EditSubcategoryName" required>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="EditSubCategory">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>

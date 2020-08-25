@@ -231,6 +231,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\chat.css" />
     <Content Include="Content\Main.css" />
+    <Content Include="Content\ChatBox.css" />
     <Content Include="Content\spinner.css" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -260,6 +261,10 @@
     <Compile Include="Migrations\202007230319194_AddedDateCreated.cs" />
     <Compile Include="Migrations\202007230319194_AddedDateCreated.Designer.cs">
       <DependentUpon>202007230319194_AddedDateCreated.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008191221138_newMod.cs" />
+    <Compile Include="Migrations\202008191221138_newMod.designer.cs">
+      <DependentUpon>202008191221138_newMod.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -2304,6 +2309,8 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Admin\Products.cshtml" />
+    <Content Include="Views\Admin\EditProduct.cshtml" />
+    <Content Include="Views\Admin\UserDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2341,6 +2348,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202007230319194_AddedDateCreated.resx">
       <DependentUpon>202007230319194_AddedDateCreated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008191221138_newMod.resx">
+      <DependentUpon>202008191221138_newMod.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

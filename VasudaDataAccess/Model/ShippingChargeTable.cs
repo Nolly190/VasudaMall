@@ -12,11 +12,15 @@ namespace VasudaDataAccess.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class C__MigrationHistory
+    public partial class ShippingChargeTable
     {
-        public string MigrationId { get; set; }
-        public string ContextKey { get; set; }
-        public byte[] Model { get; set; }
-        public string ProductVersion { get; set; }
+        public System.Guid Id { get; set; }
+        public decimal MinQuantity { get; set; }
+        public decimal MaxQuantity { get; set; }
+        public decimal Price { get; set; }
+        public string Type { get; set; }
+        public string OriginCountry { get; set; }
+        public string DestinationCountry { get; set; }
+        public bool IsActive { get; set; }
     }
 }

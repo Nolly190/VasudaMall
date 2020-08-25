@@ -15,6 +15,7 @@ namespace VasudaDataAccess.Logic
         Response<string> WithdrawalRequest(WithdrawalRequestTable model);
         Response<FlutterPaymentDetails> FundingRequest(FundingRequestTable model);
         Response<AdminWalletViewModel> AdminGetAllWithdrawalAccounts();
+        Response<UserDetailsDTO> GetUserInfo(string userId);
         Response<string> Action(RequestApprovalDTO model);
     }
 }

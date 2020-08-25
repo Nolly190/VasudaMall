@@ -1,7 +1,10 @@
 ﻿
 
 function Validator(InputObj) {
-        var result = [];
+    var result = [];
+    if (InputObj.localName==="button") {
+        return result;
+    }
         var Name = $("#" + InputObj.id);
         var getFormObj = Name.val().trim();
         var dataName = Name.data("formname");

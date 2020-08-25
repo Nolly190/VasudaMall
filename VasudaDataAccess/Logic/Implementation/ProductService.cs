@@ -42,8 +42,12 @@ namespace VasudaDataAccess.Logic.Implementation
                     Quantity = Convert.ToInt32(others[5]),
                     IsActive = true,
                     IsPopular = others[3] == "on" ? true : false,
-
+                    Category = Guid.Parse(others[7]),
                 };
+                if (!string.IsNullOrEmpty(others[8]))
+                {
+                    insertProduct.SubCategory = Guid.Parse(others[8]);
+                }
                 _unitOfWork.ProductTable.Add(insertProduct);
                 var ImageList = new List<string>();
                 for (int i = 0; i < images.Count; i++)
@@ -149,6 +153,7 @@ namespace VasudaDataAccess.Logic.Implementation
                 model.Product = _unitOfWork.ProductTable.GetAll(x=>x.IsActive).ToList();
                 model.Category = _unitOfWork.CategoryTable.GetAll(x => x.IsActive).ToList();
                 model.SubCategory = _unitOfWork.SubCategoryTable.GetAll(x => x.IsActive).ToList();
+                model.Vendors = _unitOfWork.VendorTable.GetAll(x => x.IsActive).ToList();
                 response.SetResult(model);
             }
             catch (Exception ex)
@@ -215,6 +220,246 @@ namespace VasudaDataAccess.Logic.Implementation
                 logger.Error(ex.ToString());
             }
 
+            return response;
+        }
+
+        public Response<string> AddVendor(VendorTable model)
+        {
+
+            var response = new Response<string>()
+            {
+                Status = false
+            };
+
+            try
+            {
+                var checkVendor =
+                    _unitOfWork.VendorTable.Get(x => x.IsActive && x.Name.ToLower() == model.Name.ToLower());
+                if (checkVendor!=null)
+                {
+                    checkVendor.IsActive = false;
+                }
+                model.DateCreated =DateTime.UtcNow.AddHours(1);
+                model.Id =Guid.NewGuid();
+                model.IsActive = true;
+                _unitOfWork.VendorTable.Add(model);
+                _unitOfWork.Complete();
+                response.Status = true;
+
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+                response.Message = "Could not add vendor";
+            }
+
+            return response;
+        }
+
+        public Response<string> DeleteProduct(string id)
+        {
+            var response = new Response<string>();
+            response.Status = false;
+            try
+            {
+                var getProduct = _unitOfWork.ProductTable.Get(Guid.Parse(id));
+                if (getProduct==null)
+                {
+                    response.Message = "Could not retrieve product";
+                    return response;
+                }
+
+                getProduct.IsActive = false;
+                _unitOfWork.Complete();
+                response.Status = true;
+            }
+            catch (Exception ex)
+            {
+
+                response.Message = "could not delete product";
+                logger.Error(ex.ToString());
+            }
+            return response;
+        }
+
+        public Response<string> DeleteCategory(string id)
+        {
+            var response = new Response<string>();
+            response.Status = false;
+            try
+            {
+                var getProduct = _unitOfWork.CategoryTable.Get(Guid.Parse(id));
+                if (getProduct == null)
+                {
+                    response.Message = "Could not retrieve category";
+                    return response;
+                }
+
+                getProduct.IsActive = false;
+                _unitOfWork.Complete();
+                response.Status = true;
+            }
+            catch (Exception ex)
+            {
+                response.Message = "could not delete category";
+                logger.Error(ex.ToString());
+            }
+            return response;
+
+        }
+
+        public Response<string> DeleteVendor(string id)
+        {
+            var response = new Response<string>();
+            response.Status = false;
+            try
+            {
+                var getProduct = _unitOfWork.VendorTable.Get(id);
+                if (getProduct == null)
+                {
+                    response.Message = "Could not retrieve vendor";
+                    return response;
+                }
+
+                getProduct.IsActive = false;
+                _unitOfWork.Complete();
+                response.Status = true;
+            }
+            catch (Exception ex)
+            {
+
+                response.Message = "Could not delete vendor";
+                logger.Error(ex.ToString());
+            }
+            return response;
+
+        }
+        public Response<string> DeleteSubCategory(string id)
+        {
+            var response = new Response<string>();
+            response.Status = false;
+            try
+            {
+                var getProduct = _unitOfWork.SubCategoryTable.Get(Guid.Parse(id));
+                if (getProduct == null)
+                {
+                    response.Message = "Could not retrieve sub category";
+                    return response;
+                }
+
+                getProduct.IsActive = false;
+                _unitOfWork.Complete();
+                response.Status = true;
+            }
+            catch (Exception ex)
+            {
+
+                response.Message = "Could not delete subcategory";
+                logger.Error(ex.ToString());
+            }
+            return response;
+
+        }
+
+        public Response<ProductTable> GetProduct(string id)
+        {
+            var response = new Response<ProductTable>();
+            response.Status = false;
+            try
+            {
+                var getProducts = _unitOfWork.ProductTable.Get(Guid.Parse(id));
+                response.SetResult(getProducts);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+            }
+
+            return response;
+        }
+
+        public Response<List<SubCategoryTable>> GetSubCategory(string categoryName)
+        {
+            var response = new Response<List<SubCategoryTable>>()
+            {
+                Status = false
+            };
+            
+            try
+            {
+                var categoryId = Guid.Parse(categoryName);
+                _unitOfWork._dbContext.Configuration.ProxyCreationEnabled = false;
+                var getSubCategory = _unitOfWork.SubCategoryTable.GetAll(x => x.CategoryId == categoryId && x.IsActive).ToList();
+                response.SetResult(getSubCategory);
+                response.Status = true;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+
+            }
+
+            return response;
+        }
+
+        public Response<string> EditCategory(string category, string oldCategory)
+        {
+            var response = new Response<string>();
+            try
+            {
+                var getCategory = _unitOfWork.CategoryTable.Get(x => x.CategoryName.ToLower() == oldCategory.ToLower() && x.IsActive);
+                if (getCategory!= null)
+                {
+                    getCategory.CategoryName = category;
+                    response.Status = true;
+                    _unitOfWork.Complete();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+            }
+            return response;
+        }
+
+        public Response<string> EditSubCategory(string subCategory, string oldCategoryName)
+        {
+            var response = new Response<string>();
+            try
+            {
+                var getSubCategory = _unitOfWork.SubCategoryTable.Get(x => x.Name.ToLower() == oldCategoryName.ToLower() && x.IsActive);
+                if (getSubCategory != null)
+                {
+                    getSubCategory.Name = subCategory;
+                    response.Status = true;
+                    _unitOfWork.Complete();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+            }
+            return response;
+        }
+
+        public Response<string> EditVendor(string vendor, string oldVendorName, string link)
+        {
+            var response = new Response<string>();
+            try
+            {
+                var getVendor = _unitOfWork.VendorTable.Get(x => x.Name.ToLower() == vendor.ToLower() && x.IsActive);
+                if (getVendor != null)
+                {
+                    getVendor.Name = vendor;
+                    getVendor.Link = link;
+                    response.Status = true;
+                    _unitOfWork.Complete();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+            }
             return response;
         }
     }

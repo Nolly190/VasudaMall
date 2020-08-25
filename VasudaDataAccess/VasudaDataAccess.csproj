@@ -119,6 +119,7 @@
     <Compile Include="Data Access\IWithdrawalDetailsTable.cs" />
     <Compile Include="DTOs\AdminBankViewModel.cs" />
     <Compile Include="DTOs\AdminNotificationViewModel.cs" />
+    <Compile Include="DTOs\AdminOrderDto.cs" />
     <Compile Include="DTOs\AdminProfileViewModel.cs" />
     <Compile Include="DTOs\AdminWalletViewModel.cs" />
     <Compile Include="DTOs\ChangePasswordDTO.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="DTOs\StoreViewModel.cs" />
     <Compile Include="DTOs\SupportViewModel.cs" />
     <Compile Include="DTOs\TransactionViewModel.cs" />
+    <Compile Include="DTOs\UserDetailsDTO.cs" />
     <Compile Include="DTOs\UserPaymentDTO.cs" />
     <Compile Include="DTOs\WalletViewModel.cs" />
     <Compile Include="Logic\IBankService.cs" />
@@ -169,10 +171,7 @@
     <Compile Include="Model\ContactTable.cs">
       <DependentUpon>VasudaDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\C__MigrationHistory.cs">
-      <DependentUpon>VasudaDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\DomesticOrderTable.cs">
+    <Compile Include="Model\DomesticItemTable.cs">
       <DependentUpon>VasudaDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ExchangeRateTable.cs">
@@ -182,6 +181,9 @@
       <DependentUpon>VasudaDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ImageTable.cs">
+      <DependentUpon>VasudaDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ItemsTable.cs">
       <DependentUpon>VasudaDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\NotificationTable.cs">
@@ -202,7 +204,10 @@
     <Compile Include="Model\SettingTable.cs">
       <DependentUpon>VasudaDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\ShippingOrderTable.cs">
+    <Compile Include="Model\ShippingChargeTable.cs">
+      <DependentUpon>VasudaDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ShippingItemTable.cs">
       <DependentUpon>VasudaDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SubCategoryTable.cs">

@@ -5,16 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="VasudaModelEnities.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="__MigrationHistory">
-          <Key>
-            <PropertyRef Name="MigrationId" />
-            <PropertyRef Name="ContextKey" />
-          </Key>
-          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
-          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
-          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
-        </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -71,6 +61,7 @@
           <Property Name="Address" Type="nvarchar(max)" />
           <Property Name="FullName" Type="nvarchar(max)" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="IsBanned" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="AuditTrialTables">
           <Key>
@@ -125,7 +116,7 @@
           <Property Name="Message" Type="varchar(max)" Nullable="false" />
           <Property Name="DateAdded" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="DomesticOrderTable">
+        <EntityType Name="DomesticItemTable">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -135,7 +126,6 @@
           <Property Name="ReceiverAddress" Type="varchar(max)" Nullable="false" />
           <Property Name="Weight" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Quantity" Type="bigint" Nullable="false" />
-          <Property Name="Description" Type="varchar(max)" Nullable="false" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="SenderName" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="SenderAddress" Type="nvarchar(max)" Nullable="false" />
@@ -184,18 +174,7 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="NotificationTables">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Subject" Type="nvarchar(max)" />
-          <Property Name="Message" Type="nvarchar(max)" />
-          <Property Name="IsRead" Type="bit" Nullable="false" />
-          <Property Name="DateCreated" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="OrderTables">
+        <EntityType Name="ItemsTables">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -212,6 +191,35 @@
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Status" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="OrderId" Type="uniqueidentifier" />
+          <Property Name="ServicePrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NotificationTables">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Subject" Type="nvarchar(max)" />
+          <Property Name="Message" Type="nvarchar(max)" />
+          <Property Name="IsRead" Type="bit" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OrderType" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="TotalServiceCharge" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ShippingFee" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IsCompleted" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="PaymentHistoryTables">
@@ -222,9 +230,9 @@
           <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="TransactionType" Type="nvarchar(max)" />
           <Property Name="Purpose" Type="nvarchar(max)" />
-          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="Status" Type="varchar(max)" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
-          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="PriceTables">
           <Key>
@@ -255,6 +263,8 @@
           <Property Name="IsPopular" Type="bit" Nullable="false" />
           <Property Name="Clearance" Type="bit" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="Category" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SubCategory" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="SettingTables">
           <Key>
@@ -265,8 +275,22 @@
           <Property Name="paystackPublicKey" Type="nvarchar(max)" />
           <Property Name="SmSUsername" Type="nvarchar(max)" />
           <Property Name="Password" Type="nvarchar(max)" />
+          <Property Name="ServiceCharge" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
-        <EntityType Name="ShippingOrderTable">
+        <EntityType Name="ShippingChargeTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="MinQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="MaxQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="OriginCountry" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DestinationCountry" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShippingItemTable">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -276,10 +300,9 @@
           <Property Name="ReceiverAddress" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Weight" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Quantity" Type="bigint" Nullable="false" />
-          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="SenderName" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="SenderAddress" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="SenderPhoneNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SenderName" Type="nvarchar" MaxLength="200" />
+          <Property Name="SenderAddress" Type="nvarchar(max)" />
+          <Property Name="SenderPhoneNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="SubCategoryTables">
@@ -330,9 +353,10 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Name" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="Link" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <EntityType Name="WithdrawalDetailsTable">
           <Key>
@@ -429,13 +453,13 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DomesticOrderTable_OrderTables">
-          <End Role="OrderTables" Type="Self.OrderTables" Multiplicity="1" />
-          <End Role="DomesticOrderTable" Type="Self.DomesticOrderTable" Multiplicity="0..1" />
+          <End Role="ItemsTables" Type="Self.ItemsTables" Multiplicity="1" />
+          <End Role="DomesticItemTable" Type="Self.DomesticItemTable" Multiplicity="0..1" />
           <ReferentialConstraint>
-            <Principal Role="OrderTables">
+            <Principal Role="ItemsTables">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="DomesticOrderTable">
+            <Dependent Role="DomesticItemTable">
               <PropertyRef Name="Id" />
             </Dependent>
           </ReferentialConstraint>
@@ -465,10 +489,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ImageTables_OrderTables">
-          <End Role="OrderTables" Type="Self.OrderTables" Multiplicity="0..1" />
+          <End Role="ItemsTables" Type="Self.ItemsTables" Multiplicity="0..1" />
           <End Role="ImageTables" Type="Self.ImageTables" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="OrderTables">
+            <Principal Role="ItemsTables">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="ImageTables">
@@ -488,6 +512,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ItemsTables_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="ItemsTables" Type="Self.ItemsTables" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemsTables">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemsTables_OrderTable">
+          <End Role="OrderTable" Type="Self.OrderTable" Multiplicity="0..1" />
+          <End Role="ItemsTables" Type="Self.ItemsTables" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderTable">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemsTables">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_NotificationTables_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="NotificationTables" Type="Self.NotificationTables" Multiplicity="*" />
@@ -500,26 +548,50 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_OrderTable_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="OrderTable" Type="Self.OrderTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderTable">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OrderTables_VendorTables">
           <End Role="VendorTables" Type="Self.VendorTables" Multiplicity="0..1" />
-          <End Role="OrderTables" Type="Self.OrderTables" Multiplicity="*" />
+          <End Role="ItemsTables" Type="Self.ItemsTables" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="VendorTables">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="OrderTables">
+            <Dependent Role="ItemsTables">
               <PropertyRef Name="VendorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ShippingOrderTable_OrderTables">
-          <End Role="OrderTables" Type="Self.OrderTables" Multiplicity="1" />
-          <End Role="ShippingOrderTable" Type="Self.ShippingOrderTable" Multiplicity="0..1" />
+        <Association Name="FK_PaymentHistoryTables_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="PaymentHistoryTables" Type="Self.PaymentHistoryTables" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="OrderTables">
+            <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ShippingOrderTable">
+            <Dependent Role="PaymentHistoryTables">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShippingOrderTable_OrderTables">
+          <End Role="ItemsTables" Type="Self.ItemsTables" Multiplicity="1" />
+          <End Role="ShippingItemTable" Type="Self.ShippingItemTable" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ItemsTables">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShippingItemTable">
               <PropertyRef Name="Id" />
             </Dependent>
           </ReferentialConstraint>
@@ -585,7 +657,6 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="VasudaModelEnitiesStoreContainer">
-          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
@@ -596,17 +667,19 @@
           <EntitySet Name="CategoryTables" EntityType="Self.CategoryTables" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChatTable" EntityType="Self.ChatTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ContactTable" EntityType="Self.ContactTable" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="DomesticOrderTable" EntityType="Self.DomesticOrderTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DomesticItemTable" EntityType="Self.DomesticItemTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExchangeRateTables" EntityType="Self.ExchangeRateTables" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FundingRequestTable" EntityType="Self.FundingRequestTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ImageTables" EntityType="Self.ImageTables" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemsTables" EntityType="Self.ItemsTables" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NotificationTables" EntityType="Self.NotificationTables" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="OrderTables" EntityType="Self.OrderTables" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderTable" EntityType="Self.OrderTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentHistoryTables" EntityType="Self.PaymentHistoryTables" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PriceTables" EntityType="Self.PriceTables" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductTables" EntityType="Self.ProductTables" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SettingTables" EntityType="Self.SettingTables" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ShippingOrderTable" EntityType="Self.ShippingOrderTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShippingChargeTable" EntityType="Self.ShippingChargeTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShippingItemTable" EntityType="Self.ShippingItemTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubCategoryTables" EntityType="Self.SubCategoryTables" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SupportTables" EntityType="Self.SupportTables" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -635,8 +708,8 @@
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
           <AssociationSet Name="FK_DomesticOrderTable_OrderTables" Association="Self.FK_DomesticOrderTable_OrderTables">
-            <End Role="OrderTables" EntitySet="OrderTables" />
-            <End Role="DomesticOrderTable" EntitySet="DomesticOrderTable" />
+            <End Role="ItemsTables" EntitySet="ItemsTables" />
+            <End Role="DomesticItemTable" EntitySet="DomesticItemTable" />
           </AssociationSet>
           <AssociationSet Name="FK_FundingRequestTable_AspNetUsers" Association="Self.FK_FundingRequestTable_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -647,24 +720,40 @@
             <End Role="FundingRequestTable" EntitySet="FundingRequestTable" />
           </AssociationSet>
           <AssociationSet Name="FK_ImageTables_OrderTables" Association="Self.FK_ImageTables_OrderTables">
-            <End Role="OrderTables" EntitySet="OrderTables" />
+            <End Role="ItemsTables" EntitySet="ItemsTables" />
             <End Role="ImageTables" EntitySet="ImageTables" />
           </AssociationSet>
           <AssociationSet Name="FK_ImageTables_ProductTables" Association="Self.FK_ImageTables_ProductTables">
             <End Role="ProductTables" EntitySet="ProductTables" />
             <End Role="ImageTables" EntitySet="ImageTables" />
           </AssociationSet>
+          <AssociationSet Name="FK_ItemsTables_AspNetUsers" Association="Self.FK_ItemsTables_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ItemsTables" EntitySet="ItemsTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemsTables_OrderTable" Association="Self.FK_ItemsTables_OrderTable">
+            <End Role="OrderTable" EntitySet="OrderTable" />
+            <End Role="ItemsTables" EntitySet="ItemsTables" />
+          </AssociationSet>
           <AssociationSet Name="FK_NotificationTables_AspNetUsers" Association="Self.FK_NotificationTables_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="NotificationTables" EntitySet="NotificationTables" />
           </AssociationSet>
+          <AssociationSet Name="FK_OrderTable_AspNetUsers" Association="Self.FK_OrderTable_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="OrderTable" EntitySet="OrderTable" />
+          </AssociationSet>
           <AssociationSet Name="FK_OrderTables_VendorTables" Association="Self.FK_OrderTables_VendorTables">
             <End Role="VendorTables" EntitySet="VendorTables" />
-            <End Role="OrderTables" EntitySet="OrderTables" />
+            <End Role="ItemsTables" EntitySet="ItemsTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaymentHistoryTables_AspNetUsers" Association="Self.FK_PaymentHistoryTables_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="PaymentHistoryTables" EntitySet="PaymentHistoryTables" />
           </AssociationSet>
           <AssociationSet Name="FK_ShippingOrderTable_OrderTables" Association="Self.FK_ShippingOrderTable_OrderTables">
-            <End Role="OrderTables" EntitySet="OrderTables" />
-            <End Role="ShippingOrderTable" EntitySet="ShippingOrderTable" />
+            <End Role="ItemsTables" EntitySet="ItemsTables" />
+            <End Role="ShippingItemTable" EntitySet="ShippingItemTable" />
           </AssociationSet>
           <AssociationSet Name="FK_SubCategoryTables_CategoryTables" Association="Self.FK_SubCategoryTables_CategoryTables">
             <End Role="CategoryTables" EntitySet="CategoryTables" />
@@ -691,33 +780,138 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="VasudaModelEnities" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="C__MigrationHistory">
-          <Key>
-            <PropertyRef Name="MigrationId" />
-            <PropertyRef Name="ContextKey" />
-          </Key>
-          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
+        <EntityContainer Name="VasudaModel" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AspNetRoles" EntityType="VasudaModelEnities.AspNetRole" />
+          <EntitySet Name="AspNetUserClaims" EntityType="VasudaModelEnities.AspNetUserClaim" />
+          <EntitySet Name="AspNetUserLogins" EntityType="VasudaModelEnities.AspNetUserLogin" />
+          <EntitySet Name="AspNetUsers" EntityType="VasudaModelEnities.AspNetUser" />
+          <EntitySet Name="AuditTrialTables" EntityType="VasudaModelEnities.AuditTrialTable" />
+          <EntitySet Name="BankTables" EntityType="VasudaModelEnities.BankTable" />
+          <EntitySet Name="CategoryTables" EntityType="VasudaModelEnities.CategoryTable" />
+          <EntitySet Name="ChatTables" EntityType="VasudaModelEnities.ChatTable" />
+          <EntitySet Name="ContactTables" EntityType="VasudaModelEnities.ContactTable" />
+          <EntitySet Name="DomesticItemTables" EntityType="VasudaModelEnities.DomesticItemTable" />
+          <EntitySet Name="ExchangeRateTables" EntityType="VasudaModelEnities.ExchangeRateTable" />
+          <EntitySet Name="FundingRequestTables" EntityType="VasudaModelEnities.FundingRequestTable" />
+          <EntitySet Name="ImageTables" EntityType="VasudaModelEnities.ImageTable" />
+          <EntitySet Name="ItemsTables" EntityType="VasudaModelEnities.ItemsTable" />
+          <EntitySet Name="NotificationTables" EntityType="VasudaModelEnities.NotificationTable" />
+          <EntitySet Name="PaymentHistoryTables" EntityType="VasudaModelEnities.PaymentHistoryTable" />
+          <EntitySet Name="PriceTables" EntityType="VasudaModelEnities.PriceTable" />
+          <EntitySet Name="ProductTables" EntityType="VasudaModelEnities.ProductTable" />
+          <EntitySet Name="SettingTables" EntityType="VasudaModelEnities.SettingTable" />
+          <EntitySet Name="ShippingChargeTables" EntityType="VasudaModelEnities.ShippingChargeTable" />
+          <EntitySet Name="ShippingItemTables" EntityType="VasudaModelEnities.ShippingItemTable" />
+          <EntitySet Name="SubCategoryTables" EntityType="VasudaModelEnities.SubCategoryTable" />
+          <EntitySet Name="SupportTables" EntityType="VasudaModelEnities.SupportTable" />
+          <EntitySet Name="sysdiagrams" EntityType="VasudaModelEnities.sysdiagram" />
+          <EntitySet Name="SystemAccountTables" EntityType="VasudaModelEnities.SystemAccountTable" />
+          <EntitySet Name="VendorTables" EntityType="VasudaModelEnities.VendorTable" />
+          <EntitySet Name="WithdrawalDetailsTables" EntityType="VasudaModelEnities.WithdrawalDetailsTable" />
+          <EntitySet Name="WithdrawalRequestTables" EntityType="VasudaModelEnities.WithdrawalRequestTable" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="VasudaModelEnities.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="VasudaModelEnities.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChatTable_AspNetUsers" Association="VasudaModelEnities.FK_ChatTable_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ChatTable" EntitySet="ChatTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FundingRequestTable_AspNetUsers" Association="VasudaModelEnities.FK_FundingRequestTable_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="FundingRequestTable" EntitySet="FundingRequestTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificationTables_AspNetUsers" Association="VasudaModelEnities.FK_NotificationTables_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="NotificationTable" EntitySet="NotificationTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaymentHistoryTables_AspNetUsers" Association="VasudaModelEnities.FK_PaymentHistoryTables_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="PaymentHistoryTable" EntitySet="PaymentHistoryTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupportTables_AspNetUsers" Association="VasudaModelEnities.FK_SupportTables_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="SupportTable" EntitySet="SupportTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WithdrawalDetailsTable_AspNetUsers" Association="VasudaModelEnities.FK_WithdrawalDetailsTable_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="WithdrawalDetailsTable" EntitySet="WithdrawalDetailsTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WithdrawalRequestTable_AspNetUsers" Association="VasudaModelEnities.FK_WithdrawalRequestTable_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="WithdrawalRequestTable" EntitySet="WithdrawalRequestTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubCategoryTables_CategoryTables" Association="VasudaModelEnities.FK_SubCategoryTables_CategoryTables">
+            <End Role="CategoryTable" EntitySet="CategoryTables" />
+            <End Role="SubCategoryTable" EntitySet="SubCategoryTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DomesticOrderTable_OrderTables" Association="VasudaModelEnities.FK_DomesticOrderTable_OrderTables">
+            <End Role="ItemsTable" EntitySet="ItemsTables" />
+            <End Role="DomesticItemTable" EntitySet="DomesticItemTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FundingRequestTable_SystemAccountTable" Association="VasudaModelEnities.FK_FundingRequestTable_SystemAccountTable">
+            <End Role="SystemAccountTable" EntitySet="SystemAccountTables" />
+            <End Role="FundingRequestTable" EntitySet="FundingRequestTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImageTables_OrderTables" Association="VasudaModelEnities.FK_ImageTables_OrderTables">
+            <End Role="ItemsTable" EntitySet="ItemsTables" />
+            <End Role="ImageTable" EntitySet="ImageTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImageTables_ProductTables" Association="VasudaModelEnities.FK_ImageTables_ProductTables">
+            <End Role="ProductTable" EntitySet="ProductTables" />
+            <End Role="ImageTable" EntitySet="ImageTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderTables_VendorTables" Association="VasudaModelEnities.FK_OrderTables_VendorTables">
+            <End Role="VendorTable" EntitySet="VendorTables" />
+            <End Role="ItemsTable" EntitySet="ItemsTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShippingOrderTable_OrderTables" Association="VasudaModelEnities.FK_ShippingOrderTable_OrderTables">
+            <End Role="ItemsTable" EntitySet="ItemsTables" />
+            <End Role="ShippingItemTable" EntitySet="ShippingItemTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WithdrawalRequestTable_WithdrawalDetailsTable" Association="VasudaModelEnities.FK_WithdrawalRequestTable_WithdrawalDetailsTable">
+            <End Role="WithdrawalDetailsTable" EntitySet="WithdrawalDetailsTables" />
+            <End Role="WithdrawalRequestTable" EntitySet="WithdrawalRequestTables" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="VasudaModelEnities.AspNetUserRoles">
+            <End Role="AspNetRole" EntitySet="AspNetRoles" />
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemsTables_AspNetUsers" Association="VasudaModelEnities.FK_ItemsTables_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ItemsTable" EntitySet="ItemsTables" />
+          </AssociationSet>
+          <EntitySet Name="OrderTables" EntityType="VasudaModelEnities.OrderTable" />
+          <AssociationSet Name="FK_OrderTable_AspNetUsers" Association="VasudaModelEnities.FK_OrderTable_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="OrderTable" EntitySet="OrderTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemsTables_OrderTable" Association="VasudaModelEnities.FK_ItemsTables_OrderTable">
+            <End Role="OrderTable" EntitySet="OrderTables" />
+            <End Role="ItemsTable" EntitySet="ItemsTables" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="VasudaModelEnities.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="AspNetUserClaim">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUser" Relationship="VasudaModelEnities.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="AspNetUserLogin">
           <Key>
@@ -725,17 +919,17 @@
             <PropertyRef Name="ProviderKey" />
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="VasudaModelEnities.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="AspNetUser">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Balance" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Balance" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Country" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
@@ -748,19 +942,23 @@
           <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
-          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
-          <NavigationProperty Name="ChatTables" Relationship="Self.FK_ChatTable_AspNetUsers" FromRole="AspNetUsers" ToRole="ChatTable" />
-          <NavigationProperty Name="FundingRequestTables" Relationship="Self.FK_FundingRequestTable_AspNetUsers" FromRole="AspNetUsers" ToRole="FundingRequestTable" />
-          <NavigationProperty Name="NotificationTables" Relationship="Self.FK_NotificationTables_AspNetUsers" FromRole="AspNetUsers" ToRole="NotificationTables" />
-          <NavigationProperty Name="SupportTables" Relationship="Self.FK_SupportTables_AspNetUsers" FromRole="AspNetUsers" ToRole="SupportTables" />
-          <NavigationProperty Name="WithdrawalDetailsTables" Relationship="Self.FK_WithdrawalDetailsTable_AspNetUsers" FromRole="AspNetUsers" ToRole="WithdrawalDetailsTable" />
-          <NavigationProperty Name="WithdrawalRequestTables" Relationship="Self.FK_WithdrawalRequestTable_AspNetUsers" FromRole="AspNetUsers" ToRole="WithdrawalRequestTable" />
-          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="VasudaModelEnities.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="VasudaModelEnities.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+          <NavigationProperty Name="ChatTables" Relationship="VasudaModelEnities.FK_ChatTable_AspNetUsers" FromRole="AspNetUser" ToRole="ChatTable" />
+          <NavigationProperty Name="FundingRequestTables" Relationship="VasudaModelEnities.FK_FundingRequestTable_AspNetUsers" FromRole="AspNetUser" ToRole="FundingRequestTable" />
+          <NavigationProperty Name="NotificationTables" Relationship="VasudaModelEnities.FK_NotificationTables_AspNetUsers" FromRole="AspNetUser" ToRole="NotificationTable" />
+          <NavigationProperty Name="PaymentHistoryTables" Relationship="VasudaModelEnities.FK_PaymentHistoryTables_AspNetUsers" FromRole="AspNetUser" ToRole="PaymentHistoryTable" />
+          <NavigationProperty Name="SupportTables" Relationship="VasudaModelEnities.FK_SupportTables_AspNetUsers" FromRole="AspNetUser" ToRole="SupportTable" />
+          <NavigationProperty Name="WithdrawalDetailsTables" Relationship="VasudaModelEnities.FK_WithdrawalDetailsTable_AspNetUsers" FromRole="AspNetUser" ToRole="WithdrawalDetailsTable" />
+          <NavigationProperty Name="WithdrawalRequestTables" Relationship="VasudaModelEnities.FK_WithdrawalRequestTable_AspNetUsers" FromRole="AspNetUser" ToRole="WithdrawalRequestTable" />
+          <NavigationProperty Name="AspNetRoles" Relationship="VasudaModelEnities.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+          <Property Name="IsBanned" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ItemsTables" Relationship="VasudaModelEnities.FK_ItemsTables_AspNetUsers" FromRole="AspNetUser" ToRole="ItemsTable" />
+          <NavigationProperty Name="OrderTables" Relationship="VasudaModelEnities.FK_OrderTable_AspNetUsers" FromRole="AspNetUser" ToRole="OrderTable" />
         </EntityType>
         <EntityType Name="AuditTrialTable">
           <Key>
@@ -780,8 +978,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BankCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="BankName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BankCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="BankName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
@@ -793,38 +991,55 @@
           <Property Name="CategoryName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="SubCategoryTables" Relationship="Self.FK_SubCategoryTables_CategoryTables" FromRole="CategoryTables" ToRole="SubCategoryTables" />
+          <NavigationProperty Name="SubCategoryTables" Relationship="VasudaModelEnities.FK_SubCategoryTables_CategoryTables" FromRole="CategoryTable" ToRole="SubCategoryTable" />
         </EntityType>
         <EntityType Name="ChatTable">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="SentBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SentBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_ChatTable_AspNetUsers" FromRole="ChatTable" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUser" Relationship="VasudaModelEnities.FK_ChatTable_AspNetUsers" FromRole="ChatTable" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="ContactTable">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Fullname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="DomesticItemTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ReceiverName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ReceiverNumber" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ReceiverAddress" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Weight" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Quantity" Type="Int64" Nullable="false" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SenderName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SenderAddress" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SenderPhoneNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ItemsTable" Relationship="VasudaModelEnities.FK_DomesticOrderTable_OrderTables" FromRole="DomesticItemTable" ToRole="ItemsTable" />
         </EntityType>
         <EntityType Name="ExchangeRateTable">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="BaseCurrency" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="ConvertedCurrency" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BaseCurrency" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Rate" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ConvertedCurrency" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
@@ -833,22 +1048,22 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Userid" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Userid" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="SystemAccount" Type="Guid" />
-          <Property Name="PaymentStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PaymentStatus" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="TransactionNarration" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="PaymentType" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PaymentType" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="IsApproved" Type="Boolean" />
           <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="NairaAmount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="NairaAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TransId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="PaymentId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IsCredited" Type="Boolean" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_FundingRequestTable_AspNetUsers" FromRole="FundingRequestTable" ToRole="AspNetUsers" />
-          <NavigationProperty Name="SystemAccountTable" Relationship="Self.FK_FundingRequestTable_SystemAccountTable" FromRole="FundingRequestTable" ToRole="SystemAccountTable" />
+          <NavigationProperty Name="AspNetUser" Relationship="VasudaModelEnities.FK_FundingRequestTable_AspNetUsers" FromRole="FundingRequestTable" ToRole="AspNetUser" />
+          <NavigationProperty Name="SystemAccountTable" Relationship="VasudaModelEnities.FK_FundingRequestTable_SystemAccountTable" FromRole="FundingRequestTable" ToRole="SystemAccountTable" />
         </EntityType>
         <EntityType Name="ImageTable">
           <Key>
@@ -860,446 +1075,10 @@
           <Property Name="Path" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="ProductTable" Relationship="Self.FK_ImageTables_ProductTables" FromRole="ImageTables" ToRole="ProductTables" />
-          <NavigationProperty Name="OrderTable" Relationship="VasudaModelEnities.FK_ImageTables_OrderTables" FromRole="ImageTable" ToRole="OrderTable" />
+          <NavigationProperty Name="ItemsTable" Relationship="VasudaModelEnities.FK_ImageTables_OrderTables" FromRole="ImageTable" ToRole="ItemsTable" />
+          <NavigationProperty Name="ProductTable" Relationship="VasudaModelEnities.FK_ImageTables_ProductTables" FromRole="ImageTable" ToRole="ProductTable" />
         </EntityType>
-        <EntityType Name="NotificationTable">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Subject" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsRead" Type="Boolean" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_NotificationTables_AspNetUsers" FromRole="NotificationTables" ToRole="AspNetUsers" />
-        </EntityType>
-        <EntityType Name="PaymentHistoryTable">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="TransactionType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Purpose" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Boolean" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UserId" Type="Guid" Nullable="false" />
-        </EntityType>
-        <EntityType Name="PriceTable">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Category" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DeliveryTime" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Country" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MinKg" Type="Double" Nullable="false" />
-          <Property Name="MaxKg" Type="Double" Nullable="false" />
-          <Property Name="PricePerKg" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="ProductTable">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Location" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsPopular" Type="Boolean" Nullable="false" />
-          <Property Name="Clearance" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="ImageTables" Relationship="Self.FK_ImageTables_ProductTables" FromRole="ProductTables" ToRole="ImageTables" />
-          <Property Name="Quantity" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="SettingTable">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="paystackSecretKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="paystackPublicKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SmSUsername" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="SubCategoryTable">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="CategoryId" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="CategoryTable" Relationship="Self.FK_SubCategoryTables_CategoryTables" FromRole="SubCategoryTables" ToRole="CategoryTables" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <EntityType Name="SupportTable">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Subject" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SentBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsRead" Type="Boolean" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_SupportTables_AspNetUsers" FromRole="SupportTables" ToRole="AspNetUsers" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="SystemAccountTable">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="BankName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="AccountNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="AccountName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="FundingRequestTables" Relationship="Self.FK_FundingRequestTable_SystemAccountTable" FromRole="SystemAccountTable" ToRole="FundingRequestTable" />
-        </EntityType>
-        <EntityType Name="WithdrawalDetailsTable">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="AccountName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="AccountNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="BankName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_WithdrawalDetailsTable_AspNetUsers" FromRole="WithdrawalDetailsTable" ToRole="AspNetUsers" />
-          <NavigationProperty Name="WithdrawalRequestTables" Relationship="Self.FK_WithdrawalRequestTable_WithdrawalDetailsTable" FromRole="WithdrawalDetailsTable" ToRole="WithdrawalRequestTable" />
-        </EntityType>
-        <EntityType Name="WithdrawalRequestTable">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="WithdrawalAccount" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="IsApproved" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_WithdrawalRequestTable_AspNetUsers" FromRole="WithdrawalRequestTable" ToRole="AspNetUsers" />
-          <NavigationProperty Name="WithdrawalDetailsTable" Relationship="Self.FK_WithdrawalRequestTable_WithdrawalDetailsTable" FromRole="WithdrawalRequestTable" ToRole="WithdrawalDetailsTable" />
-        </EntityType>
-        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserClaims">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserLogins">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ChatTable_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-          <End Role="ChatTable" Type="Self.ChatTable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ChatTable">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FundingRequestTable_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-          <End Role="FundingRequestTable" Type="Self.FundingRequestTable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="FundingRequestTable">
-              <PropertyRef Name="Userid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_NotificationTables_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-          <End Role="NotificationTables" Type="Self.NotificationTable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="NotificationTables">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SupportTables_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-          <End Role="SupportTables" Type="Self.SupportTable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SupportTables">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_WithdrawalDetailsTable_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-          <End Role="WithdrawalDetailsTable" Type="Self.WithdrawalDetailsTable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="WithdrawalDetailsTable">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_WithdrawalRequestTable_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-          <End Role="WithdrawalRequestTable" Type="Self.WithdrawalRequestTable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="WithdrawalRequestTable">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SubCategoryTables_CategoryTables">
-          <End Role="CategoryTables" Type="Self.CategoryTable" Multiplicity="1" />
-          <End Role="SubCategoryTables" Type="Self.SubCategoryTable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CategoryTables">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SubCategoryTables">
-              <PropertyRef Name="CategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FundingRequestTable_SystemAccountTable">
-          <End Role="SystemAccountTable" Type="Self.SystemAccountTable" Multiplicity="0..1" />
-          <End Role="FundingRequestTable" Type="Self.FundingRequestTable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SystemAccountTable">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="FundingRequestTable">
-              <PropertyRef Name="SystemAccount" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ImageTables_ProductTables">
-          <End Role="ProductTables" Type="Self.ProductTable" Multiplicity="0..1" />
-          <End Role="ImageTables" Type="Self.ImageTable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProductTables">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ImageTables">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_WithdrawalRequestTable_WithdrawalDetailsTable">
-          <End Role="WithdrawalDetailsTable" Type="Self.WithdrawalDetailsTable" Multiplicity="1" />
-          <End Role="WithdrawalRequestTable" Type="Self.WithdrawalRequestTable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="WithdrawalDetailsTable">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="WithdrawalRequestTable">
-              <PropertyRef Name="WithdrawalAccount" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="AspNetUserRoles">
-          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
-        </Association>
-        <EntityContainer Name="VasudaModel" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
-          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
-          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
-          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
-          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
-          <EntitySet Name="AuditTrialTables" EntityType="Self.AuditTrialTable" />
-          <EntitySet Name="BankTables" EntityType="Self.BankTable" />
-          <EntitySet Name="CategoryTables" EntityType="Self.CategoryTable" />
-          <EntitySet Name="ChatTables" EntityType="Self.ChatTable" />
-          <EntitySet Name="ContactTables" EntityType="Self.ContactTable" />
-          <EntitySet Name="ExchangeRateTables" EntityType="Self.ExchangeRateTable" />
-          <EntitySet Name="FundingRequestTables" EntityType="Self.FundingRequestTable" />
-          <EntitySet Name="ImageTables" EntityType="Self.ImageTable" />
-          <EntitySet Name="NotificationTables" EntityType="Self.NotificationTable" />
-          <EntitySet Name="PaymentHistoryTables" EntityType="Self.PaymentHistoryTable" />
-          <EntitySet Name="PriceTables" EntityType="Self.PriceTable" />
-          <EntitySet Name="ProductTables" EntityType="Self.ProductTable" />
-          <EntitySet Name="SettingTables" EntityType="Self.SettingTable" />
-          <EntitySet Name="SubCategoryTables" EntityType="Self.SubCategoryTable" />
-          <EntitySet Name="SupportTables" EntityType="Self.SupportTable" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <EntitySet Name="SystemAccountTables" EntityType="Self.SystemAccountTable" />
-          <EntitySet Name="WithdrawalDetailsTables" EntityType="Self.WithdrawalDetailsTable" />
-          <EntitySet Name="WithdrawalRequestTables" EntityType="Self.WithdrawalRequestTable" />
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ChatTable_AspNetUsers" Association="Self.FK_ChatTable_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="ChatTable" EntitySet="ChatTables" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FundingRequestTable_AspNetUsers" Association="Self.FK_FundingRequestTable_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="FundingRequestTable" EntitySet="FundingRequestTables" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NotificationTables_AspNetUsers" Association="Self.FK_NotificationTables_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="NotificationTables" EntitySet="NotificationTables" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SupportTables_AspNetUsers" Association="Self.FK_SupportTables_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="SupportTables" EntitySet="SupportTables" />
-          </AssociationSet>
-          <AssociationSet Name="FK_WithdrawalDetailsTable_AspNetUsers" Association="Self.FK_WithdrawalDetailsTable_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="WithdrawalDetailsTable" EntitySet="WithdrawalDetailsTables" />
-          </AssociationSet>
-          <AssociationSet Name="FK_WithdrawalRequestTable_AspNetUsers" Association="Self.FK_WithdrawalRequestTable_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="WithdrawalRequestTable" EntitySet="WithdrawalRequestTables" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SubCategoryTables_CategoryTables" Association="Self.FK_SubCategoryTables_CategoryTables">
-            <End Role="CategoryTables" EntitySet="CategoryTables" />
-            <End Role="SubCategoryTables" EntitySet="SubCategoryTables" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FundingRequestTable_SystemAccountTable" Association="Self.FK_FundingRequestTable_SystemAccountTable">
-            <End Role="SystemAccountTable" EntitySet="SystemAccountTables" />
-            <End Role="FundingRequestTable" EntitySet="FundingRequestTables" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ImageTables_ProductTables" Association="Self.FK_ImageTables_ProductTables">
-            <End Role="ProductTables" EntitySet="ProductTables" />
-            <End Role="ImageTables" EntitySet="ImageTables" />
-          </AssociationSet>
-          <AssociationSet Name="FK_WithdrawalRequestTable_WithdrawalDetailsTable" Association="Self.FK_WithdrawalRequestTable_WithdrawalDetailsTable">
-            <End Role="WithdrawalDetailsTable" EntitySet="WithdrawalDetailsTables" />
-            <End Role="WithdrawalRequestTable" EntitySet="WithdrawalRequestTables" />
-          </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <EntitySet Name="DomesticOrderTables" EntityType="VasudaModelEnities.DomesticOrderTable" />
-          <EntitySet Name="ShippingOrderTables" EntityType="VasudaModelEnities.ShippingOrderTable" />
-          <EntitySet Name="VendorTables" EntityType="VasudaModelEnities.VendorTable" />
-          <EntitySet Name="OrderTables" EntityType="VasudaModelEnities.OrderTable" />
-          <AssociationSet Name="FK_DomesticOrderTable_OrderTables" Association="VasudaModelEnities.FK_DomesticOrderTable_OrderTables">
-            <End Role="OrderTable" EntitySet="OrderTables" />
-            <End Role="DomesticOrderTable" EntitySet="DomesticOrderTables" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ImageTables_OrderTables" Association="VasudaModelEnities.FK_ImageTables_OrderTables">
-            <End Role="OrderTable" EntitySet="OrderTables" />
-            <End Role="ImageTable" EntitySet="ImageTables" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderTables_VendorTables" Association="VasudaModelEnities.FK_OrderTables_VendorTables">
-            <End Role="VendorTable" EntitySet="VendorTables" />
-            <End Role="OrderTable" EntitySet="OrderTables" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ShippingOrderTable_OrderTables" Association="VasudaModelEnities.FK_ShippingOrderTable_OrderTables">
-            <End Role="OrderTable" EntitySet="OrderTables" />
-            <End Role="ShippingOrderTable" EntitySet="ShippingOrderTables" />
-          </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="DomesticOrderTable">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="ReceiverName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="ReceiverNumber" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="ReceiverAddress" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Weight" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Quantity" Type="Int64" Nullable="false" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SenderName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="SenderAddress" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SenderPhoneNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="OrderTable" Relationship="VasudaModelEnities.FK_DomesticOrderTable_OrderTables" FromRole="DomesticOrderTable" ToRole="OrderTable" />
-        </EntityType>
-        <EntityType Name="ShippingOrderTable">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="ReceiverName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiverNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiverAddress" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Weight" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Quantity" Type="Int64" Nullable="false" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SenderName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="SenderAddress" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SenderPhoneNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="OrderTable" Relationship="VasudaModelEnities.FK_ShippingOrderTable_OrderTables" FromRole="ShippingOrderTable" ToRole="OrderTable" />
-        </EntityType>
-        <EntityType Name="VendorTable">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="Guid" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="OrderTables" Relationship="VasudaModelEnities.FK_OrderTables_VendorTables" FromRole="VendorTable" ToRole="OrderTable" />
-        </EntityType>
-        <EntityType Name="OrderTable">
+        <EntityType Name="ItemsTable">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -1316,29 +1095,355 @@
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="OrderId" Type="Guid" />
+          <Property Name="ServicePrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="DomesticOrderTable" Relationship="VasudaModelEnities.FK_DomesticOrderTable_OrderTables" FromRole="OrderTable" ToRole="DomesticOrderTable" />
-          <NavigationProperty Name="ImageTables" Relationship="VasudaModelEnities.FK_ImageTables_OrderTables" FromRole="OrderTable" ToRole="ImageTable" />
-          <NavigationProperty Name="VendorTable" Relationship="VasudaModelEnities.FK_OrderTables_VendorTables" FromRole="OrderTable" ToRole="VendorTable" />
-          <NavigationProperty Name="ShippingOrderTable" Relationship="VasudaModelEnities.FK_ShippingOrderTable_OrderTables" FromRole="OrderTable" ToRole="ShippingOrderTable" />
+          <NavigationProperty Name="DomesticItemTable" Relationship="VasudaModelEnities.FK_DomesticOrderTable_OrderTables" FromRole="ItemsTable" ToRole="DomesticItemTable" />
+          <NavigationProperty Name="ImageTables" Relationship="VasudaModelEnities.FK_ImageTables_OrderTables" FromRole="ItemsTable" ToRole="ImageTable" />
+          <NavigationProperty Name="VendorTable" Relationship="VasudaModelEnities.FK_OrderTables_VendorTables" FromRole="ItemsTable" ToRole="VendorTable" />
+          <NavigationProperty Name="ShippingItemTable" Relationship="VasudaModelEnities.FK_ShippingOrderTable_OrderTables" FromRole="ItemsTable" ToRole="ShippingItemTable" />
+          <NavigationProperty Name="AspNetUser" Relationship="VasudaModelEnities.FK_ItemsTables_AspNetUsers" FromRole="ItemsTable" ToRole="AspNetUser" />
+          <NavigationProperty Name="OrderTable" Relationship="VasudaModelEnities.FK_ItemsTables_OrderTable" FromRole="ItemsTable" ToRole="OrderTable" />
         </EntityType>
-        <Association Name="FK_DomesticOrderTable_OrderTables">
-          <End Type="VasudaModelEnities.OrderTable" Role="OrderTable" Multiplicity="1" />
-          <End Type="VasudaModelEnities.DomesticOrderTable" Role="DomesticOrderTable" Multiplicity="0..1" />
+        <EntityType Name="NotificationTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Subject" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsRead" Type="Boolean" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AspNetUser" Relationship="VasudaModelEnities.FK_NotificationTables_AspNetUsers" FromRole="NotificationTable" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="PaymentHistoryTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TransactionType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Purpose" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="VasudaModelEnities.FK_PaymentHistoryTables_AspNetUsers" FromRole="PaymentHistoryTable" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="PriceTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Category" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryTime" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MinKg" Type="Double" Nullable="false" />
+          <Property Name="MaxKg" Type="Double" Nullable="false" />
+          <Property Name="PricePerKg" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="ProductTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Location" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsPopular" Type="Boolean" Nullable="false" />
+          <Property Name="Clearance" Type="Boolean" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Category" Type="Guid" Nullable="false" />
+          <Property Name="SubCategory" Type="Guid" />
+          <NavigationProperty Name="ImageTables" Relationship="VasudaModelEnities.FK_ImageTables_ProductTables" FromRole="ProductTable" ToRole="ImageTable" />
+        </EntityType>
+        <EntityType Name="SettingTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="paystackSecretKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="paystackPublicKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SmSUsername" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ServiceCharge" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="ShippingChargeTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="MinQuantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="MaxQuantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="OriginCountry" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DestinationCountry" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShippingItemTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ReceiverName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiverNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiverAddress" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Weight" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Quantity" Type="Int64" Nullable="false" />
+          <Property Name="SenderName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SenderAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SenderPhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ItemsTable" Relationship="VasudaModelEnities.FK_ShippingOrderTable_OrderTables" FromRole="ShippingItemTable" ToRole="ItemsTable" />
+        </EntityType>
+        <EntityType Name="SubCategoryTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="CategoryId" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CategoryTable" Relationship="VasudaModelEnities.FK_SubCategoryTables_CategoryTables" FromRole="SubCategoryTable" ToRole="CategoryTable" />
+        </EntityType>
+        <EntityType Name="SupportTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Subject" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SentBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsRead" Type="Boolean" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AspNetUser" Relationship="VasudaModelEnities.FK_SupportTables_AspNetUsers" FromRole="SupportTable" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="SystemAccountTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="BankName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AccountNumber" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AccountName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="FundingRequestTables" Relationship="VasudaModelEnities.FK_FundingRequestTable_SystemAccountTable" FromRole="SystemAccountTable" ToRole="FundingRequestTable" />
+        </EntityType>
+        <EntityType Name="VendorTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Link" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ItemsTables" Relationship="VasudaModelEnities.FK_OrderTables_VendorTables" FromRole="VendorTable" ToRole="ItemsTable" />
+        </EntityType>
+        <EntityType Name="WithdrawalDetailsTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="AccountName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AccountNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="BankName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="VasudaModelEnities.FK_WithdrawalDetailsTable_AspNetUsers" FromRole="WithdrawalDetailsTable" ToRole="AspNetUser" />
+          <NavigationProperty Name="WithdrawalRequestTables" Relationship="VasudaModelEnities.FK_WithdrawalRequestTable_WithdrawalDetailsTable" FromRole="WithdrawalDetailsTable" ToRole="WithdrawalRequestTable" />
+        </EntityType>
+        <EntityType Name="WithdrawalRequestTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="WithdrawalAccount" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Rate" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IsApproved" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="VasudaModelEnities.FK_WithdrawalRequestTable_AspNetUsers" FromRole="WithdrawalRequestTable" ToRole="AspNetUser" />
+          <NavigationProperty Name="WithdrawalDetailsTable" Relationship="VasudaModelEnities.FK_WithdrawalRequestTable_WithdrawalDetailsTable" FromRole="WithdrawalRequestTable" ToRole="WithdrawalDetailsTable" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Type="VasudaModelEnities.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="VasudaModelEnities.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="OrderTable">
+            <Principal Role="AspNetUser">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="DomesticOrderTable">
+            <Dependent Role="AspNetUserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Type="VasudaModelEnities.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="VasudaModelEnities.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogin">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChatTable_AspNetUsers">
+          <End Type="VasudaModelEnities.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="VasudaModelEnities.ChatTable" Role="ChatTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ChatTable">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FundingRequestTable_AspNetUsers">
+          <End Type="VasudaModelEnities.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="VasudaModelEnities.FundingRequestTable" Role="FundingRequestTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FundingRequestTable">
+              <PropertyRef Name="Userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotificationTables_AspNetUsers">
+          <End Type="VasudaModelEnities.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="VasudaModelEnities.NotificationTable" Role="NotificationTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NotificationTable">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaymentHistoryTables_AspNetUsers">
+          <End Type="VasudaModelEnities.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="VasudaModelEnities.PaymentHistoryTable" Role="PaymentHistoryTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaymentHistoryTable">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupportTables_AspNetUsers">
+          <End Type="VasudaModelEnities.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="VasudaModelEnities.SupportTable" Role="SupportTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupportTable">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WithdrawalDetailsTable_AspNetUsers">
+          <End Type="VasudaModelEnities.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="VasudaModelEnities.WithdrawalDetailsTable" Role="WithdrawalDetailsTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WithdrawalDetailsTable">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WithdrawalRequestTable_AspNetUsers">
+          <End Type="VasudaModelEnities.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="VasudaModelEnities.WithdrawalRequestTable" Role="WithdrawalRequestTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WithdrawalRequestTable">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubCategoryTables_CategoryTables">
+          <End Type="VasudaModelEnities.CategoryTable" Role="CategoryTable" Multiplicity="1" />
+          <End Type="VasudaModelEnities.SubCategoryTable" Role="SubCategoryTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoryTable">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubCategoryTable">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DomesticOrderTable_OrderTables">
+          <End Type="VasudaModelEnities.ItemsTable" Role="ItemsTable" Multiplicity="1" />
+          <End Type="VasudaModelEnities.DomesticItemTable" Role="DomesticItemTable" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ItemsTable">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DomesticItemTable">
               <PropertyRef Name="Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FundingRequestTable_SystemAccountTable">
+          <End Type="VasudaModelEnities.SystemAccountTable" Role="SystemAccountTable" Multiplicity="0..1" />
+          <End Type="VasudaModelEnities.FundingRequestTable" Role="FundingRequestTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemAccountTable">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FundingRequestTable">
+              <PropertyRef Name="SystemAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ImageTables_OrderTables">
-          <End Type="VasudaModelEnities.OrderTable" Role="OrderTable" Multiplicity="0..1" />
+          <End Type="VasudaModelEnities.ItemsTable" Role="ItemsTable" Multiplicity="0..1" />
           <End Type="VasudaModelEnities.ImageTable" Role="ImageTable" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="OrderTable">
+            <Principal Role="ItemsTable">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="ImageTable">
@@ -1346,400 +1451,296 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ImageTables_ProductTables">
+          <End Type="VasudaModelEnities.ProductTable" Role="ProductTable" Multiplicity="0..1" />
+          <End Type="VasudaModelEnities.ImageTable" Role="ImageTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductTable">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ImageTable">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OrderTables_VendorTables">
           <End Type="VasudaModelEnities.VendorTable" Role="VendorTable" Multiplicity="0..1" />
-          <End Type="VasudaModelEnities.OrderTable" Role="OrderTable" Multiplicity="*" />
+          <End Type="VasudaModelEnities.ItemsTable" Role="ItemsTable" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="VendorTable">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="OrderTable">
+            <Dependent Role="ItemsTable">
               <PropertyRef Name="VendorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ShippingOrderTable_OrderTables">
-          <End Type="VasudaModelEnities.OrderTable" Role="OrderTable" Multiplicity="1" />
-          <End Type="VasudaModelEnities.ShippingOrderTable" Role="ShippingOrderTable" Multiplicity="0..1" />
+          <End Type="VasudaModelEnities.ItemsTable" Role="ItemsTable" Multiplicity="1" />
+          <End Type="VasudaModelEnities.ShippingItemTable" Role="ShippingItemTable" Multiplicity="0..1" />
           <ReferentialConstraint>
-            <Principal Role="OrderTable">
+            <Principal Role="ItemsTable">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ShippingOrderTable">
+            <Dependent Role="ShippingItemTable">
               <PropertyRef Name="Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="FK_WithdrawalRequestTable_WithdrawalDetailsTable">
+          <End Type="VasudaModelEnities.WithdrawalDetailsTable" Role="WithdrawalDetailsTable" Multiplicity="1" />
+          <End Type="VasudaModelEnities.WithdrawalRequestTable" Role="WithdrawalRequestTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WithdrawalDetailsTable">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WithdrawalRequestTable">
+              <PropertyRef Name="WithdrawalAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="VasudaModelEnities.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+          <End Type="VasudaModelEnities.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_ItemsTables_AspNetUsers">
+          <End Type="VasudaModelEnities.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="VasudaModelEnities.ItemsTable" Role="ItemsTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemsTable">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OrderTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OrderType" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TotalServiceCharge" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ShippingFee" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IsCompleted" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AspNetUser" Relationship="VasudaModelEnities.FK_OrderTable_AspNetUsers" FromRole="OrderTable" ToRole="AspNetUser" />
+          <NavigationProperty Name="ItemsTables" Relationship="VasudaModelEnities.FK_ItemsTables_OrderTable" FromRole="OrderTable" ToRole="ItemsTable" />
+        </EntityType>
+        <Association Name="FK_OrderTable_AspNetUsers">
+          <End Type="VasudaModelEnities.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="VasudaModelEnities.OrderTable" Role="OrderTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderTable">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemsTables_OrderTable">
+          <End Type="VasudaModelEnities.OrderTable" Role="OrderTable" Multiplicity="0..1" />
+          <End Type="VasudaModelEnities.ItemsTable" Role="ItemsTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderTable">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemsTable">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="VasudaModelEnitiesStoreContainer" CdmEntityContainer="VasudaModel">
-          <EntitySetMapping Name="C__MigrationHistory">
-            <EntityTypeMapping TypeName="VasudaModelEnities.C__MigrationHistory">
-              <MappingFragment StoreEntitySet="__MigrationHistory">
-                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
-                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="AspNetRoles">
             <EntityTypeMapping TypeName="VasudaModelEnities.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
             <EntityTypeMapping TypeName="VasudaModelEnities.AspNetUserClaim">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
                 <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
             <EntityTypeMapping TypeName="VasudaModelEnities.AspNetUserLogin">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
-                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
-                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="VasudaModelEnities.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Balance" ColumnName="Balance" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="IsBanned" ColumnName="IsBanned" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AuditTrialTables">
             <EntityTypeMapping TypeName="VasudaModelEnities.AuditTrialTable">
               <MappingFragment StoreEntitySet="AuditTrialTables">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Action" ColumnName="Action" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ModifiedData" ColumnName="ModifiedData" />
-                <ScalarProperty Name="OriginalData" ColumnName="OriginalData" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="OriginalData" ColumnName="OriginalData" />
+                <ScalarProperty Name="ModifiedData" ColumnName="ModifiedData" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="BankTables">
             <EntityTypeMapping TypeName="VasudaModelEnities.BankTable">
               <MappingFragment StoreEntitySet="BankTable">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="BankCode" ColumnName="BankCode" />
-                <ScalarProperty Name="BankName" ColumnName="BankName" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="BankCode" ColumnName="BankCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CategoryTables">
             <EntityTypeMapping TypeName="VasudaModelEnities.CategoryTable">
               <MappingFragment StoreEntitySet="CategoryTables">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChatTables">
             <EntityTypeMapping TypeName="VasudaModelEnities.ChatTable">
               <MappingFragment StoreEntitySet="ChatTable">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
-                <ScalarProperty Name="SentBy" ColumnName="SentBy" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="SentBy" ColumnName="SentBy" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ContactTables">
             <EntityTypeMapping TypeName="VasudaModelEnities.ContactTable">
               <MappingFragment StoreEntitySet="ContactTable">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
                 <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DomesticItemTables">
+            <EntityTypeMapping TypeName="VasudaModelEnities.DomesticItemTable">
+              <MappingFragment StoreEntitySet="DomesticItemTable">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="SenderPhoneNumber" ColumnName="SenderPhoneNumber" />
+                <ScalarProperty Name="SenderAddress" ColumnName="SenderAddress" />
+                <ScalarProperty Name="SenderName" ColumnName="SenderName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="ReceiverAddress" ColumnName="ReceiverAddress" />
+                <ScalarProperty Name="ReceiverNumber" ColumnName="ReceiverNumber" />
+                <ScalarProperty Name="ReceiverName" ColumnName="ReceiverName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ExchangeRateTables">
             <EntityTypeMapping TypeName="VasudaModelEnities.ExchangeRateTable">
               <MappingFragment StoreEntitySet="ExchangeRateTables">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="BaseCurrency" ColumnName="BaseCurrency" />
-                <ScalarProperty Name="Rate" ColumnName="Rate" />
-                <ScalarProperty Name="ConvertedCurrency" ColumnName="ConvertedCurrency" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ConvertedCurrency" ColumnName="ConvertedCurrency" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="BaseCurrency" ColumnName="BaseCurrency" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="FundingRequestTables">
             <EntityTypeMapping TypeName="VasudaModelEnities.FundingRequestTable">
               <MappingFragment StoreEntitySet="FundingRequestTable">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Userid" ColumnName="Userid" />
-                <ScalarProperty Name="SystemAccount" ColumnName="SystemAccount" />
-                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
-                <ScalarProperty Name="Reason" ColumnName="Reason" />
-                <ScalarProperty Name="TransactionNarration" ColumnName="TransactionNarration" />
-                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
-                <ScalarProperty Name="Rate" ColumnName="Rate" />
-                <ScalarProperty Name="NairaAmount" ColumnName="NairaAmount" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="TransId" ColumnName="TransId" />
-                <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
                 <ScalarProperty Name="IsCredited" ColumnName="IsCredited" />
+                <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+                <ScalarProperty Name="TransId" ColumnName="TransId" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="NairaAmount" ColumnName="NairaAmount" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
+                <ScalarProperty Name="TransactionNarration" ColumnName="TransactionNarration" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+                <ScalarProperty Name="SystemAccount" ColumnName="SystemAccount" />
+                <ScalarProperty Name="Userid" ColumnName="Userid" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ImageTables">
             <EntityTypeMapping TypeName="VasudaModelEnities.ImageTable">
               <MappingFragment StoreEntitySet="ImageTables">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Path" ColumnName="Path" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="NotificationTables">
-            <EntityTypeMapping TypeName="VasudaModelEnities.NotificationTable">
-              <MappingFragment StoreEntitySet="NotificationTables">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Subject" ColumnName="Subject" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
-                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PaymentHistoryTables">
-            <EntityTypeMapping TypeName="VasudaModelEnities.PaymentHistoryTable">
-              <MappingFragment StoreEntitySet="PaymentHistoryTables">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
-                <ScalarProperty Name="Purpose" ColumnName="Purpose" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PriceTables">
-            <EntityTypeMapping TypeName="VasudaModelEnities.PriceTable">
-              <MappingFragment StoreEntitySet="PriceTables">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Category" ColumnName="Category" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="DeliveryTime" ColumnName="DeliveryTime" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="MinKg" ColumnName="MinKg" />
-                <ScalarProperty Name="MaxKg" ColumnName="MaxKg" />
-                <ScalarProperty Name="PricePerKg" ColumnName="PricePerKg" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProductTables">
-            <EntityTypeMapping TypeName="VasudaModelEnities.ProductTable">
-              <MappingFragment StoreEntitySet="ProductTables">
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="IsPopular" ColumnName="IsPopular" />
-                <ScalarProperty Name="Clearance" ColumnName="Clearance" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SettingTables">
-            <EntityTypeMapping TypeName="VasudaModelEnities.SettingTable">
-              <MappingFragment StoreEntitySet="SettingTables">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="paystackSecretKey" ColumnName="paystackSecretKey" />
-                <ScalarProperty Name="paystackPublicKey" ColumnName="paystackPublicKey" />
-                <ScalarProperty Name="SmSUsername" ColumnName="SmSUsername" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SubCategoryTables">
-            <EntityTypeMapping TypeName="VasudaModelEnities.SubCategoryTable">
-              <MappingFragment StoreEntitySet="SubCategoryTables">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SupportTables">
-            <EntityTypeMapping TypeName="VasudaModelEnities.SupportTable">
-              <MappingFragment StoreEntitySet="SupportTables">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Subject" ColumnName="Subject" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
-                <ScalarProperty Name="SentBy" ColumnName="SentBy" />
-                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="VasudaModelEnities.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SystemAccountTables">
-            <EntityTypeMapping TypeName="VasudaModelEnities.SystemAccountTable">
-              <MappingFragment StoreEntitySet="SystemAccountTable">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="BankName" ColumnName="BankName" />
-                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
-                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="WithdrawalDetailsTables">
-            <EntityTypeMapping TypeName="VasudaModelEnities.WithdrawalDetailsTable">
-              <MappingFragment StoreEntitySet="WithdrawalDetailsTable">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
-                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
-                <ScalarProperty Name="BankName" ColumnName="BankName" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="WithdrawalRequestTables">
-            <EntityTypeMapping TypeName="VasudaModelEnities.WithdrawalRequestTable">
-              <MappingFragment StoreEntitySet="WithdrawalRequestTable">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="WithdrawalAccount" ColumnName="WithdrawalAccount" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="Rate" ColumnName="Rate" />
-                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="VasudaModelEnities.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetRoles">
-              <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
-            <EndProperty Name="AspNetUsers">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <EntitySetMapping Name="DomesticOrderTables">
-            <EntityTypeMapping TypeName="VasudaModelEnities.DomesticOrderTable">
-              <MappingFragment StoreEntitySet="DomesticOrderTable">
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="SenderPhoneNumber" ColumnName="SenderPhoneNumber" />
-                <ScalarProperty Name="SenderAddress" ColumnName="SenderAddress" />
-                <ScalarProperty Name="SenderName" ColumnName="SenderName" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Weight" ColumnName="Weight" />
-                <ScalarProperty Name="ReceiverAddress" ColumnName="ReceiverAddress" />
-                <ScalarProperty Name="ReceiverNumber" ColumnName="ReceiverNumber" />
-                <ScalarProperty Name="ReceiverName" ColumnName="ReceiverName" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ShippingOrderTables">
-            <EntityTypeMapping TypeName="VasudaModelEnities.ShippingOrderTable">
-              <MappingFragment StoreEntitySet="ShippingOrderTable">
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="SenderPhoneNumber" ColumnName="SenderPhoneNumber" />
-                <ScalarProperty Name="SenderAddress" ColumnName="SenderAddress" />
-                <ScalarProperty Name="SenderName" ColumnName="SenderName" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Weight" ColumnName="Weight" />
-                <ScalarProperty Name="ReceiverAddress" ColumnName="ReceiverAddress" />
-                <ScalarProperty Name="ReceiverNumber" ColumnName="ReceiverNumber" />
-                <ScalarProperty Name="ReceiverName" ColumnName="ReceiverName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="VendorTables">
-            <EntityTypeMapping TypeName="VasudaModelEnities.VendorTable">
-              <MappingFragment StoreEntitySet="VendorTables">
+          <EntitySetMapping Name="ItemsTables">
+            <EntityTypeMapping TypeName="VasudaModelEnities.ItemsTable">
+              <MappingFragment StoreEntitySet="ItemsTables">
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OrderTables">
-            <EntityTypeMapping TypeName="VasudaModelEnities.OrderTable">
-              <MappingFragment StoreEntitySet="OrderTables">
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ServicePrice" ColumnName="ServicePrice" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -1752,6 +1753,217 @@
                 <ScalarProperty Name="VendorId" ColumnName="VendorId" />
                 <ScalarProperty Name="ProductLink" ColumnName="ProductLink" />
                 <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NotificationTables">
+            <EntityTypeMapping TypeName="VasudaModelEnities.NotificationTable">
+              <MappingFragment StoreEntitySet="NotificationTables">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentHistoryTables">
+            <EntityTypeMapping TypeName="VasudaModelEnities.PaymentHistoryTable">
+              <MappingFragment StoreEntitySet="PaymentHistoryTables">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Purpose" ColumnName="Purpose" />
+                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PriceTables">
+            <EntityTypeMapping TypeName="VasudaModelEnities.PriceTable">
+              <MappingFragment StoreEntitySet="PriceTables">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="PricePerKg" ColumnName="PricePerKg" />
+                <ScalarProperty Name="MaxKg" ColumnName="MaxKg" />
+                <ScalarProperty Name="MinKg" ColumnName="MinKg" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="DeliveryTime" ColumnName="DeliveryTime" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductTables">
+            <EntityTypeMapping TypeName="VasudaModelEnities.ProductTable">
+              <MappingFragment StoreEntitySet="ProductTables">
+                <ScalarProperty Name="SubCategory" ColumnName="SubCategory" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Clearance" ColumnName="Clearance" />
+                <ScalarProperty Name="IsPopular" ColumnName="IsPopular" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SettingTables">
+            <EntityTypeMapping TypeName="VasudaModelEnities.SettingTable">
+              <MappingFragment StoreEntitySet="SettingTables">
+                <ScalarProperty Name="ServiceCharge" ColumnName="ServiceCharge" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="SmSUsername" ColumnName="SmSUsername" />
+                <ScalarProperty Name="paystackPublicKey" ColumnName="paystackPublicKey" />
+                <ScalarProperty Name="paystackSecretKey" ColumnName="paystackSecretKey" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShippingChargeTables">
+            <EntityTypeMapping TypeName="VasudaModelEnities.ShippingChargeTable">
+              <MappingFragment StoreEntitySet="ShippingChargeTable">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DestinationCountry" ColumnName="DestinationCountry" />
+                <ScalarProperty Name="OriginCountry" ColumnName="OriginCountry" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="MaxQuantity" ColumnName="MaxQuantity" />
+                <ScalarProperty Name="MinQuantity" ColumnName="MinQuantity" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShippingItemTables">
+            <EntityTypeMapping TypeName="VasudaModelEnities.ShippingItemTable">
+              <MappingFragment StoreEntitySet="ShippingItemTable">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="SenderPhoneNumber" ColumnName="SenderPhoneNumber" />
+                <ScalarProperty Name="SenderAddress" ColumnName="SenderAddress" />
+                <ScalarProperty Name="SenderName" ColumnName="SenderName" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="ReceiverAddress" ColumnName="ReceiverAddress" />
+                <ScalarProperty Name="ReceiverNumber" ColumnName="ReceiverNumber" />
+                <ScalarProperty Name="ReceiverName" ColumnName="ReceiverName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubCategoryTables">
+            <EntityTypeMapping TypeName="VasudaModelEnities.SubCategoryTable">
+              <MappingFragment StoreEntitySet="SubCategoryTables">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupportTables">
+            <EntityTypeMapping TypeName="VasudaModelEnities.SupportTable">
+              <MappingFragment StoreEntitySet="SupportTables">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+                <ScalarProperty Name="SentBy" ColumnName="SentBy" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="VasudaModelEnities.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SystemAccountTables">
+            <EntityTypeMapping TypeName="VasudaModelEnities.SystemAccountTable">
+              <MappingFragment StoreEntitySet="SystemAccountTable">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VendorTables">
+            <EntityTypeMapping TypeName="VasudaModelEnities.VendorTable">
+              <MappingFragment StoreEntitySet="VendorTables">
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WithdrawalDetailsTables">
+            <EntityTypeMapping TypeName="VasudaModelEnities.WithdrawalDetailsTable">
+              <MappingFragment StoreEntitySet="WithdrawalDetailsTable">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WithdrawalRequestTables">
+            <EntityTypeMapping TypeName="VasudaModelEnities.WithdrawalRequestTable">
+              <MappingFragment StoreEntitySet="WithdrawalRequestTable">
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="WithdrawalAccount" ColumnName="WithdrawalAccount" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="VasudaModelEnities.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUser">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRole">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="OrderTables">
+            <EntityTypeMapping TypeName="VasudaModelEnities.OrderTable">
+              <MappingFragment StoreEntitySet="OrderTable">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+                <ScalarProperty Name="ShippingFee" ColumnName="ShippingFee" />
+                <ScalarProperty Name="TotalServiceCharge" ColumnName="TotalServiceCharge" />
+                <ScalarProperty Name="OrderType" ColumnName="OrderType" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

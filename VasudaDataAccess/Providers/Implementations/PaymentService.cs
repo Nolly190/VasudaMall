@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Net;
 using Newtonsoft.Json;
 using NLog;
@@ -112,7 +114,7 @@ namespace VasudaDataAccess.Providers.Implementations
                         getUserDetails.Balance = getUserDetails.Balance + amount;
                         getPaymentInfo.IsCredited = true;
                         getPaymentInfo.IsApproved = true;
-                        AddPaymentHistory("Credit", amount, getUserDetails.Id, "Wallet funding", true);
+                        AddPaymentHistory("Credit", amount, getUserDetails.Id, "Wallet funding", "Payment Completed");
                         var mailModel = new Notification();
                         var model = new MailDTO()
                         {
@@ -134,7 +136,7 @@ namespace VasudaDataAccess.Providers.Implementations
             return response;
         }
 
-        public Response<string> AddPaymentHistory(string transType, decimal amount, string userId, string purpose, bool status)
+        public Response<string> AddPaymentHistory(string transType, decimal amount, string userId, string purpose, string status)
         {
             var response = new Response<string>();
             response.Status = false;
@@ -147,7 +149,7 @@ namespace VasudaDataAccess.Providers.Implementations
                     DateCreated = DateTime.UtcNow.AddHours(1),
                     TransactionType = transType,
                     Amount = amount,
-                    UserId = new Guid(userId),
+                    UserId = userId,
                     Purpose = purpose,
                     Status = status
                 };
@@ -230,12 +232,12 @@ namespace VasudaDataAccess.Providers.Implementations
             {
                 var newModel = JsonConvert.SerializeObject(new
                 {
-                    account_bank =model.BankCode,
+                    account_bank = model.BankCode,
                     account_number = model.AccountNumber,
                     amount = model.Amount,
                     beneficiary_name = model.AccountName,
-                    currency ="NGN",
-                    narration =model.Narration
+                    currency = "NGN",
+                    narration = model.Narration
                 });
                 var setting = Encryption.Decrypt(_unitOfWork.SettingTable.GetSystemSetting().paystackSecretKey);
                 var Url = $"https://api.flutterwave.com/";
@@ -255,6 +257,23 @@ namespace VasudaDataAccess.Providers.Implementations
             {
                 logger.Error(ex.ToString());
                 response.Message = "Could not verify transaction";
+            }
+            return response;
+        }
+
+        public Response<List<PaymentHistoryTable>> GetPaymentHistory()
+        {
+            var response = new Response<List<PaymentHistoryTable>>();
+            response.Status = false;
+            try
+            {
+                var getPaymentInfo = _unitOfWork.PaymentHistoryTable.GetAll().ToList();
+                response.SetResult(getPaymentInfo);
+                response.Status = true;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
             }
             return response;
         }

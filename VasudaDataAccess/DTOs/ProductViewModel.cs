@@ -12,5 +12,6 @@ namespace VasudaDataAccess.DTOs
         public List<ProductTable> Product { get; set; }
         public List<SubCategoryTable> SubCategory { get; set; }
         public List<CategoryTable> Category { get; set; }
+        public List<VendorTable> Vendors { get; set; }
     }
 }
