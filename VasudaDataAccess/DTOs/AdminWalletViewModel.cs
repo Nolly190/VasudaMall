@@ -9,7 +9,9 @@ namespace VasudaDataAccess.DTOs
 {
     public class AdminWalletViewModel
     {
-        public List<WithdrawalDetailsTable> AllWithdrawalAccounts { get; set; }
-        //public List<BankTable> AllWithdrawalAccount { get; set; }
+        public List<WithdrawalRequestTable> WithdrawalDetailsTables { get; set; }
+        public List<FundingRequestTable> FundingRequest { get; set; }
+        public List<WithdrawalRequestTable> PendingWithdrawalRequest  { get; set; }
+        public List<FundingRequestTable> PendingFundingRequest { get; set; }
     }
 }

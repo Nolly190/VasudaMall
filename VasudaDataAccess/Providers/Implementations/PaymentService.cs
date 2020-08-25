@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Net;
 using Newtonsoft.Json;
 using NLog;
@@ -112,7 +114,7 @@ namespace VasudaDataAccess.Providers.Implementations
                         getUserDetails.Balance = getUserDetails.Balance + amount;
                         getPaymentInfo.IsCredited = true;
                         getPaymentInfo.IsApproved = true;
-                        AddPaymentHistory("Credit", amount, getUserDetails.Id, "Wallet funding", true);
+                        AddPaymentHistory("Credit", amount, getUserDetails.Id, "Wallet funding", "Payment Completed");
                         var mailModel = new Notification();
                         var model = new MailDTO()
                         {
@@ -134,7 +136,7 @@ namespace VasudaDataAccess.Providers.Implementations
             return response;
         }
 
-        public Response<string> AddPaymentHistory(string transType, decimal amount, string userId, string purpose, bool status)
+        public Response<string> AddPaymentHistory(string transType, decimal amount, string userId, string purpose, string status)
         {
             var response = new Response<string>();
             response.Status = false;
@@ -218,6 +220,60 @@ namespace VasudaDataAccess.Providers.Implementations
             {
                 logger.Error(ex.ToString());
                 response.Message = "Could not verify transaction";
+            }
+            return response;
+        }
+
+        public Response<FlutterwaveResponse<TransferData>> PayUser(UserPaymentDTO model)
+        {
+            var response = new Response<FlutterwaveResponse<TransferData>>();
+            response.Status = false;
+            try
+            {
+                var newModel = JsonConvert.SerializeObject(new
+                {
+                    account_bank = model.BankCode,
+                    account_number = model.AccountNumber,
+                    amount = model.Amount,
+                    beneficiary_name = model.AccountName,
+                    currency = "NGN",
+                    narration = model.Narration
+                });
+                var setting = Encryption.Decrypt(_unitOfWork.SettingTable.GetSystemSetting().paystackSecretKey);
+                var Url = $"https://api.flutterwave.com/";
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3;
+                System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+                ServicePointManager.ServerCertificateValidationCallback = (snder, cert, chain, error) => true;
+                var client = new RestClient(Url);
+                var request = new RestRequest($"v3/transfers", Method.POST);
+                request.AddHeader("authorization", "Bearer " + setting);
+                request.AddParameter("application/json; charset=utf-8", newModel, ParameterType.RequestBody);
+                var responseStr = client.Execute(request);
+                var FlutterwaveVerifyResponse = JsonConvert.DeserializeObject<FlutterwaveResponse<TransferData>>(responseStr.Content);
+                response.Status = true;
+                response.SetResult(FlutterwaveVerifyResponse);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+                response.Message = "Could not verify transaction";
+            }
+            return response;
+        }
+
+        public Response<List<PaymentHistoryTable>> GetPaymentHistory()
+        {
+            var response = new Response<List<PaymentHistoryTable>>();
+            response.Status = false;
+            try
+            {
+                var getPaymentInfo = _unitOfWork.PaymentHistoryTable.GetAll().ToList();
+                response.SetResult(getPaymentInfo);
+                response.Status = true;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
             }
             return response;
         }

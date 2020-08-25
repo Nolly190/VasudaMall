@@ -1,0 +1,522 @@
+﻿@model  VasudaDataAccess.DTOs.ProductViewModel
+@{
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    int count = 1;
+}
+
+<section class="content">
+    <div class="container-fluid">
+
+        <!--Notification drop down start-->
+        <div class="row">
+            <div class="col-12">
+                <!-- Default box -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Manage Products</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <button type="button" data-target="#AddProductModal" class="btn btn-primary" data-toggle="modal" id="AddProduct">Add Product</button>
+                        <button type="button" data-target="#AddCategoryModal" class="btn btn-primary" data-toggle="modal" id="AddCategory">Add Category</button>
+                        <button type="button" data-target="#AddSubCategoryModal" class="btn btn-primary" data-toggle="modal" id="AddSubCategory">Add SubCategory</button>
+                        <button type="button" data-target="#AddVendorModal" class="btn btn-primary" data-toggle="modal" id="AddVendor">Add Vendor</button>
+                    </div>
+                    <!-- /.card-body -->
+                    @*<div class="card-footer">
+                        Footer
+                    </div>*@
+                    <!-- /.card-footer-->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!--Notification drop down end-->
+        <!--Notification table start-->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Products</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @if (Model.Product.Count == 0)
+                        {
+                            <h3 style="text-align:center">NO PRODUCTS AVAILABLE</h3>
+                        }
+                        else
+                        {
+                            <table id="notificationTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Title</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th>Location</th>
+                                        <th>Is Popular</th>
+                                        <th>Is Clearance</th>
+                                        <th>Status</th>
+                                        <th>Date Created</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Product)
+                                    {
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@item.Title</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@item.Price</td>
+                                            <td>@item.Location</td>
+                                            <td>@item.IsPopular</td>
+                                            <td>@item.Clearance</td>
+                                            <td>@item.IsActive</td>
+                                            <td>@item.DateCreated.ToString("f")</td>
+                                            <td>
+                                                <a class="btn btn-outline-success btn-sm" href="@Url.Action("EditProduct","Admin", new{id= item.Id})">Edit</a> 
+                                                <button type="button" id="deleteNotificationBtn" data-id="@item.Id" class="btn btn-outline-danger btn-sm DeleteProduct">Delete</button>
+                                            </td>
+                                        </tr>
+                                        count++;
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>vi
+        <!--Notification table end-->
+        <!--Notification table start-->
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Category</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @if (Model.Category.Count == 0)
+                        {
+                            <h3 style="text-align:center">NO CATEGORY AVAILABLE</h3>
+                        }
+                        else
+                        {
+                            count = 1;
+                            <table id="notificationTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Name</th>
+                                        <th>Date Created</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Category)
+                                    {
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@item.CategoryName</td>
+                                            <td>@item.DateCreated.ToString("f")</td>
+                                            <td>
+                                                <button type="button" id="editNotificationBtn" data-id="@item.Id" class="btn btn-outline-success btn-sm EditCategory" data-type="Category" >Edit Category</button>
+                                                <button type="button" id="deleteNotificationBtn" data-id="@item.Id" class="btn btn-outline-danger btn-sm DeleteCategory">Delete</button>
+                                            </td>
+                                        </tr>
+                                        count++;
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Sub Category</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @if (Model.SubCategory.Count == 0)
+                        {
+                            <h3 style="text-align:center">NO SUB CATEGORY AVAILABLE</h3>
+                        }
+                        else
+                        {
+                            count = 1;
+
+                            <table id="notificationTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Sub Name</th>
+                                        <th>Category Name</th>
+                                        <th>Date Created</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.SubCategory)
+                                    {
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@item.Name</td>
+                                            <td>@item.CategoryTable.CategoryName</td>
+                                            <td>@item.DateCreated.ToString("f")</td>
+                                            <td>
+                                                <button type="button" id="editNotificationBtn" data-id="@item.Id" data-type="SubCate"  class="btn btn-outline-success btn-sm EditSubCategory">Edit Sub Category</button>
+                                                <button type="button" id="deleteNotificationBtn" data-id="@item.Id" class="btn btn-outline-danger btn-sm DeleteSubCate">Delete</button>
+                                            </td>
+                                        </tr>
+                                        count++;
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!--Notification table end-->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Vendors</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @{ count = 1;}
+                        @if (Model.Vendors.Count == 0)
+                        {
+                            <h3 style="text-align: center">NO VENDOR AVAILABLE</h3>
+                        }
+                        else
+                        {
+                            <table id="notificationTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
+                                <thead>
+                                <tr>
+                                    <th>S/N</th>
+                                    <th>Name</th>
+                                    <th>Website</th>
+                                    <th>Date Created</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach (var item in Model.Vendors)
+                                {
+                                    <tr>
+                                        <td>@count</td>
+                                        <td>@item.Name</td>
+                                        <td>@item.Link</td>
+                                        <td>@item.DateCreated.ToString("f")</td>
+                                        <td>
+                                            <button type="button" id="EditVendorBtn"  class="btn btn-outline-success btn-sm EditVendor">Edit</button>
+                                            <button type="button" id="deleteNotificationBtn" data-id="@item.Id" class="btn btn-outline-danger btn-sm DeleteVendor">Delete</button>
+                                        </td>
+                                    </tr>
+                                    count++;
+                                }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" id="AddProductModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Product</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body">
+                        <form id="ProductForm">
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input type="text" class="form-control form-control-sm" data-formname="Title" id="title" placeholder="Product Title" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                <input type="number" class="form-control form-control-sm" data-formname="Price" id="price" placeholder="Price" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="Qty">Quantity</label>
+                                <input type="number" class="form-control form-control-sm" data-formname="Quantity" id="Qty" placeholder="Quantity" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="Qty">Category</label>
+                                <select id="ProdCate" class="form-control form-control-sm" data-formname="Category"  required>
+                                    <option value="">Select Category</option>
+                                    @foreach (var item in Model.Category)
+                                    {
+                                        <option value="@item.Id">@item.CategoryName</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group" id="subCatDropDown" style="display: none">
+                                <label for="Qty">Sub Category</label>
+                                <select id="ProdSubCate" class="form-control form-control-sm">
+                                    <option value="">Select SubCategory</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="Description">Description</label>
+                                <textarea class="form-control form-control-sm"   data-formname="Description" id="Description" placeholder="Description" required></textarea>
+                               </div>
+                            <div class="form-group">
+                                <label for="Description">Location</label>
+                                <select id="Location" class="form-control form-control-sm" data-formname="Description"  required >
+                                    <option selected value="">Select Location</option>
+                                    <option>China</option>
+                                    <option>Nigeria</option>
+                                </select>
+                               </div>
+                            <div class="form-group">
+                                <label for="Description"> Clearance Product</label>
+                                <label class="switch">
+                                    <input type="checkbox" id="Clearance">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="Description">IsPopular Product</label>
+                                <label class="switch">
+                                    <input type="checkbox" id="IsPopular">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="Images">Product Images</label>
+                                <input type="file" multiple class="form-control form-control-sm" data-formname="Image" id="Images" placeholder="Image">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="SaveProducts">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" id="AddCategoryModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Category</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body">
+                        <form id="AddCategoryForm">
+                            <div class="form-group">
+                                <label for="title">Name</label>
+                                <input type="text" class="form-control form-control-sm" data-formname="Name" id="CatName" placeholder="Category Name" required>
+                            </div>
+                      
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="SaveCategory">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" id="AddVendorModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Vendor</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body">
+                        <form id="AddVendorForm">
+                            <div class="form-group">
+                                <label for="title">Vendor Name</label>
+                                <input type="text" class="form-control form-control-sm" data-formname="Name" id="VendorName" placeholder="Vendor Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="title">Vendor Link</label>
+                                <input type="text" class="form-control form-control-sm" data-formname="Name" id="VendorLink" placeholder="Vendor Link" required>
+                            </div>
+                      
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="SaveVendor">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" id="AddSubCategoryModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Sub Category</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body">
+                        <form id="AddSubCategoryForm">
+                            <div class="form-group">
+                                <label for="title">Category Name</label>
+                                <select id="subCats" class="form-control form-control-sm" data-formname="Category" required>
+                                    <option value="">Select Category</option>
+                                    @foreach (var item in Model.Category)
+                                    {
+                                        <option value="@item.Id">@item.CategoryName</option>
+                                    }
+                                </select>
+                            </div>
+                               <div class="form-group">
+                                    <label for="title">Name</label>
+                                    <input type="text" class="form-control form-control-sm" data-formname="Subcategory Name" id="SubcategoryName" required>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="SaveSubCategory">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+<div class="modal" tabindex="-1" id="EditCategoryModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Category</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body">
+                        <form id="EditCategoryForm">
+                            <div class="form-group">
+                                <label for="title">Name</label>
+                                <input type="hidden"  id="EditCatName">
+                                <input type="text" class="form-control form-control-sm" data-formname="Name" id="NewCatName" placeholder="Category Name" required>
+                            </div>
+                      
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="EditCategory">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" id="EditVendorModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Vendor</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body">
+                        <form id="EditVendorForm">
+                            <div class="form-group">
+                                <label for="title">Vendor Name</label>
+                                <input type="hidden" id="OldVendorName" required>
+                                <input type="text" class="form-control form-control-sm" data-formname="Name" id="EditedVendorName" placeholder="Vendor Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="title">Vendor Link</label>
+                                <input type="text" class="form-control form-control-sm" data-formname="Name" id="EditedVendorLink" placeholder="Vendor Link" required>
+                            </div>
+                      
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="EditVendor">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" id="EditSubCategoryModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Sub Category</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body">
+                        <form id="EditSubCategoryForm">
+                       
+                               <div class="form-group">
+                                    <label for="title">Name</label>
+                                    <input type="hidden" id="SubId" >
+                                    <input type="text" class="form-control form-control-sm" data-formname="Subcategory Name" id="EditSubcategoryName" required>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="EditSubCategory">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>

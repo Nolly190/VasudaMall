@@ -25,7 +25,6 @@ namespace VasudaDataAccess.Model
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
@@ -35,6 +34,7 @@ namespace VasudaDataAccess.Model
         public virtual DbSet<CategoryTable> CategoryTables { get; set; }
         public virtual DbSet<ChatTable> ChatTables { get; set; }
         public virtual DbSet<ContactTable> ContactTables { get; set; }
+        public virtual DbSet<DomesticItemTable> DomesticItemTables { get; set; }
         public virtual DbSet<ExchangeRateTable> ExchangeRateTables { get; set; }
         public virtual DbSet<FundingRequestTable> FundingRequestTables { get; set; }
         public virtual DbSet<ImageTable> ImageTables { get; set; }
@@ -45,6 +45,7 @@ namespace VasudaDataAccess.Model
         public virtual DbSet<ProductTable> ProductTables { get; set; }
         public virtual DbSet<SettingTable> SettingTables { get; set; }
         public virtual DbSet<ShippingChargeTable> ShippingChargeTables { get; set; }
+        public virtual DbSet<ShippingItemTable> ShippingItemTables { get; set; }
         public virtual DbSet<SubCategoryTable> SubCategoryTables { get; set; }
         public virtual DbSet<SupportTable> SupportTables { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }

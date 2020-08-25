@@ -1,6 +1,5 @@
 ﻿$(document).ready(function () {
 
-   
     //$("#withdrawalAccounttr").on( 'click',"#setWithdrawalAccountButton",function () {
     $("#setWithdrawalAccountButton").click(function () {
         if (StartValidation("setWithdrawalAccountForm")) {

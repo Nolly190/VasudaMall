@@ -24,28 +24,164 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        Start creating your amazing application!
+                        <input type="button" class="btn btn-primary" id="RequestToggleBtn" value="View Fund Request" />
+                        <input type="button" class="btn btn-primary" value="View Withdrawal Request" id="WithdrawalToggleBtn" />
                     </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer">
-                        Footer
-                    </div>
-                    <!-- /.card-footer-->
                 </div>
                 <!-- /.card -->
             </div>
         </div>
         <!--Wallet drop down end-->
         <!--Wallet table start-->
-        <div class="row">
+        <div class="row" id="FundHistoryDiv" style="display:none">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Notifications</h3>
+                        <h3 class="card-title">Funding History</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        @if (Model.AllWithdrawalAccounts.Count == 0)
+                        @if (Model.FundingRequest.Count == 0)
+                        {
+                            <h3 style="text-align:center">No history </h3>
+                        }
+                        else
+                        {
+                            <table id="notificationTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Channel</th>
+                                        <th>Bank Name</th>
+                                        <th>Account Number</th>
+                                        <th>Narration</th>
+                                        <th>Amount Paid (NGN)</th>
+                                        <th>Date Created</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var fundingRequestTable in Model.FundingRequest)
+                                    {
+                                        var bankName = fundingRequestTable.PaymentType != "Online" ? fundingRequestTable.SystemAccountTable.BankName : "";
+                                        var accountNumber = fundingRequestTable.PaymentType != "Online" ? fundingRequestTable.SystemAccountTable.AccountNumber : "";
+                                        var narration = fundingRequestTable.PaymentType != "Online" ? fundingRequestTable.TransactionNarration : "";
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@fundingRequestTable.AspNetUser.FullName</td>
+                                            <td>@fundingRequestTable.AspNetUser.Email</td>
+                                            <td>@fundingRequestTable.PaymentType</td>
+
+                                            <td>@bankName</td>
+                                            <td>@accountNumber</td>
+                                            <td>@narration</td>
+
+                                            <td>@fundingRequestTable.NairaAmount</td>
+                                            <td>@fundingRequestTable.DateCreated</td>
+                                            <td>@fundingRequestTable.PaymentStatus</td>
+                                          
+                                        </tr>
+                                        count++;
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!--Wallet table end-->
+        <!--Wallet table start-->
+        @{ count = 1;}
+        <div class="row" id="FundRequestDiv">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Funding Request</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @if (Model.PendingFundingRequest.Count == 0)
+                        {
+                            <h3 style="text-align:center">No available request </h3>
+                        }
+                        else
+                        {
+                            <table id="notificationTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Channel</th>
+                                        <th>Bank Name</th>
+                                        <th>Account Number</th>
+                                        <th>Narration</th>
+                                        <th>Amount Paid(NGN)</th>
+                                        <th>Date Created</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var fundingRequestTable in Model.PendingFundingRequest)
+                                    {
+                                        var bankName = fundingRequestTable.PaymentType != "Online" ? fundingRequestTable.SystemAccountTable.BankName : "";
+                                        var accountNumber = fundingRequestTable.PaymentType != "Online" ? fundingRequestTable.SystemAccountTable.AccountNumber : "";
+                                        var narration = fundingRequestTable.PaymentType != "Online" ? fundingRequestTable.TransactionNarration : "";
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@fundingRequestTable.AspNetUser.FullName</td>
+                                            <td>@fundingRequestTable.AspNetUser.Email</td>
+                                            <td>@fundingRequestTable.PaymentType</td>
+
+                                            <td>@bankName</td>
+                                            <td>@accountNumber</td>
+                                            <td>@narration</td>
+
+                                            <td>@fundingRequestTable.NairaAmount</td>
+                                            <td>@fundingRequestTable.DateCreated</td>
+                                            @if (fundingRequestTable.PaymentType != "Online" && fundingRequestTable.IsCredited == false)
+                                            {
+                                                <td>
+                                                    <button type="button" class="btn btn-outline-success btn-sm action" data-action="approve" data-type="Fund" data-id="@fundingRequestTable.Id">Approve</button>
+                                                    <button type="button"  class="btn btn-outline-danger btn-sm action" data-action="decline" data-type="Fund" data-id="@fundingRequestTable.Id">Decline</button>
+
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                </td>
+                                            }
+                                        </tr>
+                                        count++;
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!--Wallet table end-->
+        <!--Wallet table start-->
+        @{ count = 1;}
+
+        <div class="row" id="WithdrawalHistoryDiv" style="display: none">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Withdrawal History</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @if (Model.WithdrawalDetailsTables.Count == 0)
                         {
                             <h3 style="text-align:center">NO WITHDRAWAL ACCOUNT AVAILABLE</h3>
                         }
@@ -55,35 +191,87 @@
                                 <thead>
                                     <tr>
                                         <th>S/N</th>
-                                        <th>Account Name</th>
-                                        <th>Account Number</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
                                         <th>Bank Name</th>
-                                        <th>Owner Name</th>
-                                        <th>IsActive</th>
+                                        <th>Account Number</th>
+                                        <th>Amount(USD) </th>
+                                        <th>Date Created</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var withdrawalAccount in Model.WithdrawalDetailsTables)
+                                    {
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@withdrawalAccount.AspNetUser.FullName</td>
+                                            <td>@withdrawalAccount.AspNetUser.Email</td>
+                                            <td>@withdrawalAccount.WithdrawalDetailsTable.BankName</td>
+                                            <td>@withdrawalAccount.WithdrawalDetailsTable.AccountNumber</td>
+                                            <td>@withdrawalAccount.Amount</td>
+                                            <td>@withdrawalAccount.DateCreated</td>
+                                            <td> @withdrawalAccount.Status</td>
+                                        </tr>
+                                        count++;
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!--Wallet table end-->
+        <!--Wallet table start-->
+        @{ count = 1;}
+
+        <div class="row" id="withdrawalRequestDiv">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Withdrawal Request</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @if (Model.PendingWithdrawalRequest.Count == 0)
+                        {
+                            <h3 style="text-align:center">NO WITHDRAWAL ACCOUNT AVAILABLE</h3>
+                        }
+                        else
+                        {
+                            <table id="notificationTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Bank Name</th>
+                                        <th>Account Number</th>
+                                        <th>Amount (USD)</th>
                                         <th>Date Created</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var withdrawalAccount in Model.AllWithdrawalAccounts)
+                                    @foreach (var withdrawalAccount in Model.PendingWithdrawalRequest)
                                     {
                                         <tr>
                                             <td>@count</td>
-                                            <td>@withdrawalAccount.AccountName</td>
-                                            <td>@withdrawalAccount.AccountNumber</td>
-                                            <td>@withdrawalAccount.BankName</td>
                                             <td>@withdrawalAccount.AspNetUser.FullName</td>
-                                            <td>@withdrawalAccount.IsActive</td>
+                                            <td>@withdrawalAccount.AspNetUser.Email</td>
+                                            <td>@withdrawalAccount.WithdrawalDetailsTable.BankName</td>
+                                            <td>@withdrawalAccount.WithdrawalDetailsTable.AccountNumber</td>
+                                            <td>@withdrawalAccount.Amount</td>
                                             <td>@withdrawalAccount.DateCreated</td>
                                             <td>
-                                                @if (withdrawalAccount.IsActive == true)
-                                                {
-                                                    <button type="button" class="btn btn-outline-danger btn-sm blockWIthdrawalAccountBtn">Block</button>
 
-                                                }
-                                                else
+                                                @if (!withdrawalAccount.IsApproved)
                                                 {
-                                                    <button type="button" class="btn btn-outline-success btn-sm unblockWIthdrawalAccountBtn">UnBlock</button>
+                                                    <button type="button" class="btn btn-outline-success btn-sm action" data-action="approve" data-type="withdrawal" data-id="@withdrawalAccount.Id">Approve</button>
+                                                    <button type="button" class="btn btn-outline-danger btn-sm action" data-action="decline" data-type="withdrawal" data-id="@withdrawalAccount.Id">Decline</button>
                                                 }
                                             </td>
                                         </tr>
