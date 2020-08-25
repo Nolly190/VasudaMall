@@ -1,11 +1,12 @@
 ﻿@model VasudaDataAccess.DTOs.ProfileViewModel
+@using VasudaDataAccess.Utility
 
 @{
     Layout = "~/Views/shared/_LayoutDashboard.cshtml";
     ViewBag.Title = "Profile";
     var count = 1;
     var fullName = ""; var email = ""; var phoneNumber = ""; var address = ""; var city = ""; var country = "";
-    decimal.TryParse("0", out decimal balance); 
+    decimal.TryParse("0", out decimal balance);
     DateTime? dateCreated = null; var mainDateCreated = "";
 
     if (Model.User != null)
@@ -37,11 +38,13 @@
                         <div class="card card-info card-outline">
                             <div class="card-body box-profile">
                                 <ul class="list-group list-group-unbordered mb-3">
-                                    <li class="list-group-item">
-                                        <b>Full Name</b> <a class="float-right" id="fullNameProfile">@fullName</a>
+                                    <li class="list-group-item row">
+                                        <b>Full Name</b>
+                                        <a class="float-right" id="fullNameProfile">@fullName</a>
                                     </li>
                                     <li class="list-group-item">
-                                        <b>Email</b> <a class="float-right" id="emailProfile">@email</a>
+                                        <b>Email</b>
+                                        <a class="float-right" id="emailProfile">@email</a>
                                     </li>
                                     <li class="list-group-item">
                                         <b>Phone Number</b> <a class="float-right" id="phoneNumberProfile">@phoneNumber</a>
@@ -49,8 +52,9 @@
                                     <li class="list-group-item">
                                         <b>Account Balance</b> <a class="float-right" id="balanceProfile">@balance</a>
                                     </li>
-                                    <li class="list-group-item">
-                                        <b>Address</b> <a class="float-right" id="addressProfile">@address</a>
+                                    <li class="list-group-item row">
+                                        <b class="col-12">Address</b>
+                                        <a class="float-right col-12" id="addressProfile">@address</a>
                                     </li>
                                     <li class="list-group-item">
                                         <b>City</b> <a class="float-right" id="cityProfile">@city</a>
@@ -59,7 +63,7 @@
                                         <b>Country</b> <a class="float-right" id="countryProfile">@country</a>
                                     </li>
                                     <li class="list-group-item">
-                                        <b>Registered</b> <a class="float-right" id="registeredProfile">@mainDateCreated</a>
+                                        <b>Registered</b> <a class="float-right" id="registeredProfile">@Util.FormatDate(dateCreated.Value)</a>
                                     </li>
                                 </ul>
                             </div>
@@ -123,7 +127,6 @@
                                         <!-- /.card -->
                                     </div>
                                     <!--Edit profile end-->
-
                                     <!--Change Password start-->
                                     <div class="tab-pane fade show active" id="change-password" role="tabpanel" aria-labelledby="change-password-tab">
                                         <!-- change password Form start-->
@@ -155,7 +158,7 @@
                                         <!-- /.card -->
                                     </div>
                                     <!--Change Password end-->
-                                    
+
                                 </div>
                             </div>
                         </div>

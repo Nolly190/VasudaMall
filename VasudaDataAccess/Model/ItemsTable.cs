@@ -38,12 +38,12 @@ namespace VasudaDataAccess.Model
         public bool IsActive { get; set; }
         public System.DateTime DateCreated { get; set; }
     
+        public virtual AspNetUser AspNetUser { get; set; }
         public virtual DomesticItemTable DomesticItemTable { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ImageTable> ImageTables { get; set; }
+        public virtual OrderTable OrderTable { get; set; }
         public virtual VendorTable VendorTable { get; set; }
         public virtual ShippingItemTable ShippingItemTable { get; set; }
-        public virtual AspNetUser AspNetUser { get; set; }
-        public virtual OrderTable OrderTable { get; set; }
     }
 }

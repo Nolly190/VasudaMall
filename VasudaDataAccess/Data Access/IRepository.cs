@@ -14,5 +14,6 @@ namespace VasudaDataAccess.Data_Access
         IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate);
         void Remove(TEntity model);
         void RemoveRange(IEnumerable<TEntity> model);
+        void Update(TEntity model);
     }
 }

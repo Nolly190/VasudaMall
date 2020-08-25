@@ -11,7 +11,7 @@ namespace VasudaDataAccess.Logic
     public interface IWalletService
     {
         Response<WalletViewModel> GetWalletHomePage(string userId);
-        Response<TransactionViewModel> GetAllTransactionsHomePage();
+        Response<TransactionViewModel> GetAllTransactionsHomePage(string userId);
         Response<string> WithdrawalRequest(WithdrawalRequestTable model);
         Response<FlutterPaymentDetails> FundingRequest(FundingRequestTable model);
         Response<AdminWalletViewModel> AdminGetAllWithdrawalAccounts();

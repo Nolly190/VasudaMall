@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VasudaDataAccess.Data_Access.Implentations;
+using VasudaDataAccess.Data_Access.Implementation;
 using VasudaDataAccess.DTOs;
 using VasudaDataAccess.Model;
 using VasudaDataAccess.Provider;
@@ -65,7 +65,7 @@ namespace VasudaDataAccess.Logic.Implementation
             result.SetResult(model);
             return result;
         }
-        public Response<TransactionViewModel> GetAllTransactionsHomePage()
+        public Response<TransactionViewModel> GetAllTransactionsHomePage(string userId)
         {
             var result = new Response<TransactionViewModel>
             {
@@ -77,8 +77,9 @@ namespace VasudaDataAccess.Logic.Implementation
             model.AllTransactions = new List<PaymentHistoryTable>();
             try
             {
-                model.AllTransactions = _unitOfWork.PaymentHistoryTable.GetAll().ToList();
+                model.AllTransactions = _unitOfWork.PaymentHistoryTable.GetAll(x => x.UserId.ToString() == userId).ToList();
                 result.Status = true;
+                result.Message = "Successfully retrieved all transactions";
             }
             catch (Exception ex)
             {
@@ -107,7 +108,7 @@ namespace VasudaDataAccess.Logic.Implementation
 
                 if (getBalance.Balance < model.Amount)
                 {
-                    response.Message = "Amount is more than your balance";
+                    response.Message = "Insufficient balance to complete this request";
                     return response;
                 }
 

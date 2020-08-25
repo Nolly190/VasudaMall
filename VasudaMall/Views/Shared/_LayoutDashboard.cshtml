@@ -87,25 +87,50 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
+
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-shopping-cart"></i>
                                 <p>
-                                    Orders
+                                    Add Order Items
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="@Url.Action("Index","Order")" class="nav-link">
+                                    <a href="@Url.Action("Domestic","Item")" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Order Placement</p>
+                                        <p>Domestic</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href=@Url.Action("Orderhistory", "Dashboard") class="nav-link">
+                                    <a href="@Url.Action("General","Item")" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>General</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-shopping-cart"></i>
+                                <p>
+                                    Manage Orders
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Checkout","Order")" class="nav-link">
+                                        <i class="fas fa-shopping-cart"></i>
+                                        <p>Checkout</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href=@Url.Action("History", "Order") class="nav-link">
                                         <i class="far fa-cart-plus nav-icon"></i>
-                                        <p>Order History</p>
+                                        <p>History</p>
                                     </a>
                                 </li>
                             </ul>
@@ -113,7 +138,7 @@
 
                         <li class="nav-item">
                             <a href=@Url.Action("Wallet", "Dashboard") class="nav-link">
-                                <i class="nav-icon far fa-image"></i>
+                                <i class="nav-icon fa fa-credit-card"></i>
                                 <p>
                                     Wallet
                                 </p>
@@ -208,6 +233,7 @@
         </footer>
     </div>
     <!-- ./wrapper -->
+    @*Loader wrapper start*@
     <div class="Main-loader">
         <div class="spin-loader">
             <div class="loadingio-spinner-spinner-hl80v3974ce">
@@ -217,6 +243,312 @@
             </div>
         </div>
     </div>
+    @*Loader wrapper end*@
+
+    @*Purchase Item modal start*@
+
+    <div class="modal fade" id="general-purchase-item-info" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Purchase Item Details</h4>
+                    <button type="button" class="btn btn-outline-success btn-sm" data-dismiss="modal" aria-label="Close">
+                        Close
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-sm">
+                        <tbody>
+                            <tr>
+                                <td><strong>Description</strong></td>
+                                <td><p class="text-muted" id="pItemDescription"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>UnitPrice</strong></td>
+                                <td><p class="text-muted" id="pItemUnitPrice"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Quantity</strong></td>
+                                <td><p class="text-muted" id="pItemQuantity"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Service Charge</strong></td>
+                                <td><p class="text-muted" id="pItemServicePrice"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Total Price</strong></td>
+                                <td><p class="text-muted" id="pItemTotalPrice"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>ProductLink</strong></td>
+                                <td><p class="text-muted" id="pItemProductLink"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Vendor Name</strong></td>
+                                <td><p class="text-muted" id="pItemVendor"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Status</strong></td>
+                                <td><p class="text-muted" id="pItemStatus"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Date Created</strong></td>
+                                <td><p class="text-muted" id="pItemDateCreated"></p></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-outline-success btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    @*Purchase Item modal end*@
+
+    @*Shipping Item modal start*@
+
+    <div class="modal fade" id="general-shipping-item-info" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Shipping Item Details</h4>
+                    <button type="button" class="btn btn-outline-success btn-sm" data-dismiss="modal" aria-label="Close">
+                        Close
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-sm">
+                        <tbody>
+                            <tr>
+                                <td><strong>Sender Name</strong></td>
+                                <td><p class="text-muted" id="sItemSenderName"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sender PhoneNumber</strong></td>
+                                <td><p class="text-muted" id="sItemSenderPhoneNumber"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sender Address</strong></td>
+                                <td><p class="text-muted" id="sItemSenderAddress"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Description</strong></td>
+                                <td><p class="text-muted" id="sItemDescription"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Quantity</strong></td>
+                                <td><p class="text-muted" id="sItemQuantity"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Weight</strong></td>
+                                <td><p class="text-muted" id="sItemWeight"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Service Charge</strong></td>
+                                <td><p class="text-muted" id="sItemServicePrice"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Total Price</strong></td>
+                                <td><p class="text-muted" id="sItemTotalPrice"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Status</strong></td>
+                                <td><p class="text-muted" id="sItemStatus"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Receiver Name</strong></td>
+                                <td><p class="text-muted" id="sItemReceiverName"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Receiver PhoneNumber</strong></td>
+                                <td><p class="text-muted" id="sItemReceiverNumber"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Receiver Address</strong></td>
+                                <td><p class="text-muted" id="sItemReceiverAddress"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Date Created</strong></td>
+                                <td><p class="text-muted" id="sItemDateCreated"></p></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-outline-success btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    @*Shipping Item modal end*@
+
+
+    @*Purchase and Shipping Item modal start*@
+
+    <div class="modal fade" id="general-purchase-shipping-item-info" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Purchase and Shipping Item Details</h4>
+                    <button type="button" class="btn btn-outline-success btn-sm" data-dismiss="modal" aria-label="Close">
+                        Close
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-sm">
+                        <tbody>
+                            <tr>
+                                <td><strong>Description</strong></td>
+                                <td><p class="text-muted" id="psItemDescription"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>UnitPrice</strong></td>
+                                <td><p class="text-muted" id="psItemUnitPrice"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Quantity</strong></td>
+                                <td><p class="text-muted" id="psItemQuantity"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Service Charge</strong></td>
+                                <td><p class="text-muted" id="psItemServicePrice"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Total Price</strong></td>
+                                <td><p class="text-muted" id="psItemTotalPrice"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>ProductLink</strong></td>
+                                <td><p class="text-muted" id="psItemProductLink"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Vendor Name</strong></td>
+                                <td><p class="text-muted" id="psItemVendor"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Status</strong></td>
+                                <td><p class="text-muted" id="psItemStatus"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Receiver Name</strong></td>
+                                <td><p class="text-muted" id="psItemReceiverName"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Receiver PhoneNumber</strong></td>
+                                <td><p class="text-muted" id="psItemReceiverNumber"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Receiver Address</strong></td>
+                                <td><p class="text-muted" id="psItemReceiverAddress"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Date Created</strong></td>
+                                <td><p class="text-muted" id="psItemDateCreated"></p></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-outline-success btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    @*Purchase and Shipping Item modal end*@
+
+    @*Domestic Item modal start*@
+
+    <div class="modal fade" id="domestic-item-info" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Domestic Item Details</h4>
+                    <button type="button" class="btn btn-outline-success btn-sm" data-dismiss="modal" aria-label="Close">
+                        Close
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-sm">
+                        <tbody>
+                            <tr>
+                                <td><strong>Sender Name</strong></td>
+                                <td><p class="text-muted" id="dItemSenderName"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sender PhoneNumber</strong></td>
+                                <td><p class="text-muted" id="dItemSenderPhoneNumber"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sender Address</strong></td>
+                                <td><p class="text-muted" id="dItemSenderAddress"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Description</strong></td>
+                                <td><p class="text-muted" id="dItemDescription"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Quantity</strong></td>
+                                <td><p class="text-muted" id="dItemQuantity"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Weight</strong></td>
+                                <td><p class="text-muted" id="dItemWeight"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Service Charge</strong></td>
+                                <td><p class="text-muted" id="dItemServicePrice"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Total Price</strong></td>
+                                <td><p class="text-muted" id="dItemTotalPrice"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Status</strong></td>
+                                <td><p class="text-muted" id="dItemStatus"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Receiver Name</strong></td>
+                                <td><p class="text-muted" id="dItemReceiverName"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Receiver PhoneNumber</strong></td>
+                                <td><p class="text-muted" id="dItemReceiverNumber"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Receiver Address</strong></td>
+                                <td><p class="text-muted" id="dItemReceiverAddress"></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Date Created</strong></td>
+                                <td><p class="text-muted" id="dItemDateCreated"></p></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-outline-success btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    @*Domestic Item modal end*@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     @Scripts.Render("~/admin-lte/script")

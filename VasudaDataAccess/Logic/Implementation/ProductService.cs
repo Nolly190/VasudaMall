@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using NLog;
-using VasudaDataAccess.Data_Access.Implentations;
+using VasudaDataAccess.Data_Access.Implementation;
 using VasudaDataAccess.DTOs;
 using VasudaDataAccess.Model;
 

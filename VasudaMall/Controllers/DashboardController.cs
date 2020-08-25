@@ -7,7 +7,7 @@ using HtmlAgilityPack;
 using Microsoft.AspNet.Identity;
 using ScrapySharp.Extensions;
 using ScrapySharp.Network;
-using VasudaDataAccess.Data_Access.Implentations;
+using VasudaDataAccess.Data_Access.Implementation;
 using VasudaDataAccess.Logic;
 using VasudaDataAccess.Logic.Implementation;
 using VasudaDataAccess.Model;
@@ -21,15 +21,13 @@ namespace VasudaMall.Controllers
         private IWalletService _walletService;
         private IProfileService _profileService;
         private INotificationService _notificationService;
-        private IOrderService _orderService;
         private IPaymentService _paymentService;
 
-        public DashboardController(IWalletService walletService, IProfileService profileService, IOrderService orderService, IPaymentService paymentService)
+        public DashboardController(IWalletService walletService, IProfileService profileService, IPaymentService paymentService)
         {
             _walletService = walletService;
             _profileService = profileService;
             _notificationService = new NotificationService(new UnitOfWork(new VasudaModel()));
-            _orderService = orderService;
             _paymentService = paymentService;
         }
 
@@ -73,8 +71,7 @@ namespace VasudaMall.Controllers
 
         public new ActionResult Profile()
         {
-            var userId = User.Identity.GetUserId();
-            return View(_profileService.GetProfileHomePage(userId).Result());
+            return View(_profileService.GetProfileHomePage(User.Identity.GetUserId()).Result());
         }
 
         [HttpPost]
@@ -91,17 +88,12 @@ namespace VasudaMall.Controllers
         
         public ActionResult Transaction()
         {
-            return View(_walletService.GetAllTransactionsHomePage().Result());
+            return View(_walletService.GetAllTransactionsHomePage(User.Identity.GetUserId()).Result());
         }
-        
+
         public ActionResult Wallet()
         {
             return View(_walletService.GetWalletHomePage(User.Identity.GetUserId()).Result());
-        }
-
-        public ActionResult OrderHistory()
-        {
-            return View(_orderService.GetAllOrdersHomePage().Result());
         }
         
         public ActionResult Support()

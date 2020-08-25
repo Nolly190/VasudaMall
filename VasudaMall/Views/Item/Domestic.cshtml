@@ -1,0 +1,161 @@
+﻿@model VasudaDataAccess.DTOs.DomesticItemViewModel
+@using VasudaDataAccess.Utility
+@using VasudaDataAccess.Data_Access.Implementation
+
+@{
+    ViewBag.Title = "Domestic";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    var count = 1;
+
+    var fullName = ""; var phoneNumber = ""; var address = "";
+
+    if (Model.User != null)
+    {
+        var User = Model.User;
+        fullName = string.IsNullOrEmpty(User.FullName) ? "" : User.FullName;
+        phoneNumber = string.IsNullOrEmpty(User.PhoneNumber) ? "" : User.PhoneNumber;
+        address = string.IsNullOrEmpty(User.Address) ? "" : User.Address;
+    }
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">ADD ITEM FOR DOMESTIC SHIPPING</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- form start -->
+                        <form class="form-horizontal" id="addDomesticItemForm">
+                            <div class="form-group row">
+                                <label for="senderName" class="col-sm-12 col-md-2">Sender Name</label>
+                                <input type="text" class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Sender Name" id="senderName" value="@fullName" placeholder="Sender Name" required />
+                            </div>
+                            <div class="form-group row">
+                                <label for="senderPhoneNumber" class="col-sm-12 col-md-2">Sender Phone Number</label>
+                                <input type="text" class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Sender PhoneNumber" id="senderPhoneNumber" value="@phoneNumber" placeholder="Sender PhoneNumber" required>
+                            </div>
+                            <div class="form-group row">
+                                <label for="senderAddress" class="col-sm-12 col-md-2">Sender Address</label>
+                                <input type="text" class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Sender Address" id="senderAddress" value="@address" placeholder="Sender Address" required>
+                            </div>
+                            <div class="form-group row">
+                                <label for="description" class="col-sm-12 col-md-2">Description</label>
+                                <textarea class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Description" id="description" placeholder="Describe the products." required></textarea>
+                            </div>
+                            <div class="form-group row">
+                                <label for="quantity" class="col-sm-12 col-md-2">Quantity</label>
+                                <textarea class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Quantity" id="quantity" placeholder="Enter quantity of products" required></textarea>
+                            </div>
+                            <div class="form-group row">
+                                <label for="weight" class="col-sm-12 col-md-2">Weight (Kg)</label>
+                                <input type="text" class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Weight" id="weight" placeholder="Enter the weight of items to be shipped in Kg" required />
+                            </div>
+                            <div class="form-group row">
+                                <label for="receiverName" class="col-sm-12 col-md-2">Receiver Name</label>
+                                <input type="text" class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Receiver Name" id="receiverName" placeholder="Receiver Name" required />
+                            </div>
+                            <div class="form-group row">
+                                <label for="receiverPhoneNumber" class="col-sm-12 col-md-2">Receiver Phone Number</label>
+                                <input type="text" class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Receiver Phone Number" id="receiverPhoneNumber" placeholder="Receiver Phone Number" required />
+                            </div>
+                            <div class="form-group row">
+                                <label for="receiverAddress" class="col-sm-12 col-md-2">Receiver Address</label>
+                                <input type="text" class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Receiver Address" id="receiverAddress" placeholder="Receiver Address" required />
+                            </div>
+                            <div class="form-group col-12">
+                                <button type="submit" class="btn btn-info" id="addDomesticItemBtn">Add Domestic Order</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
+
+        <!--Domestic Item table start-->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">ITEM(S) PENDING CHECKOUT</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @if (Model.DomesticItems.Count <= 0)
+                        {
+                            <h3 style="text-align:center">NO ITEM AVAILABLE</h3>
+                        }
+                        else
+                        {
+                            <table id="orderHistoryTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
+                                <thead>
+                                    <tr>
+                                        <th width="10">S/N</th>
+                                        <th>Sender Name</th>
+                                        <th>Reciever Name</th>
+                                        <th>Reciever Phone Number</th>
+                                        <th>Description</th>
+                                        <th>Status</th>
+                                        <th>Total Price</th>
+                                        <th>Date Created</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.DomesticItems)
+                                    {
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@item.DomesticItemTable.SenderName</td>
+                                            <td>@item.DomesticItemTable.ReceiverName</td>
+                                            <td>@item.DomesticItemTable.ReceiverNumber</td>
+                                            <td>@Util.ReduceDescriptionLength(item.Description)</td>
+                                            <td>
+                                                @if (item.DomesticItemTable.Status == DomesticOrderStatus.AwaitingQuotation.ToString())
+                                                {
+                                                    <span>Awaiting Quotation</span>
+                                                }
+                                                else if (item.DomesticItemTable.Status == DomesticOrderStatus.AcceptedQuotation.ToString())
+                                                {
+                                                    <span>Accepted Quotation</span>
+                                                }
+                                                else if (item.DomesticItemTable.Status == DomesticOrderStatus.RejectedQuotation.ToString())
+                                                {
+                                                    <span>Rejected Quotation</span>
+                                                }
+                                            </td>
+                                            <td>@item.TotalPrice</td>
+                                            <td>@Util.FormatDate(item.DomesticItemTable.DateCreated)</td>
+                                            <td>
+                                                <button type="submit"
+                                                        class="btn btn-outline-success btn-sm itemsViewMoreButton"
+                                                        data-id="@item.Id">
+                                                    View More
+                                                </button>
+                                                <button type="submit" class="btn btn-outline-danger btn-sm itemsDeleteBtn" data-id="@item.Id">Delete</button>
+                                            </td>
+                                        </tr>
+                                        count++;
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!--Domestic Item table end-->
+    </div>
+</section>
+

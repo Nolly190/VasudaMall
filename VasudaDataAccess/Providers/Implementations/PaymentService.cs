@@ -6,7 +6,7 @@ using System.Net;
 using Newtonsoft.Json;
 using NLog;
 using RestSharp;
-using VasudaDataAccess.Data_Access.Implentations;
+using VasudaDataAccess.Data_Access.Implementation;
 using VasudaDataAccess.DTOs;
 using VasudaDataAccess.Logic.Implementation;
 using VasudaDataAccess.Model;
@@ -140,7 +140,7 @@ namespace VasudaDataAccess.Providers.Implementations
         {
             var response = new Response<string>();
             response.Status = false;
-            response.Message = "Could add payment history";
+            response.Message = "Could not add payment";
             try
             {
                 var insertPayment = new PaymentHistoryTable()
@@ -151,7 +151,7 @@ namespace VasudaDataAccess.Providers.Implementations
                     Amount = amount,
                     UserId = userId,
                     Purpose = purpose,
-                    Status = status
+                    Status = status.ToString()
                 };
                 _unitOfWork.PaymentHistoryTable.Add(insertPayment);
                 _unitOfWork.Complete();

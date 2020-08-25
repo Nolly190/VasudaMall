@@ -84,25 +84,31 @@
     <Compile Include="Data Access\IBankTable.cs" />
     <Compile Include="Data Access\ICategoryTable.cs" />
     <Compile Include="Data Access\IChatTable.cs" />
+    <Compile Include="Data Access\IDomesticItemTable.cs" />
     <Compile Include="Data Access\IExchangeRateTable.cs" />
     <Compile Include="Data Access\IImageTable.cs" />
-    <Compile Include="Data Access\Implentations\AspNetUserRepo.cs" />
-    <Compile Include="Data Access\Implentations\ChatTableRepo.cs" />
-    <Compile Include="Data Access\Implentations\ContactTableRepo.cs" />
-    <Compile Include="Data Access\Implentations\BankTableRepo.cs" />
-    <Compile Include="Data Access\Implentations\CategoryTableRepo.cs" />
-    <Compile Include="Data Access\Implentations\ExchangeRateTableRepo.cs" />
-    <Compile Include="Data Access\Implentations\ImageTableRepo.cs" />
-    <Compile Include="Data Access\Implentations\NotificationTableRepo.cs" />
-    <Compile Include="Data Access\Implentations\OrderTableRepo.cs" />
-    <Compile Include="Data Access\Implentations\PaymentHistoryTableRepo.cs" />
-    <Compile Include="Data Access\Implentations\PriceTableRepo.cs" />
-    <Compile Include="Data Access\Implentations\ProductTableRepo.cs" />
-    <Compile Include="Data Access\Implentations\SettingTableRepo.cs" />
-    <Compile Include="Data Access\Implentations\SubCategoryTableRepo.cs" />
-    <Compile Include="Data Access\Implentations\SupportTableRepo.cs" />
-    <Compile Include="Data Access\Implentations\VendorTableRepo.cs" />
-    <Compile Include="Data Access\Implentations\WithdrawalDetailsTableRepo.cs" />
+    <Compile Include="Data Access\IItemsTable.cs" />
+    <Compile Include="Data Access\Implementation\AspNetUserRepo.cs" />
+    <Compile Include="Data Access\Implementation\ChatTableRepo.cs" />
+    <Compile Include="Data Access\Implementation\ContactTableRepo.cs" />
+    <Compile Include="Data Access\Implementation\BankTableRepo.cs" />
+    <Compile Include="Data Access\Implementation\CategoryTableRepo.cs" />
+    <Compile Include="Data Access\Implementation\DomesticItemTableRepo.cs" />
+    <Compile Include="Data Access\Implementation\ExchangeRateTableRepo.cs" />
+    <Compile Include="Data Access\Implementation\ImageTableRepo.cs" />
+    <Compile Include="Data Access\Implementation\ItemsTableRepo.cs" />
+    <Compile Include="Data Access\Implementation\NotificationTableRepo.cs" />
+    <Compile Include="Data Access\Implementation\OrderTableRepo.cs" />
+    <Compile Include="Data Access\Implementation\PaymentHistoryTableRepo.cs" />
+    <Compile Include="Data Access\Implementation\PriceTableRepo.cs" />
+    <Compile Include="Data Access\Implementation\ProductTableRepo.cs" />
+    <Compile Include="Data Access\Implementation\SettingTableRepo.cs" />
+    <Compile Include="Data Access\Implementation\ShippingChargeTableRepo.cs" />
+    <Compile Include="Data Access\Implementation\ShippingItemTableRepo.cs" />
+    <Compile Include="Data Access\Implementation\SubCategoryTableRepo.cs" />
+    <Compile Include="Data Access\Implementation\SupportTableRepo.cs" />
+    <Compile Include="Data Access\Implementation\VendorTableRepo.cs" />
+    <Compile Include="Data Access\Implementation\WithdrawalDetailsTableRepo.cs" />
     <Compile Include="Data Access\INotificationTable.cs" />
     <Compile Include="Data Access\IOrderTable.cs" />
     <Compile Include="Data Access\IPaymentHistoryTable.cs" />
@@ -110,33 +116,48 @@
     <Compile Include="Data Access\IProductTable.cs" />
     <Compile Include="Data Access\IRepository.cs" />
     <Compile Include="Data Access\ISettingTable.cs" />
+    <Compile Include="Data Access\IShippingChargeTable.cs" />
+    <Compile Include="Data Access\IShippingItemTable.cs" />
     <Compile Include="Data Access\ISubCategoryTable.cs" />
     <Compile Include="Data Access\ISupportTable.cs" />
     <Compile Include="Data Access\IUnitOfWork.cs" />
-    <Compile Include="Data Access\Implentations\Repository.cs" />
-    <Compile Include="Data Access\Implentations\UnitOfWork.cs" />
+    <Compile Include="Data Access\Implementation\Repository.cs" />
+    <Compile Include="Data Access\Implementation\UnitOfWork.cs" />
     <Compile Include="Data Access\IVendorTable.cs" />
     <Compile Include="Data Access\IWithdrawalDetailsTable.cs" />
+    <Compile Include="DTOs\AddPurchaseAndShippingItemViewModel.cs" />
+    <Compile Include="DTOs\AddPurchaseItemViewModel.cs" />
+    <Compile Include="DTOs\AddShippingItemViewModel.cs" />
     <Compile Include="DTOs\AdminBankViewModel.cs" />
     <Compile Include="DTOs\AdminNotificationViewModel.cs" />
     <Compile Include="DTOs\AdminOrderDto.cs" />
     <Compile Include="DTOs\AdminProfileViewModel.cs" />
     <Compile Include="DTOs\AdminWalletViewModel.cs" />
     <Compile Include="DTOs\ChangePasswordDTO.cs" />
+    <Compile Include="DTOs\AddDomesticItemViewModel.cs" />
+    <Compile Include="DTOs\DashboardLayoutViewModel.cs" />
+    <Compile Include="DTOs\DomesticItemViewModel.cs" />
     <Compile Include="DTOs\FlutterwaveTransResponse.cs" />
+    <Compile Include="DTOs\GeneralItemViewModel.cs" />
+    <Compile Include="DTOs\GetSingleItemResponseDTO.cs" />
+    <Compile Include="DTOs\SingleDomesticItemDTO.cs" />
+    <Compile Include="DTOs\SinglePurchaseAndShippingItemDTO.cs" />
+    <Compile Include="DTOs\SinglePurchaseItemDTO.cs" />
     <Compile Include="DTOs\HomeProductViewModel.cs" />
     <Compile Include="DTOs\NotificationViewModel.cs" />
-    <Compile Include="DTOs\OrderDTO.cs" />
+    <Compile Include="DTOs\OrderCheckoutViewModel.cs" />
     <Compile Include="DTOs\OrderHistoryViewModel.cs" />
     <Compile Include="DTOs\ProductViewModel.cs" />
     <Compile Include="DTOs\ProfileViewModel.cs" />
     <Compile Include="DTOs\RequestApprovalDTO.cs" />
     <Compile Include="DTOs\Response.cs" />
+    <Compile Include="DTOs\SingleShippingItemDTO.cs" />
     <Compile Include="DTOs\StoreViewModel.cs" />
     <Compile Include="DTOs\SupportViewModel.cs" />
     <Compile Include="DTOs\TransactionViewModel.cs" />
     <Compile Include="DTOs\UserDetailsDTO.cs" />
     <Compile Include="DTOs\UserPaymentDTO.cs" />
+    <Compile Include="DTOs\VendorTableDTO.cs" />
     <Compile Include="DTOs\WalletViewModel.cs" />
     <Compile Include="Logic\IBankService.cs" />
     <Compile Include="Logic\Implementation\BankService.cs" />
@@ -169,6 +190,9 @@
       <DependentUpon>VasudaDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ContactTable.cs">
+      <DependentUpon>VasudaDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\C__MigrationHistory.cs">
       <DependentUpon>VasudaDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DomesticItemTable.cs">
@@ -259,6 +283,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\Encryption.cs" />
     <Compile Include="Utility\Notification.cs" />
+    <Compile Include="Utility\Util.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

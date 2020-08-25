@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using VasudaDataAccess.Data_Access.Implentations;
+using VasudaDataAccess.Data_Access.Implementation;
 using VasudaDataAccess.Logic;
 using VasudaDataAccess.Logic.Implementation;
 using VasudaDataAccess.Model;

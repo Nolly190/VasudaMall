@@ -1,0 +1,65 @@
+﻿@model VasudaDataAccess.DTOs.OrderHistoryViewModel
+
+@{
+    Layout = "~/Views/shared/_LayoutDashboard.cshtml";
+    ViewBag.Title = "History";
+    var count = 1;
+}
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">ORDER</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @if (Model.AllOrders.Count == 0)
+                        {
+                            <h3 style="text-align:center">NO ORDER AVAILABLE</h3>
+                        }
+                        else
+                        {
+                            <table id="orderHistoryTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th>Shipping Fee</th>
+                                        <th>Total Service Charge</th>
+                                        <th>Total Price</th>
+                                        <th>DateCreated</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var order in Model.AllOrders)
+                                    {
+                                        var mainDateCreated = $"{order.DateCreated.Year}-{order.DateCreated.Month}-{order.DateCreated.Day}";
+                                        <tr>
+                                                <td>@count</td>
+                                                <td>@order.OrderType</td>
+                                                <td>@order.Status</td>
+                                                <td>@order.ShippingFee</td>
+                                                <td>@order.TotalServiceCharge</td>
+                                                <td>@order.TotalPrice</td>
+                                                <td>@mainDateCreated</td>
+                                                <td><button type="submit" class="btn btn-outline-success btn-sm orderHistoryViewMoreBtn" data-type="" data-action="" data-id="@order.Id">View More</button></td>
+                                            </tr>
+                                        count++;
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+</section>
