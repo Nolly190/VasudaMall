@@ -192,7 +192,7 @@
     <Compile Include="Model\ContactTable.cs">
       <DependentUpon>VasudaDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\DomesticItemTable.cs">
+    <Compile Include="Model\C__MigrationHistory.cs">
       <DependentUpon>VasudaDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DomesticItemTable.cs">

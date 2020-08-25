@@ -37,7 +37,7 @@ namespace VasudaDataAccess.Logic.Implementation
             return response;
         }
 
-        public Response<OrderHistoryViewModel> GetAllOrdersHomePage()
+        public Response<OrderHistoryViewModel> GetAllOrdersHomePage(string userId)
         {
             var result = new Response<OrderHistoryViewModel>
             {

@@ -4,58 +4,58 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="75766847946f4564b9eb82c67c0e5e86" Name="Diagram1">
+      <Diagram DiagramId="d8f3e579cdeb453098ba4073970a188d" Name="Diagram1">
         <EntityTypeShape EntityType="VasudaDataModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="VasudaDataModel.AspNetRole" Width="1.5" PointX="0.75" PointY="14.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="VasudaDataModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="VasudaDataModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="VasudaDataModel.AspNetUser" Width="1.5" PointX="3" PointY="12" IsExpanded="true" />
-        <EntityTypeShape EntityType="VasudaDataModel.AuditTrialTable" Width="1.5" PointX="7.75" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="VasudaDataModel.BankTable" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.AspNetRole" Width="1.5" PointX="0.75" PointY="22.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.AspNetUser" Width="1.5" PointX="3" PointY="20.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.AuditTrialTable" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.BankTable" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="VasudaDataModel.CategoryTable" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="VasudaDataModel.ChatTable" Width="1.5" PointX="5.25" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="VasudaDataModel.ContactTable" Width="1.5" PointX="7.75" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="VasudaDataModel.ExchangeRateTable" Width="1.5" PointX="14.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="VasudaDataModel.FundingRequestTable" Width="1.5" PointX="5.25" PointY="13" IsExpanded="true" />
-        <EntityTypeShape EntityType="VasudaDataModel.ImageTable" Width="1.5" PointX="15.25" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="VasudaDataModel.ItemsTable" Width="1.5" PointX="10" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="VasudaDataModel.NotificationTable" Width="1.5" PointX="5.25" PointY="18.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="VasudaDataModel.PaymentHistoryTable" Width="1.5" PointX="5.25" PointY="21.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="VasudaDataModel.PriceTable" Width="1.5" PointX="9.75" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="VasudaDataModel.ProductTable" Width="1.5" PointX="13" PointY="15.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="VasudaDataModel.SettingTable" Width="1.5" PointX="15.75" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="VasudaDataModel.ShippingChargeTable" Width="1.5" PointX="15.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.ChatTable" Width="1.5" PointX="5.25" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.ContactTable" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.DomesticItemTable" Width="1.5" PointX="9.75" PointY="26.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.ExchangeRateTable" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.FundingRequestTable" Width="1.5" PointX="8.25" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.ImageTable" Width="1.5" PointX="12.75" PointY="28.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.ItemsTable" Width="1.5" PointX="7.5" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.NotificationTable" Width="1.5" PointX="5.25" PointY="24.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.OrderTable" Width="1.5" PointX="5.25" PointY="35.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.PaymentHistoryTable" Width="1.5" PointX="5.25" PointY="39.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.PriceTable" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.ProductTable" Width="1.5" PointX="10.5" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.SettingTable" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.ShippingChargeTable" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.ShippingItemTable" Width="1.5" PointX="9.75" PointY="33.25" IsExpanded="true" />
         <EntityTypeShape EntityType="VasudaDataModel.SubCategoryTable" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="VasudaDataModel.SupportTable" Width="1.5" PointX="5.25" PointY="24.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="VasudaDataModel.sysdiagram" Width="1.5" PointX="16.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="VasudaDataModel.SystemAccountTable" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="VasudaDataModel.VendorTable" Width="1.5" PointX="7.75" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="VasudaDataModel.WithdrawalDetailsTable" Width="1.5" PointX="5.25" PointY="27.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="VasudaDataModel.WithdrawalRequestTable" Width="1.5" PointX="7.5" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.SupportTable" Width="1.5" PointX="5.25" PointY="42.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.sysdiagram" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.SystemAccountTable" Width="1.5" PointX="6" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.VendorTable" Width="1.5" PointX="5.25" PointY="28.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.WithdrawalDetailsTable" Width="1.5" PointX="5.25" PointY="46.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="VasudaDataModel.WithdrawalRequestTable" Width="1.5" PointX="7.5" PointY="33" IsExpanded="true" />
         <AssociationConnector Association="VasudaDataModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="VasudaDataModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="VasudaDataModel.FK_ChatTable_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="VasudaDataModel.FK_FundingRequestTable_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="VasudaDataModel.FK_ItemsTables_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="VasudaDataModel.FK_NotificationTables_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="VasudaDataModel.FK_OrderTable_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="VasudaDataModel.FK_PaymentHistoryTables_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="VasudaDataModel.FK_SupportTables_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="VasudaDataModel.FK_WithdrawalDetailsTable_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="VasudaDataModel.FK_WithdrawalRequestTable_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="VasudaDataModel.FK_SubCategoryTables_CategoryTables" ManuallyRouted="false" />
+        <AssociationConnector Association="VasudaDataModel.FK_DomesticOrderTable_OrderTables" ManuallyRouted="false" />
         <AssociationConnector Association="VasudaDataModel.FK_FundingRequestTable_SystemAccountTable" ManuallyRouted="false" />
         <AssociationConnector Association="VasudaDataModel.FK_ImageTables_OrderTables" ManuallyRouted="false" />
         <AssociationConnector Association="VasudaDataModel.FK_ImageTables_ProductTables" ManuallyRouted="false" />
+        <AssociationConnector Association="VasudaDataModel.FK_ItemsTables_OrderTable" ManuallyRouted="false" />
         <AssociationConnector Association="VasudaDataModel.FK_OrderTables_VendorTables" ManuallyRouted="false" />
+        <AssociationConnector Association="VasudaDataModel.FK_ShippingOrderTable_OrderTables" ManuallyRouted="false" />
         <AssociationConnector Association="VasudaDataModel.FK_WithdrawalRequestTable_WithdrawalDetailsTable" ManuallyRouted="false" />
         <AssociationConnector Association="VasudaDataModel.AspNetUserRoles" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="VasudaDataModel.DomesticItemTable" Width="1.5" PointX="12.25" PointY="3.125" />
-        <EntityTypeShape EntityType="VasudaDataModel.ShippingItemTable" Width="1.5" PointX="12.25" PointY="7.25" />
-        <AssociationConnector Association="VasudaDataModel.FK_DomesticOrderTable_OrderTables" />
-        <AssociationConnector Association="VasudaDataModel.FK_ShippingOrderTable_OrderTables" />
-        <AssociationConnector Association="VasudaDataModel.FK_ItemsTables_AspNetUsers" />
-        <EntityTypeShape EntityType="VasudaDataModel.OrderTable" Width="1.5" PointX="5.25" PointY="0.75" />
-        <AssociationConnector Association="VasudaDataModel.FK_OrderTable_AspNetUsers" />
-        <AssociationConnector Association="VasudaDataModel.FK_ItemsTables_OrderTable" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
