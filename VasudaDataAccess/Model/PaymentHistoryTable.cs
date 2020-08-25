@@ -18,8 +18,10 @@ namespace VasudaDataAccess.Model
         public decimal Amount { get; set; }
         public string TransactionType { get; set; }
         public string Purpose { get; set; }
-        public bool Status { get; set; }
+        public string Status { get; set; }
         public System.DateTime DateCreated { get; set; }
-        public System.Guid UserId { get; set; }
+        public string UserId { get; set; }
+    
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

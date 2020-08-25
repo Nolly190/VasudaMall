@@ -18,6 +18,7 @@ namespace VasudaDataAccess.Model
         public System.Guid CategoryId { get; set; }
         public string Name { get; set; }
         public System.DateTime DateCreated { get; set; }
+        public bool IsActive { get; set; }
     
         public virtual CategoryTable CategoryTable { get; set; }
     }

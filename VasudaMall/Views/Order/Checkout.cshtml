@@ -1,0 +1,92 @@
+﻿@model VasudaDataAccess.DTOs.OrderCheckoutViewModel
+@using VasudaDataAccess.Utility
+@using VasudaDataAccess.Data_Access.Implementation
+
+@{
+    ViewBag.Title = "Checkout";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Checkout</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @if (Model.AllItems.Count == 0)
+                        {
+                            <h3 style="text-align:center">NO ITEM AVAILABLE FOR CHECKOUT</h3>
+                        }
+                        else
+                        {
+                            <table id="orderHistoryTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
+                                <thead>
+                                    <tr>
+                                        <th width="20">
+                                            <span>
+                                                <input type="checkbox" class="checkoutAllItemCheckBtn" />
+                                            </span>
+                                            Select Item
+                                        </th>
+                                        <th>Description</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th>DateCreated</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.AllItems)
+                                    {
+                                        <tr>
+                                            <td><input type="checkbox" class="checkoutItemCheckBtn" /></td>
+                                            <td>
+                                                @if (string.IsNullOrEmpty(item.Description))
+                                                {
+                                                    <div>N/A</div>
+                                                }
+                                                else
+                                                {
+                                                    if (item.Description.Length < 50)
+                                                    {
+                                                        @item.Description;
+                                                    }
+                                                    else
+                                                    {
+                                                        @item.Description.Substring(0, 50)<span>......</span>
+                                                    }
+                                                }
+                                        </td>
+                                        <td>
+                                            @if (item.Type == ItemType.PurchaseAndShipping.ToString())
+                                            {
+                                                <span>Purchase and Shipping</span>
+                                            }
+                                            else
+                                            {
+                                                @item.Type;
+                                            }
+                                        </td>
+                                        <td>@item.Status</td>
+                                        <td>@Util.FormatDate(item.DateCreated)</td>
+                                        <td>
+                                            <button type="submit" class="btn btn-outline-success btn-sm itemsViewMoreButton" data-id="@item.Id">View More</button>
+                                            <button type="submit" class="btn btn-outline-danger btn-sm itemsDeleteBtn" data-id="@item.Id">Delete</button>
+                                        </td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+</section>

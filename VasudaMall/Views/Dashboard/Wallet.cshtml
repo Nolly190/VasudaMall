@@ -1,5 +1,5 @@
 ﻿@model VasudaDataAccess.DTOs.WalletViewModel
-
+@using VasudaDataAccess.Utility
 @{
     Layout = "~/Views/shared/_LayoutDashboard.cshtml";
     ViewBag.Title = "Wallet";
@@ -44,7 +44,7 @@
                                             </div>
                                             <!-- /.card-header -->
                                             <div class="card-body">
-                                                    <table id="withdrawalAccountListTable" class="table table-bordered table-striped table-hover table-sm">
+                                                <table id="withdrawalAccountListTable" class="table table-bordered table-striped table-hover table-sm">
                                                     <thead>
                                                         <tr>
                                                             <th>S/N</th>
@@ -55,32 +55,32 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody id="withdrawalAccounttr">
-                                                    @if (Model.WithdrawalAccounts.Count == 0)
-                                                    {
-                                                        <tr> <td colspan="5">  <h3 style="text-align:center"> NO WITHDRAWAL ACCOUNT ADDED</h3></td></tr>
-                                                       
-                                                    }
-                                                    else
-                                                    {
-                                                        foreach (var withdrawalAccount in Model.WithdrawalAccounts)
+                                                        @if (Model.WithdrawalAccounts.Count == 0)
                                                         {
-
-                                                        <tr>
-                                                          <td>@count</td>
-                                                        <td>@withdrawalAccount.AccountName</td>
-                                                        <td>@withdrawalAccount.AccountNumber</td>
-                                                        <td>@withdrawalAccount.BankName</td>
-                                                        <td><button data-id="@withdrawalAccount.Id" class="btn btn-danger removeCard">Delete</button></td>
-                                                        </tr>
-
-                                                            count++;
+                                                            <tr> <td colspan="5">  <h3 style="text-align:center"> NO WITHDRAWAL ACCOUNT ADDED</h3></td></tr>
 
                                                         }
-                                                    }
-                                                 
+                                                        else
+                                                        {
+                                                            foreach (var withdrawalAccount in Model.WithdrawalAccounts)
+                                                            {
+
+                                                                <tr>
+                                                                    <td>@count</td>
+                                                                    <td>@withdrawalAccount.AccountName</td>
+                                                                    <td>@withdrawalAccount.AccountNumber</td>
+                                                                    <td>@withdrawalAccount.BankName</td>
+                                                                    <td><button data-id="@withdrawalAccount.Id" class="btn btn-danger removeCard">Delete</button></td>
+                                                                </tr>
+
+                                                                count++;
+
+                                                            }
+                                                        }
+
                                                     </tbody>
                                                 </table>
-                                                
+
                                             </div>
                                             <!-- /.card-body -->
                                         </div>
@@ -230,7 +230,7 @@
                                                 <!-- /.card-footer -->
 
                                             </form>
-                                           </div>
+                                        </div>
                                         <!--Make Withdrawal Form end-->
                                         <!-- /.card -->
                                     </div>
@@ -268,15 +268,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach (var item in Model.ExchangeRates)
-                                    {
-                                        
-                                        <tr>
-                                            <td>@item.BaseCurrency</td>
-                                            <td>@item.ConvertedCurrency</td>
-                                            <td>@item.Rate</td>
-                                        </tr>
-                                    }
+                                        @foreach (var item in Model.ExchangeRates)
+                                        {
+
+                                            <tr>
+                                                <td>@item.BaseCurrency</td>
+                                                <td>@item.ConvertedCurrency</td>
+                                                <td>@item.Rate</td>
+                                            </tr>
+                                        }
                                     </tbody>
                                 </table>
                             }
@@ -318,8 +318,8 @@
                             </div>
                             <!-- /.card-body -->
                             @*<div class="card-footer">
-                                <button type="submit" class="btn btn-info">Add Account</button>
-                            </div>*@
+                                    <button type="submit" class="btn btn-info">Add Account</button>
+                                </div>*@
                             <!-- /.card-footer -->
                         </form>
                     </div>
@@ -347,33 +347,33 @@
                         else
                         {
                             <table id="recentTransactionsTable" class="table table-bordered table-striped table-hover table-sm">
-                            <thead>
-                                <tr>
-                                    <th>S/N</th>
-                                    <th>Amount</th>
-                                    <th>Type</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            @{ count = 1;}
-                            @foreach (var recentTransaction in Model.PaymentHistory)
-                            {
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Amount</th>
+                                        <th>Type</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ count = 1;}
+                                    @foreach (var recentTransaction in Model.PaymentHistory)
+                                    {
 
-                                <tr>
-                                    <td>@count</td>
-                                    <td>@recentTransaction.Amount</td>
-                                    <td>@recentTransaction.TransactionType</td>
-                                    <td>@recentTransaction.DateCreated</td>
-                                    <td>@recentTransaction.Status</td>
-                                    <td><button type="submit" class="btn btn-outline-success btn-sm">View More</button></td>
-                                </tr>
-                                count++;
-                            }
-                            </tbody>
-                        </table>
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@recentTransaction.Amount</td>
+                                            <td>@recentTransaction.TransactionType</td>
+                                            <td>@Util.FormatDate(recentTransaction.DateCreated)</td>
+                                            <td>@recentTransaction.Status</td>
+                                            <td><button type="submit" class="btn btn-outline-success btn-sm">View More</button></td>
+                                        </tr>
+                                        count++;
+                                    }
+                                </tbody>
+                            </table>
                         }
                     </div>
                     <!-- /.card-body -->
@@ -386,5 +386,3 @@
     </div>
 </section>
 <!--Main Content end-->
-
-
