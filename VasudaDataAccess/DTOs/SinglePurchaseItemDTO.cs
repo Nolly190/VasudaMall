@@ -16,6 +16,7 @@ namespace VasudaDataAccess.DTOs
         public long Quantity { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal ServicePrice { get; set; }
+        public decimal ItemPrice { get; set; }
         public decimal TotalPrice { get; set; }
         public string DateCreated { get; set; }
     }

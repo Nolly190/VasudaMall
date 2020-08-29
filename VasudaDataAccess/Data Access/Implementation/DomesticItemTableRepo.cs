@@ -26,6 +26,7 @@ namespace VasudaDataAccess.Data_Access.Implementation
 
     public enum DomesticOrderStatus
     {
-        AwaitingQuotation = 1, AcceptedQuotation, RejectedQuotation
+        AwaitingQuotation = 1, AwaitingUserAcceptance, AcceptedQuotation, 
+        Processing, Shipped, AwaitingShipment, Completed, RejectedQuotation
     }
 }
