@@ -257,46 +257,81 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <table class="table table-sm">
-                        <tbody>
-                            <tr>
-                                <td><strong>Description</strong></td>
-                                <td><p class="text-muted" id="pItemDescription"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>UnitPrice</strong></td>
-                                <td><p class="text-muted" id="pItemUnitPrice"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Quantity</strong></td>
-                                <td><p class="text-muted" id="pItemQuantity"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Service Charge</strong></td>
-                                <td><p class="text-muted" id="pItemServicePrice"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Total Price</strong></td>
-                                <td><p class="text-muted" id="pItemTotalPrice"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>ProductLink</strong></td>
-                                <td><p class="text-muted" id="pItemProductLink"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Vendor Name</strong></td>
-                                <td><p class="text-muted" id="pItemVendor"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Status</strong></td>
-                                <td><p class="text-muted" id="pItemStatus"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Date Created</strong></td>
-                                <td><p class="text-muted" id="pItemDateCreated"></p></td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <p>
+                                <strong>Description: </strong>
+                                <span class="text-muted" id="pItemDescription"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                            <p>
+                                <strong>Vendor Name: </strong>
+                                <span class="text-muted" id="pItemVendor"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md-8">
+                            <p>
+                                <strong>Product Link: </strong>
+                                <span class="text-muted" id="pItemProductLink"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <p>
+                                <strong>Date Created: </strong>
+                                <span class="text-muted" id="pItemDateCreated"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <p>
+                                <strong>Quantity: </strong>
+                                <span class="text-muted" id="pItemQuantity"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <p>
+                                <strong>Status: </strong>
+                                <span class="text-muted" id="pItemStatus"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3">
+                            <p>
+                                <strong>Unit Price: </strong>
+                                <span class="text-muted" id="pItemUnitPrice"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <p>
+                                <strong>Item Price: </strong>
+                                <span class="text-muted" id="pItemItemPrice"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <p>
+                                <strong>Service Price: </strong>
+                                <span class="text-muted" id="pItemServicePrice"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <p>
+                                <strong>Total Price: </strong>
+                                <span class="text-muted" id="pItemTotalPrice"></span>
+                            </p>
+                        </div>
+                    </div>
 
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -322,62 +357,110 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <table class="table table-sm">
-                        <tbody>
-                            <tr>
-                                <td><strong>Sender Name</strong></td>
-                                <td><p class="text-muted" id="sItemSenderName"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Sender PhoneNumber</strong></td>
-                                <td><p class="text-muted" id="sItemSenderPhoneNumber"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Sender Address</strong></td>
-                                <td><p class="text-muted" id="sItemSenderAddress"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Description</strong></td>
-                                <td><p class="text-muted" id="sItemDescription"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Quantity</strong></td>
-                                <td><p class="text-muted" id="sItemQuantity"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Weight</strong></td>
-                                <td><p class="text-muted" id="sItemWeight"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Service Charge</strong></td>
-                                <td><p class="text-muted" id="sItemServicePrice"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Total Price</strong></td>
-                                <td><p class="text-muted" id="sItemTotalPrice"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Status</strong></td>
-                                <td><p class="text-muted" id="sItemStatus"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Receiver Name</strong></td>
-                                <td><p class="text-muted" id="sItemReceiverName"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Receiver PhoneNumber</strong></td>
-                                <td><p class="text-muted" id="sItemReceiverNumber"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Receiver Address</strong></td>
-                                <td><p class="text-muted" id="sItemReceiverAddress"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Date Created</strong></td>
-                                <td><p class="text-muted" id="sItemDateCreated"></p></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <p>
+                                <strong>Sender Name: </strong>
+                                <span class="text-muted" id="sItemSenderName"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <p>
+                                <strong>Sender PhoneNumber: </strong>
+                                <span class="text-muted" id="sItemSenderPhoneNumber"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-12">
+                            <p>
+                                <strong>Sender Address: </strong>
+                                <span class="text-muted" id="sItemSenderAddress"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-12">
+                            <p>
+                                <strong>Description: </strong>
+                                <span class="text-muted" id="sItemDescription"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                            <p>
+                                <strong>Quantity: </strong>
+                                <span class="text-muted" id="sItemQuantity"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <p>
+                                <strong>Weight: </strong>
+                                <span class="text-muted" id="sItemWeight"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <p>
+                                <strong>Status: </strong>
+                                <span class="text-muted" id="sItemStatus"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <p>
+                                <strong>Receiver Name: </strong>
+                                <span class="text-muted" id="sItemReceiverName"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <p>
+                                <strong>Receiver PhoneNumber: </strong>
+                                <span class="text-muted" id="sItemReceiverNumber"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-12">
+                            <p>
+                                <strong>Receiver Address: </strong>
+                                <span class="text-muted" id="sItemReceiverAddress"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <p>
+                                <strong>Date Created: </strong>
+                                <span class="text-muted" id="sItemDateCreated"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <p>
+                                <strong>Service Price: </strong>
+                                <span class="text-muted" id="sItemServicePrice"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <p>
+                                <strong>Total Price: </strong>
+                                <span class="text-muted" id="sItemTotalPrice"></span>
+                            </p>
+                        </div>
+                    </div>
 
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -404,58 +487,107 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <table class="table table-sm">
-                        <tbody>
-                            <tr>
-                                <td><strong>Description</strong></td>
-                                <td><p class="text-muted" id="psItemDescription"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>UnitPrice</strong></td>
-                                <td><p class="text-muted" id="psItemUnitPrice"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Quantity</strong></td>
-                                <td><p class="text-muted" id="psItemQuantity"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Service Charge</strong></td>
-                                <td><p class="text-muted" id="psItemServicePrice"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Total Price</strong></td>
-                                <td><p class="text-muted" id="psItemTotalPrice"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>ProductLink</strong></td>
-                                <td><p class="text-muted" id="psItemProductLink"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Vendor Name</strong></td>
-                                <td><p class="text-muted" id="psItemVendor"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Status</strong></td>
-                                <td><p class="text-muted" id="psItemStatus"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Receiver Name</strong></td>
-                                <td><p class="text-muted" id="psItemReceiverName"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Receiver PhoneNumber</strong></td>
-                                <td><p class="text-muted" id="psItemReceiverNumber"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Receiver Address</strong></td>
-                                <td><p class="text-muted" id="psItemReceiverAddress"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Date Created</strong></td>
-                                <td><p class="text-muted" id="psItemDateCreated"></p></td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <p>
+                                <strong>Receiver Name: </strong>
+                                <span class="text-muted" id="psItemReceiverName"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <p>
+                                <strong>Receiver PhoneNumber: </strong>
+                                <span class="text-muted" id="psItemReceiverNumber"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-12">
+                            <p>
+                                <strong>Receiver Address: </strong>
+                                <span class="text-muted" id="psItemReceiverAddress"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-12">
+                            <p>
+                                <strong>Description: </strong>
+                                <span class="text-muted" id="psItemDescription"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                            <p>
+                                <strong>Vendor Name: </strong>
+                                <span class="text-muted" id="psItemVendor"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md-8">
+                            <p>
+                                <strong>Product Link: </strong>
+                                <span class="text-muted" id="psItemProductLink"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <p>
+                                <strong>Date Created: </strong>
+                                <span class="text-muted" id="psItemDateCreated"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <p>
+                                <strong>Quantity: </strong>
+                                <span class="text-muted" id="psItemQuantity"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <p>
+                                <strong>Status: </strong>
+                                <span class="text-muted" id="psItemStatus"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3">
+                            <p>
+                                <strong>Unit Price: </strong>
+                                <span class="text-muted" id="psItemUnitPrice"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-6 col-md-">
+                            <p>
+                                <strong>Item Price: </strong>
+                                <span class="text-muted" id="psItemItemPrice"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <p>
+                                <strong>Service Price: </strong>
+                                <span class="text-muted" id="psItemServicePrice"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <p>
+                                <strong>Total Price: </strong>
+                                <span class="text-muted" id="psItemTotalPrice"></span>
+                            </p>
+                        </div>
+                    </div>
 
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -481,62 +613,111 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <table class="table table-sm">
-                        <tbody>
-                            <tr>
-                                <td><strong>Sender Name</strong></td>
-                                <td><p class="text-muted" id="dItemSenderName"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Sender PhoneNumber</strong></td>
-                                <td><p class="text-muted" id="dItemSenderPhoneNumber"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Sender Address</strong></td>
-                                <td><p class="text-muted" id="dItemSenderAddress"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Description</strong></td>
-                                <td><p class="text-muted" id="dItemDescription"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Quantity</strong></td>
-                                <td><p class="text-muted" id="dItemQuantity"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Weight</strong></td>
-                                <td><p class="text-muted" id="dItemWeight"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Service Charge</strong></td>
-                                <td><p class="text-muted" id="dItemServicePrice"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Total Price</strong></td>
-                                <td><p class="text-muted" id="dItemTotalPrice"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Status</strong></td>
-                                <td><p class="text-muted" id="dItemStatus"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Receiver Name</strong></td>
-                                <td><p class="text-muted" id="dItemReceiverName"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Receiver PhoneNumber</strong></td>
-                                <td><p class="text-muted" id="dItemReceiverNumber"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Receiver Address</strong></td>
-                                <td><p class="text-muted" id="dItemReceiverAddress"></p></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Date Created</strong></td>
-                                <td><p class="text-muted" id="dItemDateCreated"></p></td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <p>
+                                <strong>Sender Name: </strong>
+                                <span class="text-muted" id="dItemSenderName"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <p>
+                                <strong>Sender PhoneNumber: </strong>
+                                <span class="text-muted" id="dItemSenderPhoneNumber"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-12">
+                            <p>
+                                <strong>Sender Address: </strong>
+                                <span class="text-muted" id="dItemSenderAddress"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-12">
+                            <p>
+                                <strong>Description: </strong>
+                                <span class="text-muted" id="dItemDescription"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                            <p>
+                                <strong>Quantity: </strong>
+                                <span class="text-muted" id="dItemQuantity"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <p>
+                                <strong>Weight: </strong>
+                                <span class="text-muted" id="dItemWeight"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <p>
+                                <strong>Status: </strong>
+                                <span class="text-muted" id="dItemStatus"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <p>
+                                <strong>Receiver Name: </strong>
+                                <span class="text-muted" id="dItemReceiverName"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <p>
+                                <strong>Receiver PhoneNumber: </strong>
+                                <span class="text-muted" id="dItemReceiverNumber"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-12">
+                            <p>
+                                <strong>Receiver Address: </strong>
+                                <span class="text-muted" id="dItemReceiverAddress"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <p>
+                                <strong>Date Created: </strong>
+                                <span class="text-muted" id="dItemDateCreated"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <p>
+                                <strong>Service Price: </strong>
+                                <span class="text-muted" id="dItemServicePrice"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <p>
+                                <strong>Total Price: </strong>
+                                <span class="text-muted" id="dItemTotalPrice"></span>
+                            </p>
+                        </div>
+                    </div>
 
                 </div>
                 <div class="modal-footer justify-content-between">

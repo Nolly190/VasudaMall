@@ -5,6 +5,7 @@
 @{
     ViewBag.Title = "Checkout";
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    var count = 1;
 }
 
 <section class="content">
@@ -23,62 +24,65 @@
                         }
                         else
                         {
-                            <table id="orderHistoryTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
+                            <h6 style="color:forestgreen">You can only checkout items that are of the same type.</h6>
+                            <table id="checkoutItemTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
                                 <thead>
                                     <tr>
-                                        <th width="20">
+                                        <th class="tw3">
                                             <span>
                                                 <input type="checkbox" class="checkoutAllItemCheckBtn" />
                                             </span>
                                             Select Item
                                         </th>
                                         <th>Description</th>
-                                        <th>Type</th>
-                                        <th>Status</th>
-                                        <th>DateCreated</th>
-                                        <th>Action</th>
+                                        <th class="tw6">Quantity</th>
+                                        <th class="tw6">Item Price</th>
+                                        <th class="tw6">Service Charge</th>
+                                        <th class="tw10">Type</th>
+                                        <th class="tw10">Status</th>
+                                        <th class="tw10">Date Created</th>
+                                        <th class="tw10">Action</th>
+                                        <th class="tw6">Total Price</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model.AllItems)
                                     {
+                                        var fpId = "itemFinalpriceCol" + count;
                                         <tr>
-                                            <td><input type="checkbox" class="checkoutItemCheckBtn" /></td>
+                                            <td><input type="checkbox" class="checkoutItemCheckBtn" data-id="@item.Id" /></td>
                                             <td>
-                                                @if (string.IsNullOrEmpty(item.Description))
+                                                @Util.ReduceDescriptionLength(item.Description)
+                                            </td>
+                                            <td>@item.Quantity</td>
+                                            <td>@item.ItemsPrice</td>
+                                            <td>@item.ServicePrice</td>
+                                            <td>
+                                                @if (item.Type == ItemType.PurchaseAndShipping.ToString())
                                                 {
-                                                    <div>N/A</div>
+                                                    <span>Purchase and Shipping</span>
                                                 }
                                                 else
                                                 {
-                                                    if (item.Description.Length < 50)
-                                                    {
-                                                        @item.Description;
-                                                    }
-                                                    else
-                                                    {
-                                                        @item.Description.Substring(0, 50)<span>......</span>
-                                                    }
+                                                    @item.Type;
                                                 }
-                                        </td>
-                                        <td>
-                                            @if (item.Type == ItemType.PurchaseAndShipping.ToString())
-                                            {
-                                                <span>Purchase and Shipping</span>
-                                            }
-                                            else
-                                            {
-                                                @item.Type;
-                                            }
-                                        </td>
-                                        <td>@item.Status</td>
-                                        <td>@Util.FormatDate(item.DateCreated)</td>
-                                        <td>
-                                            <button type="submit" class="btn btn-outline-success btn-sm itemsViewMoreButton" data-id="@item.Id">View More</button>
-                                            <button type="submit" class="btn btn-outline-danger btn-sm itemsDeleteBtn" data-id="@item.Id">Delete</button>
+                                            </td>
+                                            <td>@item.Status</td>
+                                            <td>@Util.FormatDate(item.DateCreated)</td>
+                                            <td>
+                                                <button type="submit" class="btn btn-outline-success btn-sm itemsViewMoreButton" data-id="@item.Id">
+                                                    View More
+                                                </button><br />
+                                                <button type="submit" class="btn btn-outline-danger btn-sm itemsDeleteBtn" data-id="@item.Id">Delete</button>
+                                            </td>
+                                            <td>@item.TotalPrice</td>
+                                        </tr>
+                                    }
+                                    <tr style="display:none" id="createOrderBtnRow">
+                                        <td colspan="10">
+                                            <button type="submit" class="btn btn-outline-success btn-sm float-right" id="createOrderFromCheckoutBtn">Create Order</button>
                                         </td>
                                     </tr>
-                                }
                                 </tbody>
                             </table>
                         }

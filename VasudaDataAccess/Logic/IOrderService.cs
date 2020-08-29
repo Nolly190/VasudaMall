@@ -23,5 +23,8 @@ namespace VasudaDataAccess.Logic
         Response<string> DeleteItem(string id, string userId);
         //Response<GetSinglePurchaseItemResponseDTO> GetSinglePurchaseItem(ItemsTable itemsTable, string message, bool status);
         Response<GetSingleItemResponseDTO> GetSingleItem(string id, string userId);
+        
+        Response<string> CreateOrder(string[] itemIds, string userId);
+        Response<SingleOrderDTO> GetSingleOrder(string id, string userId);
     }
 }
