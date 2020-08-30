@@ -221,8 +221,9 @@
                                         <th class="tw3">S/N</th>
                                         <th>Description</th>
                                         <th class="tw6">Quantity</th>
-                                        <th class="tw6">Total Price</th>
+                                        <th class="tw6">Item Price</th>
                                         <th class="tw6">Service Charge</th>
+                                        <th class="tw6">Total Price</th>
                                         <th class="tw10">Type</th>
                                         <th class="tw10">Status</th>
                                         <th class="tw10">Date Created</th>
@@ -238,6 +239,7 @@
                                                 @Util.ReduceDescriptionLength(item.Description)
                                             </td>
                                             <td>@item.Quantity</td>
+                                            <td>@item.ItemsPrice</td>
                                             <td>@item.ServicePrice</td>
                                             <td>@item.TotalPrice</td>
                                             <td>

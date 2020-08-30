@@ -33,6 +33,35 @@ namespace VasudaMall.Controllers
             return View(_orderService.GetAllItemsPage(User.Identity.GetUserId()).Result());
         }
 
+        [HttpPost]
+        public ActionResult CreateOrder(string[] model)
+        {
+            var response = new Response<string>();
+
+            if (model.Count() < 1)
+            {
+                response.Message = "No item was supplied to create order";
+                response.Status = false;
+                return Json(response, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(_orderService.CreateOrder(model, User.Identity.GetUserId()), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult GetSingleOrder(string id)
+        {
+            var response = new Response<string>();
+            if (string.IsNullOrEmpty(id))
+            {
+                response.Message = "Unable to retrieve order....";
+                response.Status = false;
+                return Json(response, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(_orderService.GetSingleItem(id, User.Identity.GetUserId()), JsonRequestBehavior.AllowGet);
+        }
+
         public string ValidateModelState()
         {
             var message = string.Empty;

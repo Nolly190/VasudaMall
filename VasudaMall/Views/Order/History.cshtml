@@ -1,4 +1,6 @@
 ﻿@model VasudaDataAccess.DTOs.OrderHistoryViewModel
+@using VasudaDataAccess.Utility
+@using VasudaDataAccess.Data_Access.Implementation
 
 @{
     Layout = "~/Views/shared/_LayoutDashboard.cshtml";
@@ -39,17 +41,25 @@
                                 <tbody>
                                     @foreach (var order in Model.AllOrders)
                                     {
-                                        var mainDateCreated = $"{order.DateCreated.Year}-{order.DateCreated.Month}-{order.DateCreated.Day}";
                                         <tr>
-                                                <td>@count</td>
-                                                <td>@order.OrderType</td>
-                                                <td>@order.Status</td>
-                                                <td>@order.ShippingFee</td>
-                                                <td>@order.TotalServiceCharge</td>
-                                                <td>@order.TotalPrice</td>
-                                                <td>@mainDateCreated</td>
-                                                <td><button type="submit" class="btn btn-outline-success btn-sm orderHistoryViewMoreBtn" data-type="" data-action="" data-id="@order.Id">View More</button></td>
-                                            </tr>
+                                            <td>@count</td>
+                                            <td>
+                                                @if (order.OrderType == ItemType.PurchaseAndShipping.ToString())
+                                                {
+                                                    <span>Purchase and Shipping</span>
+                                                }
+                                                else
+                                                {
+                                                    @order.OrderType;
+                                                }
+                                            </td>
+                                            <td>@order.Status</td>
+                                            <td>@order.ShippingFee</td>
+                                            <td>@order.TotalServiceCharge</td>
+                                            <td>@order.TotalPrice</td>
+                                            <td>@Util.FormatDate(order.DateCreated)</td>
+                                            <td><button type="submit" class="btn btn-outline-success btn-sm" id="orderHistoryViewMoreBtn" data-type="" data-action="" data-id="@order.Id">View More</button></td>
+                                        </tr>
                                         count++;
                                     }
                                 </tbody>
@@ -63,3 +73,71 @@
         </div>
     </div>
 </section>
+
+@*Order Details modal start*@
+
+<div class="modal fade" id="order-history-info" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Order Details</h4>
+                <button type="button" class="btn btn-outline-success btn-sm" data-dismiss="modal" aria-label="Close">
+                    Close
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-4">
+                        <p>
+                            <strong>Type: </strong>
+                            <span class="text-muted" id="oType"></span>
+                        </p>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <p>
+                            <strong>Status: </strong>
+                            <span class="text-muted" id="oStatus"></span>
+                        </p>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <p>
+                            <strong>Date Created: </strong>
+                            <span class="text-muted" id="oDateCreated"></span>
+                        </p>
+                    </div>
+                </div>
+                <hr />
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <p>
+                            <strong>Shipping Fee: </strong>
+                            <span class="text-muted" id="oShipppingFee"></span>
+                        </p>
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <p>
+                            <strong>Service Price: </strong>
+                            <span class="text-muted" id="oServicePrice"></span>
+                        </p>
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <p>
+                            <strong>Total Price: </strong>
+                            <span class="text-muted" id="oTotalPrice"></span>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-outline-success btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+@*Order Details modal end*@

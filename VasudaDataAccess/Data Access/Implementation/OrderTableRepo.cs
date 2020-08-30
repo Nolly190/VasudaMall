@@ -49,4 +49,9 @@ namespace VasudaDataAccess.Data_Access.Implementation
     {
         AwaitingPayment=1, 
     }
+
+    public enum PurchaseOrderStatus
+    {
+        AwaitingPurchase = 1, Arrived, Completed
+    }
 }
