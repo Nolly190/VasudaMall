@@ -127,6 +127,15 @@ namespace VasudaMall.Controllers
         {
             return Json(_productService.AddSubCategory(model),JsonRequestBehavior.AllowGet);
         }
+        public JsonResult ViewMoreDomesticInfo(string id)
+        {
+            return Json(_orderService.GetDomesticInfo(id),JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult SendPriceQuotation(string id, decimal amount)
+        {
+            return Json(_orderService.PriceQuote(id,amount),JsonRequestBehavior.AllowGet);
+        }
+       
         public new ActionResult Profile()
         {
 

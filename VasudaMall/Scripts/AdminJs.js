@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-
+    var domesticPriceId = "";
 
     $("#SaveProducts").click(function () {
         if (StartValidation("ProductForm")) {
@@ -457,6 +457,120 @@
         $("#EditCategoryModal").modal("show");
     });
 
+
+    $("#ContactUser").click(async function () {
+        const { value: text } = await Swal.fire({
+            input: 'textarea',
+            inputPlaceholder: 'Type your message here...',
+            inputAttributes: {
+                'aria-label': 'Type your message here'
+            },
+            showCancelButton: true
+        })
+
+        if (text) {
+            var details = {};
+            details.Message = text;
+            details.Subject = "Domestic Order Quotation";
+            details.Email = $("#DomeEmail").val();
+            $.ajax({
+                url: "/Admin/SendMail",
+                type: "Post",
+                data: { model: details },
+                error: function (status, xhr) {
+                    $(".Main-loader").modal('hide');
+                },
+                success: function (result) {
+
+                    $(".Main-loader").modal('hide');
+                    if (result.Status === true) {
+                        Swal.fire('Mail Sent');
+                        return;
+                    }
+                    Swal.fire(result.Message);
+                }
+
+            });
+
+        }
+
+    });
+
+    $("#SubmitPrice").click(function () {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "/Admin/SendPriceQuotation",
+                    type: "Post",
+                    data: { amount: $("#DomesticQoutation").val(), id: domesticPriceId },
+                    error: function(status, xhr) {
+                        $(".Main-loader").modal('hide');
+                    },
+                    success: function(result) {
+
+                        $(".Main-loader").modal('hide');
+                        if (result.Status === true) {
+                            Swal.fire('Mail Sent');
+                            return;
+                        }
+                        Swal.fire(result.Message);
+                    }
+
+                });
+
+            }
+        });
+
+
+    });
+
+
+
+    $(".DomesticViewMore").click(function () {
+        var id = $(this).data("id");
+        $.ajax({
+            url: "/Admin/ViewMoreDomesticInfo",
+            type: "Post",
+            data: { id: id },
+            error: function (status, xhr) {
+                $(".Main-loader").modal('hide');
+            },
+            success: function (result) {
+
+                $(".Main-loader").modal('hide');
+                if (result.Status === true) {
+                    domesticPriceId = result._entity.Id;
+                    $("#DomeAddress").val(result._entity.AsNetUser.Address);
+                    $("#DomeName").val(result._entity.AsNetUser.FullName);
+                    $("#DomeEmail").val(result._entity.AspNetUser.Email);
+                    $("#DomePhone").val(result._entity.AspNetUser.PhoneNumber);
+                    $("#DomeWeight").val(result._entity.Weight);
+                    $("#DomeQuantity").val(result._entity.Quantity);
+                    $("#DomeReceAddr").val(result._entity.ReceiverAddress);
+                    $("#DomeReceName").val(result._entity.ReceiverName);
+                    $("#DomeRecePhone").val(result._entity.ReceiverNumber);
+                    $("#DomeSuppAddr").val(result._entity.SenderAddress);
+                    $("#DomeSuppPhone").val(result._entity.SenderPhoneNumber);
+                    $("#DomeSuppName").val(result._entity.SenderName);
+                    $("#DomeCreated").val(result._entity.DateCreated);
+                    $("#DomesticLargeModel").modal("show");
+                    return;
+                }
+                Swal.fire(result.Message);
+            }
+
+        });
+        return;
+
+    });
 
 
     $(".EditVendor").click(function () {

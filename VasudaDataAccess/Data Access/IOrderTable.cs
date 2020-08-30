@@ -10,7 +10,6 @@ namespace VasudaDataAccess.Data_Access
 {
     public interface IOrderTable : IRepository<OrderTable>
     {
-        List<SingleAdminOrder> GetAdminOrders();
     }
     public interface IWithdrawalRequestTable : IRepository<WithdrawalRequestTable>
     {

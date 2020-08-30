@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Configuration;
 using VasudaDataAccess.Data_Access.Implementation;
 using VasudaDataAccess.DTOs;
 using VasudaDataAccess.Model;
+using VasudaDataAccess.Utility;
 
 namespace VasudaDataAccess.Logic.Implementation
 {
@@ -13,11 +15,13 @@ namespace VasudaDataAccess.Logic.Implementation
 
         private UnitOfWork _unitOfWork;
         private Logger logger;
+        private Notification _notification;
 
         public OrderService()
         {
             logger = LogManager.GetCurrentClassLogger();
             _unitOfWork = new UnitOfWork(new VasudaModel());
+            _notification = new Notification();
         }
 
         public Response<AdminOrderDto> GetAllOrderInfo()
@@ -26,8 +30,26 @@ namespace VasudaDataAccess.Logic.Implementation
             try
             {
                 var model = new AdminOrderDto();
-                model.DomesticOrder = new List<ItemsTable>() ;
-                model.UnfinishedOrders = _unitOfWork.OrderTable.GetAdminOrders();
+                var domestic = DomesticOrderStatus.AwaitingQuotation.ToString();
+                model.DomesticOrder = _unitOfWork.ItemsTable.GetAll(x=>x.DomesticItemTable.Status == domestic).ToList() ;
+                model.UnfinishedOrders = _unitOfWork.OrderTable.GetAll(x => !x.IsCompleted).Select(x => new SingleAdminOrder()
+                    {
+                        AspNetUser = x.AspNetUser,
+                        DateCreated = x.DateCreated,
+                        Id = x.Id,
+                        IsActive = x.IsActive,
+                        IsCompleted = x.IsCompleted,
+                        ItemsTables = x.ItemsTables,
+                        NextAction = GetOrderTypeNextAction(x.OrderType, x.Status),
+                        OrderType = x.OrderType,
+                        ShippingFee = x.ShippingFee,
+                        Status = x.Status,
+                    })
+                    .ToList();
+                model.FinishedOrders = _unitOfWork.OrderTable.GetAll(x => x.IsCompleted).ToList();
+                response.SetResult(model);
+                response.Status = true;
+               
             }
             catch (Exception ex)
             {
@@ -63,9 +85,22 @@ namespace VasudaDataAccess.Logic.Implementation
             result.SetResult(model);
             return result;
         }
+        public string GetOrderTypeNextAction(string orderType, string status)
+        {
+            var array = WebConfigurationManager.AppSettings[orderType].ToString().Split(',');
+            var index = Array.FindIndex(array, x => x.Equals(status));
+            if (array.Length >= index + 1)
+            {
+                return array[index + 1];
+            }
+            return array[index];
+        }
+   
 
         public Response<DomesticItemViewModel> GetDomesticItemsPage(string userId)
         {
+          
+
             var result = new Response<DomesticItemViewModel>
             {
                 Status = false,
@@ -540,6 +575,65 @@ namespace VasudaDataAccess.Logic.Implementation
                     return response;
                 }
                 response.SetResult(getOrder.ItemsTables.ToList());
+                response.Status = true;
+            }
+            catch (Exception ex)
+            {
+                response.Message = "Could not retrieve items";
+                logger.Error(ex.ToString());
+            }
+            return response;
+        }
+
+        public Response<ItemsTable> GetDomesticInfo(string id)
+        {
+            var response = new Response<ItemsTable>();
+            response.Status = false;
+            try
+            {
+              //  var test = _unitOfWork.ItemsTable.GetAll();
+              //  var sumt = test.Sum(x => x.ItemsPrice);
+
+              //  var groupBy = test.GroupBy(x => x.Type);
+              //var productList =  groupBy.Where(x => x.Key == "Product").ToList();
+                var getItem = _unitOfWork.ItemsTable.Get(x => x.Id == Guid.Parse(id));
+                if (getItem == null)
+                {
+                    response.Message = "Could not retrieve item";
+                    return response;
+                }
+                response.SetResult(getItem);
+                response.Status = true;
+            }
+            catch (Exception ex)
+            {
+                response.Message = "Could not retrieve items";
+                logger.Error(ex.ToString());
+            }
+            return response;
+        }
+
+        public Response<string> PriceQuote(string id, decimal amount)
+        {
+            var response = new Response<string>();
+            response.Status = false;
+            try
+            {
+                var getItem = _unitOfWork.ItemsTable.Get(x => x.Id == Guid.Parse(id));
+                if (getItem == null)
+                {
+                    response.Message = "Could not retrieve item";
+                    return response;
+                }
+                getItem.ItemsPrice = amount;
+                var newMail = new MailDTO()
+                {
+                    Email = getItem.AspNetUser.Email,
+                    Message = $"The price quotation for your domestic order is $ {amount}, Kindly login to accept the quotation.",
+                    Subject = "Vasuda Price Quotation"
+                };
+                _notification.SendEmail(newMail);
+                _unitOfWork.Complete();
                 response.Status = true;
             }
             catch (Exception ex)

@@ -11,7 +11,9 @@ namespace VasudaDataAccess.Logic
   public interface IOrderService
     {
         Response<List<ItemsTable>> GetOrderItems(string orderId);
+        Response<string> PriceQuote (string id,decimal amount);
         Response<AdminOrderDto> GetAllOrderInfo();
+        Response<ItemsTable> GetDomesticInfo(string id);
         Response<OrderHistoryViewModel> GetAllOrdersHomePage(string userId);
         Response<DomesticItemViewModel> GetDomesticItemsPage(string userId);
         Response<GeneralItemViewModel> GetGeneralItemsPage(string userId);
@@ -23,5 +25,6 @@ namespace VasudaDataAccess.Logic
         Response<string> DeleteItem(string id, string userId);
         //Response<GetSinglePurchaseItemResponseDTO> GetSinglePurchaseItem(ItemsTable itemsTable, string message, bool status);
         Response<GetSingleItemResponseDTO> GetSingleItem(string id, string userId);
+        string GetOrderTypeNextAction(string orderType, string status);
     }
 }
