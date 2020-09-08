@@ -10,6 +10,7 @@ using VasudaDataAccess.Logic.Implementation;
 using VasudaDataAccess.Model;
 using VasudaDataAccess.Provider;
 using VasudaDataAccess.Utility;
+using VasudaMall.Utilities;
 
 namespace VasudaMall.Controllers
 {
@@ -123,6 +124,10 @@ namespace VasudaMall.Controllers
         {
             return Json(_notificationService.SendMail(model),JsonRequestBehavior.AllowGet);
         }
+        public JsonResult ManageAdmin(string userId,bool makeAdmin)
+        {
+           return Json(new UtilityClass().ManageAdmin(userId, makeAdmin), JsonRequestBehavior.AllowGet);
+        }
         public JsonResult AddSubCategory(SubCategoryTable model)
         {
             return Json(_productService.AddSubCategory(model),JsonRequestBehavior.AllowGet);
@@ -131,9 +136,16 @@ namespace VasudaMall.Controllers
         {
             return Json(_orderService.GetDomesticInfo(id),JsonRequestBehavior.AllowGet);
         }
+        public JsonResult GetOrderItems(string orderId)
+        {
+            return Json(_orderService.GetOrderItems(orderId),JsonRequestBehavior.AllowGet);
+        }
         public JsonResult SendPriceQuotation(string id, decimal amount)
         {
             return Json(_orderService.PriceQuote(id,amount),JsonRequestBehavior.AllowGet);
+        } public JsonResult SendChat(string message)
+        {
+            return Json(_notificationService.SendChats("Admin",message),JsonRequestBehavior.AllowGet);
         }
        
         public new ActionResult Profile()
@@ -151,7 +163,7 @@ namespace VasudaMall.Controllers
         }
         public ActionResult Support()
         {
-            return View();
+            return View(_notificationService.GetAllChats(null).Result());
         }
         
         public ActionResult More()

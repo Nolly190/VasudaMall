@@ -1,4 +1,5 @@
 ﻿@using VasudaDataAccess.DTOs
+@using VasudaMall.Utilities
 
 @model  UserDetailsDTO
 @{
@@ -52,11 +53,14 @@
                         <div class="form-group">
                             @{
                                 var activeUser = Model.User.LockoutEnabled == false ? "Active User" : "Banned User";
+                                var disabled = new UtilityClass().GetRole(Model.User.Id).Contains("Admin") ? "Disable" : "";
                             }
                             <label>Active User</label>
                             <input type="text" disabled value="@activeUser" class="form-control" placeholder="Enter ...">
 
                         </div>
+                        
+                        <button class="btn btn-primary" id="MakeAdmin" @disabled data-id="@Model.User.Id">Make Admin</button>
                     </div>
                 </div>
 

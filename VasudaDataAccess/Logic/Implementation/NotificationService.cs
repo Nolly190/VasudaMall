@@ -139,8 +139,8 @@ namespace VasudaDataAccess.Logic.Implementation
                 var emails = model.Email.Split(',');
                 foreach (var item in emails)
                 {
-                    model.Email = item;
-                    var user = _unitOfWork.AspNetUser.Get(x => x.Email.ToLower() == item.ToLower());
+                    model.Email = item.ToLower();
+                    var user = _unitOfWork.AspNetUser.Get(x => x.Email.ToLower() == model.Email);
                     model.Name = user?.FullName.Split(' ')[0];
                     var result = new Notification().SendEmail(model);
                     if (!result)
@@ -171,6 +171,16 @@ namespace VasudaDataAccess.Logic.Implementation
                 logger.Error(ex.ToString());
             }
             return response;
+        }
+
+        public Response<List<SupportTable>> GetAllChats(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Response<string> SendChats(string userId, string message)
+        {
+            throw new NotImplementedException();
         }
     }
 }

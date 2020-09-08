@@ -56,6 +56,7 @@ namespace VasudaDataAccess.Logic.Implementation
                 model.NairaBal = getRate != null ? (Math.Round((userInfo.Balance * getRate.Rate), 2)).ToString() : "0";
                 model.SystemAccounts = _unitOfWork.SystemAccountTable.GetAll(x=>x.IsActive).ToList();
                 result.Status = true;
+                result.SetResult(model);
             }
             catch (Exception ex)
             {
@@ -376,7 +377,8 @@ namespace VasudaDataAccess.Logic.Implementation
                else
                {
                    response.Message = makePayment._entity.message;
-               }
+                  
+                }
             }
             catch (Exception ex)
             {
@@ -433,6 +435,7 @@ namespace VasudaDataAccess.Logic.Implementation
             catch (Exception ex)
             {
                 logger.Error(ex.ToString());
+
             }
 
             return response;

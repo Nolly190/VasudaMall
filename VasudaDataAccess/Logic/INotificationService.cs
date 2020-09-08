@@ -16,5 +16,8 @@ namespace VasudaDataAccess.Logic
         Response<AdminNotificationViewModel> AdminGetAllNotifications();
         Response<string> SendMail(MailDTO model);
 
+        Response<List<SupportTable>> GetAllChats(string userId);
+        Response<string> SendChats(string userId,string message);
+
     }
 }

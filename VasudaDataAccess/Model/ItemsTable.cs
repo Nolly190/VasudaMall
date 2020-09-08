@@ -37,6 +37,7 @@ namespace VasudaDataAccess.Model
         public Nullable<decimal> ServicePrice { get; set; }
         public bool IsActive { get; set; }
         public System.DateTime DateCreated { get; set; }
+        public string Title { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual DomesticItemTable DomesticItemTable { get; set; }

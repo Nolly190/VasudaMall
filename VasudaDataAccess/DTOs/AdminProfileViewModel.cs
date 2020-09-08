@@ -10,5 +10,6 @@ namespace VasudaDataAccess.DTOs
     public class AdminProfileViewModel
     {
         public List<AspNetUser> Users { get; set; }
+        public List<AspNetUser> Admins { get; set; }
     }
 }
