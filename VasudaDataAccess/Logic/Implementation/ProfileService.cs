@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.EntityFramework;
 using VasudaDataAccess.Data_Access.Implementation;
 using VasudaDataAccess.DTOs;
 using VasudaDataAccess.Model;
@@ -33,7 +34,7 @@ namespace VasudaDataAccess.Logic.Implementation
             {
                
                 var accountName = _paymentService.GetValidAccountName(model.BankName, model.AccountNumber);
-                var getBank = _unitOfWork.BankTable.Get(x => x.IsActive && x.BankCode == model.BankName);
+                var getBank = _unitOfWork.BankTable.Get(x => x.IsActive && x.BankCode == model.BankName);;
                 if (!accountName.Status)
                 {
                     response.Message = "Account name could not be resolved";
@@ -192,11 +193,13 @@ namespace VasudaDataAccess.Logic.Implementation
 
             var model = new AdminProfileViewModel
             {
-                Users = new List<AspNetUser>()
+                Users = new List<AspNetUser>(),
+                Admins = new List<AspNetUser>()
             };
             try
             {
                 model.Users = _unitOfWork.AspNetUser.GetAll().ToList();
+                model.Admins = _unitOfWork.AspNetUser.GetAll().ToList();
                 response.Message = "Successfully retrieved all users";
                 response.Status = true;
                 response.SetResult(model);
@@ -236,5 +239,6 @@ namespace VasudaDataAccess.Logic.Implementation
             }
             return response;
         }
+
     }
 }

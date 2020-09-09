@@ -35,7 +35,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="CompleteOrderTable" class="table table-bordered table-striped table-responsive-lg">
+                            <table id="CompleteOrderTable" class="table table-bordered table-striped table-responsive">
                                 <thead>
                                 <tr>
                                     <th>UserName</th>
@@ -98,8 +98,6 @@
                                 <thead>
                                 <tr>
                                     <th>UserName</th>
-                                    <th>Email</th>
-                                    <th>Location</th>
                                     <th>Phone Number</th>
                                     <th>Type</th>
                                     <th>Total Amount</th>
@@ -108,6 +106,7 @@
                                     <th>Is Completed</th>
                                     <th>Date Created</th>
                                     <th>Options</th>
+                                    <th>Next Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -115,8 +114,6 @@
                                 {
                                     <tr>
                                         <td>@item.AspNetUser.FullName</td>
-                                        <td>@item.AspNetUser.Email</td>
-                                        <td>@item.AspNetUser.Address</td>
                                         <td>@item.AspNetUser.PhoneNumber</td>
                                         <td>@item.OrderType</td>
                                         <td>@item.TotalPrice</td>
@@ -124,7 +121,8 @@
                                         <td>@item.Status</td>
                                         <td>@item.IsCompleted</td>
                                         <td>@item.DateCreated.ToString("f")</td>
-                                        <td><button>View Details</button>| <button>@item.NextAction</button> </td>
+                                        <td><button data-id="@item.Id"  class="btn btn-success ViewOrderItems">View</button> </td>
+                                        <td> <button data-id="@item.Id" data-status="@item.Status"  class="btn btn-primary NextAction">@item.NextAction</button> </td>
                                     </tr>
 
                                 }
@@ -145,7 +143,7 @@
 
         </div>
                    
-        <div class="card-body" id="DomesticOrders">
+        <div class="card-body" id="DomesticOrders" style="display: none" >
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -157,16 +155,12 @@
                             <table id="UserOrderTable" class="table table-bordered table-striped table-responsive-lg">
                                 <thead>
                                 <tr>
-                                    <th>Type</th>
-                                    <th>Sender Name</th>
-                                    <th>Sender Phone</th>
-                                    <th>Sender Address</th>
-                                    <th>Receiver Name</th>
-                                    <th>Receiver Phone</th>
-                                    <th>Receiver Address</th>
+                                    <th>Name</th>
+                                    <th>Phone</th>
                                     <th>Description</th>
                                     <th>Weight</th>
                                     <th>Quantity</th>
+                                    <th>Date Created</th>
                                     <th>Options</th>
                                 </tr>
                                 </thead>
@@ -176,16 +170,12 @@
                                 {
                                     <tr>
                                         <td>@item.AspNetUser.FullName</td>
-                                        <td>@item.AspNetUser.Email</td>
-                                        <td>@item.AspNetUser.Address</td>
                                         <td>@item.AspNetUser.PhoneNumber</td>
-                                        <td></td>
-                                        <td>@item.TotalPrice</td>
-                                        <td></td>
-                                        <td>@item.Status</td>
-                                        <td></td>
-                                        <td>@item.DateCreated.ToString("f")</td>
-                                        <td><button>View Details</button> </td>
+                                        <td>@item.Description</td>
+                                        <td>@item.DomesticItemTable.Weight</td>
+                                        <td>@item.DomesticItemTable.Quantity</td>
+                                      <td>@item.DateCreated.ToString("f")</td>
+                                      <td> <button class="btn btn-primary DomesticViewMore" data-id="@item.Id">View Details</button>  
                                     </tr>
 
                                 }
@@ -213,20 +203,82 @@
 </section>
 
 
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg" id="DomesticLargeModel" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
+                <h5 class="modal-title">Domestic Order</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Modal body text goes here.</p>
+                <div class="row">
+                    <div class="form-group">
+                        <label class="col-4">Name:<label id="DomeName"></label></label>
+                        <label class="col-4">Email:<label id="DomeEmail"></label></label>
+                        <label class="col-3">Phone:<label id="DomePhone"></label></label>
+                        <label class="col-6">Address:<label id="DomeAddress"></label></label>
+                        <label class="col-5">Supplier Name:<label id="DomeSuppName"></label></label>
+                        <label class="col-3">Supplier Address:<label id="DomeSuppAddr"></label></label>
+                        <label class="col-3">Supplier Phone:<label id="DomeSuppPhone"></label></label>
+                        <label class="col-3">Receiver Name:<label id="DomeReceName"></label></label>
+                        <label class="col-3">Receiver Address:<label id="DomeReceAddr"></label></label>
+                        <label class="col-3">Receiver Phone:<label id="DomeRecePhone"></label></label>
+                        <label class="col-2">Weight:<label id="DomeWeight"></label></label>
+                        <label class="col-3">Quantity:<label id="DomeQuantity"></label></label>
+                        <label class="col-3">Date Created:<label id="DomeCreated"></label></label>
+                        <label class="col-3">Price Quotation:<input type="number" class="form-control" id="DomesticQoutation"></label>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" id="ContactUser">Contact User</button>
+                <button type="button" class="btn btn-primary" id="SubmitPrice">Save Quotation</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="OrderModel" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Order</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group">
+                        <label class="col-4">Name:<label id="OrderName"></label></label>
+                        <label class="col-4">Email:<label id="OrderEmail"></label></label>
+                        <label class="col-3">Phone:<label id="OrderPhone"></label></label>
+                        <label class="col-6">Address:<label id="OrderAddress"></label></label>
+                        <label class="col-5">Order Type:<label id="OrderType"></label></label>
+                        <label class="col-5">Status<label id="OrderStatus"></label></label>
+                        <table class="table table-bordered table-responsive table-striped">
+                            <thead><tr>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Type</th>
+                                <th>Quantity</th>
+                                <th>Items Price</th>
+                                <th>Service Price</th>
+                                <th>Total Price</th>
+                                <th>Options</th>
+                            </tr></thead>
+                            <tbody id="ItemsTableDiv">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="ContactUser">Contact User</button>
+                <button type="button" class="btn btn-primary" id="SubmitPrice">Save Quotation</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>

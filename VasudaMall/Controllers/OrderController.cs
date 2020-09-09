@@ -34,7 +34,7 @@ namespace VasudaMall.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateOrder(string[] model)
+        public ActionResult CreateGeneralOrder(string[] model)
         {
             var response = new Response<string>();
 
@@ -45,7 +45,7 @@ namespace VasudaMall.Controllers
                 return Json(response, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(_orderService.CreateOrder(model, User.Identity.GetUserId()), JsonRequestBehavior.AllowGet);
+            return Json(_orderService.CreateGeneralOrder(model, User.Identity.GetUserId()), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

@@ -33,4 +33,9 @@ namespace VasudaDataAccess.Data_Access.Implementation
     {
         Pending = 1, Completed, Cancelled, Deleted, Rejected, Closed
     }
+
+    
+    
+    //<add key = "Purchase" value="Awaiting Purchase,Arrived,Completed,Cancel" />
+    //<add key = "Domestic" value=" AwaitingQuotation,AwaitingPrice, AcceptedQuotation,Processing,Shipped,Completed,RejectedQuotation,Cancel" />
 }

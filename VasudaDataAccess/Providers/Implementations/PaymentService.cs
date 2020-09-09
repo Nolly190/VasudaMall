@@ -255,6 +255,7 @@ namespace VasudaDataAccess.Providers.Implementations
                 var FlutterwaveVerifyResponse = JsonConvert.DeserializeObject<FlutterwaveResponse<TransferData>>(responseStr.Content);
                 response.Status = true;
                 response.SetResult(FlutterwaveVerifyResponse);
+                logger.Info(responseStr.Content);
             }
             catch (Exception ex)
             {

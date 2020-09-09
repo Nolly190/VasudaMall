@@ -83,7 +83,7 @@
         $('#items-to-confirm-checkout').modal('hide');
         $(".Main-loader").show();
         $.ajax({
-            url: "/Order/CreateOrder",
+            url: "/Order/CreateGeneralOrder",
             type: "Post",
             data: { model: allSelected },
             error: function (status, xhr) {

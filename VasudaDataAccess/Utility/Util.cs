@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.ModelBinding;
 using VasudaDataAccess.Data_Access.Implementation;
 
 namespace VasudaDataAccess.Utility
 {
     public class Util
     {
+      
         public static bool ValidateUrl(string urlName)
         {
             return Uri.TryCreate(urlName, UriKind.Absolute, out Uri uriResult) &&

@@ -393,7 +393,8 @@ namespace VasudaDataAccess.Logic.Implementation
                else
                {
                    response.Message = makePayment._entity.message;
-               }
+                  
+                }
             }
             catch (Exception ex)
             {
@@ -450,6 +451,7 @@ namespace VasudaDataAccess.Logic.Implementation
             catch (Exception ex)
             {
                 logger.Error(ex.ToString());
+
             }
 
             return response;

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Configuration;
 using VasudaDataAccess.Data_Access.Implementation;
 using VasudaDataAccess.DTOs;
 using VasudaDataAccess.Model;
@@ -9,16 +10,19 @@ using VasudaDataAccess.Utility;
 
 namespace VasudaDataAccess.Logic.Implementation
 {
-    public class OrderService : IOrderService
+    public class
+        OrderService : IOrderService
     {
 
         private UnitOfWork _unitOfWork;
         private Logger logger;
+        private Notification _notification;
 
         public OrderService()
         {
             logger = LogManager.GetCurrentClassLogger();
             _unitOfWork = new UnitOfWork(new VasudaModel());
+            _notification = new Notification();
         }
 
         public Response<AdminOrderDto> GetAllOrderInfo()
@@ -27,8 +31,26 @@ namespace VasudaDataAccess.Logic.Implementation
             try
             {
                 var model = new AdminOrderDto();
-                model.DomesticOrder = new List<ItemsTable>() ;
-                model.UnfinishedOrders = _unitOfWork.OrderTable.GetAdminOrders();
+                var domestic = DomesticOrderStatus.AwaitingQuotation.ToString();
+                model.DomesticOrder = _unitOfWork.ItemsTable.GetAll(x => x.DomesticItemTable.Status == domestic && x.IsActive).ToList();
+                model.UnfinishedOrders = _unitOfWork.OrderTable.GetAll(x => !x.IsCompleted && x.IsActive).Select(x => new SingleAdminOrder()
+                {
+                    AspNetUser = x.AspNetUser,
+                    DateCreated = x.DateCreated,
+                    Id = x.Id,
+                    IsActive = x.IsActive,
+                    IsCompleted = x.IsCompleted,
+                    ItemsTables = x.ItemsTables,
+                    NextAction = GetOrderTypeNextAction(x.OrderType, x.Status),
+                    OrderType = x.OrderType,
+                    ShippingFee = x.ShippingFee,
+                    Status = x.Status,
+                })
+                    .ToList();
+                model.FinishedOrders = _unitOfWork.OrderTable.GetAll(x => x.IsCompleted && x.IsActive).ToList();
+                response.SetResult(model);
+                response.Status = true;
+
             }
             catch (Exception ex)
             {
@@ -64,9 +86,22 @@ namespace VasudaDataAccess.Logic.Implementation
             result.SetResult(model);
             return result;
         }
+        public string GetOrderTypeNextAction(string orderType, string status)
+        {
+            var array = WebConfigurationManager.AppSettings[orderType].ToString().Split(',');
+            var index = Array.FindIndex(array, x => x.Equals(status));
+            if (array.Length >= index + 1)
+            {
+                return array[index + 1];
+            }
+            return array[index];
+        }
+
 
         public Response<DomesticItemViewModel> GetDomesticItemsPage(string userId)
         {
+
+
             var result = new Response<DomesticItemViewModel>
             {
                 Status = false,
@@ -81,8 +116,8 @@ namespace VasudaDataAccess.Logic.Implementation
             try
             {
                 model.DomesticItems = _unitOfWork.ItemsTable.GetAll(
-                                        x => x.UserId == userId && x.IsActive == true && 
-                                        x.Type == ItemType.Domestic.ToString() && 
+                                        x => x.UserId == userId && x.IsActive == true &&
+                                        x.Type == ItemType.Domestic.ToString() &&
                                         x.Status == ItemStatus.Pending.ToString())
                                         .OrderByDescending(x => x.DateCreated).ToList();
 
@@ -117,7 +152,7 @@ namespace VasudaDataAccess.Logic.Implementation
             {
                 List<VendorTable> vendorTable = new List<VendorTable>();
 
-                model.GeneralItems = _unitOfWork.ItemsTable.GetAll(x => x.UserId == userId && x.IsActive == true && 
+                model.GeneralItems = _unitOfWork.ItemsTable.GetAll(x => x.UserId == userId && x.IsActive == true &&
                                         (x.Type != ItemType.Domestic.ToString() && x.Type != ItemType.Product.ToString())
                                           && x.Status != ItemStatus.Closed.ToString())
                                         .OrderByDescending(x => x.DateCreated).ToList();
@@ -288,9 +323,10 @@ namespace VasudaDataAccess.Logic.Implementation
 
             try
             {
-                var itemPrice = model.UnitPrice * model.Quantity;
-                var serviceCharge = itemPrice * Convert.ToDecimal(0.03);
-                var totalPrice = itemPrice + serviceCharge;
+                var totalPrice = model.UnitPrice * model.Quantity;
+                var serviceCharge = totalPrice * Convert.ToDecimal(0.03);
+                var overrallCharge = totalPrice + serviceCharge;
+
 
                 var vendor = _unitOfWork.VendorTable.GetAll(x => x.Name == model.VendorName && x.IsActive == true).FirstOrDefault();
                 if (vendor == null)
@@ -310,11 +346,11 @@ namespace VasudaDataAccess.Logic.Implementation
                     VendorId = vendor.Id,
                     ProductLink = model.ProductLink,
                     IsActive = true,
-                    ItemsPrice = itemPrice,
                     ServicePrice = serviceCharge,
                     TotalPrice = totalPrice,
                     DateCreated = DateTime.Now
                 };
+
 
                 _unitOfWork.ItemsTable.Add(itemModel);
                 _unitOfWork.Complete();
@@ -518,6 +554,7 @@ namespace VasudaDataAccess.Logic.Implementation
                     var domestic = _unitOfWork.DomesticItemTable.Get(x => x.Id == item.Id);
                     model.DomesticItem = new SingleDomesticItemDTO
                     {
+
                         Type = item.Type,
                         Title = item.Title,
                         Description = item.Description,
@@ -547,23 +584,40 @@ namespace VasudaDataAccess.Logic.Implementation
             return response;
         }
 
-        public Response<List<ItemsTable>> GetOrderItems(string orderId)
+        public Response<OrderItemDTO> GetOrderItems(string orderId)
         {
-            var response = new Response<List<ItemsTable>>();
+            var response = new Response<OrderItemDTO>();
             response.Status = false;
             try
             {
-                var getOrder = _unitOfWork.OrderTable.Get(
-                                x => x.Id == Guid.Parse(orderId) && 
-                                x.IsActive == true && 
-                                x.Status != ItemStatus.Deleted.ToString());
+                var id = Guid.Parse(orderId);
+                var model = new OrderItemDTO();
+                model.Order = _unitOfWork.OrderTable.GetAll(x => x.Id == id).Select(x => new SingleOrderDTO()
+                {
+                    Status = x.Status,
+                    UserId = x.UserId,
+                    TotalPrice = x.TotalPrice,
+                    TotalServiceCharge = x.TotalServiceCharge
 
-                if (getOrder == null)
+                })
+                    .SingleOrDefault();
+
+                if (model.Order == null)
                 {
                     response.Message = "Could not retrieve order";
                     return response;
                 }
-                response.SetResult(getOrder.ItemsTables.ToList());
+                _unitOfWork._dbContext.Configuration.ProxyCreationEnabled = false;
+                var user = _unitOfWork.AspNetUser.Get(model.Order.UserId);
+                model.FullName = user.FullName;
+                model.PhoneNumber = user.PhoneNumber;
+                model.Address = user.Address;
+                model.Email = user.Email;
+                var item = _unitOfWork.ItemsTable.GetAll().Select(x => new { x.Type, x.Status, x.ServicePrice }).Distinct().ToList();
+                var item2 = _unitOfWork.ItemsTable.GetAll().Select(x => x.Type).ToList();
+                model.Item = _unitOfWork.ItemsTable.GetAll(x => x.OrderId == id).ToList();
+
+                response.SetResult(model);
                 response.Status = true;
             }
             catch (Exception ex)
@@ -574,7 +628,216 @@ namespace VasudaDataAccess.Logic.Implementation
             return response;
         }
 
-        public Response<string> CreateOrder(string[] itemIds, string userId)
+        public Response<DomesticOrderDTO> GetDomesticInfo(string id)
+        {
+            var response = new Response<DomesticOrderDTO>();
+            response.Status = false;
+            try
+            {
+                //  var test = _unitOfWork.ItemsTable.GetAll();
+                //  var sumt = test.Sum(x => x.ItemsPrice);
+
+                //  var groupBy = test.GroupBy(x => x.Type);
+                //var productList =  groupBy.Where(x => x.Key == "Product").ToList();
+                var itemId = Guid.Parse(id);
+                var getItem = _unitOfWork.ItemsTable.Get(x => x.Id == itemId);
+                if (getItem == null)
+                {
+                    response.Message = "Could not retrieve item";
+                    return response;
+                }
+
+                var newmodel = new DomesticOrderDTO()
+                {
+                    id = getItem.Id.ToString(),
+                    Address = getItem.AspNetUser.Address,
+                    DateCreated = getItem.DateCreated.ToString("f"),
+                    Email = getItem.AspNetUser.Email,
+                    FullName = getItem.AspNetUser.FullName,
+                    PhoneNumber = getItem.AspNetUser.PhoneNumber,
+                    Quantity = getItem.DomesticItemTable.Quantity,
+                    Weight = getItem.DomesticItemTable.Weight,
+                    ReceiverAddress = getItem.DomesticItemTable.ReceiverAddress,
+                    ReceiverName = getItem.DomesticItemTable.ReceiverName,
+                    ReceiverNumber = getItem.DomesticItemTable.ReceiverNumber,
+                    SenderAddress = getItem.DomesticItemTable.SenderAddress,
+                    SenderName = getItem.DomesticItemTable.SenderName,
+                    SenderPhoneNumber = getItem.DomesticItemTable.SenderPhoneNumber
+                };
+                response.SetResult(newmodel);
+                response.Status = true;
+            }
+            catch (Exception ex)
+            {
+                response.Message = "Could not retrieve items";
+                logger.Error(ex.ToString());
+            }
+            return response;
+        }
+
+        public Response<string> PriceQuote(string id, decimal amount)
+        {
+            var response = new Response<string>();
+            response.Status = false;
+            try
+            {
+                var item = Guid.Parse(id);
+                var getItem = _unitOfWork.ItemsTable.Get(x => x.Id == item);
+                if (getItem == null)
+                {
+                    response.Message = "Could not retrieve item";
+                    return response;
+                }
+                getItem.TotalPrice = amount;
+                getItem.DomesticItemTable.Status = DomesticOrderStatus.AwaitingUserAcceptance.ToString();
+                var newMail = new MailDTO()
+                {
+                    Email = getItem.AspNetUser.Email,
+                    Message = $"The price quotation for your domestic order is $ {amount}, Kindly login to accept the quotation.",
+                    Subject = "Vasuda Price Quotation"
+                };
+                if (_notification.SendEmail(newMail))
+                {
+                    var insertNotification = new NotificationTable()
+                    {
+                        DateCreated = DateTime.UtcNow.AddHours(1),
+                        Id = Guid.NewGuid().ToString(),
+                        IsRead = false,
+                        Message = newMail.Message,
+                        Subject = newMail.Subject,
+                        UserId = getItem.AspNetUser.Id
+                    };
+                    _unitOfWork.NotificationTable.Add(insertNotification);
+                }
+                _unitOfWork.Complete();
+                response.Status = true;
+            }
+            catch (Exception ex)
+            {
+                response.Message = "Could not retrieve items";
+                logger.Error(ex.ToString());
+            }
+            return response;
+        }
+        public Response<string> ProcessOrder(string orderId, string amount)
+        {
+            var response = new Response<string>();
+            response.Status = false;
+            try
+            {
+                var id = Guid.Parse(orderId);
+                var getOrder = _unitOfWork.OrderTable.Get(x => x.Id == id);
+                if (getOrder == null)
+                {
+                    response.Message = "Could not retrieve order";
+                    return response;
+                }
+                response.Status = true;
+            }
+            catch (Exception ex)
+            {
+                response.Message = "Could not retrieve items";
+                logger.Error(ex.ToString());
+            }
+            return response;
+        }
+
+        public Response<string> ProcessDomesticItem(string id, string action, string userId)
+        {
+            var response = new Response<string>()
+            {
+                Message = "Unable to make initial payment and create order for this item. Try again",
+                Status = false
+            };
+
+            try
+            {
+                var Id = Guid.Parse(id);
+                var item = _unitOfWork.ItemsTable.Get(x => x.UserId == userId && x.Id == Id && x.Status == ItemStatus.Pending.ToString());
+                if (item == null)
+                {
+                    return response;
+                }
+
+                var domestic = _unitOfWork.DomesticItemTable.Get(x => x.Id == item.Id &&
+                                x.Status == DomesticOrderStatus.AwaitingUserAcceptance.ToString());
+                if (domestic == null)
+                {
+                    return response;
+                }
+
+                if (action == "Accepted")
+                {
+                    var user = _unitOfWork.AspNetUser.Get(userId);
+                    if (user == null)
+                    {
+                        return response;
+                    }
+
+                    if (user.Balance < item.TotalPrice)
+                    {
+                        response.Message = "Insufficient fund";
+                        return response;
+                    }
+
+                    var order = new OrderTable
+                    {
+                        Id = Guid.NewGuid(),
+                        OrderType = ItemType.Domestic.ToString(),
+                        Status = DomesticOrderStatus.Processing.ToString(),
+                        UserId = userId,
+                        IsActive = true,
+                        IsCompleted = false,
+                        DateCreated = DateTime.Now,
+                        TotalPrice = item.TotalPrice,
+                        TotalServiceCharge = 0,
+                        ShippingFee = 0
+                    };
+                    _unitOfWork.OrderTable.Add(order);
+
+                    user.Balance -= item.TotalPrice;
+                    _unitOfWork.AspNetUser.Update(user);
+
+                    var payment = new PaymentHistoryTable()
+                    {
+                        UserId = item.UserId,
+                        Amount = item.TotalPrice,
+                        DateCreated = DateTime.Now,
+                        Purpose = PaymentHistoryPurposeEnum.DomesticOrderProcessing.ToString(),
+                        Id = Guid.NewGuid(),
+                        Status = PaymentHistoryStatus.Completed.ToString(),
+                        TransactionType = PaymentHistoryType.Debit.ToString()
+                    };
+                    _unitOfWork.PaymentHistoryTable.Add(payment);
+
+                    domestic.Status = DomesticOrderStatus.Processing.ToString();
+                    _unitOfWork.DomesticItemTable.Update(domestic);
+
+                    item.Status = ItemStatus.Completed.ToString();
+                    item.OrderId = order.Id;
+                    _unitOfWork.ItemsTable.Update(item);
+
+                    response.Message = "Domestic Order created successfully!";
+                }
+                else if (action == "Rejected")
+                {
+                    domestic.Status = DomesticOrderStatus.RejectedQuotation.ToString();
+                    _unitOfWork.DomesticItemTable.Update(domestic);
+
+                    response.Message = "Domestic order rejected!";
+                }
+
+                _unitOfWork.Complete();
+                response.Status = true;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+            }
+            return response;
+        }
+
+        public Response<string> CreateGeneralOrder(string[] itemIds, string userId)
         {
             var response = new Response<string>
             {
@@ -608,10 +871,10 @@ namespace VasudaDataAccess.Logic.Implementation
                 var ProductItem = new List<ItemsTable>();
                 foreach (var itemskey in items.GroupBy(x => x.Type).ToList())
                 {
-                    PurchaseItem.AddRange(itemskey.Where(x=>x.Type== ItemType.Purchase.ToString()).ToList());
-                    PurchaseAndShippingItem.AddRange(itemskey.Where(x=>x.Type== ItemType.PurchaseAndShipping.ToString()).ToList());
-                    ProductItem.AddRange(itemskey.Where(x=>x.Type== ItemType.Product.ToString()).ToList());
-                }              
+                    PurchaseItem.AddRange(itemskey.Where(x => x.Type == ItemType.Purchase.ToString()).ToList());
+                    PurchaseAndShippingItem.AddRange(itemskey.Where(x => x.Type == ItemType.PurchaseAndShipping.ToString()).ToList());
+                    ProductItem.AddRange(itemskey.Where(x => x.Type == ItemType.Product.ToString()).ToList());
+                }
 
                 var ProductOrder = new OrderTable();
                 var PurchaseOrder = new OrderTable();
@@ -783,101 +1046,6 @@ namespace VasudaDataAccess.Logic.Implementation
                 response.Status = true;
                 response.Message = "Order retrieved successfully";
                 response.SetResult(model);
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex.ToString());
-            }
-            return response;
-        }
-
-        public Response<string> ProcessDomesticItem(string id, string action, string userId)
-        {
-            var response = new Response<string>()
-            {
-                Message = "Unable to make initial payment and create order for this item. Try again",
-                Status = false
-            };
-
-            try
-            {
-                var Id = Guid.Parse(id);
-                var item = _unitOfWork.ItemsTable.Get(x => x.UserId == userId && x.Id == Id && x.Status == ItemStatus.Pending.ToString());
-                if (item == null)
-                {
-                    return response;
-                }
-
-                var domestic = _unitOfWork.DomesticItemTable.Get(x => x.Id == item.Id && 
-                                x.Status == DomesticOrderStatus.AwaitingUserAcceptance.ToString());
-                if (domestic == null)
-                {
-                    return response;
-                }
-
-                if (action == "Accepted")
-                {
-                    var user = _unitOfWork.AspNetUser.Get(userId);
-                    if (user == null)
-                    {
-                        return response;
-                    }
-
-                    if (user.Balance < item.TotalPrice)
-                    {
-                        response.Message = "Insufficient fund";
-                        return response;
-                    }
-
-                    var order = new OrderTable
-                    {
-                        Id = Guid.NewGuid(),
-                        OrderType = ItemType.Domestic.ToString(),
-                        Status = DomesticOrderStatus.Processing.ToString(),
-                        UserId = userId,
-                        IsActive = true,
-                        IsCompleted = false,
-                        DateCreated = DateTime.Now,
-                        TotalPrice = item.TotalPrice,
-                        TotalServiceCharge = 0,
-                        ShippingFee = 0
-                    };
-                    _unitOfWork.OrderTable.Add(order);
-
-                    user.Balance -= item.TotalPrice;
-                    _unitOfWork.AspNetUser.Update(user);
-
-                    var payment = new PaymentHistoryTable()
-                    {
-                        UserId = item.UserId,
-                        Amount = item.TotalPrice,
-                        DateCreated = DateTime.Now,
-                        Purpose = PaymentHistoryPurposeEnum.DomesticOrderProcessing.ToString(),
-                        Id = Guid.NewGuid(),
-                        Status = PaymentHistoryStatus.Completed.ToString(),
-                        TransactionType = PaymentHistoryType.Debit.ToString()
-                    };
-                    _unitOfWork.PaymentHistoryTable.Add(payment);
-
-                    domestic.Status = DomesticOrderStatus.Processing.ToString();
-                    _unitOfWork.DomesticItemTable.Update(domestic);
-
-                    item.Status = ItemStatus.Completed.ToString();
-                    item.OrderId = order.Id;
-                    _unitOfWork.ItemsTable.Update(item);
-
-                    response.Message = "Domestic Order created successfully!";
-                }
-                else if (action == "Rejected")
-                {
-                    domestic.Status = DomesticOrderStatus.RejectedQuotation.ToString();
-                    _unitOfWork.DomesticItemTable.Update(domestic);
-
-                    response.Message = "Domestic order rejected!";
-                }
-
-                _unitOfWork.Complete();
-                response.Status = true;
             }
             catch (Exception ex)
             {
