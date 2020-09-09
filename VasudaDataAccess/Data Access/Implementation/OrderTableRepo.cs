@@ -53,18 +53,24 @@ namespace VasudaDataAccess.Data_Access.Implementation
         {
             get
             {
-                return dbcontext as DbContext;
+                return dbcontext;
             }
         }
-    }
-
-    public enum OrderStatus
-    {
-        AwaitingPayment=1, 
     }
 
     public enum PurchaseOrderStatus
     {
         AwaitingPurchase = 1, Arrived, Completed
+    }
+    
+    public enum PurchaseAndShippingOrderStatus
+    {
+        AwaitingPurchase = 1, AwaitingShippingQuotation, AwaitingShippingPayment, AwaitingArrival, Completed
+    }
+
+    public enum DomesticOrderStatus
+    {
+        AwaitingQuotation = 1, AwaitingUserAcceptance,
+        Processing, AwaitingShippingPayment, AwaitingArrival, Completed, RejectedQuotation
     }
 }

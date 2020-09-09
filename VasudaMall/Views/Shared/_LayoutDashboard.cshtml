@@ -261,6 +261,12 @@
                     <div class="row">
                         <div class="col-12">
                             <p>
+                                <strong>Title: </strong>
+                                <span class="text-muted" id="pTitle"></span>
+                            </p>
+                        </div>
+                        <div class="col-12">
+                            <p>
                                 <strong>Description: </strong>
                                 <span class="text-muted" id="pItemDescription"></span>
                             </p>
@@ -384,6 +390,12 @@
                     <hr />
 
                     <div class="row">
+                        <div class="col-12">
+                            <p>
+                                <strong>Title: </strong>
+                                <span class="text-muted" id="sTitle"></span>
+                            </p>
+                        </div>
                         <div class="col-12">
                             <p>
                                 <strong>Description: </strong>
@@ -517,6 +529,12 @@
                     <div class="row">
                         <div class="col-12">
                             <p>
+                                <strong>Title: </strong>
+                                <span class="text-muted" id="psTitle"></span>
+                            </p>
+                        </div>
+                        <div class="col-12">
+                            <p>
                                 <strong>Description: </strong>
                                 <span class="text-muted" id="psItemDescription"></span>
                             </p>
@@ -569,7 +587,7 @@
                                 <span class="text-muted" id="psItemUnitPrice"></span>
                             </p>
                         </div>
-                        <div class="col-sm-6 col-md-">
+                        <div class="col-sm-6 col-md-3">
                             <p>
                                 <strong>Item Price: </strong>
                                 <span class="text-muted" id="psItemItemPrice"></span>
@@ -600,136 +618,6 @@
     </div>
     <!-- /.modal -->
     @*Purchase and Shipping Item modal end*@
-
-    @*Domestic Item modal start*@
-
-    <div class="modal fade" id="domestic-item-info" data-backdrop="static">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Domestic Item Details</h4>
-                    <button type="button" class="btn btn-outline-success btn-sm" data-dismiss="modal" aria-label="Close">
-                        Close
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="row">
-                        <div class="col-sm-12 col-md-6">
-                            <p>
-                                <strong>Sender Name: </strong>
-                                <span class="text-muted" id="dItemSenderName"></span>
-                            </p>
-                        </div>
-                        <div class="col-sm-12 col-md-6">
-                            <p>
-                                <strong>Sender PhoneNumber: </strong>
-                                <span class="text-muted" id="dItemSenderPhoneNumber"></span>
-                            </p>
-                        </div>
-                    </div>
-                    <hr />
-
-                    <div class="row">
-                        <div class="col-12">
-                            <p>
-                                <strong>Sender Address: </strong>
-                                <span class="text-muted" id="dItemSenderAddress"></span>
-                            </p>
-                        </div>
-                    </div>
-                    <hr />
-
-                    <div class="row">
-                        <div class="col-12">
-                            <p>
-                                <strong>Description: </strong>
-                                <span class="text-muted" id="dItemDescription"></span>
-                            </p>
-                        </div>
-                    </div>
-                    <hr />
-
-                    <div class="row">
-                        <div class="col-sm-12 col-md-4">
-                            <p>
-                                <strong>Quantity: </strong>
-                                <span class="text-muted" id="dItemQuantity"></span>
-                            </p>
-                        </div>
-                        <div class="col-sm-12 col-md-4">
-                            <p>
-                                <strong>Weight: </strong>
-                                <span class="text-muted" id="dItemWeight"></span>
-                            </p>
-                        </div>
-                        <div class="col-sm-12 col-md-4">
-                            <p>
-                                <strong>Status: </strong>
-                                <span class="text-muted" id="dItemStatus"></span>
-                            </p>
-                        </div>
-                    </div>
-                    <hr />
-
-                    <div class="row">
-                        <div class="col-sm-12 col-md-6">
-                            <p>
-                                <strong>Receiver Name: </strong>
-                                <span class="text-muted" id="dItemReceiverName"></span>
-                            </p>
-                        </div>
-                        <div class="col-sm-12 col-md-6">
-                            <p>
-                                <strong>Receiver PhoneNumber: </strong>
-                                <span class="text-muted" id="dItemReceiverNumber"></span>
-                            </p>
-                        </div>
-                    </div>
-                    <hr />
-
-                    <div class="row">
-                        <div class="col-12">
-                            <p>
-                                <strong>Receiver Address: </strong>
-                                <span class="text-muted" id="dItemReceiverAddress"></span>
-                            </p>
-                        </div>
-                    </div>
-                    <hr />
-
-                    <div class="row">
-                        <div class="col-sm-12 col-md-6">
-                            <p>
-                                <strong>Date Created: </strong>
-                                <span class="text-muted" id="dItemDateCreated"></span>
-                            </p>
-                        </div>
-                        <div class="col-sm-12 col-md-3">
-                            <p>
-                                <strong>Service Price: </strong>
-                                <span class="text-muted" id="dItemServicePrice"></span>
-                            </p>
-                        </div>
-                        <div class="col-sm-12 col-md-3">
-                            <p>
-                                <strong>Total Price: </strong>
-                                <span class="text-muted" id="dItemTotalPrice"></span>
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-outline-success btn-sm" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-    @*Domestic Item modal end*@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     @Scripts.Render("~/admin-lte/script")

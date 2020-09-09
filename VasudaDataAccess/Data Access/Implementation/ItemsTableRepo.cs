@@ -31,6 +31,6 @@ namespace VasudaDataAccess.Data_Access.Implementation
 
     public enum ItemStatus
     {
-        Pending = 1, Completed, Cancelled
+        Pending = 1, Completed, Cancelled, Deleted, Rejected, Closed
     }
 }

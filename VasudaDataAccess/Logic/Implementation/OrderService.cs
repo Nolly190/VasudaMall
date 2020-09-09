@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using VasudaDataAccess.Data_Access.Implementation;
 using VasudaDataAccess.DTOs;
 using VasudaDataAccess.Model;
+using VasudaDataAccess.Utility;
 
 namespace VasudaDataAccess.Logic.Implementation
 {
@@ -80,7 +80,12 @@ namespace VasudaDataAccess.Logic.Implementation
             };
             try
             {
-                model.DomesticItems = _unitOfWork.ItemsTable.GetAll(x => x.UserId == userId && x.IsActive == true && x.Type == ItemType.Domestic.ToString()).ToList();
+                model.DomesticItems = _unitOfWork.ItemsTable.GetAll(
+                                        x => x.UserId == userId && x.IsActive == true && 
+                                        x.Type == ItemType.Domestic.ToString() && 
+                                        x.Status == ItemStatus.Pending.ToString())
+                                        .OrderByDescending(x => x.DateCreated).ToList();
+
                 model.User = _unitOfWork.AspNetUser.GetUser(userId);
                 result.Status = true;
                 result.Message = "Domestic Order items view model data retrieved successfully";
@@ -112,9 +117,11 @@ namespace VasudaDataAccess.Logic.Implementation
             {
                 List<VendorTable> vendorTable = new List<VendorTable>();
 
-                model.GeneralItems = _unitOfWork.ItemsTable.GetAll(x => x.UserId == userId && x.IsActive == true &&
-                                        (x.Type != ItemType.Domestic.ToString() && x.Type != ItemType.Product.ToString()))
+                model.GeneralItems = _unitOfWork.ItemsTable.GetAll(x => x.UserId == userId && x.IsActive == true && 
+                                        (x.Type != ItemType.Domestic.ToString() && x.Type != ItemType.Product.ToString())
+                                          && x.Status != ItemStatus.Closed.ToString())
                                         .OrderByDescending(x => x.DateCreated).ToList();
+
                 vendorTable = _unitOfWork.VendorTable.GetAll(x => x.IsActive == true).ToList();
                 foreach (var vendor in vendorTable)
                 {
@@ -149,7 +156,7 @@ namespace VasudaDataAccess.Logic.Implementation
             try
             {
                 model.AllItems = _unitOfWork.ItemsTable.GetAll(x => x.UserId == userId && x.IsActive == true && x.Status == ItemStatus.Pending.ToString()).OrderByDescending(x => x.DateCreated).ToList();
-                model.AllItems.RemoveAll(x => x.Type == ItemType.Domestic.ToString() && x.DomesticItemTable.Status != DomesticOrderStatus.AcceptedQuotation.ToString());
+                model.AllItems.RemoveAll(x => x.Type == ItemType.Domestic.ToString());
                 result.Status = true;
                 result.Message = "Items retrieved successfully";
             }
@@ -177,9 +184,14 @@ namespace VasudaDataAccess.Logic.Implementation
                     Id = Guid.NewGuid(),
                     UserId = userId,
                     Description = model.Description,
+                    Title = model.Title,
                     Type = ItemType.Domestic.ToString(),
                     Status = ItemStatus.Pending.ToString(),
                     IsActive = true,
+                    UnitPrice = 0,
+                    ItemsPrice = 0,
+                    TotalPrice = 0,
+                    ServicePrice = 0,
                     DateCreated = DateTime.Now
                 };
 
@@ -228,8 +240,13 @@ namespace VasudaDataAccess.Logic.Implementation
                     UserId = userId,
                     Type = ItemType.Shipping.ToString(),
                     Status = ItemStatus.Pending.ToString(),
+                    Title = model.Title,
                     Description = model.Description,
                     IsActive = true,
+                    UnitPrice = 0,
+                    ItemsPrice = 0,
+                    TotalPrice = 0,
+                    ServicePrice = 0,
                     DateCreated = DateTime.Now
                 };
 
@@ -275,18 +292,6 @@ namespace VasudaDataAccess.Logic.Implementation
                 var serviceCharge = itemPrice * Convert.ToDecimal(0.03);
                 var totalPrice = itemPrice + serviceCharge;
 
-                //var user = _unitOfWork.AspNetUser.Get(userId);
-                //if (user == null)
-                //{
-                //    return response;
-                //}
-
-                //if (user.Balance < overrallCharge)
-                //{
-                //    response.Message = "You do not have sufficient fund for this request";
-                //    return response;
-                //}
-
                 var vendor = _unitOfWork.VendorTable.GetAll(x => x.Name == model.VendorName && x.IsActive == true).FirstOrDefault();
                 if (vendor == null)
                 {
@@ -300,6 +305,7 @@ namespace VasudaDataAccess.Logic.Implementation
                     Status = ItemStatus.Pending.ToString(),
                     UnitPrice = model.UnitPrice,
                     Quantity = model.Quantity,
+                    Title = model.Title,
                     Description = model.Description,
                     VendorId = vendor.Id,
                     ProductLink = model.ProductLink,
@@ -310,10 +316,6 @@ namespace VasudaDataAccess.Logic.Implementation
                     DateCreated = DateTime.Now
                 };
 
-                ////Deduct the fund for the request from the user balance...
-                //user.Balance -= overrallCharge;
-
-                //_unitOfWork.AspNetUser.Update(user);
                 _unitOfWork.ItemsTable.Add(itemModel);
                 _unitOfWork.Complete();
                 response.Status = true;
@@ -354,11 +356,13 @@ namespace VasudaDataAccess.Logic.Implementation
                     Status = ItemStatus.Pending.ToString(),
                     UnitPrice = model.UnitPrice,
                     Quantity = model.Quantity,
+                    Title = model.Title,
                     Description = model.Description,
                     VendorId = vendor.FirstOrDefault().Id,
                     ProductLink = model.ProductLink,
                     IsActive = true,
                     ItemsPrice = itemPrice,
+                    ServicePrice = serviceCharge,
                     TotalPrice = totalPrice,
                     DateCreated = DateTime.Now
                 };
@@ -398,17 +402,18 @@ namespace VasudaDataAccess.Logic.Implementation
             try
             {
                 var Id = Guid.Parse(id);
-                var item = _unitOfWork.ItemsTable.GetAll(x => x.UserId == userId && x.Id == Id).FirstOrDefault();
+                var item = _unitOfWork.ItemsTable.Get(x => x.UserId == userId && x.Id == Id);
                 if (item == null)
                 {
                     return response;
                 }
 
                 item.IsActive = false;
+                item.Status = ItemStatus.Deleted.ToString();
                 _unitOfWork.ItemsTable.Update(item);
                 _unitOfWork.Complete();
                 response.Status = true;
-                response.Message = "Delete was successful";
+                response.Message = "Successfully Deleted Item!";
             }
             catch (Exception ex)
             {
@@ -446,14 +451,15 @@ namespace VasudaDataAccess.Logic.Implementation
                     model.PurchaseItem = new SinglePurchaseItemDTO
                     {
                         Description = item.Description,
+                        Title = item.Title,
                         ProductLink = item.ProductLink,
                         Status = item.Status,
                         Type = item.Type,
                         Quantity = item.Quantity.Value,
-                        UnitPrice = item.UnitPrice.Value,
-                        ServicePrice = item.ServicePrice == null ? 0 : item.ServicePrice.Value,
-                        ItemPrice = item.ItemsPrice == null ? 0 : item.ItemsPrice.Value,
-                        TotalPrice = item.TotalPrice == null ? 0 : item.TotalPrice.Value,
+                        UnitPrice = item.UnitPrice,
+                        ServicePrice = item.ServicePrice,
+                        ItemPrice = item.ItemsPrice,
+                        TotalPrice = item.TotalPrice,
                         VendorName = vendor.Name,
                         DateCreated = item.DateCreated.ToString("dddd, MMMM dd yyyy")
                     };
@@ -466,6 +472,7 @@ namespace VasudaDataAccess.Logic.Implementation
                     {
                         Type = item.Type,
                         Status = item.Status,
+                        Title = item.Title,
                         Description = item.Description,
                         DateCreated = item.DateCreated.ToString("dddd, MMMM dd yyyy"),
                         SenderName = shipping.SenderName,
@@ -476,8 +483,8 @@ namespace VasudaDataAccess.Logic.Implementation
                         ReceiverName = shipping.ReceiverName,
                         ReceiverNumber = shipping.ReceiverNumber,
                         ReceiverAddress = shipping.ReceiverAddress,
-                        ServicePrice = item.ServicePrice == null ? 0 : item.ServicePrice.Value,
-                        TotalPrice = item.TotalPrice == null ? 0 : item.TotalPrice.Value,
+                        ServicePrice = item.ServicePrice,
+                        TotalPrice = item.TotalPrice,
                     };
                 }
 
@@ -488,15 +495,16 @@ namespace VasudaDataAccess.Logic.Implementation
 
                     model.PurchaseAndShippingItem = new SinglePurchaseAndShippingItemDTO
                     {
+                        Title = item.Title,
                         Description = item.Description,
                         ProductLink = item.ProductLink,
                         Status = item.Status,
                         Type = item.Type,
                         Quantity = item.Quantity.Value,
-                        UnitPrice = item.UnitPrice.Value,
-                        ServicePrice = item.ServicePrice == null ? 0 : item.ServicePrice.Value,
-                        ItemPrice = item.ItemsPrice == null ? 0 : item.ItemsPrice.Value,
-                        TotalPrice = item.TotalPrice == null ? 0 : item.TotalPrice.Value,
+                        UnitPrice = item.UnitPrice,
+                        ServicePrice = item.ServicePrice,
+                        ItemPrice = item.ItemsPrice,
+                        TotalPrice = item.TotalPrice,
                         VendorName = vendor.Name,
                         ReceiverName = shipping.ReceiverName,
                         ReceiverNumber = shipping.ReceiverNumber,
@@ -511,6 +519,7 @@ namespace VasudaDataAccess.Logic.Implementation
                     model.DomesticItem = new SingleDomesticItemDTO
                     {
                         Type = item.Type,
+                        Title = item.Title,
                         Description = item.Description,
                         DateCreated = item.DateCreated.ToString("dddd, MMMM dd yyyy"),
                         SenderName = domestic.SenderName,
@@ -521,9 +530,9 @@ namespace VasudaDataAccess.Logic.Implementation
                         ReceiverName = domestic.ReceiverName,
                         ReceiverNumber = domestic.ReceiverNumber,
                         ReceiverAddress = domestic.ReceiverAddress,
-                        Status = domestic.Status,
-                        ServicePrice = item.ServicePrice == null ? 0 : item.ServicePrice.Value,
-                        TotalPrice = item.TotalPrice == null ? 0 : item.TotalPrice.Value,
+                        Status = Util.DomesticStatusEnumConverter((DomesticOrderStatus)Enum.Parse(typeof(DomesticOrderStatus), domestic.Status)),
+                        ServicePrice = item.ServicePrice,
+                        TotalPrice = item.TotalPrice,
                     };
                 }
 
@@ -537,13 +546,18 @@ namespace VasudaDataAccess.Logic.Implementation
             }
             return response;
         }
+
         public Response<List<ItemsTable>> GetOrderItems(string orderId)
         {
             var response = new Response<List<ItemsTable>>();
             response.Status = false;
             try
             {
-                var getOrder = _unitOfWork.OrderTable.Get(x => x.Id == Guid.Parse(orderId));
+                var getOrder = _unitOfWork.OrderTable.Get(
+                                x => x.Id == Guid.Parse(orderId) && 
+                                x.IsActive == true && 
+                                x.Status != ItemStatus.Deleted.ToString());
+
                 if (getOrder == null)
                 {
                     response.Message = "Could not retrieve order";
@@ -565,7 +579,7 @@ namespace VasudaDataAccess.Logic.Implementation
             var response = new Response<string>
             {
                 Status = false,
-                Message = "Could not create purchase order"
+                Message = "Could not create order(s)"
             };
 
             try
@@ -589,54 +603,27 @@ namespace VasudaDataAccess.Logic.Implementation
                     return response;
                 }
 
-                var DomesticItem = new List<ItemsTable>();
                 var PurchaseItem = new List<ItemsTable>();
                 var PurchaseAndShippingItem = new List<ItemsTable>();
-                var Product = new List<ItemsTable>();
+                var ProductItem = new List<ItemsTable>();
                 foreach (var itemskey in items.GroupBy(x => x.Type).ToList())
                 {
-                    DomesticItem.AddRange(itemskey.Where(x=>x.Type== ItemType.Domestic.ToString()).ToList());
                     PurchaseItem.AddRange(itemskey.Where(x=>x.Type== ItemType.Purchase.ToString()).ToList());
                     PurchaseAndShippingItem.AddRange(itemskey.Where(x=>x.Type== ItemType.PurchaseAndShipping.ToString()).ToList());
-                    Product.AddRange(itemskey.Where(x=>x.Type== ItemType.Product.ToString()).ToList());
+                    ProductItem.AddRange(itemskey.Where(x=>x.Type== ItemType.Product.ToString()).ToList());
                 }              
 
-                var DomesticOrder = new OrderTable();
                 var ProductOrder = new OrderTable();
                 var PurchaseOrder = new OrderTable();
                 var PurchaseAndShippingOrder = new OrderTable();
 
                 var dateCreated = DateTime.Now;
 
-                if (DomesticItem.Count > 0)
-                {
-                    DomesticOrder.Id = Guid.NewGuid();
-                    DomesticOrder.OrderType = ItemType.Domestic.ToString();
-                    DomesticOrder.Status = DomesticOrderStatus.AwaitingQuotation.ToString();
-                    DomesticOrder.UserId = userId;
-                    DomesticOrder.IsActive = true;
-                    DomesticOrder.IsCompleted = false;
-                    DomesticOrder.DateCreated = dateCreated;
-                    DomesticOrder.TotalPrice = DomesticItem.Sum(x => x.TotalPrice);
-                    DomesticOrder.TotalServiceCharge = 0;
-                    DomesticOrder.ShippingFee = 0;
-
-                    foreach (var item in DomesticItem)
-                    {
-                        items.Where(x => x.Id == item.Id).ToList().Select(x => 
-                                { x.OrderId = DomesticOrder.Id;
-                                    _unitOfWork.ItemsTable.Update(x);
-                                    return x; 
-                                });
-                    }
-
-                    _unitOfWork.OrderTable.Add(DomesticOrder);
-                }
                 if (PurchaseItem.Count > 0)
                 {
                     //Deduct the fund for the request from the user balance...
                     var purchaseSum = PurchaseItem.Sum(x => x.TotalPrice);
-                    user.Balance -= purchaseSum.Value;
+                    user.Balance -= purchaseSum;
 
                     PurchaseOrder.Id = Guid.NewGuid();
                     PurchaseOrder.OrderType = ItemType.Purchase.ToString();
@@ -645,55 +632,112 @@ namespace VasudaDataAccess.Logic.Implementation
                     PurchaseOrder.IsActive = true;
                     PurchaseOrder.IsCompleted = false;
                     PurchaseOrder.DateCreated = dateCreated;
-                    PurchaseOrder.TotalPrice = DomesticItem.Sum(x => x.TotalPrice);
+                    PurchaseOrder.TotalPrice = purchaseSum;
                     PurchaseOrder.TotalServiceCharge = 0;
                     PurchaseOrder.ShippingFee = 0;
 
                     foreach (var item in PurchaseItem)
                     {
-                        items.Where(x => x.Id == item.Id).ToList().Select(x => 
-                                { x.OrderId = PurchaseOrder.Id;
-                                    _unitOfWork.ItemsTable.Update(x);
-                                    return x; });
+                        item.OrderId = PurchaseOrder.Id;
+                        item.Status = ItemStatus.Completed.ToString();
+                        _unitOfWork.ItemsTable.Update(item);
                     }
+
+                    var payment = new PaymentHistoryTable()
+                    {
+                        UserId = userId,
+                        Amount = purchaseSum,
+                        DateCreated = DateTime.Now,
+                        Purpose = PaymentHistoryPurposeEnum.PurchaseOrder.ToString(),
+                        Id = Guid.NewGuid(),
+                        Status = PaymentHistoryStatus.Completed.ToString(),
+                        TransactionType = PaymentHistoryType.Debit.ToString()
+                    };
+                    _unitOfWork.PaymentHistoryTable.Add(payment);
 
                     _unitOfWork.AspNetUser.Update(user);
                     _unitOfWork.OrderTable.Add(PurchaseOrder);
                 }
+
                 if (PurchaseAndShippingItem.Count > 0)
                 {
                     //Deduct the fund for the request from the user balance...
                     var purchaseSum = PurchaseAndShippingItem.Sum(x => x.TotalPrice);
-                    user.Balance -= purchaseSum.Value;
+                    user.Balance -= purchaseSum;
 
                     PurchaseAndShippingOrder.Id = Guid.NewGuid();
-                    PurchaseAndShippingOrder.OrderType = ItemType.Purchase.ToString();
+                    PurchaseAndShippingOrder.OrderType = ItemType.PurchaseAndShipping.ToString();
                     PurchaseAndShippingOrder.Status = PurchaseOrderStatus.AwaitingPurchase.ToString();
                     PurchaseAndShippingOrder.UserId = userId;
                     PurchaseAndShippingOrder.IsActive = true;
                     PurchaseAndShippingOrder.IsCompleted = false;
                     PurchaseAndShippingOrder.DateCreated = dateCreated;
-                    PurchaseAndShippingOrder.TotalPrice = DomesticItem.Sum(x => x.TotalPrice);
+                    PurchaseAndShippingOrder.TotalPrice = purchaseSum;
                     PurchaseAndShippingOrder.TotalServiceCharge = 0;
                     PurchaseAndShippingOrder.ShippingFee = 0;
 
                     foreach (var item in PurchaseAndShippingItem)
                     {
-                        items.Where(x => x.Id == item.Id).ToList().Select(x => 
-                                { x.OrderId = PurchaseAndShippingOrder.Id;
-                                    _unitOfWork.ItemsTable.Update(x); 
-                                    return x; });
+                        item.OrderId = PurchaseAndShippingOrder.Id;
+                        item.Status = ItemStatus.Completed.ToString();
+                        _unitOfWork.ItemsTable.Update(item);
                     }
+
+                    var payment = new PaymentHistoryTable()
+                    {
+                        UserId = userId,
+                        Amount = purchaseSum,
+                        DateCreated = DateTime.Now,
+                        Purpose = PaymentHistoryPurposeEnum.PurchaseAndShippingOrderProcessing.ToString(),
+                        Id = Guid.NewGuid(),
+                        Status = PaymentHistoryStatus.Completed.ToString(),
+                        TransactionType = PaymentHistoryType.Debit.ToString()
+                    };
+                    _unitOfWork.PaymentHistoryTable.Add(payment);
 
                     _unitOfWork.AspNetUser.Update(user);
                     _unitOfWork.OrderTable.Add(PurchaseAndShippingOrder);
                 }
 
-                //if (items.Any(x => x.Type != ItemType.Purchase.ToString()))
-                //{
-                //    response.Message = "Make sure that the items are of the same type to create the order.";
-                //    return response;
-                //}
+                if (ProductItem.Count > 0)
+                {
+                    //Deduct the fund for the request from the user balance...
+                    var purchaseSum = ProductItem.Sum(x => x.TotalPrice);
+                    user.Balance -= purchaseSum;
+
+                    ProductOrder.Id = Guid.NewGuid();
+                    ProductOrder.OrderType = ItemType.Product.ToString();
+                    ProductOrder.Status = PurchaseOrderStatus.AwaitingPurchase.ToString();
+                    ProductOrder.UserId = userId;
+                    ProductOrder.IsActive = true;
+                    ProductOrder.IsCompleted = false;
+                    ProductOrder.DateCreated = dateCreated;
+                    ProductOrder.TotalPrice = purchaseSum;
+                    ProductOrder.TotalServiceCharge = 0;
+                    ProductOrder.ShippingFee = 0;
+
+                    foreach (var item in PurchaseAndShippingItem)
+                    {
+                        item.OrderId = PurchaseAndShippingOrder.Id;
+                        item.Status = ItemStatus.Completed.ToString();
+                        _unitOfWork.ItemsTable.Update(item);
+                    }
+
+                    var payment = new PaymentHistoryTable()
+                    {
+                        UserId = userId,
+                        Amount = purchaseSum,
+                        DateCreated = DateTime.Now,
+                        Purpose = PaymentHistoryPurposeEnum.ProductOrder.ToString(),
+                        Id = Guid.NewGuid(),
+                        Status = PaymentHistoryStatus.Completed.ToString(),
+                        TransactionType = PaymentHistoryType.Debit.ToString()
+                    };
+                    _unitOfWork.PaymentHistoryTable.Add(payment);
+
+                    _unitOfWork.AspNetUser.Update(user);
+                    _unitOfWork.OrderTable.Add(ProductOrder);
+                }
 
                 _unitOfWork.Complete();
                 response.Status = true;
@@ -739,6 +783,101 @@ namespace VasudaDataAccess.Logic.Implementation
                 response.Status = true;
                 response.Message = "Order retrieved successfully";
                 response.SetResult(model);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+            }
+            return response;
+        }
+
+        public Response<string> ProcessDomesticItem(string id, string action, string userId)
+        {
+            var response = new Response<string>()
+            {
+                Message = "Unable to make initial payment and create order for this item. Try again",
+                Status = false
+            };
+
+            try
+            {
+                var Id = Guid.Parse(id);
+                var item = _unitOfWork.ItemsTable.Get(x => x.UserId == userId && x.Id == Id && x.Status == ItemStatus.Pending.ToString());
+                if (item == null)
+                {
+                    return response;
+                }
+
+                var domestic = _unitOfWork.DomesticItemTable.Get(x => x.Id == item.Id && 
+                                x.Status == DomesticOrderStatus.AwaitingUserAcceptance.ToString());
+                if (domestic == null)
+                {
+                    return response;
+                }
+
+                if (action == "Accepted")
+                {
+                    var user = _unitOfWork.AspNetUser.Get(userId);
+                    if (user == null)
+                    {
+                        return response;
+                    }
+
+                    if (user.Balance < item.TotalPrice)
+                    {
+                        response.Message = "Insufficient fund";
+                        return response;
+                    }
+
+                    var order = new OrderTable
+                    {
+                        Id = Guid.NewGuid(),
+                        OrderType = ItemType.Domestic.ToString(),
+                        Status = DomesticOrderStatus.Processing.ToString(),
+                        UserId = userId,
+                        IsActive = true,
+                        IsCompleted = false,
+                        DateCreated = DateTime.Now,
+                        TotalPrice = item.TotalPrice,
+                        TotalServiceCharge = 0,
+                        ShippingFee = 0
+                    };
+                    _unitOfWork.OrderTable.Add(order);
+
+                    user.Balance -= item.TotalPrice;
+                    _unitOfWork.AspNetUser.Update(user);
+
+                    var payment = new PaymentHistoryTable()
+                    {
+                        UserId = item.UserId,
+                        Amount = item.TotalPrice,
+                        DateCreated = DateTime.Now,
+                        Purpose = PaymentHistoryPurposeEnum.DomesticOrderProcessing.ToString(),
+                        Id = Guid.NewGuid(),
+                        Status = PaymentHistoryStatus.Completed.ToString(),
+                        TransactionType = PaymentHistoryType.Debit.ToString()
+                    };
+                    _unitOfWork.PaymentHistoryTable.Add(payment);
+
+                    domestic.Status = DomesticOrderStatus.Processing.ToString();
+                    _unitOfWork.DomesticItemTable.Update(domestic);
+
+                    item.Status = ItemStatus.Completed.ToString();
+                    item.OrderId = order.Id;
+                    _unitOfWork.ItemsTable.Update(item);
+
+                    response.Message = "Domestic Order created successfully!";
+                }
+                else if (action == "Rejected")
+                {
+                    domestic.Status = DomesticOrderStatus.RejectedQuotation.ToString();
+                    _unitOfWork.DomesticItemTable.Update(domestic);
+
+                    response.Message = "Domestic order rejected!";
+                }
+
+                _unitOfWork.Complete();
+                response.Status = true;
             }
             catch (Exception ex)
             {

@@ -195,28 +195,18 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @count = 1;
                                             @foreach (var recentNotification in Model.RecentNotifications)
                                             {
                                                 <tr>
                                                     <td>@count</td>
                                                     <td>@recentNotification.Subject</td>
-                                                    <td>@recentNotification.DateCreated</td>
+                                                    <td>@Util.FormatDate(recentNotification.DateCreated)</td>
                                                     <td>@recentNotification.IsRead</td>
                                                     <td><button type="submit" class="btn btn-outline-success btn-sm">View More</button></td>
                                                 </tr>
                                                 count++;
                                             }
                                         </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>S/N</th>
-                                                <th>Subject</th>
-                                                <th>Date Published</th>
-                                                <th>Read Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </tfoot>
                                     </table>
                                 }
                             </div>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.ModelBinding;
+using VasudaDataAccess.Data_Access.Implementation;
 
 namespace VasudaDataAccess.Utility
 {
@@ -55,6 +56,74 @@ namespace VasudaDataAccess.Utility
 
             var name = months[index - 1];
             return name;
+        }
+
+        public static string DomesticStatusEnumConverter(DomesticOrderStatus status)
+        {
+            switch (status)
+            {
+                case DomesticOrderStatus.AwaitingQuotation:
+                    return "Awaiting Quotation";
+                case DomesticOrderStatus.AwaitingUserAcceptance:
+                    return "Awaiting User Acceptance";
+                case DomesticOrderStatus.AwaitingShippingPayment:
+                    return "Awaiting Shipping Payment";
+                case DomesticOrderStatus.RejectedQuotation:
+                    return "Rejected Quotation";
+                case DomesticOrderStatus.Processing:
+                    return "Processing"; 
+                case DomesticOrderStatus.AwaitingArrival:
+                    return "Awaiting Arrival";                 
+                default:
+                    return "Completed";
+            }
+        }
+
+        public static string PaymentHistoryEnumConverter(PaymentHistoryPurposeEnum purpose)
+        {
+            switch (purpose)
+            {
+                case PaymentHistoryPurposeEnum.WalletFunding:
+                    return "Wallet Funding";
+                case PaymentHistoryPurposeEnum.DomesticOrderProcessing:
+                    return "Domestic Order Processing";
+                case PaymentHistoryPurposeEnum.DomesticOrderShipping:
+                    return "Domestic Order Shipping";
+                case PaymentHistoryPurposeEnum.PurchaseOrder:
+                    return "Purchase Order";
+                case PaymentHistoryPurposeEnum.PurchaseAndShippingOrderProcessing:
+                    return "Purchase And Shipping Order Processing";
+                default:
+                    return "N/A";
+            }
+        }
+
+        public static string OrderStatusEnumConverter(string status)
+        {
+            var word = "N/A";
+
+            if (PurchaseOrderStatus.AwaitingPurchase.ToString() == status)
+                word = "Awaiting Purchase";
+            else if (PurchaseOrderStatus.Arrived.ToString() == status)
+                word = "Arrived";
+            else if (PurchaseOrderStatus.Completed.ToString() == status)
+                word = "Completed";
+            else if (PurchaseAndShippingOrderStatus.AwaitingShippingQuotation.ToString() == status)
+                word = "Awaiting Shipping Quotation";
+            else if (PurchaseAndShippingOrderStatus.AwaitingShippingPayment.ToString() == status)
+                word = "Awaiting Shipping Payment";
+            else if (PurchaseAndShippingOrderStatus.AwaitingArrival.ToString() == status)
+                word = "Awaiting Arrival";
+            else if (DomesticOrderStatus.AwaitingQuotation.ToString() == status)
+                word = "Awaiting Quotation";
+            else if (DomesticOrderStatus.AwaitingUserAcceptance.ToString() == status)
+                word = "Awaiting User Acceptance";
+            else if (DomesticOrderStatus.RejectedQuotation.ToString() == status)
+                word = "Rejected Quotation";
+            else if (DomesticOrderStatus.Processing.ToString() == status)
+                word = "Processing";
+
+            return word;
         }
     }
 }

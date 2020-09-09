@@ -26,5 +26,7 @@ namespace VasudaDataAccess.Logic
         
         Response<string> CreateOrder(string[] itemIds, string userId);
         Response<SingleOrderDTO> GetSingleOrder(string id, string userId);
+
+        Response<string> ProcessDomesticItem(string id, string action, string userId);
     }
 }

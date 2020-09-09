@@ -114,7 +114,9 @@ namespace VasudaDataAccess.Providers.Implementations
                         getUserDetails.Balance = getUserDetails.Balance + amount;
                         getPaymentInfo.IsCredited = true;
                         getPaymentInfo.IsApproved = true;
-                        AddPaymentHistory("Credit", amount, getUserDetails.Id, "Wallet funding", "Payment Completed");
+                        AddPaymentHistory(PaymentHistoryType.Credit.ToString(), amount, getUserDetails.Id, 
+                                           PaymentHistoryPurposeEnum.WalletFunding.ToString(), 
+                                           PaymentHistoryStatus.Completed.ToString());
                         var mailModel = new Notification();
                         var model = new MailDTO()
                         {
@@ -163,6 +165,7 @@ namespace VasudaDataAccess.Providers.Implementations
             }
             return response;
         }
+
         public Response<string> VerifyTransaction(string paymentId)
         {
             var response = new Response<string>();
