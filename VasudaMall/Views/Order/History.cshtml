@@ -53,7 +53,7 @@
                                                     @order.OrderType;
                                                 }
                                             </td>
-                                            <td>@order.Status</td>
+                                            <td>@Util.OrderStatusEnumConverter(order.Status)</td>
                                             <td>@order.ShippingFee</td>
                                             <td>@order.TotalServiceCharge</td>
                                             <td>@order.TotalPrice</td>

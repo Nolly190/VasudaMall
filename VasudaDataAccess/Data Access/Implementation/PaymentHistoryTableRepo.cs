@@ -23,10 +23,28 @@ namespace VasudaDataAccess.Data_Access.Implementation
             }
         }
 
-        public List<PaymentHistoryTable> GetRecentTransactionsHistory(int? pageNum)
+        public List<PaymentHistoryTable> GetRecentTransactionsHistory(int? pageNum, string userId)
         {
             var lastTwoWeeks = DateTime.Now.Date.AddDays(-14);
-            return pageNum.HasValue ? dbcontext.Set<PaymentHistoryTable>().Where(x => x.DateCreated >= lastTwoWeeks).Skip(pageNum.Value * 10).Take(10).ToList() : dbcontext.Set<PaymentHistoryTable>().Where(x => x.DateCreated >= lastTwoWeeks).Take(10).ToList();
+            return pageNum.HasValue ? 
+                dbcontext.Set<PaymentHistoryTable>().Where(x => x.UserId == userId && x.DateCreated >= lastTwoWeeks).Skip(pageNum.Value * 10).Take(10).ToList() : 
+                dbcontext.Set<PaymentHistoryTable>().Where(x => x.UserId == userId && x.DateCreated >= lastTwoWeeks).Take(10).ToList();
         }
+    }
+
+    public enum PaymentHistoryPurposeEnum
+    {
+        WalletFunding = 1, DomesticOrderProcessing, DomesticOrderShipping, PurchaseOrder,
+        PurchaseAndShippingOrderProcessing, PurchaseAndShippingOrderShipping, ProductOrder
+    }
+
+    public enum PaymentHistoryStatus
+    {
+        Pending = 1, Completed, Canceled
+    }
+
+    public enum PaymentHistoryType
+    {
+        Credit = 1, Debit
     }
 }

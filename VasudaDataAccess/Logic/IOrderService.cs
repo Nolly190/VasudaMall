@@ -25,7 +25,12 @@ namespace VasudaDataAccess.Logic
         Response<string> DeleteItem(string id, string userId);
         Response<string> ProcessOrder(string orderId, string amount);
         //Response<GetSinglePurchaseItemResponseDTO> GetSinglePurchaseItem(ItemsTable itemsTable, string message, bool status);
+
         Response<GetSingleItemResponseDTO> GetSingleItem(string id, string userId);
+        Response<string> CreateGeneralOrder(string[] itemIds, string userId);
+        Response<SingleOrderDTO> GetSingleOrder(string id, string userId);
+
+        Response<string> ProcessDomesticItem(string id, string action, string userId);
         string GetOrderTypeNextAction(string orderType, string status);
     }
 }

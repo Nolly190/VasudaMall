@@ -33,15 +33,57 @@
         }
     }).trigger('change');
 
+    //initialize the process to create the order
     $('#createOrderFromCheckoutBtn').click(function () {
-        //var finalPrice = 0
+        var TotalPrice = 0
+        var count = 1
+
+        $('#confirmCheckoutItemsTable').empty()
         $('#checkoutItemTable input[type=checkbox]:checked').each(function () {
+
             var id = $(this).data('id');
-            allSelected.push(id);
+            if (id != null || id != undefined) {
+                var row = $(this).closest("tr")[0];
+                var price = row.cells[10].innerHTML;
+                var title = row.cells[1].innerHTML
+
+                TotalPrice += parseFloat(price);
+
+                $('#confirmCheckoutItemsTable').append(
+                    `
+                        <tr>
+                            <td>${count}</td>
+                            <td>${title}</td>
+                            <td>${price}</td>           
+                        </tr>
+                    `
+                );
+
+                count++;
+                allSelected.push(id);
+            }
+       
         });
 
+        $('#confirmCheckoutItemsTable').append(
+            `
+            <tr>
+                <td colspan="2"><span class="float-right"><b>Total Price: </b></span></td>
+                <td>${TotalPrice}</td>         
+            </tr>
+            `
+        );
+
+        $('#items-to-confirm-checkout').modal('show');
+    });
+
+    //Complete the process to create order(s)
+    $("#confirmCreateOrderFromCheckoutBtn").click(function () {
+
+        $('#items-to-confirm-checkout').modal('hide');
+        $(".Main-loader").show();
         $.ajax({
-            url: "/Order/CreateOrder",
+            url: "/Order/CreateGeneralOrder",
             type: "Post",
             data: { model: allSelected },
             error: function (status, xhr) {
@@ -50,8 +92,12 @@
             success: function (result) {
                 if (result.Status === true) {
                     $(".Main-loader").hide();
-                    location.reload(true);
-                    Swal.fire(result.Message);
+                    Swal.fire(result.Message).then(
+                        (result) => {
+                            if (result.value) {
+                                location.reload(true);
+                            }
+                        });
 
                     return;
                 } else {
@@ -88,8 +134,12 @@
                     success: function (result) {
                         if (result.Status === true) {
                             $(".Main-loader").hide();
-                            location.reload(true);
-                            Swal.fire(result.Message);
+                            Swal.fire(result.Message).then(
+                                (result) => {
+                                    if (result.value) {
+                                        location.reload(true);
+                                    }
+                                });
 
                             return;
                         } else {
@@ -126,6 +176,7 @@
                         pDes = pEntity.Description == null || pEntity.Description.length == 0  ? "N/A" : pEntity.Description;
 
                         $("#pItemDescription").html(pDes);
+                        $("#pTitle").html(pEntity.Title);
                         $("#pItemUnitPrice").html(pEntity.UnitPrice);
                         $("#pItemQuantity").html(pEntity.Quantity);
                         $("#pItemServicePrice").html(pEntity.ServicePrice);
@@ -144,6 +195,7 @@
                         $("#sItemSenderName").html(sEntity.SenderName);
                         $("#sItemSenderPhoneNumber").html(sEntity.SenderPhoneNumber);
                         $("#sItemSenderAddress").html(sEntity.SenderAddress);
+                        $("#sTitle").html(sEntity.Title);
                         $("#sItemDescription").html(sDes);
                         $("#sItemWeight").html(sEntity.Weight);
                         $("#sItemQuantity").html(sEntity.Quantity);
@@ -161,6 +213,7 @@
                         psDes = psEntity.Description == null || psEntity.Description.length == 0  ? "N/A" : psEntity.Description;
 
                         $("#psItemDescription").html(psDes);
+                        $("#psTitle").html(psEntity.Title);
                         $("#psItemUnitPrice").html(psEntity.UnitPrice);
                         $("#psItemQuantity").html(psEntity.Quantity);
                         $("#psItemServicePrice").html(psEntity.ServicePrice);
@@ -179,9 +232,31 @@
                         dEntity = entity.DomesticItem;
                         dDes = dEntity.Description == null || dEntity.Description.length == 0 ? "N/A" : dEntity.Description;
 
+                        if (dEntity.Status == "Awaiting User Acceptance")
+                        {
+                            $('#acceptDomesticItemModalBtn').css('display', 'inline-block');
+                            $('#rejectDomesticItemModalBtn').css('display', 'inline-block');
+
+                            $('#collectId').html(id);
+                        }
+                        else if (dEntity.Status == "Rejected Quotation") {
+                            $('#acceptDomesticItemModalBtn').css('display', 'inline-block');
+
+                            $('#collectId').html(id);
+                        }
+                        else if (dEntity.Status == "Awaiting Shipping Payment") {
+                            $('#acceptShippingPaymentModalBtn').css('display', 'inline-block');
+
+                            $('#collectId').html(id);
+                        }
+                        else {
+                            $('#closeDomesticItemModalBtn').css('display', 'inline-block');
+                        }
+
                         $("#dItemSenderName").html(dEntity.SenderName);
                         $("#dItemSenderPhoneNumber").html(dEntity.SenderPhoneNumber);
                         $("#dItemSenderAddress").html(dEntity.SenderAddress);
+                        $("#dTitle").html(dEntity.Title);
                         $("#dItemDescription").html(dDes);
                         $("#dItemWeight").html(dEntity.Weight);
                         $("#dItemQuantity").html(dEntity.Quantity);

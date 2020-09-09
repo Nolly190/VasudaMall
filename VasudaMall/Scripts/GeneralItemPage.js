@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function () {
 
     $("#addShippingItemBtn").click(function () {
         if (StartValidation("addShippingItemForm")) {
@@ -33,8 +34,12 @@
                         $("#soReceiverName").val("");
                         $("#soReceiverPhoneNumber").val("");
                         $("#soReceiverAddress").val("");
-                        location.reload(true);
-                        Swal.fire('Shipping order added Successfully.');
+                        Swal.fire('Shipping order added Successfully.').then(
+                            (result) => {
+                                if (result.value) {
+                                    location.reload(true);
+                                }
+                            });;
 
                         return;
                     } else {
@@ -55,6 +60,7 @@
             var purchaseItemData = {};
             purchaseItemData.VendorName = $("#poVendorWebsite").val();
             purchaseItemData.ProductLink = $("#poProductLink").val();
+            purchaseItemData.Title = $("#poTitle").val();
             purchaseItemData.Description = $("#poDescription").val();
             purchaseItemData.UnitPrice = $("#poUnitPrice").val();
             purchaseItemData.Quantity = $("#poQuantity").val();
@@ -71,11 +77,16 @@
                         $(".Main-loader").hide();
                         $("#poVendorWebsite").val("");
                         $("#poProductLink").val("");
+                        $("#poTitle").val("");
                         $("#poDescription").val("");
                         $("#poUnitPrice").val("");
                         $("#poQuantity").val("");
-                        location.reload(true);
-                        Swal.fire('Purchase item added Successfully.');
+                        Swal.fire('Purchase item added Successfully.').then(
+                            (result) => {
+                                if (result.value) {
+                                    location.reload(true);
+                                }
+                            });
 
                         return;
                     } else {
@@ -98,6 +109,7 @@
             shippingPurchaseItemData.VendorName = $("#spoVendorWebsite").val();
             shippingPurchaseItemData.ProductLink = $("#spoProductLink").val();
             shippingPurchaseItemData.Description = $("#spoDescription").val();
+            shippingPurchaseItemData.Title = $("#spoTitle").val();
             shippingPurchaseItemData.UnitPrice = $("#spoUnitPrice").val();
             shippingPurchaseItemData.Quantity = $("#spoQuantity").val();
             shippingPurchaseItemData.ReceiverName = $("#spoReceiverName").val();
@@ -116,14 +128,19 @@
                         $(".Main-loader").hide();
                         $("#spoVendorWebsite").val("");
                         $("#spoProductLink").val("");
+                        $("#spoTitle").val("");
                         $("#spoDescription").val("");
                         $("#spoUnitPrice").val("");
                         $("#spoQuantity").val("");
                         $("#spoReceiverName").val("");
                         $("#spoReceiverPhoneNumber").val("");
                         $("#spoReceiverAddress").val("");
-                        location.reload(true);
-                        Swal.fire('Shipping and Purchase order added Successfully.');
+                        Swal.fire('Shipping and Purchase order added Successfully.').then(
+                            (result) => {
+                                if (result.value) {
+                                    location.reload(true);
+                                }
+                            });
 
                         return;
                     } else {

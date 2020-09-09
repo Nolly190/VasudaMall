@@ -43,8 +43,15 @@ namespace VasudaDataAccess.Logic.Implementation
             model.SystemAccounts = new List<SystemAccountTable>();
             try
             {
+                var transactions = _unitOfWork.PaymentHistoryTable.GetRecentTransactionsHistory(null, user).ToList();
+                Parallel.ForEach(transactions, transaction =>
+                {
+                    transaction.Purpose = Util.PaymentHistoryEnumConverter(
+                                            (PaymentHistoryPurposeEnum)Enum.Parse(typeof(PaymentHistoryPurposeEnum),
+                                            transaction.Purpose));
+                });
                 model.ExchangeRates = _unitOfWork.ExchangeRateTable.GetExchangeRates();
-                model.PaymentHistory = _unitOfWork.PaymentHistoryTable.GetRecentTransactionsHistory(null);
+                model.PaymentHistory = transactions;
                 model.WithdrawalAccounts = _unitOfWork.WithdrawalDetailsTable.GetAll(x=>x.UserId==user && x.IsActive).ToList();
                 model.Banks = _unitOfWork.BankTable.GetAllActiveBanks();
                 var userInfo = _unitOfWork.AspNetUser.Get(user);
@@ -78,7 +85,16 @@ namespace VasudaDataAccess.Logic.Implementation
             model.AllTransactions = new List<PaymentHistoryTable>();
             try
             {
-                model.AllTransactions = _unitOfWork.PaymentHistoryTable.GetAll(x => x.UserId.ToString() == userId).ToList();
+                var transactions = _unitOfWork.PaymentHistoryTable.GetAll(
+                                        x => x.UserId.ToString() == userId)
+                                        .OrderByDescending(x => x.DateCreated).ToList();
+                Parallel.ForEach(transactions, transaction =>
+                {
+                    transaction.Purpose = Util.PaymentHistoryEnumConverter(
+                                            (PaymentHistoryPurposeEnum)Enum.Parse(typeof(PaymentHistoryPurposeEnum),
+                                            transaction.Purpose));
+                });
+                model.AllTransactions = transactions ;
                 result.Status = true;
                 result.Message = "Successfully retrieved all transactions";
             }
@@ -258,10 +274,10 @@ namespace VasudaDataAccess.Logic.Implementation
                     UserId = getUser.AspNetUser.Id,
                     Amount = dollars,
                     DateCreated = getUser.DateCreated,
-                    Purpose = "Wallet funding",
-                    Id=Guid.NewGuid(),
-                    Status = "Completed",
-                    TransactionType = "Credit"
+                    Purpose = PaymentHistoryPurposeEnum.WalletFunding.ToString(),
+                    Id = Guid.NewGuid(),
+                    Status = PaymentHistoryStatus.Completed.ToString(),
+                    TransactionType = PaymentHistoryType.Credit.ToString(),
                 };
                 _unitOfWork.PaymentHistoryTable.Add(insertPaymentHistory);
                 _unitOfWork.Complete();
@@ -447,7 +463,9 @@ namespace VasudaDataAccess.Logic.Implementation
         Pending,
         Approved,
         Declined,
-    }  public enum FundRequestStatus
+    }  
+    
+    public enum FundRequestStatus
     {
         Pending,
         Payment_Successful,

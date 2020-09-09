@@ -21,27 +21,27 @@
 
 <section class="content">
     <div class="container-fluid">
-        <!--General order types forms tab start-->
+        <!--General item types forms tab start-->
         <div class="row">
             <div class="col-12">
                 <div class="card card-info card-outline card-outline-tabs">
                     <div class="card-header p-0 border-bottom-0">
                         <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="purchase-order-tab" data-toggle="pill" href="#purchase-order" role="tab" aria-controls="custom-tabs-four-home" aria-selected="true"><i class="fas fa-key d-md-none"></i><span class="d-none d-md-inline">PURCHASE</span></a>
+                                <a class="nav-link active" id="purchase-item-tab" data-toggle="pill" href="#purchase-item" role="tab" aria-controls="custom-tabs-four-home" aria-selected="true"><i class="fas fa-key d-md-none"></i><span class="d-none d-md-inline">PURCHASE</span></a>
                             </li>
+                            @*<li class="nav-item">
+                                <a class="nav-link" id="shipping-item-tab" data-toggle="pill" href="#shipping-item" role="tab" aria-controls="custom-tabs-four-profile" aria-selected="false"><i class="fas fa-wallet d-md-none"></i><span class="d-none d-md-inline">SHIPPING</span></a>
+                            </li>*@
                             <li class="nav-item">
-                                <a class="nav-link" id="shipping-order-tab" data-toggle="pill" href="#shipping-order" role="tab" aria-controls="custom-tabs-four-profile" aria-selected="false"><i class="fas fa-wallet d-md-none"></i><span class="d-none d-md-inline">SHIPPING</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="shipping-purchase-order-tab" data-toggle="pill" href="#shipping-purchase-order" role="tab" aria-controls="custom-tabs-four-profile" aria-selected="false"><i class="fas fa-wallet d-md-none"></i><span class="d-none d-md-inline">PURCHASE AND SHIPPING</span></a>
+                                <a class="nav-link" id="shipping-purchase-item-tab" data-toggle="pill" href="#shipping-purchase-item" role="tab" aria-controls="custom-tabs-four-profile" aria-selected="false"><i class="fas fa-wallet d-md-none"></i><span class="d-none d-md-inline">PURCHASE AND SHIPPING</span></a>
                             </li>
                         </ul>
                     </div>
                     <div class="card-body">
                         <div class="tab-content" id="custom-tabs-four-tabContent">
-                            <!--purchase order form wrapper start-->
-                            <div class="tab-pane fade show active" id="purchase-order" role="tabpanel" aria-labelledby="purchase-order-tab">
+                            <!--purchase item form wrapper start-->
+                            <div class="tab-pane fade show active" id="purchase-item" role="tabpanel" aria-labelledby="purchase-item-tab">
                                 <!-- purchase order form start-->
                                 <div class="card card-info">
                                     <div class="card-body">
@@ -62,6 +62,10 @@
                                                 <input type="url" class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Product Link" id="poProductLink" placeholder="Enter the site link for the product" required>
                                             </div>
                                             <div class="form-group row">
+                                                <label for="poTitle" class="col-sm-12 col-md-2">Title</label>
+                                                <textarea class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Title" id="poTitle" placeholder="Enter a title to the product" required></textarea>
+                                            </div>
+                                            <div class="form-group row">
                                                 <label for="poDescription" class="col-sm-12 col-md-2">Description</label>
                                                 <textarea class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Description" id="poDescription" placeholder="Describe the product" required></textarea>
                                             </div>
@@ -74,22 +78,22 @@
                                                 <input type="text" class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Quantity" id="poQuantity" placeholder="Enter the quantity of product" required>
                                             </div>
                                             <div class="form-group row">
-                                                <button type="button" class="btn btn-info" id="addPurchaseItemButton">Add Purchase Order</button>
+                                                <button type="button" class="btn btn-info" id="addPurchaseItemButton">Add Purchase Item</button>
                                             </div>
                                         </form>
                                     </div>
                                     <!-- /.card-body -->
                                 </div>
-                                <!-- purchase order form end-->
+                                <!-- purchase item form end-->
                                 <!-- /.card -->
                             </div>
-                            <!--purchase order form wrapper end-->
-                            <!--shipping order form wrapper start-->
-                            <div class="tab-pane fade" id="shipping-order" role="tabpanel" aria-labelledby="shipping-order-tab">
-                                <!-- shipping order Form start-->
+                            <!--purchase item form wrapper end-->
+                            @*shipping item form wrapper start
+                            <div class="tab-pane fade" id="shipping-item" role="tabpanel" aria-labelledby="shipping-item-tab">
+                                 shipping order Form start
                                 <div class="card card-info">
                                     <div class="card-body">
-                                        <!-- form start -->
+                                         form start 
                                         <form class="form-horizontal" id="addShippingItemForm">
                                             <div class="form-group row">
                                                 <label for="soReceiverName" class="col-sm-12 col-md-2">Receiver Name</label>
@@ -128,18 +132,18 @@
                                                 <input type="text" class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Sender Address" id="soSenderAddress" value="@address" placeholder="Sender Address" required>
                                             </div>
                                             <div class="form-group col-12">
-                                                <button type="button" class="btn btn-info" id="addShippingItemBtn">Add Shipping Order</button>
+                                                <button type="button" class="btn btn-info" id="addShippingItemBtn">Add Shipping Item</button>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
-                                <!--shipping order form wrapper end-->
-                                <!-- /.card -->
+                                shipping item form wrapper end
+                                 /.card 
                             </div>
-                            <!--shipping order form wrapper end-->
-                            <!--shipping and purchase order form wrapper start-->
-                            <div class="tab-pane fade" id="shipping-purchase-order" role="tabpanel" aria-labelledby="shipping-purchase-order-tab">
-                                <!--shipping and purchase order Form start-->
+                            shipping item form wrapper end*@
+                            <!--shipping and purchase item form wrapper start-->
+                            <div class="tab-pane fade" id="shipping-purchase-item" role="tabpanel" aria-labelledby="shipping-purchase-item-tab">
+                                <!--shipping and purchase item Form start-->
                                 <div class="card card-info">
                                     <!--Form start -->
                                     <form class="form-horizontal" id="addShippingAndPurchaseItemForm">
@@ -157,6 +161,10 @@
                                             <div class="form-group row">
                                                 <label for="spoProductLink" class="col-sm-12 col-md-2">Product Link</label>
                                                 <input type="url" class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Product Link" id="spoProductLink" placeholder="Enter the site link for the product" required>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="spoTitle" class="col-sm-12 col-md-2">Title</label>
+                                                <input type="url" class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Title" id="spoTitle" placeholder="Enter a title for the product" required>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="spoDescription" class="col-sm-12 col-md-2">Description</label>
@@ -183,35 +191,35 @@
                                                 <input type="text" class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Receiver Address" id="spoReceiverAddress" placeholder="Receiver Address" required />
                                             </div>
                                             <div class="form-group row">
-                                                <button type="button" class="btn btn-info" id="addShippingAndPurchaseItemButton">Add Shipping And Purchase Order</button>
+                                                <button type="button" class="btn btn-info" id="addShippingAndPurchaseItemButton">Add Shipping And Purchase Item</button>
                                             </div>
                                         </div>
                                         <!-- /.card-body -->
                                     </form>
                                 </div>
-                                <!--shipping and purchase order form end-->
+                                <!--shipping and purchase item form end-->
                                 <!-- /.card -->
                             </div>
-                            <!--shipping and purchase order form wrapper end-->
+                            <!--shipping and purchase item form wrapper end-->
                         </div>
                     </div>
                 </div>
             </div>
             <!--Profile /.card end -->
         </div>
-        <!--General order types forms tab end-->
-        <!--General order types table start-->
+        <!--General item types forms tab end-->
+        <!--General item types table start-->
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">ORDER(S)</h3>
+                        <h3 class="card-title">ITEM(S)</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         @if (Model.GeneralItems.Count == 0)
                         {
-                            <h3 style="text-align:center">NO ORDER AVAILABLE</h3>
+                            <h3 style="text-align:center">NO ITEM AVAILABLE</h3>
                         }
                         else
                         {
@@ -219,6 +227,7 @@
                                 <thead>
                                     <tr>
                                         <th class="tw3">S/N</th>
+                                        <th>Title</th>
                                         <th>Description</th>
                                         <th class="tw6">Quantity</th>
                                         <th class="tw6">Item Price</th>
@@ -235,6 +244,7 @@
                                     {
                                         <tr>
                                             <td>@count</td>
+                                            <td>@item.Title</td>
                                             <td>
                                                 @Util.ReduceDescriptionLength(item.Description)
                                             </td>
@@ -260,7 +270,10 @@
                                                         data-id="@item.Id">
                                                     View More
                                                 </button><br />
-                                                <button type="submit" class="btn btn-outline-danger btn-sm itemsDeleteBtn" data-id="@item.Id">Delete</button>
+                                                @if (item.Status == ItemStatus.Pending.ToString())
+                                                {
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm itemsDeleteBtn" data-id="@item.Id">Delete</button>
+                                                }
                                             </td>
                                         </tr>
                                         count++;

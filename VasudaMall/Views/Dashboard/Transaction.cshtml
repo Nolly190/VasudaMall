@@ -1,8 +1,12 @@
 ﻿@model VasudaDataAccess.DTOs.TransactionViewModel
+@using VasudaDataAccess.Utility
+@using VasudaDataAccess.Data_Access.Implementation
 
 @{
     Layout = "~/Views/shared/_LayoutDashboard.cshtml";
     ViewBag.Title = "Transaction";
+
+    var count = 1;
 }
 
 <section class="content">
@@ -27,6 +31,7 @@
                                         <th>S/N</th>
                                         <th>Amount</th>
                                         <th>Type</th>
+                                        <th>Purpose</th>
                                         <th>Date</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -35,12 +40,12 @@
                                 <tbody>
                                     @foreach (var transaction in Model.AllTransactions)
                                     {
-                                        var count = 1;
                                         <tr>
-                                            <td>count</td>
+                                            <td>@count</td>
                                             <td>@transaction.Amount</td>
                                             <td>@transaction.TransactionType</td>
-                                            <td>@transaction.DateCreated</td>
+                                            <td>@transaction.Purpose</td>
+                                            <td>@Util.FormatDate(transaction.DateCreated)</td>
                                             <td>@transaction.Status</td>
                                             <td><button type="submit" class="btn btn-outline-success btn-sm">View More</button></td>
                                         </tr>

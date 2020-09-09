@@ -1,4 +1,5 @@
 ﻿@model VasudaDataAccess.DTOs.NotificationViewModel
+@using VasudaDataAccess.Utility
 
 
 @{
@@ -39,22 +40,13 @@
                                         <tr>
                                             <td>@count</td>
                                             <td>@notification.Subject</td>
-                                            <td>@notification.DateCreated</td>
+                                            <td>@Util.FormatDate(notification.DateCreated)</td>
                                             <td>@notification.IsRead</td>
                                             <td><button type="button" id="viewMoreNotificationBtn" class="btn btn-outline-success btn-sm">View More</button></td>
                                         </tr>
                                         count++;
                                     }
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>S/N</th>
-                                        <th>Subject</th>
-                                        <th>Date Published</th>
-                                        <th>Read Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </tfoot>
                             </table>                       
                         }
                         </div>

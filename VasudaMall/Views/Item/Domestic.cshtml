@@ -48,6 +48,10 @@
                                 <input type="text" class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Sender Address" id="senderAddress" value="@address" placeholder="Sender Address" required>
                             </div>
                             <div class="form-group row">
+                                <label for="title" class="col-sm-12 col-md-2">Title</label>
+                                <textarea class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Title" id="title" placeholder="Enter a title for the products." required></textarea>
+                            </div>
+                            <div class="form-group row">
                                 <label for="description" class="col-sm-12 col-md-2">Description</label>
                                 <textarea class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Description" id="description" placeholder="Describe the products." required></textarea>
                             </div>
@@ -72,7 +76,7 @@
                                 <input type="text" class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Receiver Address" id="receiverAddress" placeholder="Receiver Address" required />
                             </div>
                             <div class="form-group col-12">
-                                <button type="submit" class="btn btn-info" id="addDomesticItemBtn">Add Domestic Order</button>
+                                <button type="submit" class="btn btn-info" id="addDomesticItemBtn">Add Domestic Item</button>
                             </div>
                         </form>
                     </div>
@@ -103,6 +107,7 @@
                                         <th>Sender Name</th>
                                         <th>Reciever Name</th>
                                         <th>Reciever Phone Number</th>
+                                        <th>Title</th>
                                         <th>Description</th>
                                         <th>Status</th>
                                         <th>Total Price</th>
@@ -118,20 +123,11 @@
                                             <td>@item.DomesticItemTable.SenderName</td>
                                             <td>@item.DomesticItemTable.ReceiverName</td>
                                             <td>@item.DomesticItemTable.ReceiverNumber</td>
+                                            <td>@item.Title</td>
                                             <td>@Util.ReduceDescriptionLength(item.Description)</td>
                                             <td>
-                                                @if (item.DomesticItemTable.Status == DomesticOrderStatus.AwaitingQuotation.ToString())
-                                                {
-                                                    <span>Awaiting Quotation</span>
-                                                }
-                                                else if (item.DomesticItemTable.Status == DomesticOrderStatus.AcceptedQuotation.ToString())
-                                                {
-                                                    <span>Accepted Quotation</span>
-                                                }
-                                                else if (item.DomesticItemTable.Status == DomesticOrderStatus.RejectedQuotation.ToString())
-                                                {
-                                                    <span>Rejected Quotation</span>
-                                                }
+                                                @Util.DomesticStatusEnumConverter(
+                                                    (DomesticOrderStatus)Enum.Parse(typeof(DomesticOrderStatus), item.DomesticItemTable.Status))
                                             </td>
                                             <td>@item.TotalPrice</td>
                                             <td>@Util.FormatDate(item.DomesticItemTable.DateCreated)</td>
@@ -141,7 +137,18 @@
                                                         data-id="@item.Id">
                                                     View More
                                                 </button>
-                                                <button type="submit" class="btn btn-outline-danger btn-sm itemsDeleteBtn" data-id="@item.Id">Delete</button>
+                                                @{
+                                                    if (item.Status == ItemStatus.Pending.ToString())
+                                                    {
+                                                        if (item.DomesticItemTable.Status == DomesticOrderStatus.AwaitingQuotation.ToString()
+                                                            || item.DomesticItemTable.Status == DomesticOrderStatus.AwaitingUserAcceptance.ToString()
+                                                            || item.DomesticItemTable.Status == DomesticOrderStatus.RejectedQuotation.ToString()
+                                                            )
+                                                        {
+                                                            <button type="submit" class="btn btn-outline-danger btn-sm itemsDeleteBtn" data-id="@item.Id">Delete</button>
+                                                        }
+                                                    }
+                                                }
                                             </td>
                                         </tr>
                                         count++;
@@ -158,4 +165,144 @@
         <!--Domestic Item table end-->
     </div>
 </section>
+
+@*Domestic Item modal start*@
+
+<div class="modal fade" id="domestic-item-info" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Domestic Item Details</h4>
+                <button type="button" class="btn btn-outline-success btn-sm" data-dismiss="modal" aria-label="Close">
+                    Close
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <p>
+                            <strong>Sender Name: </strong>
+                            <span class="text-muted" id="dItemSenderName"></span>
+                        </p>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <p>
+                            <strong>Sender PhoneNumber: </strong>
+                            <span class="text-muted" id="dItemSenderPhoneNumber"></span>
+                        </p>
+                    </div>
+                </div>
+                <hr />
+
+                <div class="row">
+                    <div class="col-12">
+                        <p>
+                            <strong>Sender Address: </strong>
+                            <span class="text-muted" id="dItemSenderAddress"></span>
+                        </p>
+                    </div>
+                </div>
+                <hr />
+
+                <div class="row">
+                    <div class="col-12">
+                        <p>
+                            <strong>Title: </strong>
+                            <span class="text-muted" id="dTitle"></span>
+                        </p>
+                    </div>
+                    <div class="col-12">
+                        <p>
+                            <strong>Description: </strong>
+                            <span class="text-muted" id="dItemDescription"></span>
+                        </p>
+                    </div>
+                </div>
+                <hr />
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-4">
+                        <p>
+                            <strong>Quantity: </strong>
+                            <span class="text-muted" id="dItemQuantity"></span>
+                        </p>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <p>
+                            <strong>Weight: </strong>
+                            <span class="text-muted" id="dItemWeight"></span>
+                        </p>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <p>
+                            <strong>Status: </strong>
+                            <span class="text-muted" id="dItemStatus"></span>
+                        </p>
+                    </div>
+                </div>
+                <hr />
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <p>
+                            <strong>Receiver Name: </strong>
+                            <span class="text-muted" id="dItemReceiverName"></span>
+                        </p>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <p>
+                            <strong>Receiver PhoneNumber: </strong>
+                            <span class="text-muted" id="dItemReceiverNumber"></span>
+                        </p>
+                    </div>
+                </div>
+                <hr />
+
+                <div class="row">
+                    <div class="col-12">
+                        <p>
+                            <strong>Receiver Address: </strong>
+                            <span class="text-muted" id="dItemReceiverAddress"></span>
+                        </p>
+                    </div>
+                </div>
+                <hr />
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <p>
+                            <strong>Date Created: </strong>
+                            <span class="text-muted" id="dItemDateCreated"></span>
+                        </p>
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <p>
+                            <strong>Service Price: </strong>
+                            <span class="text-muted" id="dItemServicePrice"></span>
+                        </p>
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <p>
+                            <strong>Total Price: </strong>
+                            <span class="text-muted" id="dItemTotalPrice"></span>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer justify-content-between">
+                <p id="collectId" class="d-none"></p>
+                <button type="button" id="closeDomesticItemModalBtn" class="btn btn-outline-success btn-sm" data-dismiss="modal" style="display:none">Close</button>
+                <button type="button" id="acceptDomesticItemModalBtn" class="btn btn-outline-success btn-sm" data-dismiss="modal" style="display:none">Accept Processing Price</button>
+                <button type="button" id="rejectDomesticItemModalBtn" class="btn btn-outline-danger btn-sm" data-dismiss="modal" style="display:none">Reject Processing Price</button>
+                <button type="button" id="acceptShippingPaymentModalBtn" class="btn btn-outline-success btn-sm" data-dismiss="modal" style="display:none">Make Shipping Payment</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+@*Domestic Item modal end*@
 

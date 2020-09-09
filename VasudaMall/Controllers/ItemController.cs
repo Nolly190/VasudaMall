@@ -130,6 +130,19 @@ namespace VasudaMall.Controllers
             return Json(_orderService.GetSingleItem(id, User.Identity.GetUserId()), JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public JsonResult ProcessDomestic(string id, string action)
+        {
+            var response = new Response<string>();
+            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(action))
+            {
+                response.Message = "Unable to process. Try again";
+                response.Status = false;
+                return Json(response, JsonRequestBehavior.AllowGet);
+            }
+            return Json(_orderService.ProcessDomesticItem(id, action, User.Identity.GetUserId()), JsonRequestBehavior.AllowGet);
+        }
+
         public string ValidateModelState()
         {
             var message = string.Empty;

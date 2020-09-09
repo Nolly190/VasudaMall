@@ -24,7 +24,6 @@
                         }
                         else
                         {
-                            <h6 style="color:forestgreen">You can only checkout items that are of the same type.</h6>
                             <table id="checkoutItemTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
                                 <thead>
                                     <tr>
@@ -34,6 +33,7 @@
                                             </span>
                                             Select Item
                                         </th>
+                                        <th>Title</th>
                                         <th>Description</th>
                                         <th class="tw6">Quantity</th>
                                         <th class="tw6">Item Price</th>
@@ -51,6 +51,7 @@
                                         var fpId = "itemFinalpriceCol" + count;
                                         <tr>
                                             <td><input type="checkbox" class="checkoutItemCheckBtn" data-id="@item.Id" /></td>
+                                            <td>@item.Title</td>
                                             <td>
                                                 @Util.ReduceDescriptionLength(item.Description)
                                             </td>
@@ -79,7 +80,7 @@
                                         </tr>
                                     }
                                     <tr style="display:none" id="createOrderBtnRow">
-                                        <td colspan="10">
+                                        <td colspan="11">
                                             <button type="submit" class="btn btn-outline-success btn-sm float-right" id="createOrderFromCheckoutBtn">Create Order</button>
                                         </td>
                                     </tr>
@@ -94,3 +95,42 @@
         </div>
     </div>
 </section>
+
+
+@*Items to be checked out to order start*@
+
+<div class="modal fade" id="items-to-confirm-checkout" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Item(s)</h4>
+                <button type="button" class="btn btn-outline-success btn-sm" data-dismiss="modal" aria-label="Close">
+                    Close
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5 style="color:forestgreen">You are about to create order for the items(s) listed below: </h5>
+
+                <table  class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
+                    <thead>
+                        <tr>
+                            <th>SN</th>
+                            <th>Title</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="confirmCheckoutItemsTable">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-success btn-sm" id="confirmCreateOrderFromCheckoutBtn" data-dismiss="modal" aria-label="Close">
+                    <b>Confirm Create Order</b>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Items to be checked out to order end*@

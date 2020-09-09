@@ -25,16 +25,16 @@ namespace VasudaDataAccess.Model
         public string ProductLink { get; set; }
         public Nullable<System.Guid> VendorId { get; set; }
         public string SellerPhoneNumber { get; set; }
-        public Nullable<decimal> UnitPrice { get; set; }
+        public decimal UnitPrice { get; set; }
         public Nullable<long> Quantity { get; set; }
-        public Nullable<decimal> ItemsPrice { get; set; }
-        public Nullable<decimal> TotalPrice { get; set; }
+        public decimal ItemsPrice { get; set; }
+        public decimal TotalPrice { get; set; }
         public string Description { get; set; }
         public string UserId { get; set; }
         public string Type { get; set; }
         public string Status { get; set; }
         public Nullable<System.Guid> OrderId { get; set; }
-        public Nullable<decimal> ServicePrice { get; set; }
+        public decimal ServicePrice { get; set; }
         public bool IsActive { get; set; }
         public System.DateTime DateCreated { get; set; }
         public string Title { get; set; }
