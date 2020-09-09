@@ -1,14 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.ModelBinding;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using VasudaDataAccess.Data_Access;
+using VasudaDataAccess.Data_Access.Implementation;
+using VasudaDataAccess.Model;
 
 namespace VasudaDataAccess.Utility
 {
     public class Util
     {
+      
         public static bool ValidateUrl(string urlName)
         {
             return Uri.TryCreate(urlName, UriKind.Absolute, out Uri uriResult) &&
@@ -56,5 +63,7 @@ namespace VasudaDataAccess.Utility
             var name = months[index - 1];
             return name;
         }
+     
+
     }
 }

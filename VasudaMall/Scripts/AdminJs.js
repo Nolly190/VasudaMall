@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-
+    var domesticPriceId = "";
 
     $("#SaveProducts").click(function () {
         if (StartValidation("ProductForm")) {
@@ -295,6 +295,7 @@
         return;
 
     });
+
     $("#EditSubCategory").click(function () {
         $(".Main-loader").modal('show');
         $.ajax({
@@ -320,6 +321,241 @@
 
     });
 
+
+
+    //$(".NextAction").click(async function () {
+    //    if ($(this).data("status")==="Processing") {
+    //     //Get the complete list of order type and check for their status
+    //        const { value: shippingFee } = await Swal.fire({
+    //            title: 'Enter shipping fee for this order',
+    //            input: 'number',
+    //            inputValue: inputValue,
+    //            showCancelButton: true,
+    //            inputValidator: (value) => {
+    //                if (!value) {
+    //                    return 'Shipping Fee is required'
+    //                }
+    //            }
+    //        })
+
+    //        if (shippingFee) {
+    //            $(".Main-loader").modal('show');
+    //            $.ajax({
+    //                url: "/Admin/ProcessOrder",
+    //                type: "Post",
+    //                data: { orderId: $(this).data("id"), Amount: shippingFee },
+    //                error: function (status, xhr) {
+    //                    $(".Main-loader").modal('hide');
+    //                },
+    //                success: function (result) {
+
+    //                    $(".Main-loader").modal('hide');
+    //                    if (result.Status === true) {
+    //                        Swal.fire('Successful');
+    //                        window.setTimeout(function () { location.reload(); }, 3000);
+    //                        return;
+    //                    }
+    //                    Swal.fire(result.Message);
+    //                }
+
+    //            });
+    //            return;
+    //        }
+    //    }
+    //  else {
+    //        Swal.fire({
+    //            title: 'Are you sure?',
+    //            //text: "You won't be able to revert this!",
+    //            //icon: 'warning',
+    //            showCancelButton: true,
+    //            confirmButtonColor: '#3085d6',
+    //            cancelButtonColor: '#d33',
+    //            confirmButtonText: 'Yes'
+    //        }).then((result) => {
+    //            if (result.value) {
+    //                $(".Main-loader").modal('show');
+    //                $.ajax({
+    //                    url: "/Admin/ProcessOrder",
+    //                    type: "Post",
+    //                    data: { orderId: $(this).data("id") },
+    //                    error: function (status, xhr) {
+    //                        $(".Main-loader").modal('hide');
+    //                    },
+    //                    success: function (result) {
+    //                        $(".Main-loader").modal('hide');
+    //                        if (result.Status === true) {
+    //                            Swal.fire('Successful');
+    //                            window.setTimeout(function () { location.reload(); }, 3000);
+    //                            return;
+    //                        }
+    //                        Swal.fire(result.Message);
+    //                    }
+
+    //                });
+    //                return;
+    //            }
+    //        })
+    //    }
+
+
+    //});
+
+
+
+    $(".RemoveAdmin").click(async function () {
+ 
+    
+            Swal.fire({
+                title: 'Are you sure?',
+                //text: "You won't be able to revert this!",
+                //icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.value) {
+                    $(".Main-loader").modal('show');
+                    $.ajax({
+                        url: "/Admin/ManageAdmin",
+                        type: "Post",
+                        data: { userId: $(this).data("id"), makeAdmin: true },
+                        error: function (status, xhr) {
+                            $(".Main-loader").modal('hide');
+                        },
+                        success: function (result) {
+                            $(".Main-loader").modal('hide');
+                            if (result.Status === true) {
+                                Swal.fire('Successful');
+                                window.setTimeout(function () { location.reload(); }, 3000);
+                                return;
+                            }
+                            Swal.fire(result.Message);
+                        }
+
+                    });
+                    return;
+                }
+            })
+        
+
+
+    });
+
+
+    $("#MakeAdmin").click(async function () {
+ 
+    
+            Swal.fire({
+                title: 'Are you sure?',
+                //text: "You won't be able to revert this!",
+                //icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.value) {
+                    $(".Main-loader").modal('show');
+                    $.ajax({
+                        url: "/Admin/ManageAdmin",
+                        type: "Post",
+                        data: { userId: $(this).data("id") ,makeAdmin:false},
+                        error: function (status, xhr) {
+                            $(".Main-loader").modal('hide');
+                        },
+                        success: function (result) {
+                            $(".Main-loader").modal('hide');
+                            if (result.Status === true) {
+                                Swal.fire('Successful');
+                                window.setTimeout(function () { location.reload(); }, 3000);
+                                return;
+                            }
+                            Swal.fire(result.Message);
+                        }
+
+                    });
+                    return;
+                }
+            })
+        
+
+
+    });
+
+
+
+    $(".ViewOrderItems").click(function () {
+        $(".Main-loader").modal('show');
+        $.ajax({
+            url: "/Admin/GetOrderItems",
+            type: "Post",
+            data: { orderId: $(this).data("id") },
+            error: function (status, xhr) {
+                $(".Main-loader").modal('hide');
+            },
+            success: function (result) {
+                $(".Main-loader").modal('hide');
+                if (result.Status === true) {
+                 var html = "";
+                    $.each(result._entity.Item,
+                        function(index,row) {
+                            html = html + `<tr>
+                            <td>${index+1} </td>
+                            <td>${row.Title} </td>
+                            <td> ${row.Description}</td>
+                            <td>${row.OrderType} </td>    
+                            <td>${row.Quantity} </td>
+                            <td> ${row.ItemsPrice}</td>
+                            <td>${row.ServicePrice} </td>                                    
+                            <td>${row.TotalPrice} </td>                                    
+                            <td><button class="btn btn-success ViewItem" data-id=" ${row.Id}" >View Item</button></td>                                    
+                            </tr>`;
+                        });
+                    var orderInfo = result._entity.Order;
+                    var user = result._entity;
+                    $("#OrderName").text(user.FullName);
+                    $("#OrderEmail").text(user.Email);
+                    $("#OrderPhone").text(user.PhoneNumber);
+                    $("#OrderAddress").text(user.Address);
+                    $("#OrderType").text(orderInfo.OrderType);
+                    $("#OrderStatus").text(orderInfo.Status);
+                    $("#ItemsTableDiv").append(html);
+                    $("#ItemsTableDiv").on(".ViewItem",
+                        "click",
+                        function() {
+
+                        });
+                    $("#OrderModel").modal("show");
+                    return;
+                }
+                Swal.fire(result.Message);
+            }
+
+        });
+        return;
+
+    });
+
+    $("#CompletedOrderBtn").click(function () {
+        $("#CompletedOrderDiv").show();
+        $("#PendingOrderDiv").hide();
+        $("#DomesticOrders").hide();
+    });
+    $("#ViewAdmins").click(function () {
+        $("#UserDiv").toggle();
+        $("#AdminDiv").toggle();
+    });
+    $("#DomesticOrdersBtn").click(function () {
+        $("#CompletedOrderDiv").hide();
+        $("#PendingOrderDiv").hide();
+        $("#DomesticOrders").show();
+    });
+    $("#PendingOrders").click(function () {
+        $("#CompletedOrderDiv").hide();
+        $("#PendingOrderDiv").show();
+        $("#DomesticOrders").hide();
+    });
     //$("#MailType").select(function () {
     //    var mailType = $("#MailType").val();
     //    if (mailType === "Mail") {
@@ -446,8 +682,6 @@
         $("#EditSubCategoryModal").modal("show");
     });
 
-
-
     $(".EditCategory").click(function () {
 
         var getParent = $(this).parent().parent();
@@ -457,7 +691,133 @@
         $("#EditCategoryModal").modal("show");
     });
 
+    $('.modal').on('shown.bs.modal', function () {
+        $(document).off('focusin.modal');
+    });
+    $("#ContactUser").click(async function () {
 
+        const { value: text } = await Swal.fire({
+            input: 'textarea',
+            inputPlaceholder: 'Type your message here...',
+            inputAttributes: {
+                'aria-label': 'Type your message here'
+            },
+            showCancelButton: true,
+            inputValidator: (value) => {
+                if (!value) {
+                    return 'Message is required'
+                }
+            }
+        });
+        if (text) {
+
+            $(".Main-loader").modal('show');
+            var details = {};
+            details.Message = text;
+            details.Subject = "Domestic Order Quotation";
+            details.Email = $("#DomeEmail").text();
+            $.ajax({
+                url: "/Admin/SendMail",
+                type: "Post",
+                data: { model: details },
+                error: function (status, xhr) {
+                    $(".Main-loader").modal('hide');
+                },
+                success: function (result) {
+
+                    $(".Main-loader").modal('hide');
+                    if (result.Status === true) {
+                        Swal.fire('Mail Sent');
+                        return;
+                    }
+                    Swal.fire(result.Message);
+                }
+
+            });
+
+        }
+
+    });
+
+    $("#SubmitPrice").click(function () {
+        Swal.fire({
+            title: 'Are you sure?',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.value) {
+                
+                if ($("#DomesticQoutation").val() === "" || $("#DomesticQoutation").val() === null) {
+                    Swal.fire("Price field is required");
+                    return;
+                }
+                $(".Main-loader").modal('show');
+                $.ajax({
+                    url: "/Admin/SendPriceQuotation",
+                    type: "Post",
+                    data: { amount: $("#DomesticQoutation").val(), id: domesticPriceId },
+                    error: function(status, xhr) {
+                        $(".Main-loader").modal('hide');
+                    },
+                    success: function(result) {
+
+                        $(".Main-loader").modal('hide');
+                        if (result.Status === true) {
+                            Swal.fire('Successful');
+                            $("#DomesticQoutation").val("");
+                            return;
+                        }
+                        Swal.fire(result.Message);
+                    }
+
+                });
+
+            }
+        });
+
+
+    });
+    
+    $(".DomesticViewMore").click(function () {
+        var id = $(this).data("id");
+        $(".Main-loader").modal('show');
+        $.ajax({
+            url: "/Admin/ViewMoreDomesticInfo",
+            type: "Post",
+            data: { id: id },
+            error: function (status, xhr) {
+                $(".Main-loader").modal('hide');
+            },
+            success: function (result) {
+
+                $(".Main-loader").modal('hide');
+                if (result.Status === true) {
+                    domesticPriceId = result._entity.id;
+                    $("#DomeAddress").text(result._entity.Address);
+                    $("#DomeName").text(result._entity.FullName);
+                    $("#DomeEmail").text(result._entity.Email);
+                    $("#DomePhone").text(result._entity.PhoneNumber);
+                    $("#DomeWeight").text(result._entity.Weight);
+                    $("#DomeQuantity").text(result._entity.Quantity);
+                    $("#DomeReceAddr").text(result._entity.ReceiverAddress);
+                    $("#DomeReceName").text(result._entity.ReceiverName);
+                    $("#DomeRecePhone").text(result._entity.ReceiverNumber);
+                    $("#DomeSuppAddr").text(result._entity.SenderAddress);
+                    $("#DomeSuppPhone").text(result._entity.SenderPhoneNumber);
+                    $("#DomeSuppName").text(result._entity.SenderName);
+                    $("#DomeCreated").text(result._entity.DateCreated);
+                    $("#DomesticLargeModel").modal("show");
+                    return;
+                }
+                Swal.fire(result.Message);
+            }
+
+        });
+        return;
+
+    });
 
     $(".EditVendor").click(function () {
 
@@ -468,10 +828,6 @@
         $("#EditedVendorLink").val(getParent[0].cells[1].innerText);
         $("#EditVendorModal").modal("show");
     });
-
-
-
-
 
     $("#SaveSubCategory").click(function () {
         if (StartValidation("AddSubCategoryForm")) {
@@ -596,7 +952,7 @@
                     $(".Main-loader").modal('hide');
                     if (result.Status === true) {
                         Swal.fire('Completed Successfully');
-                        return;
+                        window.setTimeout(function () { location.reload(); }, 3000);
                     }
                     Swal.fire(result.Message);
                 }

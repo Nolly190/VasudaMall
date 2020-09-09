@@ -10,8 +10,10 @@ namespace VasudaDataAccess.Logic
 {
   public interface IOrderService
     {
-        Response<List<ItemsTable>> GetOrderItems(string orderId);
+        Response<OrderItemDTO> GetOrderItems(string orderId);
+        Response<string> PriceQuote (string id,decimal amount);
         Response<AdminOrderDto> GetAllOrderInfo();
+        Response<DomesticOrderDTO> GetDomesticInfo(string id);
         Response<OrderHistoryViewModel> GetAllOrdersHomePage(string userId);
         Response<DomesticItemViewModel> GetDomesticItemsPage(string userId);
         Response<GeneralItemViewModel> GetGeneralItemsPage(string userId);
@@ -21,10 +23,9 @@ namespace VasudaDataAccess.Logic
         Response<string> AddPurchaseItem(AddPurchaseItemViewModel model, string userId);
         Response<string> AddShippingAndPurchaseItem(AddPurchaseAndShippingItemViewModel model, string userId);
         Response<string> DeleteItem(string id, string userId);
+        Response<string> ProcessOrder(string orderId, string amount);
         //Response<GetSinglePurchaseItemResponseDTO> GetSinglePurchaseItem(ItemsTable itemsTable, string message, bool status);
         Response<GetSingleItemResponseDTO> GetSingleItem(string id, string userId);
-        
-        Response<string> CreateOrder(string[] itemIds, string userId);
-        Response<SingleOrderDTO> GetSingleOrder(string id, string userId);
+        string GetOrderTypeNextAction(string orderType, string status);
     }
 }

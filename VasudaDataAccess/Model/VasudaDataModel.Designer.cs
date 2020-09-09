@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\SN029470\Documents\mine\VasudaMallProject\VasudaMall\VasudaDataAccess\Model\VasudaDataModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\NONSO UDENWANI\source\repos\VasudaMall\VasudaDataAccess\Model\VasudaDataModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

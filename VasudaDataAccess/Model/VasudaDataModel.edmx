@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="VasudaDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="VasudaDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -197,6 +197,7 @@
           <Property Name="Quantity" Type="bigint" />
           <Property Name="ItemsPrice" Type="decimal" Precision="18" Scale="2" />
           <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -787,8 +788,7 @@
             <End Role="WithdrawalRequestTable" EntitySet="WithdrawalRequestTable" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="VasudaDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1012,6 +1012,7 @@
           <NavigationProperty Name="OrderTable" Relationship="Self.FK_ItemsTables_OrderTable" FromRole="ItemsTables" ToRole="OrderTable" />
           <NavigationProperty Name="VendorTable" Relationship="Self.FK_OrderTables_VendorTables" FromRole="ItemsTables" ToRole="VendorTables" />
           <NavigationProperty Name="ShippingItemTable" Relationship="Self.FK_ShippingOrderTable_OrderTables" FromRole="ItemsTables" ToRole="ShippingItemTable" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="NotificationTable">
           <Key>
@@ -1770,6 +1771,7 @@
           <EntitySetMapping Name="ItemsTables">
             <EntityTypeMapping TypeName="VasudaDataModel.ItemsTable">
               <MappingFragment StoreEntitySet="ItemsTables">
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
                 <ScalarProperty Name="ProductLink" ColumnName="ProductLink" />

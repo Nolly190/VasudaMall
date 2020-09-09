@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        Start creating your amazing application!
+                     <button class="btn btn-primary" id="ViewAdmins"> View Admins</button>
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
@@ -35,9 +35,66 @@
                 <!-- /.card -->
             </div>
         </div>
-        <!--Users drop down end-->
-        <!--Users table start-->
-        <div class="row">
+        <div class="row" id="AdminDiv" style="display: none">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Notifications</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @if (Model.Users.Count == 0)
+                        {
+                            <h3 style="text-align:center">NO ADMIN AVAILABLE</h3>
+                        }
+                        else
+                        {
+                            <table id="notificationTable" class="table table-bordered table-striped table-hover table-sm table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Full Name</th>
+                                        <th>Email</th>
+                                        <th>Balance</th>
+                                        <th>Phone Number</th>
+                                        <th>Address</th>
+                                        <th>City</th>
+                                        <th>Date Created</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var user in Model.Admins)
+                                    {
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@user.FullName</td>
+                                            <td>@user.Email</td>
+                                            <td>@user.Balance</td>
+                                            <td>@user.PhoneNumber</td>
+                                            <td>@user.Address</td>
+                                            <td>@user.City</td>
+                                            <td>@user.DateCreated</td>
+                                            <td>
+                                                <button data-id="@user.Id" class="btn btn-outline-success btn-sm RemoveAdmin">Remove Admin</button>
+                                                <a class="btn btn-outline-success btn-sm" href="@Url.Action("UserDetails","Admin", new {userId=user.Id})">View User</a>
+                                         
+                                            </td>
+                                        </tr>
+                                        count++;
+                                    }
+                                </tbody>
+                                <tfoot>
+                                </tfoot>
+                            </table>
+                        }
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <div class="row" id="UserDiv" >
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
@@ -104,6 +161,5 @@
                 <!-- /.card -->
             </div>
         </div>
-        <!--Users table end-->
     </div>
 </section>

@@ -45,7 +45,7 @@ namespace VasudaMall.Controllers
                 return Json(response, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(_orderService.CreateOrder(model, User.Identity.GetUserId()), JsonRequestBehavior.AllowGet);
+            return Json(/*_orderService.CreateOrder(model, User.Identity.GetUserId()),*/ JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
