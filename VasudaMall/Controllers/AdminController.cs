@@ -26,6 +26,7 @@ namespace VasudaMall.Controllers
         private IOrderService _orderService;
         private IPaymentService _paymentService;
         private IProductService _productService;
+        private UnitOfWork _unitOfWork;
 
         public AdminController(IWalletService walletService, IProfileService profileService, IOrderService orderService, 
                                 IPaymentService paymentService, IBankService bankService, IProductService productService)
@@ -37,6 +38,7 @@ namespace VasudaMall.Controllers
             _paymentService = paymentService;
             _bankService = bankService;
             _productService = productService;
+            _unitOfWork = new UnitOfWork(new VasudaModel());
         }
 
         // GET: Admin
@@ -143,9 +145,19 @@ namespace VasudaMall.Controllers
         public JsonResult SendPriceQuotation(string id, decimal amount)
         {
             return Json(_orderService.PriceQuote(id,amount),JsonRequestBehavior.AllowGet);
-        } public JsonResult SendChat(string message)
+        } public JsonResult SendChat(string message,string userId)
         {
-            return Json(_notificationService.SendChats("Admin",message),JsonRequestBehavior.AllowGet);
+            return Json(_notificationService.SendChats(userId,message, "Admin"),JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult RetrieveChat(string userId)
+        {
+
+            return Json(  _notificationService.GetAllChats(userId,"User"), JsonRequestBehavior.AllowGet);
+        }   
+        public JsonResult ViewNotification(string noteId)
+        {
+
+            return Json(  _notificationService.GetNotification(noteId), JsonRequestBehavior.AllowGet);
         }
        
         public new ActionResult Profile()
@@ -163,7 +175,7 @@ namespace VasudaMall.Controllers
         }
         public ActionResult Support()
         {
-            return View(_notificationService.GetAllChats(null).Result());
+            return View(_unitOfWork.SupportTable.GetAll().ToList());
         }
         
         public ActionResult More()

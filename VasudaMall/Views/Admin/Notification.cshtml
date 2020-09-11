@@ -112,7 +112,7 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="NotificationTbody">
                                     @foreach (var notification in Model.Notifications)
                                     {
                                         <tr>
@@ -121,21 +121,12 @@
                                             <td>@notification.DateCreated</td>
                                             <td>@notification.IsRead</td>
                                             <td>
-                                                <button type="button" id="editNotificationBtn" class="btn btn-outline-success btn-sm">Edit</button>
-                                                <button type="button" id="deleteNotificationBtn" class="btn btn-outline-danger btn-sm">Delete</button>
+                                                <button type="button" class="btn btn-outline-success btn-sm ViewNotification" data-id="@notification.Id">View</button>
                                             </td>
                                         </tr>
                                         count++;
                                     }
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>S/N</th>
-                                        <th>Subject</th>
-                                        <th>Date Published</th>
-                                        <th>Read Status</th>
-                                    </tr>
-                                </tfoot>
                             </table>
                         }
                     </div>
@@ -160,6 +151,27 @@
         //Add text editor
         $('#compose-textarea').summernote();
     })
+    $("#notificationTable").DataTable();
 </script>
+
+
+<div class="modal fade" id="NotificationModal" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">View Notification</h4>
+                <button type="button" class="btn btn-outline-success btn-sm" data-dismiss="modal" aria-label="Close">
+                    Close
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="NotificationDiv">
+
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
