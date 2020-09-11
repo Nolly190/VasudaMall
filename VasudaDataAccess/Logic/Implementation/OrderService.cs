@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Configuration;
 using VasudaDataAccess.Data_Access.Implementation;
 using VasudaDataAccess.DTOs;
@@ -86,6 +87,7 @@ namespace VasudaDataAccess.Logic.Implementation
             result.SetResult(model);
             return result;
         }
+
         public string GetOrderTypeNextAction(string orderType, string status)
         {
             var array = WebConfigurationManager.AppSettings[orderType].ToString().Split(',');
@@ -96,7 +98,6 @@ namespace VasudaDataAccess.Logic.Implementation
             }
             return array[index];
         }
-
 
         public Response<DomesticItemViewModel> GetDomesticItemsPage(string userId)
         {
@@ -1045,6 +1046,112 @@ namespace VasudaDataAccess.Logic.Implementation
 
                 response.Status = true;
                 response.Message = "Order retrieved successfully";
+                response.SetResult(model);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+            }
+            return response;
+        }
+
+        public Response<GetSingleOrderResponseDTO> SingleCreatedOrder(string orderId)
+        {
+            var response = new Response<GetSingleOrderResponseDTO>()
+            {
+                Message = "Unable to retrieve order...",
+                Status = false
+            };
+
+            try
+            {
+                _unitOfWork._dbContext.Configuration.ProxyCreationEnabled = false;
+                var id = Guid.Parse(orderId);
+                var order = _unitOfWork.OrderTable.Get(x => x.Id == id);
+                var items = _unitOfWork.ItemsTable.GetAll(x => x.OrderId == order.Id).ToList();
+
+                if (order == null || items == null)
+                {
+                    return response;
+                }
+                
+
+                var model = new GetSingleOrderResponseDTO();
+                model.PurchaseAndShippingOrders = new List<SinglePurchaseAndShippingItemDTO>();
+                model.PurchaseOrders = new List<SinglePurchaseItemDTO>();
+                model.DomesticOrder = new SingleDomesticItemDTO();
+
+                if (order.OrderType == ItemType.Purchase.ToString())
+                {
+                    Parallel.ForEach(items, item =>
+                    {
+                        var singelItem = new SinglePurchaseItemDTO
+                        {
+                            Description = item.Description,
+                            Title = item.Title,
+                            ProductLink = item.ProductLink,
+                            Quantity = item.Quantity.Value,
+                            UnitPrice = item.UnitPrice,
+                            ServicePrice = item.ServicePrice,
+                            TotalPrice = item.TotalPrice,
+                        };
+                        model.PurchaseOrders.Add(singelItem);
+
+                    });
+                    model.PurchaseAndShippingOrders = null;
+                    model.DomesticOrder = null;
+                }
+
+                if (order.OrderType == ItemType.PurchaseAndShipping.ToString())
+                {
+                    Parallel.ForEach(items, item =>
+                    {
+                        var shipping = _unitOfWork.ShippingItemTable.Get(x => x.Id == item.Id);
+                        
+                        var singleItem = new SinglePurchaseAndShippingItemDTO
+                        {
+                            Title = item.Title,
+                            Description = item.Description,
+                            ProductLink = item.ProductLink,
+                            Quantity = item.Quantity.Value,
+                            TotalPrice = item.TotalPrice,
+                            Type = ItemType.PurchaseAndShipping.ToString(),
+                            ReceiverName = shipping.ReceiverName,
+                        };
+                        model.PurchaseAndShippingOrders.Add(singleItem);
+                    });
+
+                    model.PurchaseOrders = null;
+                    model.DomesticOrder = null;
+
+                }
+
+                if (order.OrderType == ItemType.Domestic.ToString())
+                {
+                    var item = items.FirstOrDefault();
+                    if (item == null)
+                    {
+                        return response;
+                    }
+
+                    var domestic = _unitOfWork.DomesticItemTable.Get(x => x.Id == item.Id);
+                    var singleItem= new SingleDomesticItemDTO
+                    {
+                        Title = item.Title,
+                        Description = item.Description,
+                        Quantity = domestic.Quantity,
+                        Weight = domestic.Weight,
+                        ReceiverName = domestic.ReceiverName,
+                        Status = Util.DomesticStatusEnumConverter((DomesticOrderStatus)Enum.Parse(typeof(DomesticOrderStatus), domestic.Status))
+                    };
+
+                    model.DomesticOrder = singleItem;
+                    model.PurchaseOrders = null;
+                    model.PurchaseAndShippingOrders = null;
+                }
+
+                response.Status = true;
+                response.Message = "Orders retrieved successfully";
                 response.SetResult(model);
             }
             catch (Exception ex)

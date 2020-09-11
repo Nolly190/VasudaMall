@@ -48,7 +48,7 @@
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="@Url.Action("Cart", "Store")"><i class="nav-link fas fa-shopping-cart" aria-hidden="true"></i></a>
+                    <a href="@Url.Action("Order", "Checkout")"><i class="nav-link fas fa-shopping-cart" aria-hidden="true"></i></a>
                 </li>
                 @if (!User.Identity.IsAuthenticated)
                 {

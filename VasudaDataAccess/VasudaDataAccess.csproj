@@ -147,6 +147,7 @@
     <Compile Include="DTOs\FlutterwaveTransResponse.cs" />
     <Compile Include="DTOs\GeneralItemViewModel.cs" />
     <Compile Include="DTOs\GetSingleItemResponseDTO.cs" />
+    <Compile Include="DTOs\GetSingleOrderResponseDTO.cs" />
     <Compile Include="DTOs\SingleDomesticItemDTO.cs" />
     <Compile Include="DTOs\SingleOrderDTO.cs" />
     <Compile Include="DTOs\SinglePurchaseAndShippingItemDTO.cs" />

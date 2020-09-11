@@ -50,7 +50,9 @@
                                     {
                                         var fpId = "itemFinalpriceCol" + count;
                                         <tr>
-                                            <td><input type="checkbox" class="checkoutItemCheckBtn" data-id="@item.Id" /></td>
+                                            <td>
+                                                <input type="checkbox" class="checkoutItemCheckBtn" data-id="@item.Id" />
+                                            </td>
                                             <td>@item.Title</td>
                                             <td>
                                                 @Util.ReduceDescriptionLength(item.Description)
