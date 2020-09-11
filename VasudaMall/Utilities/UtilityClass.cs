@@ -5,7 +5,9 @@ using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using NLog;
+using VasudaDataAccess.Data_Access.Implementation;
 using VasudaDataAccess.DTOs;
+using VasudaDataAccess.Model;
 using VasudaMall.Models;
 
 namespace VasudaMall.Utilities
@@ -13,6 +15,7 @@ namespace VasudaMall.Utilities
     public class UtilityClass
     {
         private Logger logger;
+        private UnitOfWork _unitOfWork;
 
         public UserManager<ApplicationUser> UserManager { get; set; }
 
@@ -22,7 +25,7 @@ namespace VasudaMall.Utilities
             var userStore = new UserStore<ApplicationUser>(conn);
             UserManager = new UserManager<ApplicationUser>(userStore);
             logger = LogManager.GetCurrentClassLogger();
-
+            _unitOfWork = new UnitOfWork(new VasudaModel());
         }
         public List<string> GetRole(string userId)
         {
@@ -47,6 +50,10 @@ namespace VasudaMall.Utilities
             }
 
             return response;
+        }  
+        public int AdminChatCount()
+        {
+            return _unitOfWork.SupportTable.GetAll(x => x.SentBy == "User" && !x.IsRead).Count();
         }
     }
 

@@ -173,14 +173,87 @@ namespace VasudaDataAccess.Logic.Implementation
             return response;
         }
 
-        public Response<List<SupportTable>> GetAllChats(string userId)
+        public Response<List<SupportTable>> GetAllChats(string userId, string sentBy)
         {
-            throw new NotImplementedException();
+            var response = new Response<List<SupportTable>>()
+            {
+                Status = false
+            };
+            try
+            {
+                _unitOfWork._dbContext.Configuration.ProxyCreationEnabled = false;
+                var result = string.IsNullOrEmpty(userId) ? _unitOfWork.SupportTable.GetAll().OrderBy(x=>x.DateCreated).ToList(): _unitOfWork.SupportTable.GetAll(x=>x.UserId==userId).OrderBy(x => x.DateCreated).ToList();
+                if (!string.IsNullOrEmpty(userId))
+                {
+                    var getRead = _unitOfWork.SupportTable.GetAll(x => x.UserId == userId && !x.IsRead && x.SentBy==sentBy).ToList();
+                    foreach (var item in getRead)
+                    {
+                        item.IsRead = true;
+
+                    }
+                    _unitOfWork.Complete();
+                }
+                response.Status = true;
+                response.SetResult(result);
+            }
+            catch (Exception ex)
+            {
+                response.SetResult(new List<SupportTable>());
+                logger.Error(ex.ToString());
+            }
+            return response;
         }
 
-        public Response<string> SendChats(string userId, string message)
+        public Response<string> SendChats(string userId, string message , string sentBy)
         {
-            throw new NotImplementedException();
+            var response = new Response<string>()
+            {
+                Status = false
+            };
+            try
+            {
+                var sendChat = new SupportTable()
+                {
+                    DateCreated = DateTime.UtcNow.AddHours(1),
+                    Id = Guid.NewGuid(),
+                    Message = message,
+                    IsRead = false,
+                    SentBy = sentBy,
+                    UserId = userId,
+                };
+                _unitOfWork.SupportTable.Add(sendChat);
+                _unitOfWork.Complete();
+                response.Status = true;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+                response.Message = "Could not add chat";
+            }
+            return response;
+        }
+
+        public Response<NotificationTable> GetNotification(string id)
+        {
+
+            var response = new Response<NotificationTable>()
+            {
+                Status = false
+            };
+            try
+            {
+                _unitOfWork._dbContext.Configuration.ProxyCreationEnabled = false;
+                var getNotification = _unitOfWork.NotificationTable.Get(x => x.Id == id);
+                response.SetResult(getNotification);
+                response.Status = true;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+                response.Message = "Could not retrieve notification";
+            }
+            return response;
+        
         }
     }
 }

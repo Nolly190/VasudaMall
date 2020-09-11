@@ -277,6 +277,7 @@
     <Content Include="Content\chat.css" />
     <Content Include="Content\Main.css" />
     <Content Include="Content\ChatBox.css" />
+    <Content Include="Content\chatting.css" />
     <Content Include="Content\spinner.css" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />

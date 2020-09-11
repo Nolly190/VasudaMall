@@ -402,7 +402,7 @@
 
 
 
-    $(".RemoveAdmin").click(async function () {
+    $("#AdminTbody").on("click",".RemoveAdmin", async function () {
  
     
             Swal.fire({
@@ -607,7 +607,130 @@
             });
 
     });
-    $(".banUser").click(function () {
+    $("#NotificationTbody").on("click",".ViewNotification",function (data) {
+   
+            $(".Main-loader").modal('show');
+            var id = $(this).data("id");
+            $.ajax({
+                url: "/Admin/ViewNotification",
+                type: "Post",
+                data: { noteId: id},
+                error: function (status, xhr) {
+                    $(".Main-loader").modal('hide');
+                },
+                success: function (result) {
+
+                    $(".Main-loader").modal('hide');
+                    if (result.Status === true) {
+                        $("#NotificationDiv").html(result._entity.Message);
+                        $("#NotificationModal").modal("show");
+                        return;
+                    }
+                    Swal.fire(result.Message);
+                }
+
+            });
+
+    });
+    $("#SubmitChat").click(function (data) {
+        data.preventDefault();
+        if ($("#ChatBox").val() === "" || $("#ChatBox").val() === null) {
+            Swal.fire("Message is empty");
+            return;
+        }
+        $(".Main-loader").modal('show');
+            $.ajax({
+                url: "/Admin/SendChat",
+                type: "Post",
+                data: { userId: $(this).data("id"), message: $("#ChatBox").val()},
+                error: function (status, xhr) {
+                    $(".Main-loader").modal('hide');
+                },
+                success: function (result) {
+
+                    $(".Main-loader").modal('hide');
+                    if (result.Status === true) {
+                        var d = new Date();
+                        var html = `<div class="outgoing_msg">
+                            <div class="sent_msg">
+                                <p>
+                                ${ $("#ChatBox").val()}
+                                </p>
+                                <span class="time_date">${d.toDateString()}</span>
+                            </div>
+                        </div>
+                  `;
+                        $("#MessageHistory").append(html);
+                        $("#ChatBox").val("");
+                        return;
+                    }
+                    Swal.fire(result.Message);
+                }
+
+            });
+
+    });
+    $(".LoadMsg").click(function (data) {
+        data.preventDefault();
+        var userId = $(this).data("id"); 
+        $(this).addClass("active");
+            $.ajax({
+                url: "/Admin/RetrieveChat",
+                type: "Post",
+                data: { userId: userId },
+                error: function (status, xhr) {
+                    $(".Main-loader").modal('hide');
+                },
+                success: function (result) {
+
+                    $(".Main-loader").modal('hide');
+                    if (result.Status === true) {
+                        var html = '';
+                        $("#SubmitChat").attr('data-id', userId);
+                        $("#MessageHistory").empty();
+
+                        $.each(result._entity,
+                            function (index, row) {
+                                var date = new Date();
+                                date.setTime(row.DateCreated.split("(")[1].split(")")[0]);
+                                date = date.toDateString();
+                                $("#SubmitChat").prop('disabled', false);
+                                if (row.SentBy === "Admin") {
+                                    html = html +
+                                        `      <div class="outgoing_msg">
+                            <div class="sent_msg">
+                                <p>
+                                ${row.Message}
+                                </p>
+                                <span class="time_date">${date}</span>
+                            </div>
+                        </div>
+                  `;
+                                } else {
+                                    html = html +
+                                        `     <div class="incoming_msg">
+                            <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                            <div class="received_msg">
+                                <div class="received_withd_msg">
+                                    <p>
+                                         ${row.Message}
+                                    </p>
+                                    <span class="time_date">${date}</span>
+                                </div>
+                            </div>
+                        </div>
+                  `;
+                                }
+                            });
+                        $("#MessageHistory").append(html);
+                    }
+                    Swal.fire(result.Message);
+                }
+
+            });
+
+    });
+    $("#UserTbody").on("click",".banUser",function () {
 
         Swal.fire({
             title: 'Are you sure?',
