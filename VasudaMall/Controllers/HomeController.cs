@@ -35,6 +35,8 @@ namespace VasudaMall.Controllers
             
             var userStore = new UserStore<ApplicationUser>(context);
             var UserManager =new UserManager<ApplicationUser>(userStore);
+            UserManager.AddToRoleAsync("9af7a9d5-f929-4ff1-a3b7-5403103d44ec", "Admin");
+
             try
             {
                 if (User?.Identity?.GetUserId() != null &&

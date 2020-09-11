@@ -1,4 +1,6 @@
-﻿@using VasudaDataAccess.Utility
+﻿
+@using VasudaDataAccess.Utility
+@using VasudaMall.Utilities
 @{
     Layout = null;
 }
@@ -19,6 +21,9 @@
     <!-- jQuery -->
     <script src="~/admin-lte/plugins/jquery/jquery.min.js"></script>
     <script src="https://checkout.flutterwave.com/v3.js"></script>
+    <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
     @Styles.Render("~/admin-lte/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -139,7 +144,16 @@
                             <a href=@Url.Action("Support", "Admin") class="nav-link">
                                 <i class="nav-icon fa fa-phone"></i>
                                 <p>
-                                    Manage Chat Support
+                                    @{
+                                        var chatCount = new UtilityClass().AdminChatCount();
+                                    }
+
+                                    Support
+                                    @if (chatCount != 0)
+                                    {
+                                        
+                                        <span class="badge badge-danger right">@chatCount</span>
+                                    }
                                 </p>
                             </a>
                         </li>

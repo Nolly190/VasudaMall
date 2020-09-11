@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                     <button class="btn btn-primary" id="ViewAdmins"> View Admins</button>
+                        <button class="btn btn-primary" id="ViewAdmins"> View Admins</button>
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
@@ -49,40 +49,40 @@
                         }
                         else
                         {
-                            <table id="notificationTable" class="table table-bordered table-striped table-hover table-sm table-responsive">
+                            <table id="AdminTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
                                 <thead>
-                                    <tr>
-                                        <th>S/N</th>
-                                        <th>Full Name</th>
-                                        <th>Email</th>
-                                        <th>Balance</th>
-                                        <th>Phone Number</th>
-                                        <th>Address</th>
-                                        <th>City</th>
-                                        <th>Date Created</th>
-                                        <th>Action</th>
-                                    </tr>
+                                <tr>
+                                    <th>S/N</th>
+                                    <th>Full Name</th>
+                                    <th>Email</th>
+                                    <th>Balance</th>
+                                    <th>Phone Number</th>
+                                    <th>Address</th>
+                                    <th>City</th>
+                                    <th>Date Created</th>
+                                    <th>Action</th>
+                                </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach (var user in Model.Admins)
-                                    {
-                                        <tr>
-                                            <td>@count</td>
-                                            <td>@user.FullName</td>
-                                            <td>@user.Email</td>
-                                            <td>@user.Balance</td>
-                                            <td>@user.PhoneNumber</td>
-                                            <td>@user.Address</td>
-                                            <td>@user.City</td>
-                                            <td>@user.DateCreated</td>
-                                            <td>
-                                                <button data-id="@user.Id" class="btn btn-outline-success btn-sm RemoveAdmin">Remove Admin</button>
-                                                <a class="btn btn-outline-success btn-sm" href="@Url.Action("UserDetails","Admin", new {userId=user.Id})">View User</a>
+                                <tbody id="AdminTbody">
+                                @foreach (var user in Model.Admins)
+                                {
+                                    <tr>
+                                        <td>@count</td>
+                                        <td>@user.FullName</td>
+                                        <td>@user.Email</td>
+                                        <td>@user.Balance</td>
+                                        <td>@user.PhoneNumber</td>
+                                        <td>@user.Address</td>
+                                        <td>@user.City</td>
+                                        <td>@user.DateCreated</td>
+                                        <td>
+                                            <button data-id="@user.Id" class="btn btn-outline-success btn-sm RemoveAdmin">Remove Admin</button>
+                                            <a class="btn btn-outline-success btn-sm" href="@Url.Action("UserDetails","Admin", new {userId=user.Id})">View User</a>
                                          
-                                            </td>
-                                        </tr>
-                                        count++;
-                                    }
+                                        </td>
+                                    </tr>
+                                    count++;
+                                }
                                 </tbody>
                                 <tfoot>
                                 </tfoot>
@@ -108,48 +108,49 @@
                         }
                         else
                         {
-                            <table id="notificationTable" class="table table-bordered table-striped table-hover table-sm table-responsive">
+                            count = 1;
+                            <table id="UserTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
                                 <thead>
-                                    <tr>
-                                        <th>S/N</th>
-                                        <th>Full Name</th>
-                                        <th>Email</th>
-                                        <th>Balance</th>
-                                        <th>Phone Number</th>
-                                        <th>Address</th>
-                                        <th>City</th>
-                                        <th>Date Created</th>
-                                        <th>Action</th>
-                                    </tr>
+                                <tr>
+                                    <th>S/N</th>
+                                    <th>Full Name</th>
+                                    <th>Email</th>
+                                    <th>Balance</th>
+                                    <th>Phone Number</th>
+                                    <th>Address</th>
+                                    <th>City</th>
+                                    <th>Date Created</th>
+                                    <th>Action</th>
+                                </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach (var user in Model.Users)
-                                    {
-                                        <tr>
-                                            <td>@count</td>
-                                            <td>@user.FullName</td>
-                                            <td>@user.Email</td>
-                                            <td>@user.Balance</td>
-                                            <td>@user.PhoneNumber</td>
-                                            <td>@user.Address</td>
-                                            <td>@user.City</td>
-                                            <td>@user.DateCreated</td>
-                                            <td>
-                                                <a class="btn btn-outline-success btn-sm" href="@Url.Action("UserDetails","Admin", new {userId=user.Id})">View User</a>
-                                                @if (user.IsBanned)
-                                                {
-                                                    <button type="button" data-action="UnBan" data-id="@user.Id" class="btn btn-outline-success btn-sm banUser">UnBlock</button>
+                                <tbody id="UserTbody">
+                                @foreach (var user in Model.Users)
+                                {
+                                    <tr>
+                                        <td>@count</td>
+                                        <td>@user.FullName</td>
+                                        <td>@user.Email</td>
+                                        <td>@user.Balance</td>
+                                        <td>@user.PhoneNumber</td>
+                                        <td>@user.Address</td>
+                                        <td>@user.City</td>
+                                        <td>@user.DateCreated</td>
+                                        <td>
+                                            <a class="btn btn-outline-success btn-sm" href="@Url.Action("UserDetails","Admin", new {userId=user.Id})">View User</a>
+                                            @if (user.IsBanned)
+                                            {
+                                                <button type="button" data-action="UnBan" data-id="@user.Id" class="btn btn-outline-success btn-sm banUser">UnBlock</button>
 
-                                                }
-                                                else
-                                                {
-                                                    <button type="button" data-action="Ban" data-id="@user.Id" class="btn btn-outline-danger btn-sm banUser">Block</button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" data-action="Ban" data-id="@user.Id" class="btn btn-outline-danger btn-sm banUser">Block</button>
 
-                                                }
-                                            </td>
-                                        </tr>
-                                        count++;
-                                    }
+                                            }
+                                        </td>
+                                    </tr>
+                                    count++;
+                                }
                                 </tbody>
                                 <tfoot>
                                 </tfoot>
@@ -163,3 +164,9 @@
         </div>
     </div>
 </section>
+<script>
+    $(document).ready(function () {
+    $("#UserTable").DataTable();
+    $("#AdminTable").DataTable();
+    })
+</script>

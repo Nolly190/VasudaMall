@@ -68,8 +68,6 @@ namespace VasudaMall
                 "~/admin-lte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js",
                 "~/admin-lte/plugins/summernote/summernote-bs4.min.js",
                 "~/admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js",
-                "~/admin-lte/plugins/datatables/jquery.dataTables.js",
-                "~/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.js",
                 "~/admin-lte/dist/js/pages/dashboard.js",
                 "~/admin-lte/plugins/select2/js/select2.full.min.js",
                 "~/admin-lte/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js",

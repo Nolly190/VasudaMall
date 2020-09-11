@@ -198,8 +198,9 @@ namespace VasudaDataAccess.Logic.Implementation
             };
             try
             {
-                model.Users = _unitOfWork.AspNetUser.GetAll().ToList();
-                model.Admins = _unitOfWork.AspNetUser.GetAll().ToList();
+                model.Users = _unitOfWork.AspNetUser.GetAll(x=>!x.AspNetRoles.Any()).ToList();
+                model.Admins = _unitOfWork.AspNetUser.GetAll().Where(x=> x.AspNetRoles.Any() && x.AspNetRoles.Count() ==1).ToList();
+               
                 response.Message = "Successfully retrieved all users";
                 response.Status = true;
                 response.SetResult(model);
