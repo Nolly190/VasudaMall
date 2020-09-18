@@ -60,4 +60,8 @@ namespace VasudaDataAccess.Data_Access.Implementation
         AwaitingQuotation = 1, AwaitingUserAcceptance,
         Processing, AwaitingShippingPayment, AwaitingArrival, Completed, RejectedQuotation
     }
+    public enum ProductOrderStatus
+    {
+       Arrived, Completed
+    }
 }

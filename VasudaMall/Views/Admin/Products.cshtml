@@ -30,8 +30,8 @@
                     </div>
                     <!-- /.card-body -->
                     @*<div class="card-footer">
-                        Footer
-                    </div>*@
+                            Footer
+                        </div>*@
                     <!-- /.card-footer-->
                 </div>
                 <!-- /.card -->
@@ -68,7 +68,7 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="productTbody">
                                     @foreach (var item in Model.Product)
                                     {
                                         <tr>
@@ -82,7 +82,7 @@
                                             <td>@item.IsActive</td>
                                             <td>@item.DateCreated.ToString("f")</td>
                                             <td>
-                                                <a class="btn btn-outline-success btn-sm" href="@Url.Action("EditProduct","Admin", new{id= item.Id})">Edit</a> 
+                                                <a class="btn btn-outline-success btn-sm" href="@Url.Action("EditProduct","Admin", new{id= item.Id})">Edit</a>
                                                 <button type="button" id="deleteNotificationBtn" data-id="@item.Id" class="btn btn-outline-danger btn-sm DeleteProduct">Delete</button>
                                             </td>
                                         </tr>
@@ -96,7 +96,7 @@
                 </div>
                 <!-- /.card -->
             </div>
-        </div>vi
+        </div>
         <!--Notification table end-->
         <!--Notification table start-->
         <div class="row">
@@ -123,7 +123,7 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="categoryTbody">
                                     @foreach (var item in Model.Category)
                                     {
                                         <tr>
@@ -131,7 +131,7 @@
                                             <td>@item.CategoryName</td>
                                             <td>@item.DateCreated.ToString("f")</td>
                                             <td>
-                                                <button type="button" id="editNotificationBtn" data-id="@item.Id" class="btn btn-outline-success btn-sm EditCategory" data-type="Category" >Edit Category</button>
+                                                <button type="button" id="editNotificationBtn" data-id="@item.Id" class="btn btn-outline-success btn-sm EditCategory" data-type="Category">Edit Category</button>
                                                 <button type="button" id="deleteNotificationBtn" data-id="@item.Id" class="btn btn-outline-danger btn-sm DeleteCategory">Delete</button>
                                             </td>
                                         </tr>
@@ -170,7 +170,7 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="subCategoryTbody">
                                     @foreach (var item in Model.SubCategory)
                                     {
                                         <tr>
@@ -179,7 +179,7 @@
                                             <td>@item.CategoryTable.CategoryName</td>
                                             <td>@item.DateCreated.ToString("f")</td>
                                             <td>
-                                                <button type="button" id="editNotificationBtn" data-id="@item.Id" data-type="SubCate"  class="btn btn-outline-success btn-sm EditSubCategory">Edit Sub Category</button>
+                                                <button type="button" id="editNotificationBtn" data-id="@item.Id" data-type="SubCate" class="btn btn-outline-success btn-sm EditSubCategory">Edit Sub Category</button>
                                                 <button type="button" id="deleteNotificationBtn" data-id="@item.Id" class="btn btn-outline-danger btn-sm DeleteSubCate">Delete</button>
                                             </td>
                                         </tr>
@@ -212,29 +212,29 @@
                         {
                             <table id="notificationTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
                                 <thead>
-                                <tr>
-                                    <th>S/N</th>
-                                    <th>Name</th>
-                                    <th>Website</th>
-                                    <th>Date Created</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach (var item in Model.Vendors)
-                                {
                                     <tr>
-                                        <td>@count</td>
-                                        <td>@item.Name</td>
-                                        <td>@item.Link</td>
-                                        <td>@item.DateCreated.ToString("f")</td>
-                                        <td>
-                                            <button type="button" id="EditVendorBtn"  class="btn btn-outline-success btn-sm EditVendor">Edit</button>
-                                            <button type="button" id="deleteNotificationBtn" data-id="@item.Id" class="btn btn-outline-danger btn-sm DeleteVendor">Delete</button>
-                                        </td>
+                                        <th>S/N</th>
+                                        <th>Name</th>
+                                        <th>Website</th>
+                                        <th>Date Created</th>
+                                        <th>Action</th>
                                     </tr>
-                                    count++;
-                                }
+                                </thead>
+                                <tbody id="VendorTbody">
+                                    @foreach (var item in Model.Vendors)
+                                    {
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@item.Name</td>
+                                            <td>@item.Link</td>
+                                            <td>@item.DateCreated.ToString("f")</td>
+                                            <td>
+                                                <button type="button" id="EditVendorBtn" class="btn btn-outline-success btn-sm EditVendor">Edit</button>
+                                                <button type="button" id="deleteNotificationBtn" data-id="@item.Id" class="btn btn-outline-danger btn-sm DeleteVendor">Delete</button>
+                                            </td>
+                                        </tr>
+                                        count++;
+                                    }
                                 </tbody>
                             </table>
                         }
@@ -272,7 +272,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="Qty">Category</label>
-                                <select id="ProdCate" class="form-control form-control-sm" data-formname="Category"  required>
+                                <select id="ProdCate" class="form-control form-control-sm" data-formname="Category" required>
                                     <option value="">Select Category</option>
                                     @foreach (var item in Model.Category)
                                     {
@@ -288,15 +288,15 @@
                             </div>
                             <div class="form-group">
                                 <label for="Description">Description</label>
-                                <textarea class="form-control form-control-sm"   data-formname="Description" id="Description" placeholder="Description" required></textarea>
-                               </div>
+                                <textarea class="form-control form-control-sm" data-formname="Description" id="Description" placeholder="Description" required></textarea>
+                            </div>
                             <div class="form-group">
                                 <label for="Description">Location</label>
-                                <select id="Location" class="form-control form-control-sm" data-formname="Description"  required >
+                                <select id="Location" class="form-control form-control-sm" data-formname="Description" required>
                                     <option selected value="">Select Location</option>
                                     <option>Nigeria</option>
                                 </select>
-                               </div>
+                            </div>
                             <div class="form-group">
                                 <label for="Description"> Clearance Product</label>
                                 <label class="switch">
@@ -342,7 +342,7 @@
                                 <label for="title">Name</label>
                                 <input type="text" class="form-control form-control-sm" data-formname="Name" id="CatName" placeholder="Category Name" required>
                             </div>
-                      
+
                         </form>
                     </div>
                 </div>
@@ -374,7 +374,7 @@
                                 <label for="title">Vendor Link</label>
                                 <input type="text" class="form-control form-control-sm" data-formname="Name" id="VendorLink" placeholder="Vendor Link" required>
                             </div>
-                      
+
                         </form>
                     </div>
                 </div>
@@ -408,10 +408,10 @@
                                     }
                                 </select>
                             </div>
-                               <div class="form-group">
-                                    <label for="title">Name</label>
-                                    <input type="text" class="form-control form-control-sm" data-formname="Subcategory Name" id="SubcategoryName" required>
-                                </div>
+                            <div class="form-group">
+                                <label for="title">Name</label>
+                                <input type="text" class="form-control form-control-sm" data-formname="Subcategory Name" id="SubcategoryName" required>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -426,7 +426,7 @@
 
 
 
-<div class="modal" tabindex="-1" id="EditCategoryModal" role="dialog">
+    <div class="modal" tabindex="-1" id="EditCategoryModal" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -440,10 +440,10 @@
                         <form id="EditCategoryForm">
                             <div class="form-group">
                                 <label for="title">Name</label>
-                                <input type="hidden"  id="EditCatName">
+                                <input type="hidden" id="EditCatName">
                                 <input type="text" class="form-control form-control-sm" data-formname="Name" id="NewCatName" placeholder="Category Name" required>
                             </div>
-                      
+
                         </form>
                     </div>
                 </div>
@@ -476,7 +476,7 @@
                                 <label for="title">Vendor Link</label>
                                 <input type="text" class="form-control form-control-sm" data-formname="Name" id="EditedVendorLink" placeholder="Vendor Link" required>
                             </div>
-                      
+
                         </form>
                     </div>
                 </div>
@@ -500,12 +500,12 @@
                 <div class="modal-body">
                     <div class="card-body">
                         <form id="EditSubCategoryForm">
-                       
-                               <div class="form-group">
-                                    <label for="title">Name</label>
-                                    <input type="hidden" id="SubId" >
-                                    <input type="text" class="form-control form-control-sm" data-formname="Subcategory Name" id="EditSubcategoryName" required>
-                                </div>
+
+                            <div class="form-group">
+                                <label for="title">Name</label>
+                                <input type="hidden" id="SubId">
+                                <input type="text" class="form-control form-control-sm" data-formname="Subcategory Name" id="EditSubcategoryName" required>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -519,3 +519,9 @@
 
 
 </section>
+
+
+
+<script>
+    $(".table").DataTable()
+</script>

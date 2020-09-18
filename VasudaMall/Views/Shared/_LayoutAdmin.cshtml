@@ -40,9 +40,6 @@
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href=@Url.Action("Index", "Home") class="nav-link">Home</a>
                 </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="@Url.Action("TrackOrder", "Store")" class="nav-link">Track Order</a>
-                </li>
             </ul>
 
             <!-- Right navbar links -->
@@ -87,14 +84,20 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
+                      
                         <li class="nav-item">
-                            <a href=@Url.Action("Order", "Admin") class="nav-link">
-                                <i class="far fa-cart-plus nav-icon"></i>
-                                <p>Manage Orders</p>
+                            <a href=@Url.Action("Index", "Admin") class="nav-link">
+                                <i class="nav-icon far fa-image"></i>
+                                <p>Index</p>
                             </a>
 
                         </li>
-
+                        <li class="nav-item">
+                            <a href=@Url.Action("Order", "Admin") class="nav-link">
+                                <i class="nav-icon far fa-address-book"></i>
+                                <p>Manage Orders</p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href=@Url.Action("Products", "Admin") class="nav-link">
                                 <i class="nav-icon far fa-image"></i>
@@ -104,23 +107,17 @@
                             </a>
                         </li>
 
+
                         <li class="nav-item">
-                            <a href=@Url.Action("Wallet", "Admin") class="nav-link">
-                                <i class="nav-icon far fa-image"></i>
+                            <a href=@Url.Action("ShippingPrice", "Admin") class="nav-link">
+                                <i class="nav-icon far fa-bell"></i>
                                 <p>
-                                    Manage Wallet
+                                    Shipping Prices
                                 </p>
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a href=@Url.Action("Transaction", "Admin") class="nav-link">
-                                <i class="nav-icon far fa-image"></i>
-                                <p>
-                                    Manage Transaction
-                                </p>
-                            </a>
-                        </li>
+
 
                         <li class="nav-item">
                             <a href=@Url.Action("Profile", "Admin") class="nav-link">
@@ -130,7 +127,14 @@
                                 </p>
                             </a>
                         </li>
-
+                        <li class="nav-item">
+                            <a href=@Url.Action("Wallet", "Admin") class="nav-link">
+                                <i class="nav-icon far fa-image"></i>
+                                <p>
+                                    Manage Wallet
+                                </p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href=@Url.Action("Notification", "Admin") class="nav-link">
                                 <i class="nav-icon far fa-bell"></i>
@@ -139,7 +143,7 @@
                                 </p>
                             </a>
                         </li>
-                        
+
                         <li class="nav-item">
                             <a href=@Url.Action("Support", "Admin") class="nav-link">
                                 <i class="nav-icon fa fa-phone"></i>
@@ -151,9 +155,17 @@
                                     Support
                                     @if (chatCount != 0)
                                     {
-                                        
+
                                         <span class="badge badge-danger right">@chatCount</span>
                                     }
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href=@Url.Action("Transaction", "Admin") class="nav-link">
+                                <i class="nav-icon far fa-image"></i>
+                                <p>
+                                    Manage Transaction
                                 </p>
                             </a>
                         </li>

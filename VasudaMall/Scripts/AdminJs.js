@@ -1,6 +1,5 @@
 ﻿$(document).ready(function () {
     var domesticPriceId = "";
-
     $("#SaveProducts").click(function () {
         if (StartValidation("ProductForm")) {
 
@@ -85,7 +84,7 @@
     });
 
 
-    $(".DeleteProduct").click(function () {
+    $("#productTbody").on("click", ".DeleteProduct", function () {
 
 
         Swal.fire({
@@ -123,7 +122,7 @@
         });
     });
 
-    $(".DeleteVendor").click(function () {
+    $("#VendorTbody").on("click", ".DeleteVendor", function () {
 
         Swal.fire({
             title: 'Are you sure?',
@@ -160,7 +159,7 @@
         });
     });
 
-    $(".DeleteSubCate").click(function () {
+    $("#subCategoryTbody").on("click", ".DeleteSubCate", function () {
 
         Swal.fire({
             title: 'Are you sure?',
@@ -197,7 +196,7 @@
         });
     });
 
-    $(".DeleteCategory").click(function () {
+    $("#categoryTbody").on("click", ".DeleteCategory", function () {
 
         Swal.fire({
             title: 'Are you sure?',
@@ -272,8 +271,19 @@
     });
 
     $("#EditVendor").click(function () {
+        var newCate = $("#EditedVendorName").val();
+        if (newCate === "" || newCate === null) {
+            Swal.fire("Vendor Name Field is required");
+            return;
+        }
 
+        newCate = $("#EditedVendorLink").val();
+        if (newCate === "" || newCate === null) {
+            Swal.fire("Vendor Link Field is required");
+            return;
+        }
         $(".Main-loader").modal('show');
+        $("#EditSubcategoryName").val()
         $.ajax({
             url: "/Admin/EditVendor",
             type: "Post",
@@ -297,6 +307,11 @@
     });
 
     $("#EditSubCategory").click(function () {
+        var newCate = $("#EditSubcategoryName").val();
+        if (newCate === "" || newCate === null) {
+            Swal.fire("Sub Category Field is required");
+            return;
+        }
         $(".Main-loader").modal('show');
         $.ajax({
             url: "/Admin/EditSubCategory",
@@ -323,88 +338,47 @@
 
 
 
-    //$(".NextAction").click(async function () {
-    //    if ($(this).data("status")==="Processing") {
-    //     //Get the complete list of order type and check for their status
-    //        const { value: shippingFee } = await Swal.fire({
-    //            title: 'Enter shipping fee for this order',
-    //            input: 'number',
-    //            inputValue: inputValue,
-    //            showCancelButton: true,
-    //            inputValidator: (value) => {
-    //                if (!value) {
-    //                    return 'Shipping Fee is required'
-    //                }
-    //            }
-    //        })
+    $("#UnfinishedTbody").on("click", ".NextAction", async function () {
+     var orderId =   $(this).data("id");
+        if ($(this).data("status") === "Processing" || $(this).data("status") ==="AwaitingShippingQuotation") {
+         //Get the complete list of order type and check for their status
+            const { value: shippingFee } = await Swal.fire({
+                title: 'Enter shipping fee for this order',
+                input: 'number',
+                inputValue: inputValue,
+                showCancelButton: true,
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'Shipping Fee is required'
+                    }
+                }
+            })
 
-    //        if (shippingFee) {
-    //            $(".Main-loader").modal('show');
-    //            $.ajax({
-    //                url: "/Admin/ProcessOrder",
-    //                type: "Post",
-    //                data: { orderId: $(this).data("id"), Amount: shippingFee },
-    //                error: function (status, xhr) {
-    //                    $(".Main-loader").modal('hide');
-    //                },
-    //                success: function (result) {
+            if (shippingFee) {
+                $(".Main-loader").modal('show');
+                $.ajax({
+                    url: "/Admin/ProcessOrder",
+                    type: "Post",
+                    data: { orderId: orderId , amount: shippingFee },
+                    error: function (status, xhr) {
+                        $(".Main-loader").modal('hide');
+                    },
+                    success: function (result) {
 
-    //                    $(".Main-loader").modal('hide');
-    //                    if (result.Status === true) {
-    //                        Swal.fire('Successful');
-    //                        window.setTimeout(function () { location.reload(); }, 3000);
-    //                        return;
-    //                    }
-    //                    Swal.fire(result.Message);
-    //                }
+                        $(".Main-loader").modal('hide');
+                        if (result.Status === true) {
+                            Swal.fire('Successful');
+                            window.setTimeout(function () { location.reload(); }, 3000);
+                            return;
+                        }
+                        Swal.fire(result.Message);
+                    }
 
-    //            });
-    //            return;
-    //        }
-    //    }
-    //  else {
-    //        Swal.fire({
-    //            title: 'Are you sure?',
-    //            //text: "You won't be able to revert this!",
-    //            //icon: 'warning',
-    //            showCancelButton: true,
-    //            confirmButtonColor: '#3085d6',
-    //            cancelButtonColor: '#d33',
-    //            confirmButtonText: 'Yes'
-    //        }).then((result) => {
-    //            if (result.value) {
-    //                $(".Main-loader").modal('show');
-    //                $.ajax({
-    //                    url: "/Admin/ProcessOrder",
-    //                    type: "Post",
-    //                    data: { orderId: $(this).data("id") },
-    //                    error: function (status, xhr) {
-    //                        $(".Main-loader").modal('hide');
-    //                    },
-    //                    success: function (result) {
-    //                        $(".Main-loader").modal('hide');
-    //                        if (result.Status === true) {
-    //                            Swal.fire('Successful');
-    //                            window.setTimeout(function () { location.reload(); }, 3000);
-    //                            return;
-    //                        }
-    //                        Swal.fire(result.Message);
-    //                    }
-
-    //                });
-    //                return;
-    //            }
-    //        })
-    //    }
-
-
-    //});
-
-
-
-    $("#AdminTbody").on("click",".RemoveAdmin", async function () {
- 
-    
+                });
+                return;
+            }
+        }
+      else {
             Swal.fire({
                 title: 'Are you sure?',
                 //text: "You won't be able to revert this!",
@@ -417,9 +391,9 @@
                 if (result.value) {
                     $(".Main-loader").modal('show');
                     $.ajax({
-                        url: "/Admin/ManageAdmin",
+                        url: "/Admin/ProcessOrder",
                         type: "Post",
-                        data: { userId: $(this).data("id"), makeAdmin: true },
+                        data: { orderId: orderId },
                         error: function (status, xhr) {
                             $(".Main-loader").modal('hide');
                         },
@@ -437,55 +411,56 @@
                     return;
                 }
             })
-        
+        }
 
 
     });
 
 
-    $("#MakeAdmin").click(async function () {
- 
-    
-            Swal.fire({
-                title: 'Are you sure?',
-                //text: "You won't be able to revert this!",
-                //icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes'
-            }).then((result) => {
-                if (result.value) {
-                    $(".Main-loader").modal('show');
-                    $.ajax({
-                        url: "/Admin/ManageAdmin",
-                        type: "Post",
-                        data: { userId: $(this).data("id") ,makeAdmin:false},
-                        error: function (status, xhr) {
-                            $(".Main-loader").modal('hide');
-                        },
-                        success: function (result) {
-                            $(".Main-loader").modal('hide');
-                            if (result.Status === true) {
-                                Swal.fire('Successful');
-                                window.setTimeout(function () { location.reload(); }, 3000);
-                                return;
-                            }
-                            Swal.fire(result.Message);
+
+    $("#AdminTbody").on("click", ".RemoveAdmin", async function () {
+
+
+        Swal.fire({
+            title: 'Are you sure?',
+            //text: "You won't be able to revert this!",
+            //icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.value) {
+                $(".Main-loader").modal('show');
+                $.ajax({
+                    url: "/Admin/ManageAdmin",
+                    type: "Post",
+                    data: { userId: $(this).data("id"), makeAdmin: false },
+                    error: function (status, xhr) {
+                        $(".Main-loader").modal('hide');
+                    },
+                    success: function (result) {
+                        $(".Main-loader").modal('hide');
+                        if (result.Status === true) {
+                            Swal.fire('Successful');
+                            window.setTimeout(function () { location.reload(); }, 3000);
+                            return;
                         }
+                        Swal.fire(result.Message);
+                    }
 
-                    });
-                    return;
-                }
-            })
-        
+                });
+                return;
+            }
+        })
+
 
 
     });
 
 
 
-    $(".ViewOrderItems").click(function () {
+    $(".UnfinishedTbody").on("click", ".ViewOrderItems", function () {
         $(".Main-loader").modal('show');
         $.ajax({
             url: "/Admin/GetOrderItems",
@@ -497,20 +472,20 @@
             success: function (result) {
                 $(".Main-loader").modal('hide');
                 if (result.Status === true) {
-                 var html = "";
+                    var html = "";
+                    var data = $("#OrderItemTable").DataTable();
+                    data.rows().remove().draw();
                     $.each(result._entity.Item,
-                        function(index,row) {
-                            html = html + `<tr>
-                            <td>${index+1} </td>
-                            <td>${row.Title} </td>
-                            <td> ${row.Description}</td>
-                            <td>${row.OrderType} </td>    
-                            <td>${row.Quantity} </td>
-                            <td> ${row.ItemsPrice}</td>
-                            <td>${row.ServicePrice} </td>                                    
-                            <td>${row.TotalPrice} </td>                                    
-                            <td><button class="btn btn-success ViewItem" data-id=" ${row.Id}" >View Item</button></td>                                    
-                            </tr>`;
+                        function (index, row) {
+                            data.row.add([
+                                row.Title,
+                                row.Description,
+                                row.OrderType,
+                                row.Quantity,
+                                row.ItemsPrice,
+                                row.ServicePrice,
+                                row.TotalPrice
+                           ]).draw(false);
                         });
                     var orderInfo = result._entity.Order;
                     var user = result._entity;
@@ -523,7 +498,7 @@
                     $("#ItemsTableDiv").append(html);
                     $("#ItemsTableDiv").on(".ViewItem",
                         "click",
-                        function() {
+                        function () {
 
                         });
                     $("#OrderModel").modal("show");
@@ -580,56 +555,56 @@
             return;
 
         }
-            $(".Main-loader").modal('show');
-            var details = {};
-            details.Message = $("#compose-textarea").val();
-            details.Subject = $("#subject").val();
-            details.Email = $("#email").val();
-            $.ajax({
-                url: "/Admin/SendMail",
-                type: "Post",
-                data: { model:details },
-                error: function (status, xhr) {
-                    $(".Main-loader").modal('hide');
-                },
-                success: function (result) {
+        $(".Main-loader").modal('show');
+        var details = {};
+        details.Message = $("#compose-textarea").val();
+        details.Subject = $("#subject").val();
+        details.Email = $("#email").val();
+        $.ajax({
+            url: "/Admin/SendMail",
+            type: "Post",
+            data: { model: details },
+            error: function (status, xhr) {
+                $(".Main-loader").modal('hide');
+            },
+            success: function (result) {
 
-                    $(".Main-loader").modal('hide');
-                    if (result.Status === true) {
-                        Swal.fire('Successful');
-                        $("#DangerAlert").text("Failed Mails " + result._entity);
-                        $("#DangerAlert").show();
-                        return;
-                    }
-                    Swal.fire(result.Message);
+                $(".Main-loader").modal('hide');
+                if (result.Status === true) {
+                    Swal.fire('Successful');
+                    $("#DangerAlert").text("Failed Mails " + result._entity);
+                    $("#DangerAlert").show();
+                    return;
                 }
+                Swal.fire(result.Message);
+            }
 
-            });
+        });
 
     });
-    $("#NotificationTbody").on("click",".ViewNotification",function (data) {
-   
-            $(".Main-loader").modal('show');
-            var id = $(this).data("id");
-            $.ajax({
-                url: "/Admin/ViewNotification",
-                type: "Post",
-                data: { noteId: id},
-                error: function (status, xhr) {
-                    $(".Main-loader").modal('hide');
-                },
-                success: function (result) {
+    $("#NotificationTbody").on("click", ".ViewNotification", function (data) {
 
-                    $(".Main-loader").modal('hide');
-                    if (result.Status === true) {
-                        $("#NotificationDiv").html(result._entity.Message);
-                        $("#NotificationModal").modal("show");
-                        return;
-                    }
-                    Swal.fire(result.Message);
+        $(".Main-loader").modal('show');
+        var id = $(this).data("id");
+        $.ajax({
+            url: "/Admin/ViewNotification",
+            type: "Post",
+            data: { noteId: id },
+            error: function (status, xhr) {
+                $(".Main-loader").modal('hide');
+            },
+            success: function (result) {
+
+                $(".Main-loader").modal('hide');
+                if (result.Status === true) {
+                    $("#NotificationDiv").html(result._entity.Message);
+                    $("#NotificationModal").modal("show");
+                    return;
                 }
+                Swal.fire(result.Message);
+            }
 
-            });
+        });
 
     });
     $("#SubmitChat").click(function (data) {
@@ -639,19 +614,19 @@
             return;
         }
         $(".Main-loader").modal('show');
-            $.ajax({
-                url: "/Admin/SendChat",
-                type: "Post",
-                data: { userId: $(this).data("id"), message: $("#ChatBox").val()},
-                error: function (status, xhr) {
-                    $(".Main-loader").modal('hide');
-                },
-                success: function (result) {
+        $.ajax({
+            url: "/Admin/SendChat",
+            type: "Post",
+            data: { userId: $(this).data("id"), message: $("#ChatBox").val() },
+            error: function (status, xhr) {
+                $(".Main-loader").modal('hide');
+            },
+            success: function (result) {
 
-                    $(".Main-loader").modal('hide');
-                    if (result.Status === true) {
-                        var d = new Date();
-                        var html = `<div class="outgoing_msg">
+                $(".Main-loader").modal('hide');
+                if (result.Status === true) {
+                    var d = new Date();
+                    var html = `<div class="outgoing_msg">
                             <div class="sent_msg">
                                 <p>
                                 ${ $("#ChatBox").val()}
@@ -660,44 +635,44 @@
                             </div>
                         </div>
                   `;
-                        $("#MessageHistory").append(html);
-                        $("#ChatBox").val("");
-                        return;
-                    }
-                    Swal.fire(result.Message);
+                    $("#MessageHistory").append(html);
+                    $("#ChatBox").val("");
+                    return;
                 }
+                Swal.fire(result.Message);
+            }
 
-            });
+        });
 
     });
     $(".LoadMsg").click(function (data) {
         data.preventDefault();
-        var userId = $(this).data("id"); 
+        var userId = $(this).data("id");
         $(this).addClass("active");
-            $.ajax({
-                url: "/Admin/RetrieveChat",
-                type: "Post",
-                data: { userId: userId },
-                error: function (status, xhr) {
-                    $(".Main-loader").modal('hide');
-                },
-                success: function (result) {
+        $.ajax({
+            url: "/Admin/RetrieveChat",
+            type: "Post",
+            data: { userId: userId },
+            error: function (status, xhr) {
+                $(".Main-loader").modal('hide');
+            },
+            success: function (result) {
 
-                    $(".Main-loader").modal('hide');
-                    if (result.Status === true) {
-                        var html = '';
-                        $("#SubmitChat").attr('data-id', userId);
-                        $("#MessageHistory").empty();
+                $(".Main-loader").modal('hide');
+                if (result.Status === true) {
+                    var html = '';
+                    $("#SubmitChat").attr('data-id', userId);
+                    $("#MessageHistory").empty();
 
-                        $.each(result._entity,
-                            function (index, row) {
-                                var date = new Date();
-                                date.setTime(row.DateCreated.split("(")[1].split(")")[0]);
-                                date = date.toDateString();
-                                $("#SubmitChat").prop('disabled', false);
-                                if (row.SentBy === "Admin") {
-                                    html = html +
-                                        `      <div class="outgoing_msg">
+                    $.each(result._entity,
+                        function (index, row) {
+                            var date = new Date();
+                            date.setTime(row.DateCreated.split("(")[1].split(")")[0]);
+                            date = date.toDateString();
+                            $("#SubmitChat").prop('disabled', false);
+                            if (row.SentBy === "Admin") {
+                                html = html +
+                                    `      <div class="outgoing_msg">
                             <div class="sent_msg">
                                 <p>
                                 ${row.Message}
@@ -706,9 +681,9 @@
                             </div>
                         </div>
                   `;
-                                } else {
-                                    html = html +
-                                        `     <div class="incoming_msg">
+                            } else {
+                                html = html +
+                                    `     <div class="incoming_msg">
                             <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
                             <div class="received_msg">
                                 <div class="received_withd_msg">
@@ -720,17 +695,17 @@
                             </div>
                         </div>
                   `;
-                                }
-                            });
-                        $("#MessageHistory").append(html);
-                    }
-                    Swal.fire(result.Message);
+                            }
+                        });
+                    $("#MessageHistory").append(html);
                 }
+                Swal.fire(result.Message);
+            }
 
-            });
+        });
 
     });
-    $("#UserTbody").on("click",".banUser",function () {
+    $("#UserTbody").on("click", ".banUser", function () {
 
         Swal.fire({
             title: 'Are you sure?',
@@ -768,7 +743,50 @@
         });
 
     });
-    $("#EditCategory").click(function () {
+    $("#UserTbody").on("click", ".MakeAdmin", function () {
+
+
+        Swal.fire({
+            title: 'Are you sure?',
+            //text: "You won't be able to revert this!",
+            //icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.value) {
+                $(".Main-loader").modal('show');
+                $.ajax({
+                    url: "/Admin/ManageAdmin",
+                    type: "Post",
+                    data: { userId: $(this).data("id"), makeAdmin: true },
+                    error: function (status, xhr) {
+                        $(".Main-loader").modal('hide');
+                    },
+                    success: function (result) {
+                        $(".Main-loader").modal('hide');
+                        if (result.Status === true) {
+                            Swal.fire('Successful');
+                            window.setTimeout(function () { location.reload(); }, 3000);
+                            return;
+                        }
+                        Swal.fire(result.Message);
+                    }
+
+                });
+                return;
+            }
+        })
+
+
+    });
+    $("#EditCategory").on("click", function () {
+        var newCate = $("#NewCatName").val();
+        if (newCate === "" || newCate === null) {
+            Swal.fire("Category Field is required");
+            return;
+        }
         $(".Main-loader").modal('show');
         $.ajax({
             url: "/Admin/EditCategory",
@@ -795,7 +813,7 @@
 
 
 
-    $(".EditSubCategory").click(function () {
+    $("#subCategoryTbody").on("click", ".EditSubCategory", function () {
 
 
         var getParent = $(this).parent().parent();
@@ -805,7 +823,7 @@
         $("#EditSubCategoryModal").modal("show");
     });
 
-    $(".EditCategory").click(function () {
+    $("#categoryTbody").on("click", ".EditCategory", function () {
 
         var getParent = $(this).parent().parent();
         var Catevalue = getParent[0].cells[1].innerText;
@@ -871,7 +889,7 @@
             confirmButtonText: 'Yes'
         }).then((result) => {
             if (result.value) {
-                
+
                 if ($("#DomesticQoutation").val() === "" || $("#DomesticQoutation").val() === null) {
                     Swal.fire("Price field is required");
                     return;
@@ -881,10 +899,10 @@
                     url: "/Admin/SendPriceQuotation",
                     type: "Post",
                     data: { amount: $("#DomesticQoutation").val(), id: domesticPriceId },
-                    error: function(status, xhr) {
+                    error: function (status, xhr) {
                         $(".Main-loader").modal('hide');
                     },
-                    success: function(result) {
+                    success: function (result) {
 
                         $(".Main-loader").modal('hide');
                         if (result.Status === true) {
@@ -902,8 +920,8 @@
 
 
     });
-    
-    $(".DomesticViewMore").click(function () {
+
+    $("#domesticTbody").on("click", ".DomesticViewMore", function () {
         var id = $(this).data("id");
         $(".Main-loader").modal('show');
         $.ajax({
@@ -942,7 +960,7 @@
 
     });
 
-    $(".EditVendor").click(function () {
+    $("#VendorTbody").on("click", ".EditVendor", function () {
 
         var getParent = $(this).parent().parent();
         var Catevalue = getParent[0].cells[1].innerText;
@@ -1013,8 +1031,46 @@
             return;
         }
     });
+    $(".SubmitShippingPrice").click(function (data) {
+        data.preventDefault();
+        if (StartValidation("ShippingPriceForm")) {
 
-    $(".action").click(async function () {
+            $(".Main-loader").modal('show');
+            var details = {};
+            if ($(this).data("type") === "Edit") {
+                details.Id = $(this).data("id");
+            }
+            details.Type = $("#ShippingType").val();
+            details.DeliveryTime = $("#Days").val();
+            details.Country = $("#Country").val();
+            details.MinKg = $("#MinKg").val();
+            details.MaxKg = $("#MaxKg").val();
+            details.PricePerKg = $("#Price").val();
+            $.ajax({
+                url: "/Admin/ManagePrice",
+                type: "Post",
+                data: { model: details },
+                error: function (status, xhr) {
+                    $(".Main-loader").modal('hide');
+                },
+                success: function (result) {
+
+                    $(".Main-loader").modal('hide');
+                    if (result.Status === true) {
+                        Swal.fire('Successfully Created');
+                        window.setTimeout(function () { location.reload(); }, 3000);
+
+                        return;
+                    }
+                    Swal.fire(result.Message);
+                }
+
+            });
+            return;
+        }
+    });
+
+    $(".AllRequest").on("click", ".action", async function () {
 
         $(".Main-loader").modal('show');
         var details = {};
@@ -1086,6 +1142,67 @@
         details.reason = $("#DeclineReason").val();
 
     });
+
+
+    $("#ShippingPriceTbody").on("click", ".DeletePrice", async function () {
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                $(".Main-loader").modal('show');
+
+                var details = {};
+                details.Id = $(this).data("id");
+                details.PricePerKg = 0;
+                $.ajax({
+                    url: "/Admin/ManagePrice",
+                    type: "Post",
+                    data: { model: details },
+                    error: function (status, xhr) {
+                        $(".Main-loader").modal('hide');
+                    },
+                    success: function (result) {
+
+                        $(".Main-loader").modal('hide');
+                        if (result.Status === true) {
+                            Swal.fire('Successfully Created');
+                            window.setTimeout(function () { location.reload(); }, 3000);
+
+                            return;
+                        }
+                        Swal.fire(result.Message);
+                    }
+
+                });
+            }
+        })
+    });
+
+
+    $("#ShippingPriceTbody").on("click", ".EditPrice", async function () {
+        var trParent = $(this).parent().parent();
+        var elementChildren = $(trParent).children();
+        $("#ShippingType").val($(elementChildren[1]).text());
+        $("#Days").val($(elementChildren[6]).text());
+        $("#Country").val($(elementChildren[5]).text());
+        $("#MinKg").val($(elementChildren[2]).text());
+        $("#MaxKg").val($(elementChildren[3]).text());
+        $("#Price").val($(elementChildren[4]).text());
+        $("#ShipPriceEdit").show();
+        $("#ShipPriceSave").hide();
+        var id = $(this).data("id");
+        $("#ShipPriceEdit").attr("data-id", id);
+        $('html, body').animate({
+            scrollTop: $("#NavigateToSection").offset().top
+        });
+    })
 
 
     $("#RequestToggleBtn").click(function () {

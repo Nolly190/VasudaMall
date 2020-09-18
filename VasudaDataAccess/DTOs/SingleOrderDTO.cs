@@ -17,6 +17,17 @@ namespace VasudaDataAccess.DTOs
         public decimal? TotalPrice { get; set; }
         public string DateCreated { get; set; }
     }
+    public class ItemDetailsDTO
+    {
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string OrderType { get; set; }
+        public long? Quantity { get; set; }
+        public decimal? ItemsPrice { get; set; }
+        public decimal? TotalPrice { get; set; }
+        public decimal? ServicePrice { get; set; }
+        public Guid Id { get; set; }
+    }
      public class OrderItemDTO
     {
         public string FullName { get; set; }
@@ -24,6 +35,6 @@ namespace VasudaDataAccess.DTOs
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
         public SingleOrderDTO Order { get; set; }
-        public List<ItemsTable> Item { get; set; }
+        public List<ItemDetailsDTO> Item { get; set; }
     }
 }

@@ -44,7 +44,8 @@ namespace VasudaMall.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            return View();
+
+            return View(_orderService.GetHomeReport().Result());
         }
         public ActionResult UserDetails(string userId)
         {
@@ -52,6 +53,7 @@ namespace VasudaMall.Controllers
         }
         public ActionResult Order()
         {
+            
             return View(_orderService.GetAllOrderInfo().Result());
         }
         public ActionResult Products()
@@ -69,11 +71,19 @@ namespace VasudaMall.Controllers
         public ActionResult Transaction()
         {
             return View(_paymentService.GetPaymentHistory()._entity);
+        }  
+        public ActionResult ShippingPrice()
+        {
+            return View(_orderService.GetAllPrice().Result());
         }   
         public JsonResult AddProducts()
         {
             return Json(_productService.AddProducts(Request.Files, Request.Form),JsonRequestBehavior.AllowGet);
         }   
+        public JsonResult ProcessOrder(string orderId , string amount)
+        {
+            return Json(_orderService.ProcessOrder(orderId,amount),JsonRequestBehavior.AllowGet);
+        }    
         public JsonResult BanUser(bool action , string id)
         {
             return Json(_profileService.BanUser(id,action),JsonRequestBehavior.AllowGet);
@@ -90,6 +100,10 @@ namespace VasudaMall.Controllers
         {
             return Json(_productService.EditVendor(vendor, oldVendor,link),JsonRequestBehavior.AllowGet);
         }  
+        public JsonResult ManagePrice(PriceTable model)
+        {
+            return Json(_walletService.ManagePrice(model),JsonRequestBehavior.AllowGet);
+        }
         public JsonResult Action(RequestApprovalDTO model)
         {
             return Json(_walletService.Action(model),JsonRequestBehavior.AllowGet);

@@ -17,5 +17,6 @@ namespace VasudaDataAccess.Logic
         Response<AdminWalletViewModel> AdminGetAllWithdrawalAccounts();
         Response<UserDetailsDTO> GetUserInfo(string userId);
         Response<string> Action(RequestApprovalDTO model);
+        Response<string> ManagePrice(PriceTable model);
     }
 }

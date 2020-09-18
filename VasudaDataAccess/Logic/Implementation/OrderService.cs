@@ -33,20 +33,23 @@ namespace VasudaDataAccess.Logic.Implementation
             {
                 var model = new AdminOrderDto();
                 var domestic = DomesticOrderStatus.AwaitingQuotation.ToString();
-                model.DomesticOrder = _unitOfWork.ItemsTable.GetAll(x => x.DomesticItemTable.Status == domestic && x.IsActive).ToList();
-                model.UnfinishedOrders = _unitOfWork.OrderTable.GetAll(x => !x.IsCompleted && x.IsActive).Select(x => new SingleAdminOrder()
-                {
-                    AspNetUser = x.AspNetUser,
-                    DateCreated = x.DateCreated,
-                    Id = x.Id,
-                    IsActive = x.IsActive,
-                    IsCompleted = x.IsCompleted,
-                    ItemsTables = x.ItemsTables,
-                    NextAction = GetOrderTypeNextAction(x.OrderType, x.Status),
-                    OrderType = x.OrderType,
-                    ShippingFee = x.ShippingFee,
-                    Status = x.Status,
-                })
+                model.DomesticOrder = _unitOfWork.ItemsTable
+                    .GetAll(x => x.DomesticItemTable.Status == domestic && x.IsActive).ToList();
+                model.UnfinishedOrders = _unitOfWork.OrderTable.GetAll(x => !x.IsCompleted && x.IsActive).Select(x =>
+                        new SingleAdminOrder()
+                        {
+                            AspNetUser = x.AspNetUser,
+                            DateCreated = x.DateCreated,
+                            Id = x.Id,
+                            IsActive = x.IsActive,
+                            IsCompleted = x.IsCompleted,
+                            ItemsTables = x.ItemsTables,
+                            NextAction = GetOrderTypeNextAction(x.OrderType, x.Status),
+                            OrderType = x.OrderType,
+                            ShippingFee = x.ShippingFee,
+                            Status = x.Status,
+                            TrackingNumber = x.TrackingNumber
+                        })
                     .ToList();
                 model.FinishedOrders = _unitOfWork.OrderTable.GetAll(x => x.IsCompleted && x.IsActive).ToList();
                 response.SetResult(model);
@@ -75,7 +78,8 @@ namespace VasudaDataAccess.Logic.Implementation
             };
             try
             {
-                model.AllOrders = _unitOfWork.OrderTable.GetAll(x => x.UserId == userId).OrderByDescending(x => x.DateCreated).ToList();
+                model.AllOrders = _unitOfWork.OrderTable.GetAll(x => x.UserId == userId)
+                    .OrderByDescending(x => x.DateCreated).ToList();
                 result.Status = true;
                 result.Message = "Orders retrieved successfully";
             }
@@ -90,13 +94,37 @@ namespace VasudaDataAccess.Logic.Implementation
 
         public string GetOrderTypeNextAction(string orderType, string status)
         {
-            var array = WebConfigurationManager.AppSettings[orderType].ToString().Split(',');
-            var index = Array.FindIndex(array, x => x.Equals(status));
-            if (array.Length >= index + 1)
+            var index = 0;
+            //var array = System.Enum.GetNames(typeof(ordertype));
+            //var index = Array.FindIndex(array, x => x.Equals(status));
+            //if (array.Length >= index + 1)
+            //{
+            //    return array[index + 1];
+            //}
+
+            //return array[index];
+            switch (orderType)
             {
-                return array[index + 1];
+                case "Domestic":
+                    var domeArray = System.Enum.GetNames(typeof(DomesticOrderStatus)).ToList();
+                    index = domeArray.IndexOf(status);
+                    return domeArray[index + 1];
+
+                case "Purchase":
+                    var purchaseArray = System.Enum.GetNames(typeof(PurchaseOrderStatus)).ToList();
+                    index = purchaseArray.IndexOf(status);
+                    return purchaseArray[index + 1];
+                case "PurchaseAndShipping":
+                    var purchaseShippingArray = System.Enum.GetNames(typeof(PurchaseAndShippingOrderStatus)).ToList();
+                    index = purchaseShippingArray.IndexOf(status);
+                    return purchaseShippingArray[index + 1];
+                case "Product":
+                    var productArray = System.Enum.GetNames(typeof(ProductTable)).ToList();
+                    index = productArray.IndexOf(status);
+                    return productArray[index + 1];
+                default:
+                    return null;
             }
-            return array[index];
         }
 
         public Response<DomesticItemViewModel> GetDomesticItemsPage(string userId)
@@ -117,10 +145,10 @@ namespace VasudaDataAccess.Logic.Implementation
             try
             {
                 model.DomesticItems = _unitOfWork.ItemsTable.GetAll(
-                                        x => x.UserId == userId && x.IsActive == true &&
-                                        x.Type == ItemType.Domestic.ToString() &&
-                                        x.Status == ItemStatus.Pending.ToString())
-                                        .OrderByDescending(x => x.DateCreated).ToList();
+                        x => x.UserId == userId && x.IsActive == true &&
+                             x.Type == ItemType.Domestic.ToString() &&
+                             x.Status == ItemStatus.Pending.ToString())
+                    .OrderByDescending(x => x.DateCreated).ToList();
 
                 model.User = _unitOfWork.AspNetUser.GetUser(userId);
                 result.Status = true;
@@ -154,9 +182,10 @@ namespace VasudaDataAccess.Logic.Implementation
                 List<VendorTable> vendorTable = new List<VendorTable>();
 
                 model.GeneralItems = _unitOfWork.ItemsTable.GetAll(x => x.UserId == userId && x.IsActive == true &&
-                                        (x.Type != ItemType.Domestic.ToString() && x.Type != ItemType.Product.ToString())
-                                          && x.Status != ItemStatus.Closed.ToString())
-                                        .OrderByDescending(x => x.DateCreated).ToList();
+                                                                        (x.Type != ItemType.Domestic.ToString() &&
+                                                                         x.Type != ItemType.Product.ToString())
+                                                                        && x.Status != ItemStatus.Closed.ToString())
+                    .OrderByDescending(x => x.DateCreated).ToList();
 
                 vendorTable = _unitOfWork.VendorTable.GetAll(x => x.IsActive == true).ToList();
                 foreach (var vendor in vendorTable)
@@ -164,6 +193,7 @@ namespace VasudaDataAccess.Logic.Implementation
                     var vendorDTO = new VendorTableDTO { Name = vendor.Name };
                     model.Vendors.Add(vendorDTO);
                 }
+
                 model.User = _unitOfWork.AspNetUser.GetUser(userId);
                 result.Status = true;
                 result.Message = "General Order items view model data retrieved successfully";
@@ -191,7 +221,9 @@ namespace VasudaDataAccess.Logic.Implementation
             };
             try
             {
-                model.AllItems = _unitOfWork.ItemsTable.GetAll(x => x.UserId == userId && x.IsActive == true && x.Status == ItemStatus.Pending.ToString()).OrderByDescending(x => x.DateCreated).ToList();
+                model.AllItems = _unitOfWork.ItemsTable
+                    .GetAll(x => x.UserId == userId && x.IsActive == true && x.Status == ItemStatus.Pending.ToString())
+                    .OrderByDescending(x => x.DateCreated).ToList();
                 model.AllItems.RemoveAll(x => x.Type == ItemType.Domestic.ToString());
                 result.Status = true;
                 result.Message = "Items retrieved successfully";
@@ -329,11 +361,13 @@ namespace VasudaDataAccess.Logic.Implementation
                 var overrallCharge = totalPrice + serviceCharge;
 
 
-                var vendor = _unitOfWork.VendorTable.GetAll(x => x.Name == model.VendorName && x.IsActive == true).FirstOrDefault();
+                var vendor = _unitOfWork.VendorTable.GetAll(x => x.Name == model.VendorName && x.IsActive == true)
+                    .FirstOrDefault();
                 if (vendor == null)
                 {
                     return response;
                 }
+
                 var itemModel = new ItemsTable()
                 {
                     Id = Guid.NewGuid(),
@@ -380,11 +414,13 @@ namespace VasudaDataAccess.Logic.Implementation
                 var serviceCharge = itemPrice * Convert.ToDecimal(0.03);
                 var totalPrice = itemPrice + serviceCharge;
 
-                var vendor = _unitOfWork.VendorTable.GetAll(x => x.Name == model.VendorName && x.IsActive == true).ToList();
+                var vendor = _unitOfWork.VendorTable.GetAll(x => x.Name == model.VendorName && x.IsActive == true)
+                    .ToList();
                 if (vendor == null)
                 {
                     return response;
                 }
+
                 var purchasePartModel = new ItemsTable()
                 {
                     Id = Guid.NewGuid(),
@@ -456,6 +492,7 @@ namespace VasudaDataAccess.Logic.Implementation
             {
                 logger.Error(ex.ToString());
             }
+
             return response;
         }
 
@@ -568,7 +605,8 @@ namespace VasudaDataAccess.Logic.Implementation
                         ReceiverName = domestic.ReceiverName,
                         ReceiverNumber = domestic.ReceiverNumber,
                         ReceiverAddress = domestic.ReceiverAddress,
-                        Status = Util.DomesticStatusEnumConverter((DomesticOrderStatus)Enum.Parse(typeof(DomesticOrderStatus), domestic.Status)),
+                        Status = Util.DomesticStatusEnumConverter(
+                            (DomesticOrderStatus)Enum.Parse(typeof(DomesticOrderStatus), domestic.Status)),
                         ServicePrice = item.ServicePrice,
                         TotalPrice = item.TotalPrice,
                     };
@@ -582,6 +620,7 @@ namespace VasudaDataAccess.Logic.Implementation
             {
                 logger.Error(ex.ToString());
             }
+
             return response;
         }
 
@@ -608,15 +647,25 @@ namespace VasudaDataAccess.Logic.Implementation
                     response.Message = "Could not retrieve order";
                     return response;
                 }
+
                 _unitOfWork._dbContext.Configuration.ProxyCreationEnabled = false;
                 var user = _unitOfWork.AspNetUser.Get(model.Order.UserId);
                 model.FullName = user.FullName;
                 model.PhoneNumber = user.PhoneNumber;
                 model.Address = user.Address;
                 model.Email = user.Email;
-                var item = _unitOfWork.ItemsTable.GetAll().Select(x => new { x.Type, x.Status, x.ServicePrice }).Distinct().ToList();
-                var item2 = _unitOfWork.ItemsTable.GetAll().Select(x => x.Type).ToList();
-                model.Item = _unitOfWork.ItemsTable.GetAll(x => x.OrderId == id).ToList();
+                model.Item = _unitOfWork.ItemsTable.GetAll(x => x.OrderId == id).Select(x => new ItemDetailsDTO()
+                {
+                    Title = x.Title,
+                    Description = x.Description,
+                    Id = x.Id,
+                    OrderType = x.Type,
+                    ItemsPrice = x.ItemsPrice,
+                    Quantity = x.Quantity,
+                    ServicePrice = x.ServicePrice,
+                    TotalPrice = x.TotalPrice,
+
+                }).ToList();
 
                 response.SetResult(model);
                 response.Status = true;
@@ -626,6 +675,7 @@ namespace VasudaDataAccess.Logic.Implementation
                 response.Message = "Could not retrieve items";
                 logger.Error(ex.ToString());
             }
+
             return response;
         }
 
@@ -673,6 +723,7 @@ namespace VasudaDataAccess.Logic.Implementation
                 response.Message = "Could not retrieve items";
                 logger.Error(ex.ToString());
             }
+
             return response;
         }
 
@@ -689,12 +740,14 @@ namespace VasudaDataAccess.Logic.Implementation
                     response.Message = "Could not retrieve item";
                     return response;
                 }
+
                 getItem.TotalPrice = amount;
                 getItem.DomesticItemTable.Status = DomesticOrderStatus.AwaitingUserAcceptance.ToString();
                 var newMail = new MailDTO()
                 {
                     Email = getItem.AspNetUser.Email,
-                    Message = $"The price quotation for your domestic order is $ {amount}, Kindly login to accept the quotation.",
+                    Message =
+                        $"The price quotation for your domestic order is $ {amount}, Kindly login to accept the quotation.",
                     Subject = "Vasuda Price Quotation"
                 };
                 if (_notification.SendEmail(newMail))
@@ -710,6 +763,7 @@ namespace VasudaDataAccess.Logic.Implementation
                     };
                     _unitOfWork.NotificationTable.Add(insertNotification);
                 }
+
                 _unitOfWork.Complete();
                 response.Status = true;
             }
@@ -718,8 +772,10 @@ namespace VasudaDataAccess.Logic.Implementation
                 response.Message = "Could not retrieve items";
                 logger.Error(ex.ToString());
             }
+
             return response;
         }
+
         public Response<string> ProcessOrder(string orderId, string amount)
         {
             var response = new Response<string>();
@@ -733,6 +789,25 @@ namespace VasudaDataAccess.Logic.Implementation
                     response.Message = "Could not retrieve order";
                     return response;
                 }
+
+                if (getOrder.Status == "AwaitingShippingQuotation" || getOrder.Status == "Processing")
+                {
+                    getOrder.ShippingFee = Convert.ToDecimal(amount);
+                }
+
+                getOrder.Status = GetNextAction(getOrder.OrderType, getOrder.Status);
+                if (getOrder.Status == "Completed")
+                {
+                    getOrder.IsCompleted = true;
+                }
+
+                var sendMail = _notification.SendEmail(new MailDTO()
+                {
+                    Email = getOrder.AspNetUser.Email,
+                    Message = GetNotificationMessage(getOrder.Status, getOrder),
+                    Subject = $"Vasuda Mall Order"
+                });
+                _unitOfWork.Complete();
                 response.Status = true;
             }
             catch (Exception ex)
@@ -740,7 +815,63 @@ namespace VasudaDataAccess.Logic.Implementation
                 response.Message = "Could not retrieve items";
                 logger.Error(ex.ToString());
             }
+
             return response;
+        }
+
+        public string GetNotificationMessage(string currentStatus, OrderTable order)
+        {
+            switch (currentStatus)
+            {
+                case "Processing":
+                    return "Your order with the is been processed";
+
+                case "AwaitingUserAcceptance":
+                    return "your order is waiting for your Acceptance";
+                case "AwaitingQuotation":
+                    return "Waiting for admin quotation";
+                case "AwaitingArrival":
+                    return "Waiting for arrival";
+                case "AwaitingShippingPayment":
+                    return "Awaiting shipping payment";
+                case "AwaitingShippingQuotation":
+                    return "Awaiting shipping quotation";
+                case "Completed":
+                    return "Your order has been completed";
+                case "AwaitingPurchase":
+                    return "Awaiting admin purchase";
+                case "Arrived":
+                    return "Your order has arrived";
+                default:
+                    return null;
+            }
+        }
+
+        public string GetNextAction(string orderType, string currentStatus)
+        {
+            var index = 0;
+            switch (orderType)
+            {
+                case "Domestic":
+                    var domeArray = System.Enum.GetNames(typeof(DomesticOrderStatus)).ToList();
+                    index = domeArray.IndexOf(currentStatus);
+                    return domeArray[index + 1];
+
+                case "Purchase":
+                    var purchaseArray = System.Enum.GetNames(typeof(PurchaseOrderStatus)).ToList();
+                    index = purchaseArray.IndexOf(currentStatus);
+                    return purchaseArray[index + 1];
+                case "PurchaseAndShipping":
+                    var purchaseShippingArray = System.Enum.GetNames(typeof(PurchaseAndShippingOrderStatus)).ToList();
+                    index = purchaseShippingArray.IndexOf(currentStatus);
+                    return purchaseShippingArray[index + 1];
+                case "Product":
+                    var productArray = System.Enum.GetNames(typeof(ProductTable)).ToList();
+                    index = productArray.IndexOf(currentStatus);
+                    return productArray[index + 1];
+                default:
+                    return null;
+            }
         }
 
         public Response<string> ProcessDomesticItem(string id, string action, string userId)
@@ -754,14 +885,16 @@ namespace VasudaDataAccess.Logic.Implementation
             try
             {
                 var Id = Guid.Parse(id);
-                var item = _unitOfWork.ItemsTable.Get(x => x.UserId == userId && x.Id == Id && x.Status == ItemStatus.Pending.ToString());
+                var item = _unitOfWork.ItemsTable.Get(x =>
+                    x.UserId == userId && x.Id == Id && x.Status == ItemStatus.Pending.ToString());
                 if (item == null)
                 {
                     return response;
                 }
 
                 var domestic = _unitOfWork.DomesticItemTable.Get(x => x.Id == item.Id &&
-                                x.Status == DomesticOrderStatus.AwaitingUserAcceptance.ToString());
+                                                                      x.Status == DomesticOrderStatus
+                                                                          .AwaitingUserAcceptance.ToString());
                 if (domestic == null)
                 {
                     return response;
@@ -835,6 +968,7 @@ namespace VasudaDataAccess.Logic.Implementation
             {
                 logger.Error(ex.ToString());
             }
+
             return response;
         }
 
@@ -853,6 +987,7 @@ namespace VasudaDataAccess.Logic.Implementation
                 {
                     return response;
                 }
+
                 var overallPrice = items.Sum(x => x.TotalPrice);
 
                 var user = _unitOfWork.AspNetUser.Get(userId);
@@ -873,7 +1008,8 @@ namespace VasudaDataAccess.Logic.Implementation
                 foreach (var itemskey in items.GroupBy(x => x.Type).ToList())
                 {
                     PurchaseItem.AddRange(itemskey.Where(x => x.Type == ItemType.Purchase.ToString()).ToList());
-                    PurchaseAndShippingItem.AddRange(itemskey.Where(x => x.Type == ItemType.PurchaseAndShipping.ToString()).ToList());
+                    PurchaseAndShippingItem.AddRange(itemskey
+                        .Where(x => x.Type == ItemType.PurchaseAndShipping.ToString()).ToList());
                     ProductItem.AddRange(itemskey.Where(x => x.Type == ItemType.Product.ToString()).ToList());
                 }
 
@@ -1011,6 +1147,7 @@ namespace VasudaDataAccess.Logic.Implementation
             {
                 logger.Error(ex.ToString());
             }
+
             return response;
         }
 
@@ -1052,6 +1189,65 @@ namespace VasudaDataAccess.Logic.Implementation
             {
                 logger.Error(ex.ToString());
             }
+
+            return response;
+        }
+
+        public Response<List<PriceTable>> GetAllPrice()
+        {
+
+            var response = new Response<List<PriceTable>>()
+            {
+                Message = "Unable to retrieve order..",
+                Status = false
+            };
+
+            try
+            {
+
+                var prices = _unitOfWork.PriceTable.GetAll(x => x.IsActive).ToList();
+                response.Status = true;
+                response.Message = "Order retrieved successfully";
+                response.SetResult(prices);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+            }
+
+            return response;
+        }
+
+        public Response<ReportDTO> GetHomeReport()
+        {
+            var response = new Response<ReportDTO>()
+            {
+                Message = "Unable to retrieve order..",
+                Status = false
+            };
+
+            try
+            {
+
+                var model =new ReportDTO();
+                var allUsers = _unitOfWork.AspNetUser.GetAll();
+                var allOrders = _unitOfWork.OrderTable.GetAll();
+                model.MonthlyOrders = allOrders.Count(x => x.DateCreated.Month == DateTime.Now.Month);
+                model.AllOrders = allOrders.Count();
+                model.AllUsers = allUsers.Count(x => !x.AspNetRoles.Any());
+                model.NewUsers = allUsers.Count(x => x.DateCreated.Month == DateTime.Now.Month);
+                model.UnconfirmedUsers = allUsers.Count(x => !x.EmailConfirmed);
+                model.CompletedOrder = allOrders.Count(x => !x.IsCompleted);
+                model.NewNotification = _unitOfWork.SupportTable.GetAll().Count(x => x.SentBy == "User" && !x.IsRead);
+                response.Status = true;
+                response.Message = "Order retrieved successfully";
+                response.SetResult(model);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+            }
+
             return response;
         }
 

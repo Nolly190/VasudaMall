@@ -279,4 +279,43 @@
             }
         });
     });
+    $("#SubmitChat").click(function (data) {
+        data.preventDefault();
+        if ($("#ChatBox").val() === "" || $("#ChatBox").val() === null) {
+            Swal.fire("Message is empty");
+            return;
+        }
+        $(".Main-loader").modal('show');
+        $.ajax({
+            url: "/Dashboard/SendChat",
+            type: "Post",
+            data: { userId: $(this).data("id"), message: $("#ChatBox").val() },
+            error: function (status, xhr) {
+                $(".Main-loader").modal('hide');
+            },
+            success: function (result) {
+
+                $(".Main-loader").modal('hide');
+                if (result.Status === true) {
+                    var d = new Date();
+                    var html = `<div class="outgoing_msg">
+                            <div class="sent_msg">
+                                <p>
+                                ${ $("#ChatBox").val()}
+                                </p>
+                                <span class="time_date">${d.toDateString()}</span>
+                            </div>
+                        </div>
+                  `;
+                    $("#MessageHistory").append(html);
+                    $("#ChatBox").val("");
+                    return;
+                }
+                Swal.fire(result.Message);
+            }
+
+        });
+
+    });
+
 })

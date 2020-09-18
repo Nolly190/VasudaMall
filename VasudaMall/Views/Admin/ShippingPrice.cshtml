@@ -1,0 +1,186 @@
+﻿
+@model List<VasudaDataAccess.Model.PriceTable>
+@{
+    ViewBag.Title = "ShippingPrice";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var count = 1;
+}
+
+
+
+
+<link rel="stylesheet" href="~/admin-lte/plugins/fontawesome-free/css/all.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="~/admin-lte/dist/css/adminlte.min.css">
+<!-- summernote -->
+<link rel="stylesheet" href="~/admin-lte/plugins/summernote/summernote-bs4.css">
+<!-- Google Font: Source Sans Pro -->
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+<section class="content">
+    <div class="container-fluid">
+
+        <!--Notification drop down start-->
+        <div class="row">
+            <div class="col-12">
+                <!-- Default box -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Manage Price</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="col-md-12" id="NavigateToSection">
+                            <div class="card card-primary card-outline">
+                                <div class="card-header">
+                                    <h3 class="card-title">Add Price</h3>
+                                </div>
+                                <div class="alert alert-danger" id="DangerAlert" style="display: none" role="alert">
+
+                                </div>
+                                <!-- /.card-header -->
+                                <form id="ShippingPriceForm">
+                                    <div class="card-body">
+                                    <div class="row">
+                                        <div class="form-group col-3">Price:
+                                            <input class="form-control" type="number" required data-formname="Price" id="Price" placeholder="Price">
+                                        </div>
+                                        <div class="form-group  col-3">
+                                            Country:
+                                            <input class="form-control" required data-formname="Country" id="Country" placeholder="Country:">
+                                        </div>
+                                        <div class="form-group  col-3">
+                                            Minimum Kg:
+                                            <input class="form-control" type="number" required data-formname="Minimum Kg" id="MinKg" placeholder="Min-Kg:">
+                                        </div>
+                                        <div class="form-group  col-3">
+                                            Maximum Kg:
+                                            <input class="form-control" type="number" required data-formname="Maximum Kg" id="MaxKg" placeholder="Max-Kg:">
+                                        </div>
+                                        <div class="form-group  col-3">
+                                            Delivery Days
+                                            <input class="form-control" type="number" required data-formname="Days" id="Days" placeholder="No of Days:">
+                                        </div>
+                                        <div class="form-group  col-3">
+                                            Type
+                                            <select class="form-control" required data-formname="Type" id="ShippingType">
+                                                <option value="">Select Type</option>
+                                                <option>Normal</option>
+                                                <option>Express</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <!-- /.card-body -->
+                                    <div class="card-footer">
+                                        <div class="float-right">
+                                            <button type="submit" id="ShipPriceSave" data-type="=Insert" class="btn btn-primary SubmitShippingPrice"><i class="far fa-envelope "></i> Save</button>
+                                            <button type="submit" id="ShipPriceEdit" style="display:none" data-type="Edit" class="btn btn-primary SubmitShippingPrice"><i class="far fa-envelope"></i> Edit</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <!-- /.card-footer -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+
+
+
+                    </div>
+                    <!-- /.card-body -->
+
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!--Notification drop down end-->
+        <!--Notification table start-->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Shipping Price</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @if (Model.Count == 0)
+                        {
+                            <h3 style="text-align:center">NO SHIPPING FEE AVAILABLE</h3>
+                        }
+                        else
+                        {
+                            <table id="ShippingPriceTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Type</th>
+                                        <th>Min Kg</th>
+                                        <th>Max Kg</th>
+                                        <th>Price</th>
+                                        <th>Country</th>
+                                        <th>Delivery Time</th>
+                                        <th>Date Created</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ShippingPriceTbody">
+                                    @foreach (var notification in Model)
+                                    {
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@notification.Type</td>
+                                            <td>@notification.MinKg</td>
+                                            <td>@notification.MaxKg</td>
+                                            <td>@notification.PricePerKg</td>
+                                            <td>@notification.Country</td>
+                                            <td>@notification.DeliveryTime</td>
+                                            <td>@notification.DateCreated.ToString("D")</td>
+                                            <td>
+                                                <button type="button" class="btn btn-outline-success btn-sm EditPrice" data-id="@notification.Id">Edit</button>
+                                                <button type="button" class="btn btn-outline-danger btn-sm DeletePrice" data-id="@notification.Id">Delete</button>
+                                            </td>
+                                        </tr>
+                                        count++;
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!--Notification table end-->
+
+    </div>
+</section>
+<!-- AdminLTE App -->
+<script src="~/admin-lte/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="~/admin-lte/dist/js/demo.js"></script>
+<!-- Summernote -->
+<script src="~/admin-lte/plugins/summernote/summernote-bs4.min.js"></script>
+<!-- Page Script -->
+<script>
+    $(function () {
+        $("#ShippingPriceTable").DataTable();
+
+    })
+</script>
+
+
+
+
+
+
+
