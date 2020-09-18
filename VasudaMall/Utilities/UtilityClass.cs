@@ -55,6 +55,10 @@ namespace VasudaMall.Utilities
         {
             return _unitOfWork.SupportTable.GetAll(x => x.SentBy == "User" && !x.IsRead).Count();
         }
+        public int UserChatCount(string userId)
+        {
+            return _unitOfWork.SupportTable.GetAll(x => x.SentBy == "Admin" && !x.IsRead && x.UserId==userId).Count();
+        }
     }
 
 }

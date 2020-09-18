@@ -10,10 +10,12 @@ namespace VasudaDataAccess.Logic
 {
   public interface IOrderService
     {
+        Response<ReportDTO> GetHomeReport();
         Response<OrderItemDTO> GetOrderItems(string orderId);
         Response<string> PriceQuote (string id,decimal amount);
         Response<AdminOrderDto> GetAllOrderInfo();
         Response<DomesticOrderDTO> GetDomesticInfo(string id);
+        Response<List<PriceTable>> GetAllPrice();
         Response<OrderHistoryViewModel> GetAllOrdersHomePage(string userId);
         Response<DomesticItemViewModel> GetDomesticItemsPage(string userId);
         Response<GeneralItemViewModel> GetGeneralItemsPage(string userId);

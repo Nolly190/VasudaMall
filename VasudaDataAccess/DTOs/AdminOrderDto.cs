@@ -19,6 +19,7 @@ namespace VasudaDataAccess.DTOs
         public System.Guid Id { get; set; }
         public string Status { get; set; }
         public Nullable<decimal> TotalPrice { get; set; }
+        public string TrackingNumber { get; set; }
         public string OrderType { get; set; }
         public Nullable<decimal> TotalServiceCharge { get; set; }
         public Nullable<decimal> ShippingFee { get; set; }

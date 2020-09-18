@@ -5,201 +5,191 @@
 }
 
 <section class="content">
-<div class="container-fluid">
-<div class="row">
-<div class="col-12">
-    <!-- Default box -->
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Add Product</h3>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <!-- Default box -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Add Product</h3>
 
-            <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-        </div>
-        <div class="card-body">
-            <input type="button" class="btn btn-primary" value="Completed Orders" id="CompletedOrderBtn" />
-            <input type="button" class="btn btn-primary" value="Pending Domestic Request" id="DomesticOrdersBtn" />
-            <input type="button" class="btn btn-primary" value="Pending Orders" id="PendingOrders" />
-
-            <div class="row" id="CompletedOrderDiv" style="display: none">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Completed Order</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                                <i class="fas fa-times"></i>
+                            </button>
                         </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <table id="CompleteOrderTable" class="table table-bordered table-striped table-responsive">
-                                <thead>
-                                <tr>
-                                    <th>UserName</th>
-                                    <th>Email</th>
-                                    <th>Location</th>
-                                    <th>Phone Number</th>
-                                    <th>Type</th>
-                                    <th>Total Amount</th>
-                                    <th>Total ServiceCharge</th>
-                                    <th>Payment Status</th>
-                                    <th>Is Completed</th>
-                                    <th>Date Created</th>
-                                    <th>Options</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach (var item in Model.FinishedOrders)
-                                {
-                                    <tr>
-                                        <td>@item.AspNetUser.FullName</td>
-                                        <td>@item.AspNetUser.Email</td>
-                                        <td>@item.AspNetUser.Address</td>
-                                        <td>@item.AspNetUser.PhoneNumber</td>
-                                        <td>@item.OrderType</td>
-                                        <td>@item.TotalPrice</td>
-                                        <td>@item.TotalServiceCharge</td>
-                                        <td>@item.Status</td>
-                                        <td>@item.IsCompleted</td>
-                                        <td>@item.DateCreated.ToString("f")</td>
-                                        <td><button>View Details</button></td>
-                                    </tr>
-
-                                }
-
-                                </tbody>
-
-                            </table>
-                        </div>
-                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card -->
-                </div>
-                <!-- /.col -->
+                    <div class="card-body">
+                        <input type="button" class="btn btn-primary" value="Completed Orders" id="CompletedOrderBtn" />
+                        <input type="button" class="btn btn-primary" value="Pending Domestic Request" id="DomesticOrdersBtn" />
+                        <input type="button" class="btn btn-primary" value="Pending Orders" id="PendingOrders" />
 
-            </div>
+                        <div class="row" id="CompletedOrderDiv" style="display: none">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Completed Order</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <table id="CompleteOrderTable" class="table table-bordered table-striped table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <th>Tracking Number</th>
+                                                    <th>UserName</th>
+                                                    <th>Email</th>
+                                                    <th>Location</th>
+                                                    <th>Type</th>
+                                                    <th>Total Amount</th>
+                                                    <th>Payment Status</th>
+                                                    <th>Date Created</th>
+                                                    <th>Options</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="UnfinishedTbody">
+                                                @foreach (var item in Model.FinishedOrders)
+                                                {
+                                                <tr>
+                                                    <td>@item.TrackingNumber</td>
+                                                    <td>@item.AspNetUser.FullName</td>
+                                                    <td>@item.AspNetUser.Email</td>
+                                                    <td>@item.AspNetUser.Address</td>
+                                                    <td>@item.OrderType</td>
+                                                    <td>@item.TotalPrice</td>
+                                                    <td>@item.Status</td>
+                                                    <td>@item.DateCreated.ToString("f")</td>
+                                                    <td><button data-id="@item.Id" class="btn btn-success ViewOrderItems">View</button> </td>
+                                                </tr>
 
+                                                }
 
-        </div>
-                  
-        <div class="card-body" id="PendingOrderDiv">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Pending Order</h3>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!-- /.col -->
+
                         </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <table id="PendingOrderTable" class="table table-bordered table-striped table-responsive-lg">
-                                <thead>
-                                <tr>
-                                    <th>UserName</th>
-                                    <th>Phone Number</th>
-                                    <th>Type</th>
-                                    <th>Total Amount</th>
-                                    <th>Total ServiceCharge</th>
-                                    <th>Payment Status</th>
-                                    <th>Is Completed</th>
-                                    <th>Date Created</th>
-                                    <th>Options</th>
-                                    <th>Next Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach (var item in Model.UnfinishedOrders)
-                                {
-                                    <tr>
-                                        <td>@item.AspNetUser.FullName</td>
-                                        <td>@item.AspNetUser.PhoneNumber</td>
-                                        <td>@item.OrderType</td>
-                                        <td>@item.TotalPrice</td>
-                                        <td>@item.TotalServiceCharge</td>
-                                        <td>@item.Status</td>
-                                        <td>@item.IsCompleted</td>
-                                        <td>@item.DateCreated.ToString("f")</td>
-                                        <td><button data-id="@item.Id"  class="btn btn-success ViewOrderItems">View</button> </td>
-                                        <td> <button data-id="@item.Id" data-status="@item.Status"  class="btn btn-primary NextAction">@item.NextAction</button> </td>
-                                    </tr>
-
-                                }
 
 
-                                </tbody>
-
-                            </table>
-                        </div>
-                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card -->
-                </div>
-                <!-- /.col -->
 
-            </div>
+                    <div class="card-body" id="PendingOrderDiv">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Pending Order</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <table id="PendingOrderTable" class="table table-bordered table-striped table-responsive-lg">
+                                            <thead>
+                                                <tr>
+                                                    <th>UserName</th>
+                                                    <th>Tracking Number</th>
+                                                    <th>Type</th>
+                                                    <th>Total Amount</th>
+                                                    <th>Payment Status</th>
+                                                    <th>Options</th>
+                                                    <th>Next Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="UnfinishedTbody">
+                                                @foreach (var item in Model.UnfinishedOrders)
+                                                {
+                                                    <tr>
+                                                        <td>@item.AspNetUser.FullName</td>
+                                                        <td>@item.TrackingNumber</td>
+                                                        <td>@item.OrderType</td>
+                                                        <td>@item.TotalPrice</td>
+                                                        <td>@item.Status</td>
+                                                        <td><button data-id="@item.Id" class="btn btn-success ViewOrderItems">View</button> </td>
+                                                        <td> <button data-id="@item.Id" data-status="@item.Status" class="btn btn-primary NextAction">@item.NextAction</button> </td>
+                                                    </tr>
+
+                                                }
 
 
-        </div>
-                   
-        <div class="card-body" id="DomesticOrders" style="display: none" >
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Order History</h3>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!-- /.col -->
+
                         </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <table id="UserOrderTable" class="table table-bordered table-striped table-responsive-lg">
-                                <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Phone</th>
-                                    <th>Description</th>
-                                    <th>Weight</th>
-                                    <th>Quantity</th>
-                                    <th>Date Created</th>
-                                    <th>Options</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                
-                                @foreach (var item in Model.DomesticOrder)
-                                {
-                                    <tr>
-                                        <td>@item.AspNetUser.FullName</td>
-                                        <td>@item.AspNetUser.PhoneNumber</td>
-                                        <td>@item.Description</td>
-                                        <td>@item.DomesticItemTable.Weight</td>
-                                        <td>@item.DomesticItemTable.Quantity</td>
-                                      <td>@item.DateCreated.ToString("f")</td>
-                                      <td> <button class="btn btn-primary DomesticViewMore" data-id="@item.Id">View Details</button>  
-                                    </tr>
 
-                                }
-                                </tbody>
 
-                            </table>
-                        </div>
-                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card -->
+
+                    <div class="card-body" id="DomesticOrders" style="display: none">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Order History</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <table id="UserOrderTable" class="table table-bordered table-striped table-responsive-lg">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Phone</th>
+                                                    <th>Description</th>
+                                                    <th>Weight</th>
+                                                    <th>Quantity</th>
+                                                    <th>Date Created</th>
+                                                    <th>Options</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="domesticTbody">
+
+                                                @foreach (var item in Model.DomesticOrder)
+                                                {
+                                                    <tr>
+                                                        <td>@item.AspNetUser.FullName</td>
+                                                        <td>@item.AspNetUser.PhoneNumber</td>
+                                                        <td>@item.Description</td>
+                                                        <td>@item.DomesticItemTable.Weight</td>
+                                                        <td>@item.DomesticItemTable.Quantity</td>
+                                                        <td>@item.DateCreated.ToString("f")</td>
+                                                        <td> <button class="btn btn-primary DomesticViewMore" data-id="@item.Id">View Details</button>
+                                                    </tr>
+
+                                                }
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!-- /.col -->
+
+                        </div>
+
+
+                    </div>
+
+                    <!-- /.card-footer-->
                 </div>
-                <!-- /.col -->
-
+                <!-- /.card -->
             </div>
-
-
         </div>
-                  
-        <!-- /.card-footer-->
     </div>
-    <!-- /.card -->
-</div>
-</div>
-</div>
 </section>
 
 
@@ -215,20 +205,39 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="form-group">
-                        <label class="col-4">Name:<label id="DomeName"></label></label>
-                        <label class="col-4">Email:<label id="DomeEmail"></label></label>
-                        <label class="col-3">Phone:<label id="DomePhone"></label></label>
-                        <label class="col-6">Address:<label id="DomeAddress"></label></label>
-                        <label class="col-5">Supplier Name:<label id="DomeSuppName"></label></label>
-                        <label class="col-3">Supplier Address:<label id="DomeSuppAddr"></label></label>
-                        <label class="col-3">Supplier Phone:<label id="DomeSuppPhone"></label></label>
-                        <label class="col-3">Receiver Name:<label id="DomeReceName"></label></label>
-                        <label class="col-3">Receiver Address:<label id="DomeReceAddr"></label></label>
-                        <label class="col-3">Receiver Phone:<label id="DomeRecePhone"></label></label>
-                        <label class="col-2">Weight:<label id="DomeWeight"></label></label>
-                        <label class="col-3">Quantity:<label id="DomeQuantity"></label></label>
-                        <label class="col-3">Date Created:<label id="DomeCreated"></label></label>
-                        <label class="col-3">Price Quotation:<input type="number" class="form-control" id="DomesticQoutation"></label>
+                        <hr />
+                        <div class="row">
+                            <div class="col-4 "><b>Name:</b><span id="DomeName"></span></div>
+                            <div class="col-4"><b>Email:</b><span id="DomeEmail"></span></div>
+                            <div class="col-3"><b>Phone:</b><span id="DomePhone"></span></div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-6"><b>Address:</b><span id="DomeAddress"></span></div>
+                            <div class="col-5"><b>Supplier Name:</b><span id="DomeSuppName"></span></div>
+                        </div>
+                        <hr />
+                        <div class="row">
+
+                            <div class="col-3"><b>Supplier Address:</b><span id="DomeSuppAddr"></span></div>
+                            <div class="col-3"><b>Supplier Phone:</b><span id="DomeSuppPhone"></span></div>
+                            <div class="col-3"><b>Receiver Name:</b><span id="DomeReceName"></span></div>
+                        </div>
+                        <hr />
+                        <div class="row">
+
+                            <div class="col-3"><b>Receiver Address:</b><span id="DomeReceAddr"></span></div>
+                            <div class="col-3"><b>Receiver Phone:</b><span id="DomeRecePhone"></span></div>
+                            <div class="col-2"><b>Weight:</b><span id="DomeWeight"></span></div>
+                            <div class="col-3"><b>Quantity:</b><span id="DomeQuantity"></span></div>
+                        </div>
+                        <hr />
+                        <div class="row">
+
+                            <div class="col-3"><b>Date Created:</b><span id="DomeCreated"></span></div>
+                            <div class="col-3"><b>Price Quotation:</b><input type="number" class="form-control" id="DomesticQoutation"></div>
+                        </div>
+                        <hr />
                     </div>
                 </div>
             </div>
@@ -259,17 +268,19 @@
                         <label class="col-6">Address:<label id="OrderAddress"></label></label>
                         <label class="col-5">Order Type:<label id="OrderType"></label></label>
                         <label class="col-5">Status<label id="OrderStatus"></label></label>
-                        <table class="table table-bordered table-responsive table-striped">
-                            <thead><tr>
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>Type</th>
-                                <th>Quantity</th>
-                                <th>Items Price</th>
-                                <th>Service Price</th>
-                                <th>Total Price</th>
-                                <th>Options</th>
-                            </tr></thead>
+                        <table class="table table-bordered table-responsive table-striped" id="OrderItemTable">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Type</th>
+                                    <th>Quantity</th>
+                                    <th>Items Price</th>
+                                    <th>Service Price</th>
+                                    <th>Total Price</th>
+                                    @*<th>Options</th>*@
+                                </tr>
+                            </thead>
                             <tbody id="ItemsTableDiv">
                             </tbody>
                         </table>
@@ -277,8 +288,6 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="ContactUser">Contact User</button>
-                <button type="button" class="btn btn-primary" id="SubmitPrice">Save Quotation</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -304,3 +313,6 @@
         </div>
     </div>
 </div>
+<script>
+    $(".table").DataTable()
+</script>

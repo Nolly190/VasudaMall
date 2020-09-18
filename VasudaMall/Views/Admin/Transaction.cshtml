@@ -51,37 +51,37 @@
                         else
                         {
                             
-                            <table id="notificationTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
+                            <table id="TransactionTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
                                 <thead>
-                                    <tr>
-                                        <th>S/N</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Amount</th>
-                                        <th>Transaction Type/th>
-                                        <th>Purpose</th>
-                                        <th>Status</th>
-                                        <th>Date Created</th>
-                                    </tr>
+                                <tr>
+                                    <th>S/N</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Amount</th>
+                                    <th>Transaction Type</th>
+                                    <th>Purpose</th>
+                                    <th>Status</th>
+                                    <th>Date Created</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var fundingRequestTable in Model)
-                                    {
-                                        var name = fundingRequestTable.AspNetUser == null ?"Null" :fundingRequestTable.AspNetUser .FullName;
-                                        var email = fundingRequestTable.AspNetUser == null ?"Null" :fundingRequestTable.AspNetUser .Email;
-                                        <tr>
-                                            <td>@count</td>
-                                            <td>@name</td>
-                                            <td>@email</td>
-                                            <td>@fundingRequestTable.Amount</td>
-                                            <td>@fundingRequestTable.TransactionType</td>
-                                            <td>@fundingRequestTable.Purpose</td>
-                                            <td>@fundingRequestTable.Status</td>
-                                            <td>@fundingRequestTable.DateCreated</td>
+                                @foreach (var fundingRequestTable in Model)
+                                {
+                                    var name = fundingRequestTable.AspNetUser == null ?"Null" :fundingRequestTable.AspNetUser .FullName;
+                                    var email = fundingRequestTable.AspNetUser == null ?"Null" :fundingRequestTable.AspNetUser .Email;
+                                    <tr>
+                                        <td>@count</td>
+                                        <td>@name</td>
+                                        <td>@email</td>
+                                        <td>@fundingRequestTable.Amount</td>
+                                        <td>@fundingRequestTable.TransactionType</td>
+                                        <td>@fundingRequestTable.Purpose</td>
+                                        <td>@fundingRequestTable.Status</td>
+                                        <td>@fundingRequestTable.DateCreated</td>
 
-                                        </tr>
-                                        count++;
-                                    }
+                                    </tr>
+                                    count++;
+                                }
                                 </tbody>
                             </table>
                         }
@@ -95,6 +95,12 @@
      
     </div>
 </section>
+
+<script>
+    $(document).ready(function () {
+        $("#TransactionTable").DataTable();
+    })
+</script>
 
 
 

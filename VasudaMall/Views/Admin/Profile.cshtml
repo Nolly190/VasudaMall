@@ -39,7 +39,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Notifications</h3>
+                        <h3 class="card-title">Admins</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -76,7 +76,7 @@
                                         <td>@user.City</td>
                                         <td>@user.DateCreated</td>
                                         <td>
-                                            <button data-id="@user.Id" class="btn btn-outline-success btn-sm RemoveAdmin">Remove Admin</button>
+                                            <button data-id="@user.Id" class="btn btn-outline-danger btn-sm RemoveAdmin">Remove Admin</button>
                                             <a class="btn btn-outline-success btn-sm" href="@Url.Action("UserDetails","Admin", new {userId=user.Id})">View User</a>
                                          
                                         </td>
@@ -98,7 +98,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Notifications</h3>
+                        <h3 class="card-title">Users</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -137,6 +137,8 @@
                                         <td>@user.DateCreated</td>
                                         <td>
                                             <a class="btn btn-outline-success btn-sm" href="@Url.Action("UserDetails","Admin", new {userId=user.Id})">View User</a>
+                                            <button type="button" data-action="UnBan" data-id="@user.Id" class="btn btn-outline-primary btn-sm MakeAdmin">Make Admin</button>
+
                                             @if (user.IsBanned)
                                             {
                                                 <button type="button" data-action="UnBan" data-id="@user.Id" class="btn btn-outline-success btn-sm banUser">UnBlock</button>

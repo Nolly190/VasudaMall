@@ -80,7 +80,10 @@ namespace VasudaMall.Controllers
             model.Id = User.Identity.GetUserId();
             return Json(_profileService.UpdateUserProfile(model), JsonRequestBehavior.AllowGet);
         }
-
+        public JsonResult SendChat(string message)
+        {
+            return Json(_notificationService.SendChats(User.Identity.GetUserId(), message, "User"), JsonRequestBehavior.AllowGet);
+        }
         public ActionResult Notification()
         {
             return View(_notificationService.GetAllNotificationsHomePage().Result());
@@ -98,7 +101,7 @@ namespace VasudaMall.Controllers
         
         public ActionResult Support()
         {
-            return View();
+            return View(_notificationService.GetAllChats(User.Identity.GetUserId(), "Admin").Result());
         }
     }
 }

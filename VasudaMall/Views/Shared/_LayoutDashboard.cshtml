@@ -1,4 +1,6 @@
-﻿@using VasudaDataAccess.Utility
+﻿@using Microsoft.AspNet.Identity
+@using VasudaDataAccess.Utility
+@using VasudaMall.Utilities
 @{
     Layout = null;
 }
@@ -176,7 +178,17 @@
                             <a href=@Url.Action("Support", "Dashboard") class="nav-link">
                                 <i class="nav-icon fa fa-phone"></i>
                                 <p>
+                                   
+                                    @{
+                                        var chatCount = new UtilityClass().UserChatCount(User.Identity.GetUserId());
+                                    }
+
                                     Chat Support
+                                    @if (chatCount != 0)
+                                    {
+
+                                        <span class="badge badge-danger right">@chatCount</span>
+                                    }
                                 </p>
                             </a>
                         </li>

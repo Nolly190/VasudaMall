@@ -26,7 +26,7 @@ namespace VasudaDataAccess.Data_Access.Implementation
 
     public enum ItemType
     {
-        Domestic = 1, Shipping, Purchase, PurchaseAndShipping, Product
+        Domestic = 1, Purchase,Shipping, PurchaseAndShipping, Product
     }
 
     public enum ItemStatus

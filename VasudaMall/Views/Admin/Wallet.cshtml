@@ -47,7 +47,7 @@
                         }
                         else
                         {
-                            <table id="notificationTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
+                            <table id="FundingHistTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
                                 <thead>
                                     <tr>
                                         <th>S/N</th>
@@ -81,7 +81,7 @@
                                             <td>@fundingRequestTable.NairaAmount</td>
                                             <td>@fundingRequestTable.DateCreated</td>
                                             <td>@fundingRequestTable.PaymentStatus</td>
-                                          
+
                                         </tr>
                                         count++;
                                     }
@@ -111,7 +111,7 @@
                         }
                         else
                         {
-                            <table id="notificationTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
+                            <table id="FundingReqTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
                                 <thead>
                                     <tr>
                                         <th>S/N</th>
@@ -126,7 +126,7 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="AllRequest">
                                     @foreach (var fundingRequestTable in Model.PendingFundingRequest)
                                     {
                                         var bankName = fundingRequestTable.PaymentType != "Online" ? fundingRequestTable.SystemAccountTable.BankName : "";
@@ -148,7 +148,7 @@
                                             {
                                                 <td>
                                                     <button type="button" class="btn btn-outline-success btn-sm action" data-action="approve" data-type="Fund" data-id="@fundingRequestTable.Id">Approve</button>
-                                                    <button type="button"  class="btn btn-outline-danger btn-sm action" data-action="decline" data-type="Fund" data-id="@fundingRequestTable.Id">Decline</button>
+                                                    <button type="button" class="btn btn-outline-danger btn-sm action" data-action="decline" data-type="Fund" data-id="@fundingRequestTable.Id">Decline</button>
 
                                                 </td>
                                             }
@@ -187,7 +187,7 @@
                         }
                         else
                         {
-                            <table id="notificationTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
+                            <table id="WithdrawalHistTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
                                 <thead>
                                     <tr>
                                         <th>S/N</th>
@@ -242,7 +242,7 @@
                         }
                         else
                         {
-                            <table id="notificationTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
+                            <table id="WithdrawalReqTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
                                 <thead>
                                     <tr>
                                         <th>S/N</th>
@@ -255,7 +255,7 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="AllRequest">
                                     @foreach (var withdrawalAccount in Model.PendingWithdrawalRequest)
                                     {
                                         <tr>
@@ -290,5 +290,15 @@
 
     </div>
 </section>
+
+
+<script>
+    $(document).ready(function () {
+        $("#WithdrawalReqTable").DataTable();
+        $("#WithdrawalHistTable").DataTable();
+        $("#FundingReqTable").DataTable();
+        $("#FundingHistTable").DataTable();
+    })
+</script>
 
 
