@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity;
 using ScrapySharp.Extensions;
 using ScrapySharp.Network;
 using VasudaDataAccess.Data_Access.Implementation;
+using VasudaDataAccess.DTOs;
 using VasudaDataAccess.Logic;
 using VasudaDataAccess.Logic.Implementation;
 using VasudaDataAccess.Model;
@@ -83,7 +84,7 @@ namespace VasudaMall.Controllers
 
         public ActionResult Notification()
         {
-            return View(_notificationService.GetAllNotificationsHomePage().Result());
+            return View(_notificationService.GetAllNotificationsHomePage(User.Identity.GetUserId()).Result());
         }
         
         public ActionResult Transaction()
@@ -99,6 +100,20 @@ namespace VasudaMall.Controllers
         public ActionResult Support()
         {
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult GetSingleNotification(string id)
+        {
+            var response = new Response<string>();
+            if (string.IsNullOrEmpty(id))
+            {
+                response.Message = "Unable to retrieve notification....";
+                response.Status = false;
+                return Json(response, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(_notificationService.GetUserNotification(id, User.Identity.GetUserId()), JsonRequestBehavior.AllowGet);
         }
     }
 }

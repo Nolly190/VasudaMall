@@ -38,7 +38,7 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="orderHistoryTBody">
                                     @foreach (var order in Model.AllOrders)
                                     {
                                         <tr>
@@ -60,7 +60,8 @@
                                             <td>@Util.FormatDate(order.DateCreated)</td>
                                             <td>
                                                 <button type="submit"
-                                                        class="btn btn-outline-success btn-sm orderHistoryViewMoreBtn"
+                                                        class="btn btn-outline-success btn-sm"
+                                                        id="orderHistoryViewMoreBtn"
                                                         data-id="@order.Id" data-total="@order.TotalPrice">
                                                     View More
                                                 </button>
@@ -194,3 +195,11 @@
 </div>
 
 @*Domestic order details modal end*@
+
+<script>
+    $(function () {
+        //Add text editor
+        $('#compose-textarea').summernote();
+    })
+    $("#orderHistoryTable").DataTable();
+</script>

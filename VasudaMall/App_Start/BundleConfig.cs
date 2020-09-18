@@ -79,7 +79,8 @@ namespace VasudaMall
                 "~/Scripts/DomesticItemPage.js",
                 "~/Scripts/GeneralItemPage.js",
                 "~/Scripts/HistoryPage.js",
-                "~/Scripts/CheckoutPage.js"
+                "~/Scripts/CheckoutPage.js",
+                "~/Scripts/NotificationPage.js"
                 //"~/Scripts/ChatPage.js"
                 //"~/Scripts/jquery.validate.min.js",
                 //"~/Scripts/jquery.validate.unobtrusive.min.js"

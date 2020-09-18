@@ -3,7 +3,7 @@ $(document).ready(function () {
 
 
     //Get a general order details start
-    $(".orderHistoryViewMoreBtn").click(function () {
+    $("#orderHistoryTBody").on("click", "#orderHistoryViewMoreBtn", function () {
         $(".Main-loader").show();
 
         var id = $(this).data('id');
@@ -147,4 +147,5 @@ $(document).ready(function () {
             }
         });
     });
+
 })

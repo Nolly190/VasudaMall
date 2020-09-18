@@ -110,7 +110,7 @@
     });
 
     //Delete an item from checkout
-    $(".itemsDeleteBtn").click(function () {
+    $(".itemTBody").on("click", ".itemsDeleteBtn", function () {
 
         Swal.fire({
             title: 'Are you sure you want to delete this item?',
@@ -151,10 +151,11 @@
                 });
             }
         });
-    })
+    });
+
 
     //Get a general item details start
-    $(".itemsViewMoreButton").click(function () {
+    $(".itemTBody").on("click", ".itemsViewMoreButton" ,function () {
         $(".Main-loader").show();
 
         var id = $(this).data('id');
