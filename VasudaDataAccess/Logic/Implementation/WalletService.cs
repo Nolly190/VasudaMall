@@ -456,6 +456,42 @@ namespace VasudaDataAccess.Logic.Implementation
 
             return response;
         }
+
+        public Response<string> ManagePrice(PriceTable model)
+        {
+            var response = new Response<string>();
+            response.Status = false;
+            try
+            {
+                if (model.Id != Guid.Empty && model.PricePerKg !=0  )
+                {
+                    model.DateCreated = DateTime.UtcNow.AddHours(1);
+                    model.IsActive = true;
+                   _unitOfWork.PriceTable.Update(model);
+                }
+                else if (model.Id != Guid.Empty && model.PricePerKg ==0)
+                {
+                    var getRecord = _unitOfWork.PriceTable.Get(model.Id);
+                    getRecord.IsActive = false;
+                }
+                else
+                {
+                    model.DateCreated =DateTime.UtcNow.AddHours(1);
+                    model.Id =Guid.NewGuid();
+                    model.IsActive = true;
+                    _unitOfWork.PriceTable.Add(model);
+                }
+                _unitOfWork.Complete();
+                response.Status = true;
+            }
+            catch (Exception ex)
+            {
+                response.Message = "Could not modify price";
+                logger.Error(ex.ToString());
+            }
+            return response;
+
+        }
     }
 
     public enum FundWithdrawalStatus
