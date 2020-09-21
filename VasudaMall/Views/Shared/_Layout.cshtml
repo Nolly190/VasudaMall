@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+@using VasudaMall.Utilities
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- Required meta tags -->
@@ -13,7 +16,7 @@
     <link rel="shortcut icon" href="~/favicon.ico" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-    
+
     <!-- jQuery -->
     <script src="~/vasuda-template/js/jquery-2.0.3.min.js"></script>
     <script src="~/vasuda-template/js/jquery-3.3.1.min.js"></script>
@@ -68,7 +71,16 @@
                             <a href=@Url.Action("LogOff", "Account")>Log Out</a>
 
                         }
-                        <a href="@Url.Action("Order", "Checkout")"><i class="fas fa-shopping-cart" style="margin-left: 7%;" aria-hidden="true"></i></a>
+                    <a href="@Url.Action("Checkout", "Order")">
+                        <i class="fas fa-shopping-cart" style="margin-left: 7%;" aria-hidden="true"></i>
+                        @{
+                                var checkoutCount = new UtilityClass().UserPendingCheckout(User.Identity.GetUserId());
+                                if (checkoutCount > 0)
+                                {
+                                <span class="badge badge-info navbar-badge">@checkoutCount</span>
+                        }
+                        }
+                    </a>
                         <select id="">
                             <option><a href="#">USD</a></option>
                             <option><a href="#">GBP</a></option>
@@ -124,8 +136,8 @@
             </div>
         </footer>
     </div>
-    
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
     @*@Scripts.Render("~/bundles/jquery")*@
     @Scripts.Render("~/vasuda-template/script")

@@ -24,6 +24,7 @@ namespace VasudaDataAccess.Logic
         Response<string> AddShippingItem(AddShippingItemViewModel model, string userId);
         Response<string> AddPurchaseItem(AddPurchaseItemViewModel model, string userId);
         Response<string> AddShippingAndPurchaseItem(AddPurchaseAndShippingItemViewModel model, string userId);
+        Response<string> AddProductItem(int quantity, string productId, string userId);
         Response<string> DeleteItem(string id, string userId);
         Response<string> ProcessOrder(string orderId, string amount);
         //Response<GetSinglePurchaseItemResponseDTO> GetSinglePurchaseItem(ItemsTable itemsTable, string message, bool status);
@@ -36,5 +37,7 @@ namespace VasudaDataAccess.Logic
         string GetOrderTypeNextAction(string orderType, string status);
 
         Response<GetSingleOrderResponseDTO> SingleCreatedOrder(string orderId);
+
+        Response<LayoutViewModel> GetLayout(string userId);
     }
 }

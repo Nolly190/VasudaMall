@@ -50,7 +50,7 @@ namespace VasudaMall
                     "~/vasuda-template/js/jquery.skitter.js",
                     "~/vasuda-template/js/jquery.skitter.min.js",
                     "~/Scripts/JqueryValidator.js",
-                    "~/Scripts/products.js",
+                    "~/Scripts/Products.js",
                     "~/vasuda-template/js/owl.carousel.js"
                     ));
             //Admin lte styles and scripts...

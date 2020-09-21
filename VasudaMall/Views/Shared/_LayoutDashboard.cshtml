@@ -52,9 +52,6 @@
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a href="@Url.Action("Order", "Checkout")"><i class="nav-link fas fa-shopping-cart" aria-hidden="true"></i></a>
-                </li>
                 @if (!User.Identity.IsAuthenticated)
                 {
                     <li class="nav-item">
@@ -67,6 +64,19 @@
                         <a class="nav-link" href=@Url.Action("LogOff", "Account")>Log Out</a>
                     </li>
                 }
+                <li class="nav-item">
+                    <a href="@Url.Action("Checkout", "Order")">
+                        <i class="nav-link fas fa-shopping-cart" aria-hidden="true"></i>
+                        @{
+                            var checkoutCount = new UtilityClass().UserPendingCheckout(User.Identity.GetUserId());
+                            if (checkoutCount > 0)
+                            {
+                                <span class="badge badge-info navbar-badge">@checkoutCount</span>
+                            }
+                        }
+                    </a>
+                </li>
+
             </ul>
         </nav>
         <!-- /.navbar -->
@@ -95,7 +105,7 @@
 
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-shopping-cart"></i>
+                                <i class="nav-icon fas fa-cart-plus"></i>
                                 <p>
                                     Add Order Items
                                     <i class="right fas fa-angle-left"></i>
@@ -104,13 +114,13 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="@Url.Action("Domestic","Item")" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="nav-icon fas fa-plus"></i>
                                         <p>Domestic</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="@Url.Action("General","Item")" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="nav-icon fas fa-plus"></i>
                                         <p>General</p>
                                     </a>
                                 </li>
@@ -119,7 +129,7 @@
 
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-shopping-cart"></i>
+                                <i class="nav-icon fas fa-store"></i>
                                 <p>
                                     Manage Orders
                                     <i class="right fas fa-angle-left"></i>
@@ -128,13 +138,13 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="@Url.Action("Checkout","Order")" class="nav-link">
-                                        <i class="fas fa-shopping-cart"></i>
+                                        <i class="nav-icon fas fa-cash-register"></i>
                                         <p>Checkout</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href=@Url.Action("History", "Order") class="nav-link">
-                                        <i class="far fa-cart-plus nav-icon"></i>
+                                        <i class="nav-icon fas fa-archive"></i>
                                         <p>History</p>
                                     </a>
                                 </li>
@@ -181,7 +191,7 @@
                             <a href=@Url.Action("Support", "Dashboard") class="nav-link">
                                 <i class="nav-icon fa fa-phone"></i>
                                 <p>
-                                   
+
                                     @{
                                         var chatCount = new UtilityClass().UserChatCount(User.Identity.GetUserId());
                                     }
@@ -633,6 +643,96 @@
     </div>
     <!-- /.modal -->
     @*Purchase and Shipping Item modal end*@
+
+    @*Product Item modal start*@
+
+    <div class="modal fade" id="general-product-item-info" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Product Item Details</h4>
+                    <button type="button" class="btn btn-outline-success btn-sm" data-dismiss="modal" aria-label="Close">
+                        Close
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-12">
+                            <p>
+                                <strong>Title: </strong>
+                                <span class="text-muted" id="prodTitle"></span>
+                            </p>
+                        </div>
+                        <div class="col-12">
+                            <p>
+                                <strong>Description: </strong>
+                                <span class="text-muted" id="prodItemDescription"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <p>
+                                <strong>Date Created: </strong>
+                                <span class="text-muted" id="prodItemDateCreated"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <p>
+                                <strong>Quantity: </strong>
+                                <span class="text-muted" id="prodItemQuantity"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <p>
+                                <strong>Status: </strong>
+                                <span class="text-muted" id="prodItemStatus"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3">
+                            <p>
+                                <strong>Unit Price: </strong>
+                                <span class="text-muted" id="prodItemUnitPrice"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <p>
+                                <strong>Item Price: </strong>
+                                <span class="text-muted" id="prodItemItemPrice"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <p>
+                                <strong>Service Price: </strong>
+                                <span class="text-muted" id="prodItemServicePrice"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <p>
+                                <strong>Total Price: </strong>
+                                <span class="text-muted" id="prodItemTotalPrice"></span>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-outline-success btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    @*Product Item modal end*@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     @Scripts.Render("~/admin-lte/script")
