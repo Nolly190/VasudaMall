@@ -34,21 +34,29 @@
                                         <th>Purpose</th>
                                         <th>Date</th>
                                         <th>Status</th>
-                                        <th>Action</th>
+                                        @*<th>Action</th>*@
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var transaction in Model.AllTransactions)
                                     {
-                                        <tr>
-                                            <td>@count</td>
-                                            <td>@transaction.Amount</td>
-                                            <td>@transaction.TransactionType</td>
-                                            <td>@transaction.Purpose</td>
-                                            <td>@Util.FormatDate(transaction.DateCreated)</td>
-                                            <td>@transaction.Status</td>
-                                            <td><button type="submit" class="btn btn-outline-success btn-sm">View More</button></td>
-                                        </tr>
+                                    <tr>
+                                        <td>@count</td>
+                                        <td>@transaction.Amount</td>
+                                        @if (transaction.TransactionType == PaymentHistoryType.Debit.ToString())
+                                        {
+                                            <td style="color:red">@transaction.TransactionType</td>
+                                        }
+                                        else
+                                        {
+                                            <td style="color:forestgreen">@transaction.TransactionType</td>
+
+                                        }
+                                        <td>@transaction.Purpose</td>
+                                        <td>@Util.FormatDate(transaction.DateCreated)</td>
+                                        <td>@transaction.Status</td>
+                                        @*<td><button type="submit" class="btn btn-outline-success btn-sm">View More</button></td>*@
+                                    </tr>
                                         count++;
                                     }
                                 </tbody>
@@ -62,4 +70,8 @@
         </div>
     </div>
 </section>
+
+<script>
+    $("#allTransactionsTable").DataTable();
+</script>
 

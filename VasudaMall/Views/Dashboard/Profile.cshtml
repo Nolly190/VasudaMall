@@ -194,7 +194,7 @@
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody class="notificationTBody">
                                             @foreach (var recentNotification in Model.RecentNotifications)
                                             {
                                                 <tr>
@@ -202,7 +202,24 @@
                                                     <td>@recentNotification.Subject</td>
                                                     <td>@Util.FormatDate(recentNotification.DateCreated)</td>
                                                     <td>@recentNotification.IsRead</td>
-                                                    <td><button type="submit" class="btn btn-outline-success btn-sm">View More</button></td>
+                                                    <td>
+                                                        @if (recentNotification.IsRead)
+                                                        {
+                                                            <button type="button"
+                                                                    class="btn btn-outline-success btn-sm viewMoreNotificationBtn"
+                                                                    data-id="@recentNotification.Id">
+                                                                View More
+                                                            </button>
+                                                        }
+                                                        else
+                                                        {
+                                                            <button type="button"
+                                                                    class="btn btn-outline-danger btn-sm viewMoreNotificationBtn"
+                                                                    data-id="@recentNotification.Id">
+                                                                View More
+                                                            </button>
+                                                        }
+                                                    </td>
                                                 </tr>
                                                 count++;
                                             }
@@ -238,5 +255,7 @@
         $('.select2bs4').select2({
             theme: 'bootstrap4'
         })
-    }
+    });
+
+    $("#recentNotificationTable").DataTable();
 </script>

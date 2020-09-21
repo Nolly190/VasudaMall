@@ -100,7 +100,7 @@
                         }
                         else
                         {
-                            <table id="orderHistoryTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
+                            <table id="domesticItemTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
                                 <thead>
                                     <tr>
                                         <th width="10">S/N</th>
@@ -115,7 +115,7 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="itemTBody">
                                     @foreach (var item in Model.DomesticItems)
                                     {
                                         <tr>
@@ -305,4 +305,8 @@
 </div>
 <!-- /.modal -->
 @*Domestic Item modal end*@
+
+<script>
+    $("#domesticItemTable").DataTable();
+</script>
 

@@ -118,5 +118,40 @@
 
     });
 
-  
+
+    $(".addProductBtn").click(function () {
+
+        $(".Main-loader").show();
+        var id = $(this).data("id");
+        var quantity = $(this).parent().children().find(".productQuantity").val();
+
+        $.ajax({
+            url: "/Item/AddProductItem",
+            type: "Post",
+            data: { id: id, quantity: quantity },
+            error: function (status, xhr) {
+                $(".Main-loader").hide
+                Swal.fire("Please Try Again!")
+            },
+            success: function (result) {
+                if (result.Status === true) {
+                    $(".Main-loader").hide();
+                    $(this).parent().children().find(".productQuantity").val(1);
+                    Swal.fire(result.Message).then(
+                        (result) => {
+                            if (result.value) {
+                                location.reload(true);
+                            }
+                        });
+
+                    return;
+                } else {
+                    $(".Main-loader").hide();
+                    Swal.fire(result.Message);
+                    return;
+                }
+            }
+
+        });
+    })
 });

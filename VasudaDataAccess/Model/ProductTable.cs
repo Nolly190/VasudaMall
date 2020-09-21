@@ -18,6 +18,7 @@ namespace VasudaDataAccess.Model
         public ProductTable()
         {
             this.ImageTables = new HashSet<ImageTable>();
+            this.ItemsTables = new HashSet<ItemsTable>();
         }
     
         public System.Guid Id { get; set; }
@@ -35,5 +36,7 @@ namespace VasudaDataAccess.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ImageTable> ImageTables { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ItemsTable> ItemsTables { get; set; }
     }
 }

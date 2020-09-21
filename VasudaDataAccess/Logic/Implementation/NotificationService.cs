@@ -56,7 +56,7 @@ namespace VasudaDataAccess.Logic.Implementation
             return response;
         }
 
-        public Response<NotificationViewModel> GetAllNotificationsHomePage()
+        public Response<NotificationViewModel> GetAllNotificationsHomePage(string userId)
         {
             var result = new Response<NotificationViewModel>
             {
@@ -70,7 +70,7 @@ namespace VasudaDataAccess.Logic.Implementation
             };
             try
             {
-                model.AllNotifications = _unitOfWork.NotificationTable.GetAll().ToList();
+                model.AllNotifications = _unitOfWork.NotificationTable.GetAll(x => x.UserId == userId).OrderByDescending(x => x.DateCreated).ToList();
                 result.Status = true;
             }
             catch (Exception ex)
@@ -254,6 +254,34 @@ namespace VasudaDataAccess.Logic.Implementation
             }
             return response;
         
+        }
+
+        public Response<NotificationTable> GetUserNotification(string id, string userId)
+        {
+            var response = new Response<NotificationTable>()
+            {
+                Status = false,
+                Message = "Unable to retrieve notification"
+            };
+            try
+            {
+                var payload = new NotificationTable();
+                _unitOfWork._dbContext.Configuration.ProxyCreationEnabled = false;
+                var getNotification = _unitOfWork.NotificationTable.Get(x => x.Id == id && x.UserId == userId);
+
+                payload.Message = getNotification.Message;
+                response.SetResult(payload);
+                response.Status = true;
+
+                getNotification.IsRead = true;
+                _unitOfWork.NotificationTable.Update(getNotification);
+                _unitOfWork.Complete();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+            }
+            return response;
         }
     }
 }

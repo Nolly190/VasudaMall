@@ -21,6 +21,7 @@ namespace VasudaDataAccess.Model
         }
     
         public System.Guid Id { get; set; }
+        public Nullable<System.Guid> ProductId { get; set; }
         public Nullable<System.Guid> ProductTypeId { get; set; }
         public string ProductLink { get; set; }
         public Nullable<System.Guid> VendorId { get; set; }
@@ -29,6 +30,7 @@ namespace VasudaDataAccess.Model
         public Nullable<long> Quantity { get; set; }
         public decimal ItemsPrice { get; set; }
         public decimal TotalPrice { get; set; }
+        public string Title { get; set; }
         public string Description { get; set; }
         public string UserId { get; set; }
         public string Type { get; set; }
@@ -37,7 +39,6 @@ namespace VasudaDataAccess.Model
         public decimal ServicePrice { get; set; }
         public bool IsActive { get; set; }
         public System.DateTime DateCreated { get; set; }
-        public string Title { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual DomesticItemTable DomesticItemTable { get; set; }
@@ -46,5 +47,6 @@ namespace VasudaDataAccess.Model
         public virtual OrderTable OrderTable { get; set; }
         public virtual VendorTable VendorTable { get; set; }
         public virtual ShippingItemTable ShippingItemTable { get; set; }
+        public virtual ProductTable ProductTable { get; set; }
     }
 }

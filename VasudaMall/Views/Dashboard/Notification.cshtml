@@ -1,7 +1,6 @@
 ﻿@model VasudaDataAccess.DTOs.NotificationViewModel
 @using VasudaDataAccess.Utility
 
-
 @{
     Layout = "~/Views/shared/_LayoutDashboard.cshtml";
     ViewBag.Title = "Notification";
@@ -23,37 +22,84 @@
                             <h3 style="text-align:center">NO NOTIFICATION AVAILABLE</h3>
                         }
                         else
-                        { 
+                        {
                             <table id="notificationTable" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
                                 <thead>
                                     <tr>
-                                        <th>S/N</th>
+                                        <th class="tw3">S/N</th>
                                         <th>Subject</th>
                                         <th>Date Published</th>
-                                        <th>Read Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="notificationTBody">
                                     @foreach (var notification in Model.AllNotifications)
                                     {
                                         <tr>
                                             <td>@count</td>
                                             <td>@notification.Subject</td>
                                             <td>@Util.FormatDate(notification.DateCreated)</td>
-                                            <td>@notification.IsRead</td>
-                                            <td><button type="button" id="viewMoreNotificationBtn" class="btn btn-outline-success btn-sm">View More</button></td>
+                                            <td>
+                                                @if (notification.IsRead)
+                                                {
+                                                    <button type="button"
+                                                            class="btn btn-outline-success btn-sm viewMoreNotificationBtn"
+                                                            data-id="@notification.Id">
+                                                        View More
+                                                    </button>
+                                                }
+                                                else
+                                                {
+                                                <button type="button"
+                                                        class="btn btn-outline-danger btn-sm viewMoreNotificationBtn"
+                                                        data-id="@notification.Id">
+                                                    View More
+                                                </button>
+                                                }
+                                            </td>
                                         </tr>
                                         count++;
                                     }
                                 </tbody>
-                            </table>                       
+                            </table>
                         }
-                        </div>
+                    </div>
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
-                </div>
             </div>
         </div>
- </section>
+    </div>
+</section>
+
+@*Notification modal start*@
+
+<div class="modal fade" id="notification-view-more-modal" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Notification</h4>
+                <button type="button" class="btn btn-outline-success btn-sm" data-dismiss="modal" aria-label="Close">
+                    Close
+                </button>
+            </div>
+            <div class="modal-body text-center">
+
+                <div class="row">
+                    <div class="col-12">
+                        <span class="text-muted" id="nMessage"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Notification modal end*@
+
+<script>
+    $(document).ready(function () {
+        $("#notificationTable").DataTable();
+    });
+</script>

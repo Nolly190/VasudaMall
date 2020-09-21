@@ -45,12 +45,14 @@
                                         <th class="tw6">Total Price</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="itemTBody">
                                     @foreach (var item in Model.AllItems)
                                     {
                                         var fpId = "itemFinalpriceCol" + count;
                                         <tr>
-                                            <td><input type="checkbox" class="checkoutItemCheckBtn" data-id="@item.Id" /></td>
+                                            <td>
+                                                <input type="checkbox" class="checkoutItemCheckBtn" data-id="@item.Id" />
+                                            </td>
                                             <td>@item.Title</td>
                                             <td>
                                                 @Util.ReduceDescriptionLength(item.Description)
@@ -134,3 +136,9 @@
 </div>
 
 @*Items to be checked out to order end*@
+
+<script>
+    $(document).ready(function () {
+        $("#checkoutItemTable").DataTable();
+    })
+</script>

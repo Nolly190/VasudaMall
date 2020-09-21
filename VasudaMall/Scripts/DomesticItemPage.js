@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
 
     $("#addDomesticItemBtn").click(function () {
-        if (StartValidation("addDomesticItemForm")) {
+        if (StartValidation("#addDomesticItemForm")) {
             $(".Main-loader").show();
             var domesticItemData = {};
             domesticItemData.SenderName = $("#senderName").val();
@@ -21,6 +21,7 @@
                 data: { model: domesticItemData },
                 error: function (status, xhr) {
                     $(".Main-loader").hide();
+                    Swal.fire("Please Try Again!")
                 },
                 success: function (result) {
                     if (result.Status === true) {
@@ -76,6 +77,7 @@
                     data: { id: id, action: "Accepted" },
                     error: function (status, xhr) {
                         $(".Main-loader").hide();
+                        Swal.fire("Please Try Again!")
                     },
                     success: function (result) {
                         if (result.Status === true) {

@@ -89,6 +89,8 @@ namespace VasudaDataAccess.Utility
                     return "Purchase Order";
                 case PaymentHistoryPurposeEnum.PurchaseAndShippingOrderProcessing:
                     return "Purchase And Shipping Order Processing";
+                case PaymentHistoryPurposeEnum.ProductOrder:
+                    return "Product Order";
                 default:
                     return "N/A";
             }

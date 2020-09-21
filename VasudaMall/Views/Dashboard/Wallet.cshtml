@@ -1,5 +1,6 @@
 ﻿@model VasudaDataAccess.DTOs.WalletViewModel
 @using VasudaDataAccess.Utility
+@using VasudaDataAccess.Data_Access.Implementation
 @{
     Layout = "~/Views/shared/_LayoutDashboard.cshtml";
     ViewBag.Title = "Wallet";
@@ -355,7 +356,7 @@
                                         <th>Purpose</th>
                                         <th>Date</th>
                                         <th>Status</th>
-                                        <th>Action</th>
+                                        @*<th>Action</th>*@
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -366,11 +367,18 @@
                                         <tr>
                                             <td>@count</td>
                                             <td>@recentTransaction.Amount</td>
-                                            <td>@recentTransaction.TransactionType</td>
+                                            @if (recentTransaction.TransactionType == PaymentHistoryType.Debit.ToString())
+                                            {
+                                                <td style="color:red">@recentTransaction.TransactionType</td>
+                                            }
+                                            else
+                                            {
+                                                <td style="color:forestgreen">@recentTransaction.TransactionType</td>   
+                                            }
                                             <td>@recentTransaction.Purpose</td>
                                             <td>@Util.FormatDate(recentTransaction.DateCreated)</td>
                                             <td>@recentTransaction.Status</td>
-                                            <td><button type="submit" class="btn btn-outline-success btn-sm">View More</button></td>
+                                            @*<td><button type="submit" class="btn btn-outline-success btn-sm">View More</button></td>*@
                                         </tr>
                                         count++;
                                     }
@@ -388,3 +396,8 @@
     </div>
 </section>
 <!--Main Content end-->
+
+<script>
+    $("#recentTransactionsTable").DataTable();
+    $("#withdrawalAccountListTable").DataTable();
+</script>

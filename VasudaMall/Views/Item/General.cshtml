@@ -239,7 +239,7 @@
                                         <th class="tw10">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="itemTBody">
                                     @foreach (var item in Model.GeneralItems)
                                     {
                                         <tr>
@@ -290,3 +290,7 @@
         <!--General item types table end-->
     </div>
 </section>
+
+<script>
+    $("#generalItemsTable").DataTable();
+</script>

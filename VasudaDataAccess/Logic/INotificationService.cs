@@ -11,7 +11,7 @@ namespace VasudaDataAccess.Logic
 {
     public interface INotificationService
     {
-        Response<NotificationViewModel> GetAllNotificationsHomePage();
+        Response<NotificationViewModel> GetAllNotificationsHomePage(string userId);
         Response<string> AddContactUs(ContactTable model);
         Response<AdminNotificationViewModel> AdminGetAllNotifications();
         Response<string> SendMail(MailDTO model);
@@ -19,6 +19,7 @@ namespace VasudaDataAccess.Logic
         Response<List<SupportTable>> GetAllChats(string userId, string sentBy);
         Response<string> SendChats(string userId,string message, string sentBy);
         Response<NotificationTable> GetNotification( string id);
+        Response<NotificationTable> GetUserNotification( string id, string userId);
 
     }
 }

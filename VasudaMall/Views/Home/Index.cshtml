@@ -71,13 +71,29 @@
             @foreach (var item in Model.TopStory)
             {
                 var path = @item?.ImageTables?.FirstOrDefault()?.Path ?? "~/vasuda-template/images/aa.jpg";
-                <div class="p-tab popular">
-                    <div class="p-image topTrend">
-                        <img src="@Url.Content(path)" width="300"/>
-                    </div>
-                    <div class="p-name">@item.Title</div>
-                    <div class="p-price">$ @item.Price</div>
+            <form class="p-tab popular">
+                <div class="p-image topTrend">
+                    <img src="@Url.Content(path)" width="300" />
                 </div>
+                <div class="p-name">@item.Title</div>
+
+                <div class="p-price">
+                    $ @item.Price
+                    <span class="float-right">
+                        Available: @item.Quantity
+                    </span>
+                </div>
+                <div class="form-group row">
+                    <label class="col-3"><b>Quantity: </b></label>
+                    <span>
+                        <input type="number" class="form-control form-control-sm col-4 productQuantity" value="1" min="1" />
+                    </span>
+                </div>
+                <button type="button" data-id="@item.Id" class="btn btn-outline-primary btn-sm float-right mt-0 addProductBtn">
+                    <i class="fas fa-cart-plus fa-lg mr-2"></i>
+                    Add to Checkout
+                </button>
+            </form>
 
             }
         </div>
@@ -136,13 +152,28 @@
             @foreach (var item in Model.Popular)
             {
                 var path = @item?.ImageTables?.FirstOrDefault()?.Path ?? "~/vasuda-template/images/aa.jpg";
-                <div class="p-tab popular">
-                    <div class="p-image">
-                        <img src="@Url.Content(path)" width="300"/>
-                    </div>
-                    <div class="p-name">@item.Title</div>
-                    <div class="p-price">$ @item.Price</div>
+            <form class="p-tab popular">
+                <div class="p-image">
+                    <img src="@Url.Content(path)" width="300" />
                 </div>
+                <div class="p-name">@item.Title</div>
+                <div class="p-price">
+                    $ @item.Price
+                    <span class="float-right">
+                        Available: @item.Quantity
+                    </span>
+                </div>
+                <div class="form-group row">
+                    <label class="col-3"><b>Quantity: </b></label>
+                    <span>
+                        <input type="number" class="form-control form-control-sm col-4 productQuantity" value="1" min="1" />
+                    </span>
+                </div>
+                <button type="button" data-id="@item.Id" class="btn btn-outline-primary btn-sm float-right mt-0 addProductBtn">
+                    <i class="fas fa-cart-plus fa-lg mr-2"></i>
+                    Add to Checkout
+                </button>
+            </form>
 
             }
         </div>

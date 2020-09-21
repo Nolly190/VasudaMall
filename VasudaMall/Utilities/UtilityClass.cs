@@ -59,6 +59,14 @@ namespace VasudaMall.Utilities
         {
             return _unitOfWork.SupportTable.GetAll(x => x.SentBy == "Admin" && !x.IsRead && x.UserId==userId).Count();
         }
+
+        public int UserPendingCheckout(string userId)
+        {
+            return _unitOfWork.ItemsTable.GetAll(
+                        x => x.UserId == userId &&
+                        x.Status == ItemStatus.Pending.ToString() &&
+                        x.IsActive == true).Count();
+        }
     }
 
 }
