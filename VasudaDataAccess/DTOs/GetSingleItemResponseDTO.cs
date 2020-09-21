@@ -12,5 +12,6 @@ namespace VasudaDataAccess.DTOs
         public SingleShippingItemDTO ShippingItem { get; set; }
         public SinglePurchaseAndShippingItemDTO PurchaseAndShippingItem { get; set; }
         public SingleDomesticItemDTO DomesticItem { get; set; }
+        public SingleProductItemDTO ProductItem { get; set; }
     }
 }

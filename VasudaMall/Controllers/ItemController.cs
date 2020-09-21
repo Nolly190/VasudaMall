@@ -104,6 +104,27 @@ namespace VasudaMall.Controllers
         }
 
         [HttpPost]
+        public JsonResult AddProductItem(string id, int quantity)
+        {
+            var response = new Response<string>();
+            if (string.IsNullOrEmpty(id))
+            {
+                response.Message = "Product not found";
+                response.Status = false;
+                return Json(response, JsonRequestBehavior.AllowGet);
+            }
+
+            if (quantity <= 0)
+            {
+                response.Message = "Quantity of product must be at least 1";
+                response.Status = false;
+                return Json(response, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(_orderService.AddProductItem(quantity, id, User.Identity.GetUserId()), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
         public JsonResult DeleteItem(string id)
         {
             var response = new Response<string>();

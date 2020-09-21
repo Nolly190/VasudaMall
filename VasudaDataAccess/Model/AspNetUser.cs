@@ -21,7 +21,6 @@ namespace VasudaDataAccess.Model
             this.AspNetUserLogins = new HashSet<AspNetUserLogin>();
             this.ChatTables = new HashSet<ChatTable>();
             this.FundingRequestTables = new HashSet<FundingRequestTable>();
-            this.ItemsTables = new HashSet<ItemsTable>();
             this.NotificationTables = new HashSet<NotificationTable>();
             this.OrderTables = new HashSet<OrderTable>();
             this.PaymentHistoryTables = new HashSet<PaymentHistoryTable>();
@@ -29,6 +28,7 @@ namespace VasudaDataAccess.Model
             this.WithdrawalDetailsTables = new HashSet<WithdrawalDetailsTable>();
             this.WithdrawalRequestTables = new HashSet<WithdrawalRequestTable>();
             this.AspNetRoles = new HashSet<AspNetRole>();
+            this.ItemsTables = new HashSet<ItemsTable>();
         }
     
         public string Id { get; set; }
@@ -60,8 +60,6 @@ namespace VasudaDataAccess.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FundingRequestTable> FundingRequestTables { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ItemsTable> ItemsTables { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NotificationTable> NotificationTables { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderTable> OrderTables { get; set; }
@@ -75,5 +73,7 @@ namespace VasudaDataAccess.Model
         public virtual ICollection<WithdrawalRequestTable> WithdrawalRequestTables { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ItemsTable> ItemsTables { get; set; }
     }
 }

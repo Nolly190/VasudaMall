@@ -110,7 +110,7 @@
     });
 
     //Delete an item from checkout
-    $(".itemsDeleteBtn").click(function () {
+    $(".itemTBody").on("click", ".itemsDeleteBtn", function () {
 
         Swal.fire({
             title: 'Are you sure you want to delete this item?',
@@ -151,10 +151,11 @@
                 });
             }
         });
-    })
+    });
+
 
     //Get a general item details start
-    $(".itemsViewMoreButton").click(function () {
+    $(".itemTBody").on("click", ".itemsViewMoreButton" ,function () {
         $(".Main-loader").show();
 
         var id = $(this).data('id');
@@ -188,27 +189,29 @@
                         $("#pItemDateCreated").html(pEntity.DateCreated);
                         $('#general-purchase-item-info').modal('show');
                     }
-                    else if (entity.ShippingItem != null && entity.ShippingItem.Type == "Shipping") {
-                        sEntity = entity.ShippingItem;;
-                        sDes = sEntity.Description == null || sEntity.Description.length == 0  ? "N/A" : sEntity.Description;
 
-                        $("#sItemSenderName").html(sEntity.SenderName);
-                        $("#sItemSenderPhoneNumber").html(sEntity.SenderPhoneNumber);
-                        $("#sItemSenderAddress").html(sEntity.SenderAddress);
-                        $("#sTitle").html(sEntity.Title);
-                        $("#sItemDescription").html(sDes);
-                        $("#sItemWeight").html(sEntity.Weight);
-                        $("#sItemQuantity").html(sEntity.Quantity);
-                        $("#sItemServicePrice").html(sEntity.ServicePrice);
-                        $("#sItemTotalPrice").html(sEntity.TotalPrice);
-                        $("#sItemStatus").html(sEntity.Status);
-                        $("#sItemReceiverName").html(sEntity.ReceiverName);
-                        $("#sItemReceiverNumber").html(sEntity.ReceiverNumber);
-                        $("#sItemReceiverAddress").html(sEntity.ReceiverAddress);
-                        $("#sItemDateCreated").html(sEntity.DateCreated);
-                        $('#general-shipping-item-info').modal('show');
-                    }
-                    else if (entity.PurchaseAndShippingItem != null && entity.PurchaseAndShippingItem.Type == "PurchaseAndShipping") {
+                    //if (entity.ShippingItem != null && entity.ShippingItem.Type == "Shipping") {
+                    //    sEntity = entity.ShippingItem;;
+                    //    sDes = sEntity.Description == null || sEntity.Description.length == 0  ? "N/A" : sEntity.Description;
+
+                    //    $("#sItemSenderName").html(sEntity.SenderName);
+                    //    $("#sItemSenderPhoneNumber").html(sEntity.SenderPhoneNumber);
+                    //    $("#sItemSenderAddress").html(sEntity.SenderAddress);
+                    //    $("#sTitle").html(sEntity.Title);
+                    //    $("#sItemDescription").html(sDes);
+                    //    $("#sItemWeight").html(sEntity.Weight);
+                    //    $("#sItemQuantity").html(sEntity.Quantity);
+                    //    $("#sItemServicePrice").html(sEntity.ServicePrice);
+                    //    $("#sItemTotalPrice").html(sEntity.TotalPrice);
+                    //    $("#sItemStatus").html(sEntity.Status);
+                    //    $("#sItemReceiverName").html(sEntity.ReceiverName);
+                    //    $("#sItemReceiverNumber").html(sEntity.ReceiverNumber);
+                    //    $("#sItemReceiverAddress").html(sEntity.ReceiverAddress);
+                    //    $("#sItemDateCreated").html(sEntity.DateCreated);
+                    //    $('#general-shipping-item-info').modal('show');
+                    //}
+
+                    if (entity.PurchaseAndShippingItem != null && entity.PurchaseAndShippingItem.Type == "PurchaseAndShipping") {
                         psEntity = entity.PurchaseAndShippingItem;;
                         psDes = psEntity.Description == null || psEntity.Description.length == 0  ? "N/A" : psEntity.Description;
 
@@ -228,7 +231,8 @@
                         $("#psItemDateCreated").html(psEntity.DateCreated);
                         $('#general-purchase-shipping-item-info').modal('show');
                     }
-                    else if (entity.DomesticItem != null && entity.DomesticItem.Type == "Domestic") {
+
+                    if (entity.DomesticItem != null && entity.DomesticItem.Type == "Domestic") {
                         dEntity = entity.DomesticItem;
                         dDes = dEntity.Description == null || dEntity.Description.length == 0 ? "N/A" : dEntity.Description;
 
@@ -269,6 +273,22 @@
                         $("#dItemDateCreated").html(dEntity.DateCreated);
                         $('#domestic-item-info').modal('show');
                     }
+
+                    if (entity.ProductItem != null && entity.ProductItem.Type == "Product") {
+                        prodEntity = entity.ProductItem;
+                        prodDes = prodEntity.Description == null || prodEntity.Description.length == 0 ? "N/A" : prodEntity.Description;
+
+                        $("#prodItemDescription").html(prodDes);
+                        $("#prodTitle").html(prodEntity.Title);
+                        $("#prodItemUnitPrice").html(prodEntity.UnitPrice);
+                        $("#prodItemQuantity").html(prodEntity.Quantity);
+                        $("#prodItemServicePrice").html(prodEntity.ServicePrice);
+                        $("#prodItemItemPrice").html(prodEntity.ItemPrice);
+                        $("#prodItemTotalPrice").html(prodEntity.TotalPrice);
+                        $("#prodItemStatus").html(prodEntity.Status);
+                        $("#prodItemDateCreated").html(prodEntity.DateCreated);
+                        $('#general-product-item-info').modal('show');
+                    }
                     return;
                 } else {
                     $(".Main-loader").hide();
@@ -278,6 +298,9 @@
             }
         });
     });
+        //Get a general item details end
+
+
     $("#SubmitChat").click(function (data) {
         data.preventDefault();
         if ($("#ChatBox").val() === "" || $("#ChatBox").val() === null) {

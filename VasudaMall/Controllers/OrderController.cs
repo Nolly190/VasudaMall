@@ -54,12 +54,12 @@ namespace VasudaMall.Controllers
             var response = new Response<string>();
             if (string.IsNullOrEmpty(id))
             {
-                response.Message = "Unable to retrieve order....";
+                response.Message = "Unable to retrieve order..";
                 response.Status = false;
                 return Json(response, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(_orderService.GetSingleItem(id, User.Identity.GetUserId()), JsonRequestBehavior.AllowGet);
+            return Json(_orderService.SingleCreatedOrder(id), JsonRequestBehavior.AllowGet);
         }
 
         public string ValidateModelState()
