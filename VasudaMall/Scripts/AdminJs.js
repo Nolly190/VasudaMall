@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     var domesticPriceId = "";
+    var itemsList = "";
     $("#SaveProducts").click(function () {
         if (StartValidation("ProductForm")) {
 
@@ -475,6 +476,8 @@
                     var html = "";
                     var data = $("#OrderItemTable").DataTable();
                     data.rows().remove().draw();
+                    itemsList = "";
+                    itemsList = result._entity.Item;
                     $.each(result._entity.Item,
                         function (index, row) {
                             data.row.add([
@@ -484,7 +487,8 @@
                                 row.Quantity,
                                 row.ItemsPrice,
                                 row.ServicePrice,
-                                row.TotalPrice
+                                row.TotalPrice,
+                                row.OrderType === "Domestic" ? `<input type="button" class="btn btn-primary ViewSupplierInfo" data-id="${row.Id}"  data-type="Supplier" value="Supplier Details" />` : `<input type="button" class="btn btn-primary ViewSupplierInfo" data-id="${row.Id}"  data-type="Website" value="Goto Website" />`
                            ]).draw(false);
                         });
                     var orderInfo = result._entity.Order;
@@ -496,10 +500,25 @@
                     $("#OrderType").text(orderInfo.OrderType);
                     $("#OrderStatus").text(orderInfo.Status);
                     $("#ItemsTableDiv").append(html);
-                    $("#ItemsTableDiv").on(".ViewItem",
-                        "click",
+                    $("#ItemsTableDiv").on("click",".ViewSupplierInfo",
+                        
                         function () {
+                            var id = $(this).data("id");
+                            var type = $(this).data("type");
+                            $.each(itemsList,
+                                function(index,row) {
+                                    if (row.Id === id) {
+                                        if (type === "Supplier") {
+                                            $("#SupName").text(row.SupplierName);
+                                            $("#SupPhone").text(row.SupplierPhone);
+                                            $("#SupAddress").text(row.SupplierAddress);
+                                            $("#ViewSupplierInfo").modal("show");
+                                        } else {
+                                            window.location.replace(row.ProductLink);
+                                        }
 
+                                    }
+                                });
                         });
                     $("#OrderModel").modal("show");
                     return;

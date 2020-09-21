@@ -142,7 +142,7 @@ namespace VasudaDataAccess.Logic.Implementation
                     index = purchaseShippingArray.IndexOf(status);
                     return purchaseShippingArray[index + 1];
                 case "Product":
-                    var productArray = System.Enum.GetNames(typeof(ProductTable)).ToList();
+                    var productArray = System.Enum.GetNames(typeof(ProductOrderStatus)).ToList();
                     index = productArray.IndexOf(status);
                     return productArray[index + 1];
                 default:
@@ -737,8 +737,7 @@ namespace VasudaDataAccess.Logic.Implementation
                     Status = x.Status,
                     UserId = x.UserId,
                     TotalPrice = x.TotalPrice,
-                    TotalServiceCharge = x.TotalServiceCharge
-
+                    TotalServiceCharge = x.TotalServiceCharge,
                 })
                     .SingleOrDefault();
 
@@ -764,6 +763,9 @@ namespace VasudaDataAccess.Logic.Implementation
                     Quantity = x.Quantity,
                     ServicePrice = x.ServicePrice,
                     TotalPrice = x.TotalPrice,
+                    SupplierAddress = x.DomesticItemTable?.SenderAddress,
+                    SupplierName = x.DomesticItemTable?.SenderName,
+                    SupplierPhone = x.DomesticItemTable?.SenderPhoneNumber,
 
                 }).ToList();
 
