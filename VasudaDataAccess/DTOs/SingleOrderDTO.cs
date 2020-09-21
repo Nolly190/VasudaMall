@@ -27,6 +27,10 @@ namespace VasudaDataAccess.DTOs
         public decimal? TotalPrice { get; set; }
         public decimal? ServicePrice { get; set; }
         public Guid Id { get; set; }
+
+        public string SupplierName { get; set; }
+        public string SupplierPhone { get; set; }
+        public string SupplierAddress { get; set; }
     }
      public class OrderItemDTO
     {

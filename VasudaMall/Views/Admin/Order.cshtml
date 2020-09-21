@@ -52,17 +52,17 @@
                                             <tbody class="UnfinishedTbody">
                                                 @foreach (var item in Model.FinishedOrders)
                                                 {
-                                                <tr>
-                                                    <td>@item.TrackingNumber</td>
-                                                    <td>@item.AspNetUser.FullName</td>
-                                                    <td>@item.AspNetUser.Email</td>
-                                                    <td>@item.AspNetUser.Address</td>
-                                                    <td>@item.OrderType</td>
-                                                    <td>@item.TotalPrice</td>
-                                                    <td>@item.Status</td>
-                                                    <td>@item.DateCreated.ToString("f")</td>
-                                                    <td><button data-id="@item.Id" class="btn btn-success ViewOrderItems">View</button> </td>
-                                                </tr>
+                                                    <tr>
+                                                        <td>@item.TrackingNumber</td>
+                                                        <td>@item.AspNetUser.FullName</td>
+                                                        <td>@item.AspNetUser.Email</td>
+                                                        <td>@item.AspNetUser.Address</td>
+                                                        <td>@item.OrderType</td>
+                                                        <td>@item.TotalPrice</td>
+                                                        <td>@item.Status</td>
+                                                        <td>@item.DateCreated.ToString("f")</td>
+                                                        <td><button data-id="@item.Id" class="btn btn-success ViewOrderItems">View</button> </td>
+                                                    </tr>
 
                                                 }
 
@@ -251,7 +251,7 @@
 </div>
 
 <div class="modal fade bd-example-modal-lg" id="OrderModel" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Order</h5>
@@ -278,7 +278,7 @@
                                     <th>Items Price</th>
                                     <th>Service Price</th>
                                     <th>Total Price</th>
-                                    @*<th>Options</th>*@
+                                    <th>Options</th>
                                 </tr>
                             </thead>
                             <tbody id="ItemsTableDiv">
@@ -293,26 +293,30 @@
         </div>
     </div>
 </div>
-
-<div class="modal" tabindex="-1" role="dialog">
+<div class="modal fade" id="ViewSupplierInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">View Supplier</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Modal body text goes here.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label class="col-4">Name:<label id="SupName"></label></label>
+                        <label class="col-3">Phone:<label id="SupPhone"></label></label>
+                        <label class="col-6">Address:<label id="SupAddress"></label></label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+
 <script>
     $(".table").DataTable()
 </script>
