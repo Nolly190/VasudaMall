@@ -1,10 +1,20 @@
 ﻿@{
     ViewBag.Title = "Confirm Email";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+
 }
 
-<h2>@ViewBag.Title.</h2>
-<div>
-    <p>
-        Thank you for confirming your email. Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
-    </p>
-</div>
+<section class="row">
+    <div class="slide">
+        <div class="overlay2"></div>
+        <div class="animated fadeInUp overlay-title" id="title2" style="color:#ccc">
+            <b>Email Confirmation</b>
+        </div>
+        <div class="col-lg-5 message-form">
+            <p>
+                Thank you for confirming your email. Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+            </p>
+        </div>
+        <img src="~/vasuda-template/images/mv.jpg" />
+    </div>
+</section>
