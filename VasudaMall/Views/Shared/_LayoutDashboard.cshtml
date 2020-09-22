@@ -18,6 +18,21 @@
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
+    <link rel="stylesheet" href="~/admin-lte/plugins/fontawesome-free/css/all.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/admin-lte/plugins/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/admin-lte/plugins/jqvmap/jqvmap.min.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/admin-lte/plugins/daterangepicker/daterangepicker.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/admin-lte/plugins/summernote/summernote-bs4.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/admin-lte/plugins/select2/css/select2.min.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/admin-lte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/admin-lte/dist/css/adminlte.min.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/Content/spinner.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/Content/Site.css" type="text/css" media="all" />
+
+    @Scripts.Render("~/bundles/modernizr")
+
     @*Chat template
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
@@ -29,10 +44,8 @@
     <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-    @Styles.Render("~/admin-lte/css")
-    @Scripts.Render("~/bundles/modernizr")
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini layout-fixed py-0">
     <div class="wrapper">
 
         <!-- Navbar -->
@@ -83,7 +96,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href=@Url.Action("Index", "Dashboard") class="brand-link">
+            <a href=@Url.Action("Index", "Dashboard") class="brand-link" style="padding: 11% 0">
                 <img src="~/vasuda-template/images/logo2.png" alt="Vasuda Logo" class="brand-image elevation-3"
                      style="opacity: .8;height:16px">
                 <span class="brand-text font-weight-light"></span>
@@ -92,7 +105,7 @@
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="user-panel mt-3 d-flex">
                     <div class="info">
                         <a href="#" class="d-block">@User.Identity.Name</a>
                     </div>

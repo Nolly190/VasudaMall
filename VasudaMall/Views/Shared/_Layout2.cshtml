@@ -8,8 +8,19 @@
     <title>@ViewBag.Title - Vasuda</title>
 
     <!-- Bootstrap CSS -->
-    @Styles.Render("~/vasuda-template/css")
+
     @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="~/vasuda-template/css/bootstrap.min.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/vasuda-template/css/bootstrap-grid.min.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/vasuda-template/css/index.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/vasuda-template/css/animate.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/vasuda-template/css/animate.min.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/vasuda-template/css/animated-slider.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/vasuda-template/css/owl.carousel.min.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/vasuda-template/css/owl.theme.default.min.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/vasuda-template/css/simple.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/Content/spinner.css" type="text/css" media="all" />
+
     <link rel="stylesheet" href="~/vasuda-template/css/skitter.css" type="text/css" media="all" />
     <link rel="shortcut icon" href="favicon.ico" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -27,12 +38,6 @@
         </ul>
         <hr />
         <ul style="list-style-type:none">
-            @*<a href=@Url.Action("Index", "Home")><li><i class="fas fa-home" aria-hidden="true"></i> &nbsp;  &nbsp; Home</li></a>
-            <a href=@Url.Action("About", "Home")><li><i class="fas fa-clipboard"></i> &nbsp;  &nbsp; About-Us</li></a>
-            <a href="services.html"><li><i class="fas fa-cog" aria-hidden="true"></i> &nbsp;  &nbsp; Services</li></a>
-            <a href="portfolio.html"><li><i class="fas fa-clipboard" aria-hidden="true"></i> &nbsp;  &nbsp; Portfolio</li></a>
-            <a href="team.html"><li><i class="fas fa-users" aria-hidden="true"></i> &nbsp;  &nbsp; Team</li></a>
-            <a href=@Url.Action("Contact", "Home")><li><i class="fas fa-phone" aria-hidden="true"></i> &nbsp;  &nbsp; Contact-Us</li></a>*@
             <a href=@Url.Action("Index", "Home")><li><i class="fas fa-home" aria-hidden="true"></i> &nbsp; &nbsp; Home</li></a>
             <a href=@Url.Action("About", "Home")><li><i class="fas fa-clipboard"></i> &nbsp; &nbsp; About-Us</li></a>
             <a href="@Url.Action("Services", "Home")"><li><i class="fas fa-cog" aria-hidden="true"></i> &nbsp; &nbsp; Services</li></a>
