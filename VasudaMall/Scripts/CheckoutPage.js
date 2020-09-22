@@ -15,7 +15,7 @@
     $("input[type='checkbox'].checkoutItemCheckBtn").change(function () {
         var a = $("input[type='checkbox'].checkoutItemCheckBtn");
 
-        if (a.length == a.filter(":checked").length) {
+        if (a.length === a.filter(":checked").length) {
             $('.checkoutAllItemCheckBtn').prop('checked', true);
         }
         else {
@@ -42,7 +42,7 @@
         $('#checkoutItemTable input[type=checkbox]:checked').each(function () {
 
             var id = $(this).data('id');
-            if (id != null || id != undefined) {
+            if (id !== null || id !== undefined) {
                 var row = $(this).closest("tr")[0];
                 var price = row.cells[10].innerHTML;
                 var title = row.cells[1].innerHTML
@@ -172,9 +172,9 @@
                     $(".Main-loader").hide();
                     entity = result._entity;
 
-                    if (entity.PurchaseItem != null && entity.PurchaseItem.Type == "Purchase") {
+                    if (entity.PurchaseItem !== null && entity.PurchaseItem.Type === "Purchase") {
                         pEntity = entity.PurchaseItem;
-                        pDes = pEntity.Description == null || pEntity.Description.length == 0  ? "N/A" : pEntity.Description;
+                        pDes = pEntity.Description === null || pEntity.Description.length === 0  ? "N/A" : pEntity.Description;
 
                         $("#pItemDescription").html(pDes);
                         $("#pTitle").html(pEntity.Title);
@@ -211,9 +211,9 @@
                     //    $('#general-shipping-item-info').modal('show');
                     //}
 
-                    if (entity.PurchaseAndShippingItem != null && entity.PurchaseAndShippingItem.Type == "PurchaseAndShipping") {
+                    if (entity.PurchaseAndShippingItem !== null && entity.PurchaseAndShippingItem.Type === "PurchaseAndShipping") {
                         psEntity = entity.PurchaseAndShippingItem;;
-                        psDes = psEntity.Description == null || psEntity.Description.length == 0  ? "N/A" : psEntity.Description;
+                        psDes = psEntity.Description === null || psEntity.Description.length === 0  ? "N/A" : psEntity.Description;
 
                         $("#psItemDescription").html(psDes);
                         $("#psTitle").html(psEntity.Title);
@@ -232,23 +232,23 @@
                         $('#general-purchase-shipping-item-info').modal('show');
                     }
 
-                    if (entity.DomesticItem != null && entity.DomesticItem.Type == "Domestic") {
+                    if (entity.DomesticItem !== null && entity.DomesticItem.Type === "Domestic") {
                         dEntity = entity.DomesticItem;
-                        dDes = dEntity.Description == null || dEntity.Description.length == 0 ? "N/A" : dEntity.Description;
+                        dDes = dEntity.Description === null || dEntity.Description.length === 0 ? "N/A" : dEntity.Description;
 
-                        if (dEntity.Status == "Awaiting User Acceptance")
+                        if (dEntity.Status === "Awaiting User Acceptance")
                         {
                             $('#acceptDomesticItemModalBtn').css('display', 'inline-block');
                             $('#rejectDomesticItemModalBtn').css('display', 'inline-block');
 
                             $('#collectId').html(id);
                         }
-                        else if (dEntity.Status == "Rejected Quotation") {
+                        else if (dEntity.Status === "Rejected Quotation") {
                             $('#acceptDomesticItemModalBtn').css('display', 'inline-block');
 
                             $('#collectId').html(id);
                         }
-                        else if (dEntity.Status == "Awaiting Shipping Payment") {
+                        else if (dEntity.Status === "Awaiting Shipping Payment") {
                             $('#acceptShippingPaymentModalBtn').css('display', 'inline-block');
 
                             $('#collectId').html(id);
@@ -274,9 +274,9 @@
                         $('#domestic-item-info').modal('show');
                     }
 
-                    if (entity.ProductItem != null && entity.ProductItem.Type == "Product") {
+                    if (entity.ProductItem !== null && entity.ProductItem.Type === "Product") {
                         prodEntity = entity.ProductItem;
-                        prodDes = prodEntity.Description == null || prodEntity.Description.length == 0 ? "N/A" : prodEntity.Description;
+                        prodDes = prodEntity.Description === null || prodEntity.Description.length === 0 ? "N/A" : prodEntity.Description;
 
                         $("#prodItemDescription").html(prodDes);
                         $("#prodTitle").html(prodEntity.Title);
