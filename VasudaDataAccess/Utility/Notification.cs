@@ -100,7 +100,7 @@ namespace VasudaDataAccess.Utility
 		<div class='email-body'>
 			<div class='email-wrapper'>
 				<div class='logo'>
-					<img src='images/logo2.png' />
+					<img src='https://vasudamall.com/vasuda-template/images/logo2.png' />
 				</div>
 				<div class='email-text'>
 					<div class='newstab'>
