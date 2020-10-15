@@ -18,10 +18,25 @@
                 var img = string.IsNullOrEmpty(item.ImageTables?.FirstOrDefault()?.Path) ? "~/Content/images/aa.jpg"  :item.ImageTables?.FirstOrDefault()?.Path;
                 <div class="p-tab">
                     <div class="p-image">
-                        <img src="@img"/>
+                        <img src="@Url.Content(img)"/>
                     </div>
                     <div class="p-name">@item.Title</div>
-                    <div class="p-price">₦ @item.Price</div>
+                    <div class="p-price">
+                        $ @item.Price
+                        <span class="float-right">
+                            Available: @item.Quantity
+                        </span>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3"><b>Quantity: </b></label>
+                        <span>
+                            <input type="number" class="form-control form-control-sm col-4 productQuantity" value="1" min="1" />
+                        </span>
+                    </div>
+                    <button type="button" data-id="@item.Id" class="btn btn-outline-primary btn-sm float-right mt-0 addProductBtn">
+                        <i class="fas fa-cart-plus fa-lg mr-2"></i>
+                        Add to Checkout
+                    </button>
                 </div>
             }
 

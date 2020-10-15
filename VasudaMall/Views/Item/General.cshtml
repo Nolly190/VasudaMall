@@ -28,7 +28,7 @@
                     <div class="card-header p-0 border-bottom-0">
                         <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="purchase-item-tab" data-toggle="pill" href="#purchase-item" role="tab" aria-controls="custom-tabs-four-home" aria-selected="true"><i class="fas fa-key d-md-none"></i><span class="d-none d-md-inline">PURCHASE</span></a>
+                                <a class="nav-link active" id="purchase-item-tab" data-toggle="pill" href="#purchase-item" role="tab" aria-controls="custom-tabs-four-home" aria-selected="true"><i class="fas fa-key d-md-none"></i><span class="d-none d-md-inline">PURCHASE ONLY</span></a>
                             </li>
                             @*<li class="nav-item">
                                 <a class="nav-link" id="shipping-item-tab" data-toggle="pill" href="#shipping-item" role="tab" aria-controls="custom-tabs-four-profile" aria-selected="false"><i class="fas fa-wallet d-md-none"></i><span class="d-none d-md-inline">SHIPPING</span></a>
@@ -179,17 +179,17 @@
                                                 <input type="text" class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Quantity" id="spoQuantity" placeholder="Enter the quantity of product" required>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="spoReceiverName" class="col-sm-12 col-md-2">Receiver Name</label>
+                                                <label for="spoReceiverName" class="col-sm-12 col-md-2">Vendor Name</label>
                                                 <input type="text" class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Receiver Name" id="spoReceiverName" placeholder="Receiver Name" required />
                                             </div>
                                             <div class="form-group row">
-                                                <label for="spoReceiverPhoneNumber" class="col-sm-12 col-md-2">Receiver Phone Number</label>
+                                                <label for="spoReceiverPhoneNumber" class="col-sm-12 col-md-2">Vendor Phone Number</label>
                                                 <input type="text" class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Receiver Phone Number" id="spoReceiverPhoneNumber" placeholder="Receiver Phone Number" required />
                                             </div>
-                                            <div class="form-group row">
+                                            @*<div class="form-group row">
                                                 <label for="spoReceiverAddress" class="col-sm-12 col-md-2">Receiver Address</label>
                                                 <input type="text" class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Receiver Address" id="spoReceiverAddress" placeholder="Receiver Address" required />
-                                            </div>
+                                            </div>*@
                                             <div class="form-group row">
                                                 <button type="button" class="btn btn-info" id="addShippingAndPurchaseItemButton">Add Shipping And Purchase Item</button>
                                             </div>

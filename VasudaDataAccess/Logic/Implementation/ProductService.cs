@@ -171,7 +171,7 @@ namespace VasudaDataAccess.Logic.Implementation
             try
             {
                 var check = _unitOfWork.CategoryTable.Get(x =>
-                    string.Equals(x.CategoryName.ToLower(), model.CategoryName.ToLower()));
+                    string.Equals(x.CategoryName.ToLower(), model.CategoryName.ToLower()) && !x.IsActive);
                 if (check!=null)
                 {
                     response.Message = "Category already exists";

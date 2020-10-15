@@ -11,6 +11,7 @@ namespace VasudaDataAccess.Logic
   public interface IOrderService
     {
         Response<ReportDTO> GetHomeReport();
+        Response<ReportDTO> GetHomeReport(string userId);
         Response<OrderItemDTO> GetOrderItems(string orderId);
         Response<string> PriceQuote (string id,decimal amount);
         Response<AdminOrderDto> GetAllOrderInfo();
