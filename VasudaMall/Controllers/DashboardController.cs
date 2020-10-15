@@ -23,11 +23,13 @@ namespace VasudaMall.Controllers
         private IProfileService _profileService;
         private INotificationService _notificationService;
         private IPaymentService _paymentService;
+        private IOrderService _orderService;
 
-        public DashboardController(IWalletService walletService, IProfileService profileService, IPaymentService paymentService)
+        public DashboardController(IOrderService orderService,IWalletService walletService, IProfileService profileService, IPaymentService paymentService)
         {
             _walletService = walletService;
             _profileService = profileService;
+            _orderService = orderService;
             _notificationService = new NotificationService(new UnitOfWork(new VasudaModel()));
             _paymentService = paymentService;
         }
@@ -40,7 +42,7 @@ namespace VasudaMall.Controllers
             //HtmlDocument doc = web.Load("https://campaign.aliexpress.com/wow/gf/newarrivals20201/index?spm=a2g0o.home.16001.2.3f6b2145E9mZZX&wh_weex=true&wx_navbar_hidden=true&wx_navbar_transparent=true&ignoreNavigationBar=true&wx_statusbar_hidden=true&productIds=4001032200037");
             //HtmlNode TitleNode = doc.DocumentNode.CssSelect(".site-footer").First();
 
-            return View();
+            return View(_orderService.GetHomeReport(User.Identity.GetUserId()).Result());
         }
 
         [HttpPost]

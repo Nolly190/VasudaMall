@@ -116,12 +116,11 @@ namespace VasudaDataAccess.Utility
 			<div class='foot'>
 				<div class='foot1'><span class='foot1-text'><a href='#'>Help Center</a></span> . <span class='foot1-text'><a href='#'>Support 24/7</a></span> . <span class='foot1-text'><a href='#'>Account</a></span></div>
 				<div class='foot2'>Copyright &copy; 2020 . All Rights Reserved. We appreciate you!</div>
-				<div class='foot3'>support@vasudamall.com <span style='color:#999'>|</span> 0800 330 0000</div>
+				<div class='foot3'>info@vasudamall.com <span style='color:#999'>|</span> 09064132571</div>
 				<div class='foot4'>
-					<a href='#'><i class='fab fa-instagram' aria-hidden='true'></i> </a>
-					<a href='#'><i class='fab fa-facebook' aria-hidden='true'></i> </a> 
-					<a href='#'><i class='fab fa-twitter' aria-hidden='true'></i> </a>
-					<a href='#'><i class='fab fa-google-plus-g' aria-hidden='true'></i>  </a>
+					<a target='_blank' href='https://www.instagram.com/vasudamall/'><i class='fab fa-instagram' aria-hidden='true'></i> </a>
+					<a target='_blank' href='https://www.facebook.com/Vasudamall/'><i class='fab fa-facebook' aria-hidden='true'></i> </a> 
+					<a target='_blank' href='https://mobile.twitter.com/Vasudamall'><i class='fab fa-twitter' aria-hidden='true'></i> </a>
 				</div>
 				<div class='foot3'><a href='#'>Preferences</a> <span style='color:#999'>|</span> <a href='#'>Forward</a> 
 			</div>

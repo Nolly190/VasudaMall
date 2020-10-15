@@ -116,6 +116,14 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
 
+                        <li class="nav-item">
+                            <a href=@Url.Action("Index", "Dashboard") class="nav-link">
+                                <i class="nav-icon fa fa-credit-card"></i>
+                                <p>
+                                    Home
+                                </p>
+                            </a>
+                        </li>
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-cart-plus"></i>
@@ -128,7 +136,7 @@
                                 <li class="nav-item">
                                     <a href="@Url.Action("Domestic","Item")" class="nav-link">
                                         <i class="nav-icon fas fa-plus"></i>
-                                        <p>Domestic</p>
+                                        <p>Shipping Only</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -468,27 +476,27 @@
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
                             <p>
-                                <strong>Receiver Name: </strong>
+                                <strong>Vendor Name: </strong>
                                 <span class="text-muted" id="sItemReceiverName"></span>
                             </p>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <p>
-                                <strong>Receiver PhoneNumber: </strong>
+                                <strong>Vendor PhoneNumber: </strong>
                                 <span class="text-muted" id="sItemReceiverNumber"></span>
                             </p>
                         </div>
                     </div>
                     <hr />
 
-                    <div class="row">
+                    @*<div class="row">
                         <div class="col-12">
                             <p>
                                 <strong>Receiver Address: </strong>
                                 <span class="text-muted" id="sItemReceiverAddress"></span>
                             </p>
                         </div>
-                    </div>
+                    </div>*@
                     <hr />
 
                     <div class="row">
@@ -541,13 +549,13 @@
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
                             <p>
-                                <strong>Receiver Name: </strong>
+                                <strong>Vendor Name: </strong>
                                 <span class="text-muted" id="psItemReceiverName"></span>
                             </p>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <p>
-                                <strong>Receiver PhoneNumber: </strong>
+                                <strong>Vendor PhoneNumber: </strong>
                                 <span class="text-muted" id="psItemReceiverNumber"></span>
                             </p>
                         </div>
@@ -557,7 +565,7 @@
                     <div class="row">
                         <div class="col-12">
                             <p>
-                                <strong>Receiver Address: </strong>
+                                <strong>vendor Address: </strong>
                                 <span class="text-muted" id="psItemReceiverAddress"></span>
                             </p>
                         </div>

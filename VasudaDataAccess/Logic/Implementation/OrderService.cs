@@ -1347,6 +1347,33 @@ namespace VasudaDataAccess.Logic.Implementation
             return response;
         }
 
+        public Response<ReportDTO> GetHomeReport(string userId)
+        {
+            var response = new Response<ReportDTO>()
+            {
+                Message = "Unable to retrieve order..",
+                Status = false
+            };
+
+            try
+            {
+                var model = new ReportDTO();
+                var allOrders = _unitOfWork.OrderTable.GetAll(x=>x.UserId == userId);
+                model.AllOrders = allOrders.Count();
+                model.CompletedOrder = allOrders.Count(x => x.IsCompleted);
+                model.PendingOrder = allOrders.Count(x => !x.IsCompleted);
+                model.Wallet = _unitOfWork.AspNetUser.Get(x => x.Id == userId)?.Balance;
+                response.Status = true;
+                response.Message = "Retrieved successfully";
+                response.SetResult(model);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+            }
+
+            return response;
+        }
         public Response<ReportDTO> GetHomeReport()
         {
             var response = new Response<ReportDTO>()

@@ -14,7 +14,7 @@ body a:hover{text-decoration:none;}
 .navmenu select{background:none;padding:5px;margin-left:7%;border:none;color:#ccc;font-size:1.1em;}
 .navmenu option{color:#444;}
 .navmob{min-width:110%;}
-.slide{width:100vw;height:700px;overflow:hidden;}
+.slide{width:100vw;height:100vh;overflow:hidden;}
 .slide2{width:100vw;height:400px;overflow:hidden;}
 .slide3{width:100vw;height:250px;overflow:hidden;}
 .slide img{width:100vw;}
@@ -73,10 +73,16 @@ footer{background:#000;padding-top:20px;margin-top:;bottom:0;border-top:;min-wid
 .copy{font-size:0.9em;}
 .rider{font-size:1.5em;margin-left:3%;color:#000;width:40%;margin-top:;-vendor-animation-duration: 5s; -vendor-animation-delay: 3s;text-align:;}
 #title{font-size:3.5em;margin-top:-30%;margin-left:3%;color:#f5f5f5;font-family:;text-align:;-vendor-animation-duration: 17s;-vendor-animation-iteration-count: infinite;display:}
+.panel li{list-style-type:none;margin-bottom:15px;font-size:1.1em;color:#000;}
+.panel ul{margin-top:20%;}
 
 @media screen and (max-width:480px){
 .noham,.slide2{display:none;}
+.header{width:105%;padding-right:5%;opacity:1;}
 .slide{max-height:100vh;}
+.skitter{max-height:auto;}
+.slide img{max-height:60%;margin-top:75px;}
+.mv{margin-top:-30%;}
 footer{text-align:center;}
 .contact-form{width:80%;margin-left:10%;}
 .rider{font-size:1em;margin-left:3%;color:#fff;width:60%;margin-top:;-vendor-animation-duration: 5s; -vendor-animation-delay: 3s;text-align:;}
@@ -94,10 +100,16 @@ footer{text-align:center;}
 .page-tab-wrapper{width:90%;margin-left:5%;}
 .oc{padding-top:15%;}
 .cat-tab .store-name{margin-top:20%;}
+.loginlogo img{height:20px;margin-left:100%;}
+.logintitle{margin-left:10%;text-align:center;}
+.loginform{margin-top:45%;width:95%}
+.overlay2{height:100vh;}
 }
 @media screen and (min-width:481px) and (max-width:575px){
 .noham,.slide2{display:none;}
+.header{width:105%;padding-right:5%;}
 .slide{max-height:100vh;}
+.slide img{max-height:90%;margin-top:75px;}
 .p-tab{width:40%;margin-left:6%;}
 .section-title{text-align:center;}
 footer{text-align:center;}
@@ -116,6 +128,10 @@ footer{text-align:center;}
 .page-tab-wrapper{width:90%;margin-left:5%;}
 .cat-tab{width:50%;}
 .oc{padding-top:12%;}
+.loginlogo img{height:25px;margin-left:100%;}
+.loginform{margin-top:35%;width:90%}
+.overlay2{height:100vh;}
+.overlay-title{margin-top:10%}
 }
 @media screen and (min-width:576px) and (max-width:767px){
 .noham,.slide2{display:none;}
@@ -138,6 +154,11 @@ footer{text-align:center;}
 .page-tab-wrapper{width:90%;margin-left:5%;}
 .cat-tab{width:50%}
 .oc{padding-top:10%;}
+.loginlogo img{height:30px;margin-left:100%;}
+.loginform{margin-top:35%;width:70%}
+.overlay2{height:100vh;}
+.overlay-title{margin-top:10%}
+.btn{width:45%; margin-left:5%;}
 }
 @media screen and (min-width:768px) and (max-width:991px){
 .noham,.slide2{display:none;}
@@ -159,6 +180,10 @@ footer{text-align:center;}
 .page-tab-wrapper{width:90%;margin-left:5%;}
 .cat-tab{width:25%;}
 .oc{padding-top:5%;}
+.loginlogo img{height:30px;margin-left:100%;}
+.loginform{margin-top:25%;width:70%}
+.btn{width:45%; margin-left:5%;}
+.overlay2{height:100vh;}
 }
 @media screen and (min-width:992px) and (max-width:1199px){
 .hams{display:none;}
@@ -171,6 +196,7 @@ footer{text-align:center;}
 .rider2{margin-top:18%;font-size:1.2em;}
 .message-form{margin-top:25%;}
 .cat-tab{font-size:0.9em;}
+.overlay-title{margin-top:15%}
 }
 @media screen and (min-width:1200px) and (max-width:1380px){
 .hams{display:none;}

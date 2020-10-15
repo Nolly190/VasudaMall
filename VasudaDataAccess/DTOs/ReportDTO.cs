@@ -14,6 +14,8 @@ namespace VasudaDataAccess.DTOs
         public long NewUsers { get; set; }
         public long UnconfirmedUsers { get; set; }
         public long CompletedOrder { get; set; }
+        public long PendingOrder { get; set; }
+        public decimal? Wallet { get; set; }
         public long NewNotification { get; set; }
     }
 }

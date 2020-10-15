@@ -275,6 +275,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\chat.css" />
+    <Content Include="Content\images\Slider1.jpg" />
+    <Content Include="Content\images\Slider2.jpg" />
     <Content Include="Content\Main.css" />
     <Content Include="Content\ChatBox.css" />
     <Content Include="Content\chatting.css" />
@@ -2258,11 +2260,14 @@
     <Content Include="vasuda-template\fonts\mor.ttf" />
     <Content Include="vasuda-template\images\aa.jpg" />
     <Content Include="vasuda-template\images\cc.jpg" />
+    <Content Include="vasuda-template\images\login.jpg" />
     <Content Include="vasuda-template\images\logo.png" />
     <Content Include="vasuda-template\images\logo2.png" />
     <Content Include="vasuda-template\images\mp.jpg" />
     <Content Include="vasuda-template\images\mv.jpg" />
     <Content Include="vasuda-template\images\sg.jpg" />
+    <Content Include="vasuda-template\images\Slider1.jpg" />
+    <Content Include="vasuda-template\images\Slider2.jpg" />
     <Content Include="vasuda-template\images\style.jpg" />
     <Content Include="vasuda-template\images\tl.jpg" />
     <Content Include="vasuda-template\js\bigSlide.js" />
@@ -2432,7 +2437,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>63846</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44312/</IISUrl>
+          <IISUrl>http://localhost:63846/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>https://vasudamall.com</CustomServerUrl>

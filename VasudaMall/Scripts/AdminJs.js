@@ -71,6 +71,8 @@
                     if (result.Status === true) {
                         Swal.fire('Successfully Created');
                         $("#CatName").val("");
+
+                        window.setTimeout(function () { location.reload(); }, 3000);
                         return;
                     }
                     Swal.fire(result.Message);
@@ -254,6 +256,7 @@
                     if (result._entity.length > 0) {
                         $("#subCatDropDown").show();
                         $("#ProdSubCate").attr("data-formname", "SubCategory");
+                        $("#ProdSubCate").empty();
                         $("#ProdSubCate").append(html);
                         $("#ProdSubCate").attr("Required", "true");
                     } else {
