@@ -186,7 +186,7 @@
                 amount: amt,
                 currency: "NGN",
                 payment_options: "card, mobilemoneyghana, ussd",
-                redirect_url: "https://localhost:44312/Payment",
+                redirect_url: "https://vasudamall.com/Payment",
                 customer: {
                     email: customerEmail,
                     phone_number: phone,

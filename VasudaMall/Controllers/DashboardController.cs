@@ -16,7 +16,7 @@ using VasudaDataAccess.Provider;
 
 namespace VasudaMall.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class DashboardController : Controller
     {
         private IWalletService _walletService;

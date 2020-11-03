@@ -45,8 +45,29 @@
             <a href=@Url.Action("Contact", "Home")><li><i class="fas fa-phone" aria-hidden="true"></i> &nbsp; &nbsp; Contact-Us</li></a>
             @if (User.Identity.IsAuthenticated)
             {
-                <a href=@Url.Action("Index", "Dashboard")><li><i class="fas fa-phone" aria-hidden="true"></i> &nbsp; &nbsp; Dashboard</li></a>
+                <a href=@Url.Action("Index", "Dashboard")><li><i class="fas fa-home" aria-hidden="true"></i> &nbsp; &nbsp; Dashboard</li></a>
             }
+
+            @if (!User.Identity.IsAuthenticated)
+            {
+
+                <a href=@Url.Action("Login", "Account")><li><i class="fas fa-user" aria-hidden="true"></i> &nbsp; &nbsp;Login</li></a>
+            }
+            else
+            {
+                <a href=@Url.Action("LogOff", "Account")><li><i class="fas fa-user" aria-hidden="true"></i> &nbsp; &nbsp;Log Out</li></a>
+                <a href="@Url.Action("Checkout", "Order")">
+                    <i class="fas fa-shopping-cart" aria-hidden="true"></i> &nbsp; &nbsp;Cart
+                    @{
+                        var checkoutCount1 = new UtilityClass().UserPendingCheckout(User.Identity.GetUserId());
+                        if (checkoutCount1 > 0)
+                        {
+                            <span class="badge badge-info navbar-badge">@checkoutCount1</span>
+                        }
+                    }
+                </a>
+            }
+ 
         </ul>
 
     </nav>
