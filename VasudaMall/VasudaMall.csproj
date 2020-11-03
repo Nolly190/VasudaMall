@@ -2260,6 +2260,7 @@
     <Content Include="vasuda-template\fonts\mor.ttf" />
     <Content Include="vasuda-template\images\aa.jpg" />
     <Content Include="vasuda-template\images\cc.jpg" />
+    <Content Include="vasuda-template\images\contactPage.jpg" />
     <Content Include="vasuda-template\images\login.jpg" />
     <Content Include="vasuda-template\images\logo.png" />
     <Content Include="vasuda-template\images\logo2.png" />
@@ -2433,13 +2434,13 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>63846</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:63846/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
+          <UseCustomServer>True</UseCustomServer>
           <CustomServerUrl>https://vasudamall.com</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
