@@ -9,8 +9,8 @@ namespace VasudaDataAccess.DTOs
 {
     public class AddPurchaseAndShippingItemViewModel
     {
-        [Required(ErrorMessage = "Vendor name is required")]
-        public string VendorName { get; set; }
+        [Required(ErrorMessage = "Vendor website is required")]
+        public string VendorWebsite { get; set; }
 
         [Required(ErrorMessage = "Product link is required")]
         public string ProductLink { get; set; }
@@ -27,13 +27,19 @@ namespace VasudaDataAccess.DTOs
         [Required(ErrorMessage = "Unit price is required")]
         public decimal UnitPrice { get; set; }
         
-        [Required(ErrorMessage = "Receiver name is required")]
-        public string ReceiverName { get; set; }
+        [Required(ErrorMessage = "Vendor name is required")]
+        public string VendorName { get; set; }
 
-        [Required(ErrorMessage = "Receiver phone number is required")]
-        public string ReceiverPhoneNumber { get; set; }
+        [Required(ErrorMessage = "Vendor phone number is required")]
+        public string VendorPhoneNumber { get; set; }
 
-        [Required(ErrorMessage = "Receiver address is required")]
-        public string ReceiverAddress { get; set; }
+        //[Required(ErrorMessage = "Receiver name is required")]
+        //public string ReceiverName { get; set; }
+
+        //[Required(ErrorMessage = "Receiver phone number is required")]
+        //public string ReceiverPhoneNumber { get; set; }
+
+        //[Required(ErrorMessage = "Receiver address is required")]
+        //public string ReceiverAddress { get; set; }
     }
 }

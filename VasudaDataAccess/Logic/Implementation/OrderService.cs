@@ -270,6 +270,9 @@ namespace VasudaDataAccess.Logic.Implementation
 
             try
             {
+                //we will be using what ever value set in serviceCharge col as the amount for local shipping..
+                var localShippingCost = _unitOfWork.SettingTable.GetSystemSetting().ServiceCharge;
+
                 var itemModel = new ItemsTable()
                 {
                     Id = Guid.NewGuid(),
@@ -282,7 +285,7 @@ namespace VasudaDataAccess.Logic.Implementation
                     UnitPrice = 0,
                     ItemsPrice = 0,
                     TotalPrice = 0,
-                    ServicePrice = 0,
+                    ServicePrice = localShippingCost.Value,
                     DateCreated = DateTime.Now
                 };
 
@@ -325,6 +328,9 @@ namespace VasudaDataAccess.Logic.Implementation
 
             try
             {
+                //we will be using what ever value set in serviceCharge col as the amount for local shipping..
+                var localShippingCost = _unitOfWork.SettingTable.GetSystemSetting().ServiceCharge;
+
                 var itemModel = new ItemsTable()
                 {
                     Id = Guid.NewGuid(),
@@ -337,7 +343,7 @@ namespace VasudaDataAccess.Logic.Implementation
                     UnitPrice = 0,
                     ItemsPrice = 0,
                     TotalPrice = 0,
-                    ServicePrice = 0,
+                    ServicePrice = localShippingCost.Value,
                     DateCreated = DateTime.Now
                 };
 
@@ -379,8 +385,11 @@ namespace VasudaDataAccess.Logic.Implementation
 
             try
             {
+                //we will be using what ever value set in serviceCharge col as the amount for local shipping..
+                var localShippingCost = _unitOfWork.SettingTable.GetSystemSetting().ServiceCharge;
+
                 var totalPrice = model.UnitPrice * model.Quantity;
-                var serviceCharge = totalPrice * Convert.ToDecimal(0.03);
+                var serviceCharge = (totalPrice * Convert.ToDecimal(0.03)) + localShippingCost.Value;
                 var overrallCharge = totalPrice + serviceCharge;
 
 
@@ -433,11 +442,14 @@ namespace VasudaDataAccess.Logic.Implementation
 
             try
             {
+                //we will be using what ever value set in serviceCharge col as the amount for local shipping..
+                var localShippingCost = _unitOfWork.SettingTable.GetSystemSetting().ServiceCharge;
+
                 var itemPrice = model.UnitPrice * model.Quantity;
-                var serviceCharge = itemPrice * Convert.ToDecimal(0.03);
+                var serviceCharge = (itemPrice * Convert.ToDecimal(0.03)) + localShippingCost.Value;
                 var totalPrice = itemPrice + serviceCharge;
 
-                var vendor = _unitOfWork.VendorTable.GetAll(x => x.Name == model.VendorName && x.IsActive == true)
+                var vendor = _unitOfWork.VendorTable.GetAll(x => x.Name == model.VendorWebsite && x.IsActive == true)
                     .ToList();
                 if (vendor == null)
                 {
@@ -466,9 +478,9 @@ namespace VasudaDataAccess.Logic.Implementation
                 var shippingPartModel = new ShippingItemTable()
                 {
                     Id = purchasePartModel.Id,
-                    ReceiverName = model.ReceiverName,
-                    ReceiverNumber = model.ReceiverPhoneNumber,
-                    ReceiverAddress = model.ReceiverAddress,
+                    ReceiverName = model.VendorName,
+                    ReceiverNumber = model.VendorPhoneNumber,
+                    ReceiverAddress = model.VendorWebsite,
                     DateCreated = purchasePartModel.DateCreated
                 };
 
