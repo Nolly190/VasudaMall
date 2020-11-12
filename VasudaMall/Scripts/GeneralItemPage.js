@@ -1,57 +1,57 @@
 ﻿
 $(document).ready(function () {
 
-    $("#addShippingItemBtn").click(function () {
-        if (StartValidation("addShippingItemForm")) {
-            $(".Main-loader").show();
-            var shipppingItemData = {};
-            shipppingItemData.ReceiverName = $("#soReceiverName").val();
-            shipppingItemData.ReceiverPhoneNumber = $("#soReceiverPhoneNumber").val();
-            shipppingItemData.ReceiverAddress = $("#soReceiverAddress").val();
-            shipppingItemData.Description = $("#soDescription").val();
-            shipppingItemData.Quantity = $("#soQuantity").val();
-            shipppingItemData.Weight = $("#soWeight").val();
-            shipppingItemData.SenderName = $("#soSenderName").val();
-            shipppingItemData.SenderPhoneNumber = $("#soSenderPhoneNumber").val();
-            shipppingItemData.SenderAddress = $("#soSenderAddress").val();
+    //$("#addShippingItemBtn").click(function () {
+    //    if (StartValidation("addShippingItemForm")) {
+    //        $(".Main-loader").show();
+    //        var shipppingItemData = {};
+    //        shipppingItemData.ReceiverName = $("#soReceiverName").val();
+    //        shipppingItemData.ReceiverPhoneNumber = $("#soReceiverPhoneNumber").val();
+    //        shipppingItemData.ReceiverAddress = $("#soReceiverAddress").val();
+    //        shipppingItemData.Description = $("#soDescription").val();
+    //        shipppingItemData.Quantity = $("#soQuantity").val();
+    //        shipppingItemData.Weight = $("#soWeight").val();
+    //        shipppingItemData.SenderName = $("#soSenderName").val();
+    //        shipppingItemData.SenderPhoneNumber = $("#soSenderPhoneNumber").val();
+    //        shipppingItemData.SenderAddress = $("#soSenderAddress").val();
 
-            $.ajax({
-                url: "/Item/AddShippingItem",
-                type: "Post",
-                data: { model: shipppingItemData },
-                error: function (status, xhr) {
-                    $(".Main-loader").hide();
-                },
-                success: function (result) {
-                    if (result.Status === true) {
-                        $(".Main-loader").hide();
-                        $("#soSenderName").val("");
-                        $("#soSenderPhoneNumber").val("");
-                        $("#soSenderAddress").val("");
-                        $("#soDescription").val("");
-                        $("#soQuantity").val("");
-                        $("#soWeight").val("");
-                        $("#soReceiverName").val("");
-                        $("#soReceiverPhoneNumber").val("");
-                        $("#soReceiverAddress").val("");
-                        Swal.fire('Shipping order added Successfully.').then(
-                            (result) => {
-                                if (result.value) {
-                                    location.reload(true);
-                                }
-                            });;
+    //        $.ajax({
+    //            url: "/Item/AddShippingItem",
+    //            type: "Post",
+    //            data: { model: shipppingItemData },
+    //            error: function (status, xhr) {
+    //                $(".Main-loader").hide();
+    //            },
+    //            success: function (result) {
+    //                if (result.Status === true) {
+    //                    $(".Main-loader").hide();
+    //                    $("#soSenderName").val("");
+    //                    $("#soSenderPhoneNumber").val("");
+    //                    $("#soSenderAddress").val("");
+    //                    $("#soDescription").val("");
+    //                    $("#soQuantity").val("");
+    //                    $("#soWeight").val("");
+    //                    $("#soReceiverName").val("");
+    //                    $("#soReceiverPhoneNumber").val("");
+    //                    $("#soReceiverAddress").val("");
+    //                    Swal.fire('Shipping order added Successfully.').then(
+    //                        (result) => {
+    //                            if (result.value) {
+    //                                location.reload(true);
+    //                            }
+    //                        });;
 
-                        return;
-                    } else {
-                        $(".Main-loader").hide();
-                        Swal.fire(result.Message);
-                        return;
-                    }
-                }
-            });
-        }
-        return;
-    });
+    //                    return;
+    //                } else {
+    //                    $(".Main-loader").hide();
+    //                    Swal.fire(result.Message);
+    //                    return;
+    //                }
+    //            }
+    //        });
+    //    }
+    //    return;
+    //});
 
     //Purchase item start
     $("#addPurchaseItemButton").click(function () {
@@ -106,15 +106,14 @@ $(document).ready(function () {
         if (StartValidation("addShippingAndPurchaseItemForm")) {
             $(".Main-loader").show();
             var shippingPurchaseItemData = {};
-            shippingPurchaseItemData.VendorName = $("#spoVendorWebsite").val();
+            shippingPurchaseItemData.VendorWebsite = $("#spoVendorWebsite").val();
             shippingPurchaseItemData.ProductLink = $("#spoProductLink").val();
             shippingPurchaseItemData.Description = $("#spoDescription").val();
             shippingPurchaseItemData.Title = $("#spoTitle").val();
             shippingPurchaseItemData.UnitPrice = $("#spoUnitPrice").val();
             shippingPurchaseItemData.Quantity = $("#spoQuantity").val();
-            shippingPurchaseItemData.ReceiverName = $("#spoReceiverName").val();
-            shippingPurchaseItemData.ReceiverPhoneNumber = $("#spoReceiverPhoneNumber").val();
-            shippingPurchaseItemData.ReceiverAddress = $("#spoReceiverAddress").val();
+            shippingPurchaseItemData.VendorName = $("#spoVendorName").val();
+            shippingPurchaseItemData.VendorPhoneNumber = $("#spoVendorPhoneNumber").val();
 
             $.ajax({
                 url: "/Item/AddShippingAndPurchaseItem",
@@ -132,9 +131,8 @@ $(document).ready(function () {
                         $("#spoDescription").val("");
                         $("#spoUnitPrice").val("");
                         $("#spoQuantity").val("");
-                        $("#spoReceiverName").val("");
-                        $("#spoReceiverPhoneNumber").val("");
-                        $("#spoReceiverAddress").val("");
+                        $("#spoVendorName").val("");
+                        $("#spoVendorPhoneNumber").val("");
                         Swal.fire('Shipping and Purchase order added Successfully.').then(
                             (result) => {
                                 if (result.value) {

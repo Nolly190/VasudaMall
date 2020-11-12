@@ -88,6 +88,7 @@
                                 <!-- /.card -->
                             </div>
                             <!--purchase item form wrapper end-->
+
                             @*shipping item form wrapper start
                             <div class="tab-pane fade" id="shipping-item" role="tabpanel" aria-labelledby="shipping-item-tab">
                                  shipping order Form start
@@ -141,6 +142,7 @@
                                  /.card 
                             </div>
                             shipping item form wrapper end*@
+
                             <!--shipping and purchase item form wrapper start-->
                             <div class="tab-pane fade" id="shipping-purchase-item" role="tabpanel" aria-labelledby="shipping-purchase-item-tab">
                                 <!--shipping and purchase item Form start-->
@@ -178,13 +180,21 @@
                                                 <label for="spoQuantity" class="col-sm-12 col-md-2">Quantity</label>
                                                 <input type="text" class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Quantity" id="spoQuantity" placeholder="Enter the quantity of product" required>
                                             </div>
-                                            <div class="form-group row">
+                                            @*<div class="form-group row">
                                                 <label for="spoReceiverName" class="col-sm-12 col-md-2">Vendor Name</label>
                                                 <input type="text" class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Receiver Name" id="spoReceiverName" placeholder="Receiver Name" required />
                                             </div>
                                             <div class="form-group row">
                                                 <label for="spoReceiverPhoneNumber" class="col-sm-12 col-md-2">Vendor Phone Number</label>
                                                 <input type="text" class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Receiver Phone Number" id="spoReceiverPhoneNumber" placeholder="Receiver Phone Number" required />
+                                            </div>*@
+                                            <div class="form-group row">
+                                                <label for="spoVendorName" class="col-sm-12 col-md-2">Vendor Name</label>
+                                                <input type="text" class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Vendor Name" id="spoVendorName" placeholder="Vendor Name" required />
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="spoVendorPhoneNumber" class="col-sm-12 col-md-2">Vendor Phone Number</label>
+                                                <input type="text" class="form-control form-control-sm col-sm-12 col-md-10" data-formname="Vendor Phone Number" id="spoVendorPhoneNumber" placeholder="Vendor Phone Number" required />
                                             </div>
                                             @*<div class="form-group row">
                                                 <label for="spoReceiverAddress" class="col-sm-12 col-md-2">Receiver Address</label>
