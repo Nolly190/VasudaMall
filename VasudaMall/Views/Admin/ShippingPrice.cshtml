@@ -1,4 +1,5 @@
 ﻿
+@using VasudaDataAccess.Model
 @model List<VasudaDataAccess.Model.PriceTable>
 @{
     ViewBag.Title = "ShippingPrice";
@@ -28,6 +29,116 @@
                 <!-- Default box -->
                 <div class="card">
                     <div class="card-header">
+                        <h3 class="card-title">Service Fee: @ViewBag.ServicePrice</h3> <br />
+                        <button class="btn btn-success" id="AddServicePrice">Add Service Price</button>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="col-md-12" id="NavigateToSection">
+                            <div class="card card-primary card-outline">
+                                <div class="card-header">
+                                    <h3 class="card-title">Conversion Rates</h3>
+                                </div>
+
+                                <!-- /.card-header -->
+                                <form id="ExchangeRate">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="form-group  col-3">
+                                                Type
+                                                <select class="form-control" required data-formname="Type" id="ConversionType">
+                                                    <option value="">Select Type</option>
+                                                    <option>Dollar-Yuan</option>
+                                                    <option>Dollar-Naira</option>
+                                                    <option>Yuan-Naira</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group col-3">
+                                                Price:
+                                                <input class="form-control" type="number" required data-formname="Rate" id="Rate" placeholder="Rate">
+                                            </div>
+                                        </div>
+                                        <button type="submit" id="AddConversionRate" class="btn btn-primary"><i class="far fa-envelope "></i> Save</button>
+
+                                    </div>
+                                </form>
+
+                                <!-- /.card-footer -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+
+
+
+                    </div>
+                    <!-- /.card-body -->
+
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Exchange Rate</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @if ( ViewBag.ExchangeTable.Count == 0)
+                        {
+                            <h3 style="text-align:center">NO EXCHANGE RATE AVAILABLE</h3>
+                        }
+                        else
+                        {
+                            <table id="ExchangeRate" class="table table-bordered table-striped table-hover table-sm table-responsive-sm">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Base Currency</th>
+                                        <th>Converted Currency</th>
+                                        <th>Rate</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (ExchangeRateTable item in  ViewBag.ExchangeTable)
+                                    {
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@item.BaseCurrency</td>
+                                            <td>@item.ConvertedCurrency</td>
+                                            <td>@item.Rate</td>
+                                            <td>@item.DateCreated.ToString("f")</td>
+                                           
+                                        </tr>
+                                        count++;
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+
+
+
+        <!--Notification drop down start-->
+        <div class="row">
+            <div class="col-12">
+                <!-- Default box -->
+                <div class="card">
+                    <div class="card-header">
                         <h3 class="card-title">Manage Price</h3>
 
                         <div class="card-tools">
@@ -49,35 +160,36 @@
                                 <!-- /.card-header -->
                                 <form id="ShippingPriceForm">
                                     <div class="card-body">
-                                    <div class="row">
-                                        <div class="form-group col-3">Price:
-                                            <input class="form-control" type="number" required data-formname="Price" id="Price" placeholder="Price">
+                                        <div class="row">
+                                            <div class="form-group col-3">
+                                                Price:
+                                                <input class="form-control" type="number" required data-formname="Price" id="Price" placeholder="Price">
+                                            </div>
+                                            <div class="form-group  col-3">
+                                                Country:
+                                                <input class="form-control" required data-formname="Country" id="Country" placeholder="Country:">
+                                            </div>
+                                            <div class="form-group  col-3">
+                                                Minimum Kg:
+                                                <input class="form-control" type="number" required data-formname="Minimum Kg" id="MinKg" placeholder="Min-Kg:">
+                                            </div>
+                                            <div class="form-group  col-3">
+                                                Maximum Kg:
+                                                <input class="form-control" type="number" required data-formname="Maximum Kg" id="MaxKg" placeholder="Max-Kg:">
+                                            </div>
+                                            <div class="form-group  col-3">
+                                                Delivery Days
+                                                <input class="form-control" type="number" required data-formname="Days" id="Days" placeholder="No of Days:">
+                                            </div>
+                                            <div class="form-group  col-3">
+                                                Type
+                                                <select class="form-control" required data-formname="Type" id="ShippingType">
+                                                    <option value="">Select Type</option>
+                                                    <option>Normal</option>
+                                                    <option>Express</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="form-group  col-3">
-                                            Country:
-                                            <input class="form-control" required data-formname="Country" id="Country" placeholder="Country:">
-                                        </div>
-                                        <div class="form-group  col-3">
-                                            Minimum Kg:
-                                            <input class="form-control" type="number" required data-formname="Minimum Kg" id="MinKg" placeholder="Min-Kg:">
-                                        </div>
-                                        <div class="form-group  col-3">
-                                            Maximum Kg:
-                                            <input class="form-control" type="number" required data-formname="Maximum Kg" id="MaxKg" placeholder="Max-Kg:">
-                                        </div>
-                                        <div class="form-group  col-3">
-                                            Delivery Days
-                                            <input class="form-control" type="number" required data-formname="Days" id="Days" placeholder="No of Days:">
-                                        </div>
-                                        <div class="form-group  col-3">
-                                            Type
-                                            <select class="form-control" required data-formname="Type" id="ShippingType">
-                                                <option value="">Select Type</option>
-                                                <option>Normal</option>
-                                                <option>Express</option>
-                                            </select>
-                                        </div>
-                                    </div>
                                     </div>
                                     <!-- /.card-body -->
                                     <div class="card-footer">

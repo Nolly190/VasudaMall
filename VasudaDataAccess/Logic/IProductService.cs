@@ -10,6 +10,8 @@ namespace VasudaDataAccess.Logic
     {
       Response<ProductViewModel> GetProducts();
       Response<ProductTable> GetProduct(string id);
+      Response<string> AddServicePrice(decimal amount);
+      Response<string> AddExchange(ExchangeRateTable model);
       Response<string> AddProducts(HttpFileCollectionBase images, NameValueCollection others);
       Response<string> AddCategory(CategoryTable model);
       Response<string> EditCategory(string category, string oldCategory);

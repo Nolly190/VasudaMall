@@ -420,6 +420,45 @@
 
     });
 
+    $("#AddServicePrice").click( async function () {
+         //Get the complete list of order type and check for their status
+            const { value: shippingFee } = await Swal.fire({
+                title: 'Enter Service Fee',
+                input: 'number',
+                showCancelButton: true,
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'Service Fee is required';
+                    }
+                }
+            })
+
+            if (shippingFee) {
+                $(".Main-loader").modal('show');
+                $.ajax({
+                    url: "/Admin/AddServiceFee",
+                    type: "Post",
+                    data: {  amount: shippingFee },
+                    error: function (status, xhr) {
+                        $(".Main-loader").modal('hide');
+                    },
+                    success: function (result) {
+
+                        $(".Main-loader").modal('hide');
+                        if (result.Status === true) {
+                            Swal.fire('Successful');
+                            window.setTimeout(function () { location.reload(); }, 3000);
+                            return;
+                        }
+                        Swal.fire(result.Message);
+                    }
+
+                });
+                return;
+            }
+        
+    });
+
 
 
     $("#AdminTbody").on("click", ".RemoveAdmin", async function () {
@@ -1013,6 +1052,38 @@
                         Swal.fire('Successfully Created');
                         $("#SubcategoryName").val("");
                         $("#subCats").val("");
+                        return;
+                    }
+                    Swal.fire(result.Message);
+                }
+
+            });
+            return;
+        }
+
+    });
+    $("#AddConversionRate").click(function (data) {
+        data.preventDefault();
+        if (StartValidation("ExchangeRate")) {
+
+            $(".Main-loader").modal('show');
+            var details = {};
+            details.Rate = $("#Rate").val();
+            details.BaseCurrency = $("#ConversionType").val();
+            $.ajax({
+                url: "/Admin/AddExchangeRate",
+                type: "Post",
+                data: { model: details },
+                error: function (status, xhr) {
+                    $(".Main-loader").modal('hide');
+                },
+                success: function (result) {
+
+                    $(".Main-loader").modal('hide');
+                    if (result.Status === true) {
+                        Swal.fire('Successfully Created');
+                        $("#Rate").val("");
+                        $("#ConversionType").val("");
                         return;
                     }
                     Swal.fire(result.Message);

@@ -462,5 +462,65 @@ namespace VasudaDataAccess.Logic.Implementation
             }
             return response;
         }
+
+        public Response<string> AddServicePrice(decimal amount)
+        {
+            var response = new Response<string>();
+            try
+            {
+                var getPrice = _unitOfWork.SettingTable.GetAll().LastOrDefault();
+                getPrice.ServiceCharge = amount ;
+                _unitOfWork.Complete();
+                response.Status = true;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+            }
+            return response;
+        }
+
+        public Response<string> AddExchange(ExchangeRateTable model)
+        {
+            var response = new Response<string>();
+            try
+            {
+                switch (model.BaseCurrency)
+                {
+                    case "Dollar-Yuan":
+                        model.BaseCurrency = "Dollar";
+                        model.ConvertedCurrency="Yuan";
+                        break;
+                    case "Dollar-Naira":
+                        model.BaseCurrency = "Dollar";
+                        model.ConvertedCurrency = "Naira";
+                        break;
+                    case "Yuan-Naira":
+                        model.BaseCurrency = "Yuan";
+                        model.ConvertedCurrency = "Naira";
+                        break;
+                }
+
+                var getExisting = _unitOfWork.ExchangeRateTable.GetAll(x =>
+                    x.IsActive && x.BaseCurrency == model.BaseCurrency &&
+                    model.ConvertedCurrency == x.ConvertedCurrency);
+                foreach (var item in getExisting)
+                {
+                    item.IsActive = false;
+                }
+
+                model.Id = Guid.NewGuid();
+                model.DateCreated = DateTime.UtcNow.AddHours(1);
+                model.IsActive = true;
+                _unitOfWork.ExchangeRateTable.Add(model);
+                _unitOfWork.Complete();
+                response.Status = true;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.ToString());
+            }
+            return response;
+        }
     }
 }

@@ -74,11 +74,21 @@ namespace VasudaMall.Controllers
         }  
         public ActionResult ShippingPrice()
         {
+            ViewBag.ServicePrice = _unitOfWork.SettingTable.GetAll().LastOrDefault()?.ServiceCharge;
+            ViewBag.ExchangeTable = _unitOfWork.ExchangeRateTable.GetExchangeRates();
             return View(_orderService.GetAllPrice().Result());
         }   
         public JsonResult AddProducts()
         {
             return Json(_productService.AddProducts(Request.Files, Request.Form),JsonRequestBehavior.AllowGet);
+        }   
+        public JsonResult AddServiceFee(decimal amount)
+        {
+            return Json(_productService.AddServicePrice(amount),JsonRequestBehavior.AllowGet);
+        }   
+        public JsonResult AddExchangeRate(ExchangeRateTable model)
+        {
+            return Json(_productService.AddExchange(model),JsonRequestBehavior.AllowGet);
         }   
         public JsonResult ProcessOrder(string orderId , string amount)
         {
